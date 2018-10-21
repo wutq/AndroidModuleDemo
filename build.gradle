@@ -1,0 +1,27 @@
+apply from: "config.gradle"
+
+buildscript {
+
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:3.0.1"
+        //黄油刀
+        classpath "com.jakewharton:butterknife-gradle-plugin:8.4.0"
+        //数据库GreenDAO
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
+    }
+
+    allprojects {
+        repositories {
+            google()
+            jcenter()
+        }
+    }
+}
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">module_main</string>
+    <string name="main_tab_home">首页</string>
+    <string name="main_tab_center">中间</string>
+    <string name="main_tab_user">我的</string>
+    <string name="main_exit_app">再按一次退出应用</string>
+</resources>
