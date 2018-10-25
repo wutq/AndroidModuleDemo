@@ -50,6 +50,15 @@ public abstract class BasePresenter<M extends IBaseModule, V extends IBaseView> 
         return getView().getContext();
     }
 
+    protected void showLoading() {
+        view.showLoading();
+    }
+
+    protected void dismissLoading() {
+        view.dismissLoading();
+    }
+
+
     /**
      * 通过该方法创建Module
      */

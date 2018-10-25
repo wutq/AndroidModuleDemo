@@ -64,14 +64,14 @@ public class WanMainActivity extends ActionBarActivity<WanMainPresenter> impleme
     }
 
     @Override
-    public void showEmpty(Object tag) {
-        super.showEmpty(tag);
+    public void onEmpty(Object tag) {
+        super.onEmpty(tag);
         ToastUtils.showToast(mContext, "没有数据");
     }
 
     @Override
-    public void showError(Object tag, String error) {
-        super.showError(tag, error);
+    public void onError(Object tag, String error) {
+        super.onError(tag, error);
         ToastUtils.showToast(mContext, "Error");
     }
 

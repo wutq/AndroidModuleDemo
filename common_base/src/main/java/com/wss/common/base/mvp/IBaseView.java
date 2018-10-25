@@ -13,9 +13,9 @@ public interface IBaseView {
 
     void dismissLoading();
 
-    void showEmpty(Object tag);
+    void onEmpty(Object tag);
 
-    void showError(Object tag, String error);
+    void onError(Object tag, String errorMsg);
 
     Context getContext();
 }

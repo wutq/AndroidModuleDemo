@@ -12,8 +12,5 @@
         android:layout_height="50dp"
         android:background="@color/blue" />
 
-    <FrameLayout
-        android:id="@+id/fl_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <include layout="@layout/fragment_base" />
 </LinearLayout>

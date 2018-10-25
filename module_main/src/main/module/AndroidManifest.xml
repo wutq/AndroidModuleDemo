@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:theme="@style/AdmTheme">
 
-        <activity android:name="com.wss.module.main.loading.LoadingActivity">
+        <activity android:name=".ui.loading.LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,6 +17,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".home.MainActivity" />
+        <activity android:name=".ui.home.MainActivity" />
     </application>
 </manifest>

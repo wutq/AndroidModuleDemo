@@ -7,15 +7,16 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.wss.common.base.ActionBarActivity;
 import com.wss.common.base.adapter.BaseRcyAdapter;
 import com.wss.common.base.adapter.listener.OnRcyItemClickListener;
+import com.wss.common.bean.Event;
 import com.wss.common.constants.ARouterConfig;
+import com.wss.common.constants.EventConstant;
+import com.wss.common.utils.EventBusUtils;
 import com.wss.module.market.R;
 import com.wss.module.market.R2;
 import com.wss.module.market.bean.MarketInfo;
 import com.wss.module.market.main.adapter.MarketMainAdapter;
 import com.wss.module.market.main.mvp.IMarketMainView;
 import com.wss.module.market.main.mvp.MarketMainPresenter;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,8 +70,6 @@ public class MarketMainActivity extends ActionBarActivity<MarketMainPresenter> i
 
     @Override
     public void onItemClick(int position) {
-        //发送一条消息
-        EventBus.getDefault().post("来自Market Module的消息");
-
+        EventBusUtils.sendEvent(new Event<>(EventConstant.EVENT_MARKET_CLICK, "来自Market Module的消息"));
     }
 }

@@ -48,13 +48,13 @@ public class LoadingDialog {
         // 获取整个布局
         LinearLayout layout = view.findViewById(R.id.dialog_view);
         // 页面中的LoadingView
-        mLoadingView = view.findViewById(R.id.lv_circularring);
+        mLoadingView = view.findViewById(R.id.lvcr_loading);
         // 页面中显示文本
         TextView loadingText = view.findViewById(R.id.loading_text);
         // 显示文本
         loadingText.setText(msg);
         // 创建自定义样式的Dialog
-        mLoadingDialog = new Dialog(context, R.style.loading_dialog);
+        mLoadingDialog = new Dialog(context, R.style.LoadingDialog);
         // 设置返回键无效
         mLoadingDialog.setCancelable(cancelable);
         mLoadingDialog.setContentView(layout, new LinearLayout.LayoutParams(

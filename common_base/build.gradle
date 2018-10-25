@@ -40,7 +40,7 @@ android {
 
 dependencies {
     // 在项目中的libs中的所有的.jar结尾的文件，都是依赖
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     //把implementation 用api代替,它是对外部公开的, 所有其他的module就不需要添加该依赖
     api rootProject.ext.dependencies["appcompat_v7"]
     api rootProject.ext.dependencies["constraint_layout"]
@@ -49,45 +49,36 @@ dependencies {
     api rootProject.ext.dependencies["support-v4"]
     api rootProject.ext.dependencies["design"]
     api rootProject.ext.dependencies["support_annotations"]
-
     //MultiDex分包方法
     api rootProject.ext.dependencies["multidex"]
-
     //黄油刀
     annotationProcessor rootProject.ext.dependencies["butterknife_compiler"]
     api rootProject.ext.dependencies["butterknife"]
-
     //Arouter路由
     annotationProcessor rootProject.ext.dependencies["arouter_compiler"]
     api rootProject.ext.dependencies["arouter_api"]
     api rootProject.ext.dependencies["arouter_annotation"]
-
     //eventbus 发布/订阅事件总线
     api rootProject.ext.dependencies["eventbus"]
-
     //网络
     api rootProject.ext.dependencies["novate"]
-
     //日志
     api rootProject.ext.dependencies["logger"]
-
     //fastJson
     api rootProject.ext.dependencies["fastjson"]
-
     //沉浸栏
     api rootProject.ext.dependencies["barlibrary"]
-
     //banner
     api rootProject.ext.dependencies["banner"]
-
     //图片加载
     api rootProject.ext.dependencies["picasso"]
-
     //lombok
     api rootProject.ext.dependencies["lombok"]
     api rootProject.ext.dependencies["lombokJavax"]
-
-    //GreenDAO
-//    api rootProject.ext.dependencies["greenDao"]
+    //时间 日期  地址 条件选中器
+    api rootProject.ext.dependencies["pickerView"]
+    //6.0权限
+//    api rootProject.ext.dependencies["permissionsdispatcher"]
+//    api rootProject.ext.dependencies["permissionsdispatcher_processor"]
 
 }

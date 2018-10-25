@@ -6,8 +6,6 @@ import android.support.annotation.Nullable;
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.widget.ActionBar;
 
-import butterknife.BindView;
-
 /**
  * Describe：所有带actionBar的Activity基类
  * Created by 吴天强 on 2018/10/18.
@@ -15,12 +13,14 @@ import butterknife.BindView;
 
 public abstract class ActionBarActivity<P extends BasePresenter> extends BaseMvpActivity<P> {
 
-    @BindView(R2.id.actionbar)
-    ActionBar actionBar;
+    //    @BindView(R2.id.actionbar)
+    protected ActionBar actionBar;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         actionBar = findViewById(R.id.actionbar);
     }
 

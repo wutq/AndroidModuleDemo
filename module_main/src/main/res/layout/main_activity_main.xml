@@ -2,43 +2,39 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:fitsSystemWindows="true">
 
-    <RelativeLayout
-        android:id="@+id/rl_top"
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/TextStyle"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/blue">
+        android:background="@color/blue"
+        android:gravity="center"
+        android:text="@string/main_tab_home"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/tv_title"
-            style="@style/text_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/main_tab_home"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-
-    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/fl_context"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/ll_bottom"
-        android:layout_below="@+id/rl_top" />
+        android:layout_below="@+id/tv_title"
+        android:background="@color/bg" />
 
 
     <RelativeLayout
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
 
         <View
-            style="@style/horLine"
+            style="@style/HorizontalLine"
             android:layout_width="match_parent" />
 
         <RadioGroup

@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">AMD</string>
-    <string name="base_string">AMD</string>
+
+    <string name="no_data">暂无数据</string>
+    <string name="error_data">网络请求失败</string>
+    <string name="pull_up_loading">上拉加载</string>
+    <string name="pull_down_refresh">下拉刷新</string>
+    <string name="pull_loose_refreshing">松开刷新</string>
+    <string name="pull_loose_load_more">松开加载更多</string>
+    <string name="loading">加载中…</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+
 </resources>

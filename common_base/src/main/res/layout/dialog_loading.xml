@@ -3,14 +3,14 @@
     android:id="@+id/dialog_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/round_black_bg"
+    android:background="@drawable/corners_blue_shape"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp">
 
     <com.wss.common.widget.LVCircularRing
-        android:id="@+id/lv_circularring"
-        android:layout_width="20dp"
+        android:id="@+id/lvcr_loading"
+        android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="10dp" />
 

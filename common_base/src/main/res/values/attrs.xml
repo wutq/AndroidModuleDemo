@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--水平滑动Tab自定义属性-->
+    <declare-styleable name="PagerSlidingTabStrip">
+        <!--下方 指示线条器颜色-->
+        <attr name="pstsIndicatorColor" format="color" />
+        <!--下方 横线颜色-->
+        <attr name="pstsUnderlineColor" format="color" />
+        <!--水平方向分割线颜色-->
+        <attr name="pstsDividerColor" format="color" />
+        <!--标题默认颜色-->
+        <attr name="pstsTextDefaultColor" format="color" />
+        <!--标题选中颜色-->
+        <attr name="pstsTextSelectedColor" format="color" />
+        <!--字体大小-->
+        <attr name="pstsTextSize" format="dimension" />
+        <!--是否加粗-->
+        <attr name="pstsBold" format="boolean" />
+        <!--是否显示顶部横线-->
+        <attr name="pstsHasTopLine" format="boolean" />
+
+        <attr name="pstsDividerPadding" format="dimension" />
+        <!--指示器高度-->
+        <attr name="pstsIndicatorHeight" format="dimension" />
+        <attr name="pstsUnderlineHeight" format="dimension" />
+        <attr name="pstsDividerPaddingTopBottom" format="dimension" />
+        <attr name="pstsTabPaddingLeftRight" format="dimension" />
+        <attr name="pstsScrollOffset" format="dimension" />
+        <attr name="pstsShouldExpand" format="boolean" />
+        <attr name="pstsTextAllCaps" format="boolean" />
+        <attr name="pstsScaleZoomMax" format="float" />
+        <attr name="pstsSmoothScrollWhenClickTab" format="boolean" />
+    </declare-styleable>
+
+    <!--下拉 上拉刷新控件-->
+    <declare-styleable name="PullToRefreshLayout">
+        <attr name="view_error" format="reference" />
+        <attr name="view_empty" format="reference" />
+        <attr name="view_loading" format="reference" />
+    </declare-styleable>
+
+    <!--自定义加载框-->
+    <declare-styleable name="LVCircularRing">
+        <attr name="bgColor" format="color" />
+        <attr name="barColor" format="color" />
+
+    </declare-styleable>
+</resources>

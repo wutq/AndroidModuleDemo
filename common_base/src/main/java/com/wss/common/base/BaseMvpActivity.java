@@ -41,21 +41,25 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
     //***************************************IBaseView方法实现*************************************
     @Override
     public void showLoading() {
-
+        if (loadingDialog != null && !loadingDialog.isShowing()) {
+            loadingDialog.show();
+        }
     }
 
     @Override
     public void dismissLoading() {
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onEmpty(Object tag) {
 
     }
 
     @Override
-    public void showEmpty(Object tag) {
-
-    }
-
-    @Override
-    public void showError(Object tag, String error) {
+    public void onError(Object tag, String errorMsg) {
 
     }
 

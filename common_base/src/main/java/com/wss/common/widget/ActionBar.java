@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wss.common.base.R;
-import com.wss.common.utils.PxUtil;
+import com.wss.common.utils.PxUtils;
 
 
 /**
@@ -333,7 +333,7 @@ public class ActionBar extends RelativeLayout {
      */
     public ImageView getImageView() {
         ImageView iv = new ImageView(getContext());
-        iv.setLayoutParams(new LayoutParams(PxUtil.dp2px(getContext(), 25), PxUtil.dp2px(getContext(), 25)));
+        iv.setLayoutParams(new LayoutParams(PxUtils.dp2px(getContext(), 25), PxUtils.dp2px(getContext(), 25)));
         return iv;
 
     }

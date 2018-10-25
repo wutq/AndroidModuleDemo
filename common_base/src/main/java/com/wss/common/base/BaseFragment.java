@@ -1,12 +1,17 @@
 package com.wss.common.base;
 
-import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
+import android.widget.TextView;
+
+import com.wss.common.widget.dialog.LoadingDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -22,21 +27,32 @@ import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment {
 
+    private ViewStub emptyView;
+    private View rootView;
     private Unbinder unBinder;
+    protected Context mContext;
+    protected LoadingDialog loadingDialog;
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mContext = getActivity();
+        loadingDialog = new LoadingDialog(mContext);
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayoutId(), container, false);
-        unBinder = ButterKnife.bind(this, view);
+        rootView = inflater.inflate(R.layout.fragment_base, container, false);
+        ((ViewGroup) rootView.findViewById(R.id.fl_content)).addView(getLayoutInflater().inflate(getLayoutId(), null));
+        unBinder = ButterKnife.bind(this, rootView);
         if (regEvent()) {
             EventBus.getDefault().register(this);
         }
-        return view;
+        return rootView;
     }
 
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
@@ -52,6 +68,56 @@ public abstract class BaseFragment extends Fragment {
         if (regEvent()) {
             EventBus.getDefault().unregister(this);
         }
+    }
+
+
+    //***************************************空页面方法*************************************
+    protected void showEmptyView() {
+        showEmptyOrErrorView(getString(R.string.no_data), R.drawable.bg_no_data);
+    }
+
+
+    protected void showErrorView() {
+        showEmptyOrErrorView(getString(R.string.error_data), R.drawable.bg_no_net);
+    }
+
+    public void showEmptyOrErrorView(String text, int img) {
+        emptyView = rootView.findViewById(R.id.vs_empty);
+
+        if (emptyView != null) {
+            emptyView.setVisibility(View.VISIBLE);
+            rootView.findViewById(R.id.iv_empty).setBackgroundResource(img);
+            ((TextView) rootView.findViewById(R.id.tv_empty)).setText(text);
+            rootView.findViewById(R.id.ll_empty).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onEmptyViewClick();
+                }
+            });
+        }
+    }
+
+    protected void hideEmptyView() {
+        if (emptyView != null) {
+            emptyView.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 空页面被点击
+     */
+    protected void onEmptyViewClick() {
+
+    }
+
+    //***************************************空页面方法*********************************
+
+
+    /**
+     * 给Fragment设置数据
+     */
+    public void setFragmentData(Object data) {
+
     }
 
     /**

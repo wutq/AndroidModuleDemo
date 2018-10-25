@@ -25,19 +25,19 @@ public class WanMainPresenter extends BasePresenter<WanMainModule, IWanMainView>
                     if (code == 0) {
                         List<Article> articleList = JSON.parseArray(JSON.parseObject(response).getString("datas"), Article.class);
                         if (articleList == null || articleList.size() < 1) {
-                            getView().showEmpty(tag);
+                            getView().onEmpty(tag);
                         } else {
                             getView().articleList(articleList);
                         }
 
                     } else {
-                        getView().showError(tag, msg);
+                        getView().onError(tag, msg);
                     }
                 }
 
                 @Override
                 public void onFailure(Object tag, Exception e) {
-                    getView().showError(tag, Constant.ERROR_MESSAGE);
+                    getView().onError(tag, Constant.ERROR_MESSAGE);
                 }
 
                 @Override

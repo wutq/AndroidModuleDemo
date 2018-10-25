@@ -13,14 +13,36 @@ import lombok.Setter;
 @Setter
 public class MainBlock extends BaseBean {
 
-    private String text;
-    private int type;
+    private String title;
     private int res;
     private String url;
+    private String describe;
 
-    public MainBlock(String text, String url, int res) {
-        this.text = text;
-        this.url = url;
+    public MainBlock(String title, int res) {
+        this(title, "", res);
+    }
+
+    public MainBlock(String title, String url, int res) {
+        this(title, res, url, "");
+    }
+
+    public MainBlock(String title, int res, String describe) {
+        this(title, res, "", describe);
+    }
+
+    public MainBlock(String title, int res, String url, String describe) {
+        this.title = title;
         this.res = res;
+        this.url = url;
+        this.describe = describe;
+    }
+
+    @Override
+    public String toString() {
+        return "MainBlock{" +
+                "title='" + title + '\'' +
+                ", res=" + res +
+                ", url='" + url + '\'' +
+                '}';
     }
 }

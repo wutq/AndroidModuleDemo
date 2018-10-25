@@ -3,7 +3,9 @@ package com.wss.common.widget;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,6 +13,8 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
+
+import com.wss.common.base.R;
 
 /**
  * 自定义加载框View
@@ -22,6 +26,8 @@ public class LVCircularRing extends View {
     private float mPadding = 0f;
     private float startAngle = 0f;
     private Paint mPaint;
+    private int bgColor = Color.argb(100, 245, 245, 245);//加载框背景色
+    private int barColor = Color.argb(100, 245, 245, 245);//加载框动画色
 
     public LVCircularRing(Context context) {
         this(context, null);
@@ -33,6 +39,10 @@ public class LVCircularRing extends View {
 
     public LVCircularRing(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LVCircularRing);
+        bgColor = a.getColor(R.styleable.LVCircularRing_bgColor, bgColor);
+        barColor = a.getColor(R.styleable.LVCircularRing_barColor, barColor);
+        a.recycle();
         initPaint();
     }
 
@@ -51,13 +61,13 @@ public class LVCircularRing extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        mPaint.setColor(Color.argb(100, 255, 255, 255));
+        mPaint.setColor(bgColor);
         canvas.drawCircle(mWidth / 2, mWidth / 2, mWidth / 2 - mPadding, mPaint);
-        mPaint.setColor(Color.WHITE);
+        mPaint.setColor(barColor);
+        @SuppressLint("DrawAllocation")
         RectF rectF = new RectF(mPadding, mPadding, mWidth - mPadding, mWidth - mPadding);
-        canvas.drawArc(rectF, startAngle, 100
-                , false, mPaint);//第四个参数是否显示半径
-
+        //第四个参数是否显示半径
+        canvas.drawArc(rectF, startAngle, 100, false, mPaint);
     }
 
 

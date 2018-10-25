@@ -14,10 +14,6 @@ public abstract class BaseRcyHolder<T> extends RecyclerView.ViewHolder {
 
     private OnRcyItemClickListener mListener;
 
-    public BaseRcyHolder(View itemView) {
-        super(itemView);
-    }
-
     public BaseRcyHolder(View itemView, OnRcyItemClickListener listener) {
         super(itemView);
         this.mListener = listener;

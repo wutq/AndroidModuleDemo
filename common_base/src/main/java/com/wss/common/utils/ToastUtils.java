@@ -16,7 +16,7 @@ public class ToastUtils {
     }
 
     public static void showToast(Context context, String text) {
-//        showToast(context, text, Gravity.BOTTOM);
+//        showToast(context, title, Gravity.BOTTOM);
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
     }
 

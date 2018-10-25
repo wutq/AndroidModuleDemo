@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/tv_goods"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="10dp" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/TextStyle"
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@+id/tv_goods" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            style="@style/TextStyle"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/tv_goods"
+            android:textColor="@color/orange" />
+
+        <TextView
+            android:id="@+id/tv_num"
+            style="@style/TextStyle"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp" />
+    </RelativeLayout>
+</RelativeLayout>

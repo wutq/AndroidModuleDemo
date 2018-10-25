@@ -5,7 +5,7 @@
 
 
         <activity
-            android:name="com.wss.module.main.loading.LoadingActivity"
+            android:name=".ui.loading.LoadingActivity"
             android:theme="@style/Theme.AppStartLoadTranslucent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -14,6 +14,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".home.MainActivity" />
+        <activity android:name=".ui.home.MainActivity" />
+        <activity android:name=".ui.hortab.OrderListActivity" />
+        <activity android:name=".ui.refresh.ArticleListActivity" />
+        <activity android:name=".ui.selector.SelectorActivity" />
+        <activity android:name=".ui.count.CountViewActivity" />
     </application>
 </manifest>
