@@ -11,7 +11,10 @@ import android.widget.TextView;
 import com.wss.common.base.R;
 import com.wss.common.base.R2;
 import com.wss.common.utils.PxUtils;
+import com.wss.common.widget.dialog.AppDialog;
+import com.wss.common.widget.dialog.DialogType;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -26,7 +29,22 @@ public class CountClickView extends LinearLayout {
     public static final int INIT_COUNT = 1;
     public static final int MAX_COUNT = 10000;
 
-    private Context context;
+
+    @BindView(R2.id.tv_count)
+    TextView tvCount;
+
+    @BindView(R2.id.iv_plus)
+    ImageView ivPlus;
+
+    @BindView(R2.id.iv_minus)
+    ImageView ivMinus;
+
+    @BindView(R2.id.ll_minus)
+    LinearLayout llMinus;//减 控件父类
+
+    @BindView(R2.id.ll_plus)
+    LinearLayout llPlus;//加 控件父类
+    private Context mContext;
     private int maxCount = MAX_COUNT;
     private int minCount = MIN_COUNT;
 
@@ -35,60 +53,48 @@ public class CountClickView extends LinearLayout {
     private int minusNot = R.drawable.input_minus_disabled;
     private int addCan = R.drawable.input_add_default;
     private int addNot = R.drawable.input_add_disabled;
-    private CountClickDialog dialog;
     private boolean input = false;//是否支持如输入 默认不支持
+
+    public CountClickView(Context context) {
+        this(context, null);
+
+    }
 
     public CountClickView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public CountClickView(Context context) {
-        super(context);
-        init(context);
-    }
 
     private OnClickAfterListener afterClickListener = null;
 
-    private TextView tvCount;
-    private ImageView ivPlus;
-    private ImageView ivMinus;
-    private LinearLayout llMinus;//减 控件父类
-    private LinearLayout llPlus;//加 控件父类
 
-    private void init(final Context context) {
-        this.context = context;
+    private void init(Context context) {
+        this.mContext = context;
         this.setBackgroundResource(android.R.color.transparent);
-        View wholeView = View.inflate(context, R.layout.layout_count_click_view, this);
-        ButterKnife.bind(this, wholeView);
-        ivPlus = wholeView.findViewById(R.id.iv_plus);
-        ivMinus = wholeView.findViewById(R.id.iv_minus);
-        tvCount = wholeView.findViewById(R.id.tv_count);
-        llMinus = wholeView.findViewById(R.id.ll_minus);
-        llPlus = wholeView.findViewById(R.id.ll_plus);
+        ButterKnife.bind(this, View.inflate(context, R.layout.layout_count_click_view, this));
 
-
-        dialog = new CountClickDialog(context);
-        dialog.setTitle("修改数量");
         tvCount.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
                 if (input) {
-                    dialog.setOnConfirmClickListener(new CountClickDialog.OnConfirmClickListener() {
-                        @Override
-                        public void onClick(int val) {
-                            tvCount.setText(String.valueOf(val));
-                            if (afterClickListener != null) {
-                                afterClickListener.onAfter(getCount());
-                                if (getCount() == getMinCount()) {
-                                    afterClickListener.onMin();
+                    new AppDialog(mContext, DialogType.COUNT)
+                            .setTitle("修改数量")
+                            .setRightButton(new AppDialog.OnButtonClickListener() {
+                                @Override
+                                public void onClick(String val) {
+                                    tvCount.setText(val);
+                                    if (afterClickListener != null) {
+                                        afterClickListener.onAfter(getCount());
+                                        if (getCount() == getMinCount()) {
+                                            afterClickListener.onMin();
+                                        }
+                                    }
+                                    judgeTheViews(Integer.valueOf(val));
                                 }
-                            }
-                            judgeTheViews(val);
-                        }
-                    });
-                    dialog.setNumber(minCount, maxCount, getCount());
-                    dialog.showDialog();
+                            })
+                            .setNumber(minCount, maxCount, getCount())
+                            .show();
                 }
             }
         });
@@ -144,13 +150,13 @@ public class CountClickView extends LinearLayout {
      * 设置 按钮父类的大小
      */
     public void setBtnParentSize(int width, int height) {
-        llMinus.setLayoutParams(new LinearLayout.LayoutParams(PxUtils.dp2px(context, width),
-                PxUtils.dp2px(context, height)));
-        llPlus.setLayoutParams(new LinearLayout.LayoutParams(PxUtils.dp2px(context, width),
-                PxUtils.dp2px(context, height)));
+        llMinus.setLayoutParams(new LinearLayout.LayoutParams(PxUtils.dp2px(mContext, width),
+                PxUtils.dp2px(mContext, height)));
+        llPlus.setLayoutParams(new LinearLayout.LayoutParams(PxUtils.dp2px(mContext, width),
+                PxUtils.dp2px(mContext, height)));
         //如果设置了该处大小 则需要更新中间View的高度
         LinearLayout.LayoutParams layoutParams = (LayoutParams) tvCount.getLayoutParams();
-        layoutParams.height = PxUtils.dp2px(context, height);
+        layoutParams.height = PxUtils.dp2px(mContext, height);
     }
 
     /**
@@ -166,10 +172,10 @@ public class CountClickView extends LinearLayout {
      * 设置加减按钮大小
      */
     public void setBtnSize(int width, int height) {
-        ivPlus.setLayoutParams(new LinearLayout.LayoutParams(PxUtils.dp2px(context, width),
-                PxUtils.dp2px(context, height)));
-        ivMinus.setLayoutParams(new LinearLayout.LayoutParams(PxUtils.dp2px(context, width),
-                PxUtils.dp2px(context, height)));
+        ivPlus.setLayoutParams(new LinearLayout.LayoutParams(PxUtils.dp2px(mContext, width),
+                PxUtils.dp2px(mContext, height)));
+        ivMinus.setLayoutParams(new LinearLayout.LayoutParams(PxUtils.dp2px(mContext, width),
+                PxUtils.dp2px(mContext, height)));
     }
 
     /**
@@ -194,7 +200,7 @@ public class CountClickView extends LinearLayout {
      */
     public void setCountViewAttr(int bgColor, int textColor, int marginLeft, int marginRight) {
         LinearLayout.LayoutParams layoutParams = (LayoutParams) tvCount.getLayoutParams();
-        layoutParams.setMargins(PxUtils.dp2px(context, marginLeft), 0, PxUtils.dp2px(context, marginRight), 0);
+        layoutParams.setMargins(PxUtils.dp2px(mContext, marginLeft), 0, PxUtils.dp2px(mContext, marginRight), 0);
         tvCount.setBackgroundColor(getResources().getColor(bgColor));
         if (textColor != 0) {
             tvCount.setTextColor(getResources().getColor(textColor));

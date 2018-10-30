@@ -5,6 +5,7 @@ import android.content.Context;
 import com.orhanobut.logger.Logger;
 import com.tamic.novate.Novate;
 import com.tamic.novate.callback.ResponseCallback;
+import com.tamic.novate.callback.RxFileCallBack;
 
 import java.io.File;
 import java.util.List;
@@ -15,7 +16,6 @@ import java.util.List;
  */
 
 public class HttpUtils {
-    public static final String TAG = HttpUtils.class.getSimpleName();
 
     private static final int REQUEST_GET = 0;
     private static final int REQUEST_POST = 1;
@@ -26,9 +26,27 @@ public class HttpUtils {
     private HttpUtils(Context context) {
         builder = new Novate.Builder(context);
         builder.baseUrl(NetConfig.Url.getBaseUrl());
+
+        //https配置 xxx.cer放在asset目录下
+//        builder.skipSSLSocketFactory(true);//信任所有证书
+//        builder.addSSLSocketFactory(NovateHttpsFactroy.creatSSLSocketFactory(
+//                BaseApplication.getApplication().getBaseContext(), "xxx.cer"));
+
+//        builder.addHeader(headers); //添加公共请求头
+//        builder.addParameters(parameters);//公共参数
+//        builder.connectTimeout(10);  //连接时间 可以忽略
+//        builder.addCookie(false); //是否同步cooike 默认不同步
+//        builder.addCache(true);  //是否缓存 默认缓存
+//        builder.addCache(cache, cacheTime);   //自定义缓存
+//        builder.addLog(true);//是否开启log
+//        builder.cookieManager(new NovateCookieManager()); // 自定义cooike，可以忽略
+//        builder.addInterceptor(); // 自定义Interceptor
+//        builder.addNetworkInterceptor(); // 自定义NetworkInterceptor
+//        builder.proxy(proxy); //代理
+//        builder.client(client); //clent 默认不需要
     }
 
-    public static synchronized HttpUtils create(Context context) {
+    public static synchronized HttpUtils getInstance(Context context) {
         if (httpUtils == null) {
             httpUtils = new HttpUtils(context);
         }
@@ -186,7 +204,7 @@ public class HttpUtils {
      * @param callback   请求回调
      */
     private void request(int methodType, String url, RequestParam params, String tag, ResponseCallback callback) {
-        Logger.e(TAG, NetConfig.Url.getBaseUrl() + url + params.toJson());
+        Logger.e(NetConfig.Url.getBaseUrl() + url + params.toJson());
 //        builder.header("");
         switch (methodType) {
             case REQUEST_POST:
@@ -225,7 +243,7 @@ public class HttpUtils {
      */
     public void upLoadFile(String url, File file, String tag, ResponseCallback callback) {
         //使用Part 方式上传文件
-        Logger.e(TAG, NetConfig.Url.getBaseUrl() + url + file.getAbsolutePath());
+        Logger.e(NetConfig.Url.getBaseUrl() + url + file.getAbsolutePath());
         builder.build().rxUploadWithPart(url, file, callback);
     }
 
@@ -253,5 +271,19 @@ public class HttpUtils {
         builder.build().rxUploadWithPartListByFile(tag, url, files, callback);
     }
 
+    /**
+     * 文件下载
+     *
+     * @param url      文件路径
+     * @param callBack 回调
+     */
+    public void downloadFile(String url, RxFileCallBack callBack) {
+        builder.build().rxDownload(url, callBack);
+    }
+
+
+    private boolean judgeUrl(String url) {
+        return url.startsWith("http://") || url.startsWith("https://");
+    }
 
 }

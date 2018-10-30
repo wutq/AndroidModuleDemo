@@ -3,8 +3,7 @@ package com.wss.common.base;
 import android.support.annotation.CallSuper;
 import android.support.v7.widget.RecyclerView;
 
-import com.wss.common.base.adapter.BaseRcyAdapter;
-import com.wss.common.base.adapter.listener.OnRcyItemClickListener;
+import com.wss.common.listener.OnListItemClickListener;
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.widget.pulltorefresh.OnPullRefreshListener;
 import com.wss.common.widget.pulltorefresh.PullToRefreshLayout;
@@ -16,7 +15,7 @@ import butterknife.BindView;
  * 内部实现为刷新控件 PullToRefreshLayout + 列表控件 RecyclerView
  * Created by 吴天强 on 2018/10/23.
  */
-public abstract class RefreshListFragment<P extends BasePresenter> extends BaseMvpFragment<P> implements OnPullRefreshListener, OnRcyItemClickListener {
+public abstract class RefreshListFragment<P extends BasePresenter> extends BaseMvpFragment<P> implements OnPullRefreshListener, OnListItemClickListener {
 
 
     @BindView(R2.id.ptrl_list)
@@ -25,6 +24,7 @@ public abstract class RefreshListFragment<P extends BasePresenter> extends BaseM
     @BindView(R2.id.recycle_view)
     RecyclerView recyclerView;
 
+    protected RecyclerView.Adapter adapter;
 
     @Override
     protected int getLayoutId() {
@@ -34,9 +34,10 @@ public abstract class RefreshListFragment<P extends BasePresenter> extends BaseM
     @CallSuper
     @Override
     protected void initView() {
+        adapter = createAdapter();
         refreshLayout.setOnPullRefreshListener(this);
         recyclerView.setLayoutManager(getLayoutManager());
-        recyclerView.setAdapter(createAdapter());
+        recyclerView.setAdapter(adapter);
     }
 
     @CallSuper
@@ -58,5 +59,5 @@ public abstract class RefreshListFragment<P extends BasePresenter> extends BaseM
 
     protected abstract RecyclerView.LayoutManager getLayoutManager();
 
-    protected abstract BaseRcyAdapter createAdapter();
+    protected abstract RecyclerView.Adapter createAdapter();
 }

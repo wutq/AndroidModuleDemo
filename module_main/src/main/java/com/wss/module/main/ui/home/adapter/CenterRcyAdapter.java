@@ -2,62 +2,40 @@ package com.wss.module.main.ui.home.adapter;
 
 import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.wss.common.base.adapter.BaseRcyAdapter;
-import com.wss.common.base.adapter.holder.BaseRcyHolder;
-import com.wss.common.base.adapter.listener.OnRcyItemClickListener;
+import com.wss.common.base.adapter.BaseListAdapter;
+import com.wss.common.listener.OnListItemClickListener;
 import com.wss.module.main.R;
-import com.wss.module.main.R2;
 import com.wss.module.main.bean.MainBlock;
 
-import java.util.List;
+import org.byteam.superadapter.SuperViewHolder;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import java.util.List;
 
 /**
  * Describe：中间适配器
  * Created by 吴天强 on 2018/10/18.
  */
 
-public class CenterRcyAdapter extends BaseRcyAdapter<MainBlock, CenterRcyAdapter.HomeVH> {
+public class CenterRcyAdapter extends BaseListAdapter<MainBlock> {
 
 
-    public CenterRcyAdapter(Context mContext, List<MainBlock> mData, OnRcyItemClickListener listener) {
-        super(mContext, mData, listener);
+    public CenterRcyAdapter(Context context, List<MainBlock> items, int layoutResId, OnListItemClickListener listener) {
+        super(context, items, layoutResId, listener);
     }
 
     @Override
-    protected HomeVH createVH(ViewGroup parent, int viewType) {
-        return new HomeVH(View.inflate(mContext, R.layout.main_item_of_center_list, null));
-    }
-
-
-    //注意 在ViewHolder中使用ButterKnife时候 类不能是private
-    public class HomeVH extends BaseRcyHolder<MainBlock> {
-
-        @BindView(R2.id.tv_title)
-        TextView tvTitle;
-
-        @BindView(R2.id.tv_describe)
-        TextView tvDescribe;
-
-        @BindView(R2.id.iv_icon)
-        ImageView ivIcon;
-
-        HomeVH(View itemView) {
-            super(itemView, listener);
-            ButterKnife.bind(this, itemView);
-        }
-
-        @Override
-        public void bindingData(MainBlock data, int position) {
-            tvTitle.setText(data.getTitle());
-            tvDescribe.setText(data.getDescribe());
-            ivIcon.setBackgroundResource(data.getRes());
-        }
+    public void onBind(SuperViewHolder holder, int viewType, final int layoutPosition, MainBlock item) {
+        holder.setText(R.id.tv_title, item.getTitle());
+        holder.setText(R.id.tv_describe, item.getDescribe());
+        holder.setBackgroundResource(R.id.iv_icon, item.getRes());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onItemClick(layoutPosition);
+                }
+            }
+        });
     }
 }

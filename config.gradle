@@ -8,97 +8,97 @@ ext {
     isModule = false
     //版本号
     versions = [
-            applicationId               : "com.wss.amd",        //应用ID
-            versionCode                 : 1,                    //版本号
-            versionName                 : "1.0.0",              //版本名称
+            applicationId           : "com.wss.amd",        //应用ID
+            versionCode             : 1,                    //版本号
+            versionName             : "1.0.0",              //版本名称
 
-            compileSdkVersion           : 27,
-            buildToolsVersion           : "27.0.3",
-            minSdkVersion               : 17,
-            targetSdkVersion            : 23,
+            compileSdkVersion       : 27,
+            buildToolsVersion       : "27.0.3",
+            minSdkVersion           : 17,
+            targetSdkVersion        : 23,
 
-            androidSupportSdkVersion    : "27.1.1",
-            constraintLayoutVersion     : "1.1.1",
-            runnerVersion               : "1.0.1",
-            espressoVersion             : "3.0.1",
-            junitVersion                : "4.12",
-            annotationsVersion          : "24.0.0",
+            androidSupportSdkVersion: "27.1.1",
+            constraintLayoutVersion : "1.1.1",
+            runnerVersion           : "1.0.1",
+            espressoVersion         : "3.0.1",
+            junitVersion            : "4.12",
+            annotationsVersion      : "24.0.0",
 
-            multidexVersion             : "1.0.2",
-            butterknifeVersion          : "8.4.0",
-            arouterApiVersion           : "1.4.0",
-            arouterCompilerVersion      : "1.2.1",
-            arouterannotationVersion    : "1.0.4",
-            eventbusVersion             : "3.0.0",
-            novateVersion               : "1.5.5",
-            loggerVersion               : "2.2.0",
-            fastjsonVersion             : "1.1.54",
-            barlibraryVersion           : "2.3.0",
-            picassoVersion              : "2.71828",
-            bannerVersion               : "1.4.10",
-            javaxVersion                : "1.2",
-            lombokVersion               : "1.16.6",
-            greendaoVersion             : "3.2.2",
-            pickerViewVersion           : "4.1.6",
-            permissionsdispatcherVersion: "4.0.0",
+            multidexVersion         : "1.0.2",
+            butterknifeVersion      : "8.4.0",
+            arouterApiVersion       : "1.4.0",
+            arouterCompilerVersion  : "1.2.1",
+            arouterannotationVersion: "1.0.4",
+            eventbusVersion         : "3.0.0",
+            novateVersion           : "1.5.5",
+            loggerVersion           : "2.2.0",
+            fastjsonVersion         : "1.1.54",
+            barlibraryVersion       : "2.3.0",
+            picassoVersion          : "2.71828",
+            bannerVersion           : "1.4.10",
+            javaxVersion            : "1.2",
+            lombokVersion           : "1.16.6",
+            greendaoVersion         : "3.2.2",
+            pickerViewVersion       : "4.1.6",
+            superAdapterVersion     : "3.6.8",
 
     ]
-    dependencies = ["appcompat_v7"                   : "com.android.support:appcompat-v7:${versions["androidSupportSdkVersion"]}",
-                    "constraint_layout"              : "com.android.support.constraint:constraint-layout:${versions["constraintLayoutVersion"]}",
-                    "runner"                         : "com.android.support.test:runner:${versions["runnerVersion"]}",
-                    "espresso_core"                  : "com.android.support.test.espresso:espresso-core:${versions["espressoVersion"]}",
-                    "junit"                          : "junit:junit:${versions["junitVersion"]}",
-                    "support_annotations"            : "com.android.support:support-annotations:${versions["annotationsVersion"]}",
-                    "design"                         : "com.android.support:design:${versions["androidSupportSdkVersion"]}",
-                    "support-v4"                     : "com.android.support:support-v4:${versions["androidSupportSdkVersion"]}",
-                    "cardview-v7"                    : "com.android.support:cardview-v7:${versions["androidSupportSdkVersion"]}",
-                    "recyclerview-v7"                : "com.android.support:recyclerview-v7:${versions["androidSupportSdkVersion"]}",
+    dependencies = ["appcompat_v7"        : "com.android.support:appcompat-v7:${versions["androidSupportSdkVersion"]}",
+                    "constraint_layout"   : "com.android.support.constraint:constraint-layout:${versions["constraintLayoutVersion"]}",
+                    "runner"              : "com.android.support.test:runner:${versions["runnerVersion"]}",
+                    "espresso_core"       : "com.android.support.test.espresso:espresso-core:${versions["espressoVersion"]}",
+                    "junit"               : "junit:junit:${versions["junitVersion"]}",
+                    "support_annotations" : "com.android.support:support-annotations:${versions["annotationsVersion"]}",
+                    "design"              : "com.android.support:design:${versions["androidSupportSdkVersion"]}",
+                    "support-v4"          : "com.android.support:support-v4:${versions["androidSupportSdkVersion"]}",
+                    "cardview-v7"         : "com.android.support:cardview-v7:${versions["androidSupportSdkVersion"]}",
+                    "recyclerview-v7"     : "com.android.support:recyclerview-v7:${versions["androidSupportSdkVersion"]}",
 
                     //方法数超过65535解决方法64K MultiDex分包方法
-                    "multidex"                       : "com.android.support:multidex:${versions["multidexVersion"]}",
+                    "multidex"            : "com.android.support:multidex:${versions["multidexVersion"]}",
 
                     //路由
-                    "arouter_api"                    : "com.alibaba:arouter-api:${versions["arouterApiVersion"]}",
-                    "arouter_compiler"               : "com.alibaba:arouter-compiler:${versions["arouterCompilerVersion"]}",
-                    "arouter_annotation"             : "com.alibaba:arouter-annotation:${versions["arouterannotationVersion"]}",
+                    "arouter_api"         : "com.alibaba:arouter-api:${versions["arouterApiVersion"]}",
+                    "arouter_compiler"    : "com.alibaba:arouter-compiler:${versions["arouterCompilerVersion"]}",
+                    "arouter_annotation"  : "com.alibaba:arouter-annotation:${versions["arouterannotationVersion"]}",
 
                     //黄油刀
-                    "butterknife_compiler"           : "com.jakewharton:butterknife-compiler:${versions["butterknifeVersion"]}",
-                    "butterknife"                    : "com.jakewharton:butterknife:${versions["butterknifeVersion"]}",
+                    "butterknife_compiler": "com.jakewharton:butterknife-compiler:${versions["butterknifeVersion"]}",
+                    "butterknife"         : "com.jakewharton:butterknife:${versions["butterknifeVersion"]}",
 
                     //事件订阅
-                    "eventbus"                       : "org.greenrobot:eventbus:${versions["eventbusVersion"]}",
+                    "eventbus"            : "org.greenrobot:eventbus:${versions["eventbusVersion"]}",
 
                     //网络
-                    "novate"                         : "com.tamic.novate:novate:${versions["novateVersion"]}",
+                    "novate"              : "com.tamic.novate:novate:${versions["novateVersion"]}",
 
                     //日志
-                    "logger"                         : "com.orhanobut:logger:${versions["loggerVersion"]}",
+                    "logger"              : "com.orhanobut:logger:${versions["loggerVersion"]}",
 
                     //fastJson
-                    "fastjson"                       : "com.alibaba:fastjson:${versions["fastjsonVersion"]}.android",
+                    "fastjson"            : "com.alibaba:fastjson:${versions["fastjsonVersion"]}.android",
 
                     //沉浸式状态栏
-                    "barlibrary"                     : "com.gyf.barlibrary:barlibrary:${versions["barlibraryVersion"]}",
+                    "barlibrary"          : "com.gyf.barlibrary:barlibrary:${versions["barlibraryVersion"]}",
 
                     //banner
-                    "banner"                         : "com.youth.banner:banner:${versions["bannerVersion"]}",
+                    "banner"              : "com.youth.banner:banner:${versions["bannerVersion"]}",
 
                     //图片加载
-                    "picasso"                        : "com.squareup.picasso:picasso:${versions["picassoVersion"]}",
+                    "picasso"             : "com.squareup.picasso:picasso:${versions["picassoVersion"]}",
 
                     //lombok
-                    "lombokJavax"                    : "javax.annotation:javax.annotation-api:${versions["javaxVersion"]}",
-                    "lombok"                         : "org.projectlombok:lombok:${versions["lombokVersion"]}",
+                    "lombokJavax"         : "javax.annotation:javax.annotation-api:${versions["javaxVersion"]}",
+                    "lombok"              : "org.projectlombok:lombok:${versions["lombokVersion"]}",
 
                     //数据库
-                    "greenDao"                       : "org.greenrobot:greendao:${versions["greendaoVersion"]}",
+                    "greenDao"            : "org.greenrobot:greendao:${versions["greendaoVersion"]}",
 
                     //时间,地址,条件选择器
-                    "pickerView"                     : "com.contrarywind:Android-PickerView:${versions["pickerViewVersion"]}",
-                    //6.0权限管理
-                    "permissionsdispatcher"          : "com.github.hotchemi:permissionsdispatcher:${versions["permissionsdispatcherVersion"]}",
-                    "permissionsdispatcher_processor": "com.github.hotchemi:permissionsdispatcher-processor:${versions["permissionsdispatcherVersion"]}",
+                    "pickerView"          : "com.contrarywind:Android-PickerView:${versions["pickerViewVersion"]}",
+
+                    //万能Adapter
+                    "superAdapter"        : "org.byteam.superadapter:superadapter:${versions["superAdapterVersion"]}",
 
 //                    //图片缩放
 //                    "photoview"                      : "com.github.chrisbanes.photoview:library:1.2.4",

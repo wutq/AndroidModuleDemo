@@ -5,8 +5,8 @@ import android.support.v7.widget.RecyclerView;
 
 import com.wss.common.activity.WebViewActivity;
 import com.wss.common.base.RefreshListActivity;
-import com.wss.common.base.adapter.BaseRcyAdapter;
 import com.wss.common.utils.ToastUtils;
+import com.wss.module.main.R;
 import com.wss.module.main.bean.Article;
 import com.wss.module.main.ui.refresh.adapter.ArticleAdapter;
 import com.wss.module.main.ui.refresh.mvp.ArticlePresenter;
@@ -23,7 +23,6 @@ import java.util.List;
 public class ArticleListActivity extends RefreshListActivity<ArticlePresenter> implements IArticleView {
 
 
-    private BaseRcyAdapter adapter;
     private List<Article> data = new ArrayList<>();
     private int page = 0;
 
@@ -57,9 +56,8 @@ public class ArticleListActivity extends RefreshListActivity<ArticlePresenter> i
     }
 
     @Override
-    protected BaseRcyAdapter createAdapter() {
-        adapter = new ArticleAdapter(mContext, data, this);
-        return adapter;
+    protected RecyclerView.Adapter createAdapter() {
+        return new ArticleAdapter(mContext, data, R.layout.main_item_of_article_list, this);
     }
 
 
@@ -77,11 +75,6 @@ public class ArticleListActivity extends RefreshListActivity<ArticlePresenter> i
     @Override
     protected ArticlePresenter createPresenter() {
         return new ArticlePresenter();
-    }
-
-    @Override
-    public void onItemClick(int position) {
-        WebViewActivity.actionStart(mContext, data.get(position).getLink());
     }
 
     @Override
@@ -108,5 +101,10 @@ public class ArticleListActivity extends RefreshListActivity<ArticlePresenter> i
     protected void onEmptyViewClick() {
         super.onEmptyViewClick();
         initData();
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        WebViewActivity.actionStart(mContext, data.get(position).getLink());
     }
 }

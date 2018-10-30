@@ -6,14 +6,12 @@
 
     <TextView
         android:id="@+id/tv_text"
+        style="@style/TextStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="main2222222" />
+        android:layout_height="50dp"
+        android:gravity="center" />
 
-    <Button
-        android:id="@+id/btn_open"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="跳转" />
+    <View style="@style/HorizontalLine" />
+
 
 </LinearLayout>

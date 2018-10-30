@@ -25,7 +25,7 @@ public class LoadingActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        if (!UserUtils.create().isFirstBoot()) {
+//        if (!UserUtils.getInstance().isFirstBoot()) {
 //            GuideActivity.actionStart(mContext);
 //            finish();
 //        } else {

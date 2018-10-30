@@ -15,7 +15,7 @@ import com.wss.common.net.HttpUtils;
 public class HomeModule implements IBaseModule {
 
     void getBanner(Context context, ResponseCallback callback) {
-        HttpUtils.create(context)
+        HttpUtils.getInstance(context)
                 .getRequest(Api.GET_BANNER_LIST, callback);
     }
 

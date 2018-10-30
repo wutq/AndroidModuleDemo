@@ -44,6 +44,33 @@
     <declare-styleable name="LVCircularRing">
         <attr name="bgColor" format="color" />
         <attr name="barColor" format="color" />
+    </declare-styleable>
 
+    <!--横向多功能View封装-->
+    <declare-styleable name="MultipleItemView">
+        <attr name="leftTextColor" format="color" />
+        <attr name="leftIcon" format="reference" />
+        <attr name="rightTextColor" format="color" />
+        <attr name="rightIcon" format="reference" />
+        <attr name="leftText" format="string" />
+        <attr name="rightText" format="string" />
+        <attr name="showTopLine" format="boolean" />
+        <attr name="showBottomLine" format="boolean" />
+        <attr name="showLeftIcon" format="boolean" />
+        <attr name="showRightIcon" format="boolean" />
+        <attr name="showEdtText" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="ObserverButton">
+        <!--默认背景-->
+        <attr name="defaultBgColor" format="color|reference" />
+        <attr name="defaultBgResource" format="color|reference" />
+        <!--可以点击的背景-->
+        <attr name="pressBgColor" format="color|reference" />
+        <attr name="pressBgResource" format="color|reference" />
+        <!--默认字体颜色-->
+        <attr name="defaultTextColor" format="color" />
+        <!--可以点击的字体颜色-->
+        <attr name="pressTextColor" format="color" />
     </declare-styleable>
 </resources>

@@ -2,62 +2,41 @@ package com.wss.module.market.main.adapter;
 
 import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.wss.common.base.adapter.BaseRcyAdapter;
-import com.wss.common.base.adapter.holder.BaseRcyHolder;
-import com.wss.common.base.adapter.listener.OnRcyItemClickListener;
+import com.wss.common.base.adapter.BaseListAdapter;
+import com.wss.common.listener.OnListItemClickListener;
 import com.wss.common.utils.ImageUtils;
 import com.wss.module.market.R;
-import com.wss.module.market.R2;
 import com.wss.module.market.bean.MarketInfo;
 
-import java.util.List;
+import org.byteam.superadapter.SuperViewHolder;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import java.util.List;
 
 /**
  * Describe：商场适配器
  * Created by 吴天强 on 2018/10/19.
  */
 
-public class MarketMainAdapter extends BaseRcyAdapter<MarketInfo, MarketMainAdapter.MarketMainVH> {
+public class MarketMainAdapter extends BaseListAdapter<MarketInfo> {
 
-
-    public MarketMainAdapter(Context mContext, List<MarketInfo> mData, OnRcyItemClickListener listener) {
-        super(mContext, mData, listener);
+    public MarketMainAdapter(Context context, List<MarketInfo> items, int layoutResId, OnListItemClickListener listener) {
+        super(context, items, layoutResId, listener);
     }
 
     @Override
-    protected MarketMainVH createVH(ViewGroup parent, int viewType) {
-        return new MarketMainVH(View.inflate(mContext, R.layout.market_item_of_market_list, null));
-    }
-
-    public class MarketMainVH extends BaseRcyHolder<MarketInfo> {
-
-        @BindView(R2.id.iv_img)
-        ImageView ivImg;
-
-        @BindView(R2.id.tv_title)
-        TextView tvTitle;
-
-        @BindView(R2.id.tv_price)
-        TextView tvPrice;
-
-
-        MarketMainVH(View itemView) {
-            super(itemView, listener);
-            ButterKnife.bind(this, itemView);
-        }
-
-        @Override
-        public void bindingData(MarketInfo data, int position) {
-            ImageUtils.loadImage(mContext, data.getImg(), ivImg);
-            tvTitle.setText(data.getTitle());
-            tvPrice.setText(data.getPrice());
-        }
+    public void onBind(SuperViewHolder holder, int viewType, final int layoutPosition, MarketInfo item) {
+        ImageUtils.loadImage(getContext(), item.getImg(), (ImageView) holder.findViewById(R.id.iv_img));
+        holder.setText(R.id.tv_title, item.getTitle());
+        holder.setText(R.id.tv_price, item.getPrice());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onItemClick(layoutPosition);
+                }
+            }
+        });
     }
 }

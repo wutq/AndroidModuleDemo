@@ -1,6 +1,6 @@
 <resources>
     <!--首页tab style-->
-    <style name="main_tab_style">
+    <style name="MainTabStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@android:color/transparent</item>
@@ -12,4 +12,12 @@
         <item name="android:gravity">center</item>
     </style>
 
+
+    <style name="ButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/blue</item>
+        <item name="android:textColor">@color/white</item>
+
+    </style>
 </resources>

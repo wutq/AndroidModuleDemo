@@ -32,7 +32,7 @@ public class ActivityManage {
      *
      * @param activity activity
      */
-    public void removeActivityty(Activity activity) {
+    public void removeActivity(Activity activity) {
         if (activity != null) {
             allActivities.remove(activity);
         }

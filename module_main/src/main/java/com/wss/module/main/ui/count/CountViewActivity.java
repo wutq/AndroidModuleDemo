@@ -43,6 +43,6 @@ public class CountViewActivity extends ActionBarActivity {
                 R.drawable.main_stepper_add, R.drawable.main_stepper_add_disable);
         ccvCust.setBtnParentBg(R.color.white);
         ccvCust.setBtnSize(20, 20);
-        ccvCust.setCountViewAttr(R.color.white_light, 0, 4, 4);
+        ccvCust.setCountViewAttr(R.color.transparent, 0, 4, 4);
     }
 }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.wss.common.widget.MultipleItemView
+            android:id="@+id/miv_01"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            app:leftText="默认样式"
+            app:rightText="默认样式" />
+
+        <com.wss.common.widget.MultipleItemView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_of_gradient"
+            app:leftText="我的订单"
+            app:leftTextColor="@color/white"
+            app:showLeftIcon="false" />
+
+        <com.wss.common.widget.MultipleItemView
+            android:id="@+id/miv_02"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/blue"
+            app:leftIcon="@drawable/main_icon_18"
+            app:leftText="我的大哥"
+            app:leftTextColor="@color/white"
+            app:rightText="春哥"
+            app:rightTextColor="@color/orange" />
+
+        <com.wss.common.widget.MultipleItemView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            app:leftText="两头都没图"
+            app:rightText="我也没有"
+            app:showLeftIcon="false"
+            app:showRightIcon="false" />
+
+        <com.wss.common.widget.MultipleItemView
+            android:id="@+id/miv_03"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:leftText="图变大" />
+
+        <com.wss.common.widget.MultipleItemView
+            android:id="@+id/miv_04"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            app:leftText="图文之间距离变大" />
+
+        <com.wss.common.widget.MultipleItemView
+            android:id="@+id/miv_05"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:leftText="padding变大" />
+
+        <com.wss.common.widget.MultipleItemView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            app:leftText="输入框"
+            app:showEdtText="true" />
+    </LinearLayout>
+</ScrollView>

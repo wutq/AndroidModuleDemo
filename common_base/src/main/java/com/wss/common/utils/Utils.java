@@ -6,6 +6,8 @@ import android.content.res.AssetManager;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Describe：工具类
@@ -15,6 +17,13 @@ import java.io.InputStreamReader;
 public class Utils {
 
 
+    /**
+     * 读取 asset下的文件
+     *
+     * @param context  context
+     * @param fileName fileName
+     * @return
+     */
     public static String getAssetFileData(Context context, String fileName) {
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -30,6 +39,37 @@ public class Utils {
             e.printStackTrace();
         }
         return stringBuilder.toString();
+    }
+
+    /**
+     * 验证邮箱
+     *
+     * @param email email字符串
+     * @return 如果是邮件地址 返回 true
+     */
+    public static boolean isEmail(String email) {
+        boolean flag = false;
+        try {
+            String check = "^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+            Pattern regex = Pattern.compile(check);
+            Matcher matcher = regex.matcher(email);
+            flag = matcher.matches();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
+    /**
+     * 判断是否为纯数字
+     *
+     * @param str str
+     * @return boolean
+     */
+    public static boolean isNumber(String str) {
+        Pattern pattern = Pattern.compile("[0-9]*");
+        Matcher isNum = pattern.matcher(str);
+        return isNum.matches();
     }
 
 }

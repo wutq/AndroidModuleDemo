@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * 刷新状态
  */
-class State {
+interface State {
 
 
     @IntDef({REFRESH, LOAD_MORE})
@@ -17,6 +17,6 @@ class State {
     @interface REFRESH_STATE {
     }
 
-    static final int REFRESH = 10;
-    static final int LOAD_MORE = 11;
+    int REFRESH = 10;
+    int LOAD_MORE = 11;
 }

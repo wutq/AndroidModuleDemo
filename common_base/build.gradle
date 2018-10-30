@@ -77,8 +77,8 @@ dependencies {
     api rootProject.ext.dependencies["lombokJavax"]
     //时间 日期  地址 条件选中器
     api rootProject.ext.dependencies["pickerView"]
-    //6.0权限
-//    api rootProject.ext.dependencies["permissionsdispatcher"]
-//    api rootProject.ext.dependencies["permissionsdispatcher_processor"]
+    //万能Adapter
+    api rootProject.ext.dependencies["superAdapter"]
+
 
 }

@@ -16,7 +16,7 @@ public class ArticleModule implements IBaseModule {
 
 
     void getArticleList(Context context, int page, ResponseCallback callback) {
-        HttpUtils.create(context)
+        HttpUtils.getInstance(context)
                 .getRequest(String.format(Api.GET_ARTICLE_LIST, page), callback);
     }
 }

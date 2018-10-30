@@ -1,7 +1,11 @@
 package com.wss.common.base;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -10,12 +14,15 @@ import android.view.ViewStub;
 import android.widget.TextView;
 
 import com.gyf.barlibrary.ImmersionBar;
+import com.orhanobut.logger.Logger;
 import com.wss.common.bean.Event;
 import com.wss.common.utils.EventBusUtils;
 import com.wss.common.widget.dialog.LoadingDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.Arrays;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -78,7 +85,7 @@ public abstract class BaseActivity extends FragmentActivity {
             mImmersionBar.destroy();
         }
         //将Activity从管理器移除
-        BaseApplication.getApplication().getActivityManage().removeActivityty(this);
+        BaseApplication.getApplication().getActivityManage().removeActivity(this);
     }
 
     //***************************************空页面方法*************************************
@@ -121,6 +128,36 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     //***************************************空页面方法*********************************
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Logger.e("permissions:" + Arrays.toString(permissions) + " grantResults:" + Arrays.toString(grantResults));
+
+        //如果有未授权权限则跳转设置页面
+        if (!requestPermissionsResult(grantResults)) {
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.setData(Uri.parse("package:" + getPackageName()));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+
+
+    }
+
+    /**
+     * 判断授权结果
+     */
+    private boolean requestPermissionsResult(int[] grantResults) {
+        for (int code : grantResults) {
+            if (code == -1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     /**
      * 沉浸栏颜色

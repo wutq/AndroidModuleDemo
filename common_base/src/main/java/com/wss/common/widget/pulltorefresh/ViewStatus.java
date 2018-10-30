@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * 加载状态
  */
-class ViewStatus {
+interface ViewStatus {
 
     @IntDef({CONTENT_STATUS, LOADING_STATUS, EMPTY_STATUS, ERROR_STATUS})
     @Retention(RetentionPolicy.SOURCE)
@@ -17,9 +17,9 @@ class ViewStatus {
 
     }
 
-    static final int CONTENT_STATUS = 0;
-    static final int LOADING_STATUS = 1;
-    static final int EMPTY_STATUS = 2;
-    static final int ERROR_STATUS = 3;
+    int CONTENT_STATUS = 0;
+    int LOADING_STATUS = 1;
+    int EMPTY_STATUS = 2;
+    int ERROR_STATUS = 3;
 
 }

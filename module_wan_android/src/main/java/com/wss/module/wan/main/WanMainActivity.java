@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.wss.common.activity.WebViewActivity;
 import com.wss.common.base.ActionBarActivity;
-import com.wss.common.base.adapter.listener.OnRcyItemClickListener;
+import com.wss.common.listener.OnListItemClickListener;
 import com.wss.common.constants.ARouterConfig;
 import com.wss.common.utils.ToastUtils;
 import com.wss.module.wan.R;
@@ -26,7 +26,7 @@ import butterknife.BindView;
  * Created by wss on 2018/10/18.
  */
 @Route(path = ARouterConfig.WAN_MAIN_ACTIVITY)
-public class WanMainActivity extends ActionBarActivity<WanMainPresenter> implements IWanMainView, OnRcyItemClickListener {
+public class WanMainActivity extends ActionBarActivity<WanMainPresenter> implements IWanMainView, OnListItemClickListener {
 
     @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
@@ -45,7 +45,7 @@ public class WanMainActivity extends ActionBarActivity<WanMainPresenter> impleme
     @Override
     protected void initView() {
         setTitleText("文章列表");
-        adapter = new ArticleAdapter(mContext, articleList, this);
+        adapter = new ArticleAdapter(mContext, articleList,R.layout.wan_item_of_article_list, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(adapter);
         presenter.getArticleList(page);

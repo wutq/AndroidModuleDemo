@@ -2,7 +2,7 @@
 
 
     <!--应用主题-->
-    <style name="AdmTheme" parent="@android:style/Theme.NoTitleBar"></style>
+    <style name="AdmTheme" parent="@android:style/Theme.NoTitleBar" />
 
 
     <style name="Theme.AppStartLoadTranslucent" parent="android:Theme">
@@ -28,7 +28,9 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:background">@color/transparent</item>
     </style>
+
 
     <!--Loading Dialog-->
     <style name="LoadingDialog" parent="android:style/Theme.Dialog">
@@ -44,4 +46,28 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
+    <style name="AnimSheetBottom" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/anim_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_bottom_out</item>
+    </style>
+    <!--拍照对话框-->
+    <style name="ActionSheetDialogStyle" parent="@android:style/Theme.Dialog">
+        <!-- 背景透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 浮于Activity之上 -->
+        <!--<item name="android:windowIsFloating">true</item>-->
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- Dialog以外的区域模糊效果 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- Dialog进入及退出动画 -->
+        <item name="android:windowAnimationStyle">@style/AnimSheetBottom</item>
+    </style>
+
 </resources>

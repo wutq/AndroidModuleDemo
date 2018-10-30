@@ -5,8 +5,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.wss.common.base.ActionBarActivity;
-import com.wss.common.base.adapter.BaseRcyAdapter;
-import com.wss.common.base.adapter.listener.OnRcyItemClickListener;
+import com.wss.common.listener.OnListItemClickListener;
 import com.wss.common.bean.Event;
 import com.wss.common.constants.ARouterConfig;
 import com.wss.common.constants.EventConstant;
@@ -30,12 +29,12 @@ import butterknife.BindView;
 
 @Route(path = ARouterConfig.MARKET_MAIN_ACTIVITY)
 public class MarketMainActivity extends ActionBarActivity<MarketMainPresenter> implements IMarketMainView,
-        OnRcyItemClickListener {
+        OnListItemClickListener {
 
     @BindView(R2.id.rv_list)
     RecyclerView recyclerView;
 
-    private BaseRcyAdapter adapter;
+    private MarketMainAdapter adapter;
     private List<MarketInfo> marketInfoList = new ArrayList<>();
 
     @Override
@@ -51,7 +50,7 @@ public class MarketMainActivity extends ActionBarActivity<MarketMainPresenter> i
     @Override
     protected void initView() {
         setTitleText("商城");
-        adapter = new MarketMainAdapter(mContext, marketInfoList, this);
+        adapter = new MarketMainAdapter(mContext, marketInfoList, R.layout.market_item_of_market_list, this);
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
         recyclerView.setAdapter(adapter);
         presenter.getData();

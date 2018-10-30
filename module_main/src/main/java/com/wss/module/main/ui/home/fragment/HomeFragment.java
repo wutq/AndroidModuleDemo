@@ -7,8 +7,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.wss.common.activity.WebViewActivity;
 import com.wss.common.base.BaseActivity;
 import com.wss.common.base.BaseMvpFragment;
-import com.wss.common.base.adapter.BaseRcyAdapter;
-import com.wss.common.base.adapter.listener.OnRcyItemClickListener;
+import com.wss.common.listener.OnListItemClickListener;
 import com.wss.common.utils.ImageUtils;
 import com.wss.common.utils.ToastUtils;
 import com.wss.module.main.R;
@@ -31,7 +30,7 @@ import butterknife.BindView;
  * Created by 吴天强 on 2018/10/17.
  */
 
-public class HomeFragment extends BaseMvpFragment<HomePresenter> implements IHomeView, OnRcyItemClickListener {
+public class HomeFragment extends BaseMvpFragment<HomePresenter> implements IHomeView, OnListItemClickListener {
 
     @BindView(R2.id.banner)
     Banner banner;
@@ -40,7 +39,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements IHom
     RecyclerView recyclerView;
 
 
-    private BaseRcyAdapter adapter;
+    private HomeRcyAdapter adapter;
     private List<MainBlock> data = new ArrayList<>();
     private List<BannerInfo> bannerList = new ArrayList<>();
 
@@ -59,7 +58,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements IHom
             }
         });
 
-        adapter = new HomeRcyAdapter(mContext, data, this);
+        adapter = new HomeRcyAdapter(mContext, data, R.layout.main_item_of_block_list, this);
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
         recyclerView.setAdapter(adapter);
 

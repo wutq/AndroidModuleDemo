@@ -46,7 +46,7 @@
 
             <RadioButton
                 android:id="@+id/rb_main"
-                style="@style/main_tab_style"
+                style="@style/MainTabStyle"
                 android:checked="true"
                 android:drawablePadding="-3dp"
                 android:drawableTop="@drawable/main_tab_home"
@@ -54,14 +54,14 @@
 
             <RadioButton
                 android:id="@+id/rb_center"
-                style="@style/main_tab_style"
+                style="@style/MainTabStyle"
                 android:drawablePadding="1dp"
                 android:drawableTop="@drawable/main_tab_center"
                 android:text="@string/main_tab_center" />
 
             <RadioButton
                 android:id="@+id/rb_user"
-                style="@style/main_tab_style"
+                style="@style/MainTabStyle"
                 android:drawablePadding="-3dp"
                 android:drawableTop="@drawable/main_tab_user"
                 android:text="@string/main_tab_user" />

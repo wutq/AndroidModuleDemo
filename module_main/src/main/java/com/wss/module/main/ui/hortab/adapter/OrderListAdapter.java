@@ -2,19 +2,19 @@ package com.wss.module.main.ui.hortab.adapter;
 
 import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.wss.common.base.adapter.BaseRcyAdapter;
-import com.wss.common.base.adapter.holder.BaseRcyHolder;
-import com.wss.common.base.adapter.listener.OnRcyItemClickListener;
+import com.wss.common.base.adapter.BaseListAdapter;
+import com.wss.common.listener.OnListItemClickListener;
 import com.wss.common.utils.ImageUtils;
 import com.wss.module.main.R;
 import com.wss.module.main.R2;
 import com.wss.module.main.bean.Goods;
 import com.wss.module.main.bean.Order;
+
+import org.byteam.superadapter.SuperViewHolder;
 
 import java.util.List;
 
@@ -26,54 +26,37 @@ import butterknife.ButterKnife;
  * Created by 吴天强 on 2018/10/23.
  */
 
-public class OrderListAdapter extends BaseRcyAdapter<Order, OrderListAdapter.OrderVH> {
+public class OrderListAdapter extends BaseListAdapter<Order> {
 
 
-    public OrderListAdapter(Context mContext, List<Order> mData, OnRcyItemClickListener listener) {
-        super(mContext, mData, listener);
+    public OrderListAdapter(Context context, List<Order> items, int layoutResId, OnListItemClickListener listener) {
+        super(context, items, layoutResId, listener);
     }
+
 
     @Override
-    protected OrderVH createVH(ViewGroup parent, int viewType) {
-        return new OrderVH(View.inflate(mContext, R.layout.main_item_of_order_list, null), listener);
-    }
-
-    public class OrderVH extends BaseRcyHolder<Order> {
-
-        @BindView(R2.id.tv_date)
-        TextView tvDate;
-
-        @BindView(R2.id.tv_state)
-        TextView tvState;
-
-        @BindView(R2.id.tv_total)
-        TextView tvTotal;
-
-        @BindView(R2.id.layout_goods)
-        LinearLayout layout;
-
-
-        OrderVH(View itemView, OnRcyItemClickListener listener) {
-            super(itemView, listener);
-            ButterKnife.bind(this, itemView);
+    public void onBind(SuperViewHolder holder, int viewType, final int layoutPosition, Order item) {
+        holder.setText(R.id.tv_date, item.getOrderDate());
+        holder.setText(R.id.tv_state, getState(item.getOrderState()));
+        LinearLayout layout = holder.findViewById(R.id.layout_goods);
+        layout.removeAllViews();
+        int sum = 0;
+        for (Goods goods : item.getGoodsList()) {
+            View childView = View.inflate(getContext(), R.layout.main_item_of_order_goods_list, null);
+            new GoodsVH(childView).bindingData(goods);
+            layout.addView(childView);
+            sum += goods.getGoodsNum();
         }
-
-        @Override
-        public void bindingData(Order data, int position) {
-            tvDate.setText(data.getOrderDate());
-            tvState.setText(getState(data.getOrderState()));
-            layout.removeAllViews();
-            int sum = 0;
-            for (Goods goods : data.getGoodsList()) {
-                View childView = View.inflate(mContext, R.layout.main_item_of_order_goods_list, null);
-                new GoodsVH(childView).bindingData(goods);
-                layout.addView(childView);
-                sum += goods.getGoodsNum();
+        holder.setText(R.id.tv_total, String.format("共%s种商品，合计：¥%s", sum, item.getOrderTotal()));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onItemClick(layoutPosition);
+                }
             }
-            tvTotal.setText(String.format("共%s种商品，合计：¥%s", sum, data.getOrderTotal()));
-        }
+        });
     }
-
 
     public class GoodsVH {
 
@@ -94,7 +77,7 @@ public class OrderListAdapter extends BaseRcyAdapter<Order, OrderListAdapter.Ord
         }
 
         void bindingData(Goods goods) {
-            ImageUtils.loadImage(mContext, goods.getGoodsImg(), ivGoods);
+            ImageUtils.loadImage(getContext(), goods.getGoodsImg(), ivGoods);
             tvName.setText(goods.getGoodsName());
             tvPrice.setText(String.format("¥%s", goods.getGoodsPrice()));
             tvNum.setText(String.format("x%s", goods.getGoodsNum()));

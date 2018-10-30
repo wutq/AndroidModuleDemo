@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.wss.common.widget.FlowGroupView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/main_bg_of_orange_gradient"
+        android:padding="4dp"
+        android:text="哇哈哈哈哈"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/main_bg_of_green_gradient"
+        android:padding="4dp"
+        android:text="x"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/main_bg_of_orange_gradient"
+        android:padding="4dp"
+        android:text="新疆维吾尔自治区"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/main_bg_of_green_gradient"
+        android:padding="4dp"
+        android:text="长河落日圆"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/main_bg_of_orange_gradient"
+        android:padding="4dp"
+        android:text="哦。是吗"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/main_bg_of_green_gradient"
+        android:padding="4dp"
+        android:text="像水一样流动"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/main_bg_of_orange_gradient"
+        android:padding="4dp"
+        android:text="1233333333"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/main_bg_of_green_gradient"
+        android:padding="4dp"
+        android:text="必须先吃是程序下啊啊大厦实打实"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+</com.wss.common.widget.FlowGroupView>

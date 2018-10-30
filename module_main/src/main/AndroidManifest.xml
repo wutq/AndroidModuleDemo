@@ -19,5 +19,9 @@
         <activity android:name=".ui.refresh.ArticleListActivity" />
         <activity android:name=".ui.selector.SelectorActivity" />
         <activity android:name=".ui.count.CountViewActivity" />
+        <activity android:name=".ui.item.MultipleItemActivity" />
+        <activity android:name=".ui.observer.ObserverButtonActivity" />
+        <activity android:name=".ui.dialog.DialogActivity" />
+        <activity android:name=".ui.flow.FlowLayoutActivity" />
     </application>
 </manifest>

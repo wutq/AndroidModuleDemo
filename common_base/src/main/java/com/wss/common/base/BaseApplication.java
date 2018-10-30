@@ -11,6 +11,7 @@ import com.orhanobut.logger.LogcatLogStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
 import com.wss.common.manage.ActivityManage;
+import com.wss.common.manage.CrashHandlerManage;
 
 /**
  * Describe：基础Application所有需要模块化开发的module都需要继承自BaseApplication
@@ -38,7 +39,19 @@ public class BaseApplication extends Application {
         activityManage = new ActivityManage();
         initARouter();
         initLogger();
+        initCrashManage();
     }
+
+    /**
+     * 初始化崩溃管理器
+     */
+    private void initCrashManage() {
+        if (!BuildConfig.DEBUG) {
+            CrashHandlerManage.getInstance()
+                    .init(getApplicationContext());
+        }
+    }
+
 
     /**
      * 初始化日志打印框架

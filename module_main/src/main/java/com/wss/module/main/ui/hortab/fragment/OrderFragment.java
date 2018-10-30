@@ -4,13 +4,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.wss.common.base.RefreshListFragment;
-import com.wss.common.base.adapter.BaseRcyAdapter;
 import com.wss.common.bean.HorizontalTabTitle;
 import com.wss.common.utils.ToastUtils;
+import com.wss.module.main.R;
 import com.wss.module.main.bean.Order;
 import com.wss.module.main.ui.hortab.adapter.OrderListAdapter;
 import com.wss.module.main.ui.hortab.mvp.IOrderView;
 import com.wss.module.main.ui.hortab.mvp.OrderPresenter;
+
+import org.byteam.superadapter.SuperViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,6 @@ public class OrderFragment extends RefreshListFragment<OrderPresenter> implement
     private int page = 0;
     private HorizontalTabTitle title;
     private List<Order> orderList = new ArrayList<>();
-    private OrderListAdapter adapter;
 
     @Override
     public void setFragmentData(Object data) {
@@ -93,9 +94,8 @@ public class OrderFragment extends RefreshListFragment<OrderPresenter> implement
     }
 
     @Override
-    protected BaseRcyAdapter createAdapter() {
-        adapter = new OrderListAdapter(mContext, orderList, this);
-        return adapter;
+    protected RecyclerView.Adapter<SuperViewHolder> createAdapter() {
+        return new OrderListAdapter(mContext, orderList, R.layout.main_item_of_order_list, this);
     }
 
     @Override

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edt_name"
+            style="@style/TextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/transparent"
+            android:hint="请输入用户名"
+            android:paddingLeft="10dp" />
+
+        <View style="@style/HorizontalLine" />
+
+        <EditText
+            android:id="@+id/edt_pwd"
+            style="@style/TextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/transparent"
+            android:hint="请输入密码"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp" />
+
+        <View style="@style/HorizontalLine" />
+
+        <EditText
+            android:id="@+id/edt_confirm"
+            style="@style/TextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/transparent"
+            android:hint="请输入确认密码"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp" />
+
+        <View style="@style/HorizontalLine" />
+
+        <EditText
+            android:id="@+id/edt_age"
+            style="@style/TextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/transparent"
+            android:hint="请输入年龄"
+            android:inputType="number"
+            android:paddingLeft="10dp" />
+
+        <View style="@style/HorizontalLine" />
+    </LinearLayout>
+
+    <com.wss.common.widget.ObserverButton
+        android:id="@+id/ob_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="30dp"
+        android:gravity="center"
+        android:text="注册"
+        android:textColor="@color/black"
+        app:defaultBgResource="@drawable/corner_gray_shape"
+        app:pressBgResource="@drawable/main_bg_of_orange_gradient" />
+
+</LinearLayout>
