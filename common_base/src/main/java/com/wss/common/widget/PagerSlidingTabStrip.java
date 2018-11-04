@@ -64,6 +64,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
     private boolean textAllCaps = true;
     private boolean bold = false;//是否加粗
     private boolean topLine = true;//是否显示顶部横向
+    private boolean bottomLine = true;//是否显示底部横向
 
     private int scrollOffset = 52;
     private int indicatorHeight = 4;
@@ -146,6 +147,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
                 bold);
         topLine = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsHasTopLine,
                 topLine);
+        bottomLine = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsHasBottomLine,
+                bottomLine);
         dividerPadding = a.getDimensionPixelSize(
                 R.styleable.PagerSlidingTabStrip_pstsDividerPadding,
                 dividerPadding);
@@ -397,9 +400,10 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
             canvas.drawRect(0, 0, tabsContainer.getWidth(),
                     underlineHeight, rectPaint);
         }
-        canvas.drawRect(0, height - underlineHeight, tabsContainer.getWidth(),
-                height, rectPaint);
-
+        if (bottomLine) {
+            canvas.drawRect(0, height - underlineHeight, tabsContainer.getWidth(),
+                    height, rectPaint);
+        }
         // draw divider
 
         dividerPaint.setColor(dividerColor);

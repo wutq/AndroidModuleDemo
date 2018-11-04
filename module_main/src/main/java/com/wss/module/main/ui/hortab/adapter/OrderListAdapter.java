@@ -77,7 +77,7 @@ public class OrderListAdapter extends BaseListAdapter<Order> {
         }
 
         void bindingData(Goods goods) {
-            ImageUtils.loadImage(getContext(), goods.getGoodsImg(), ivGoods);
+            ImageUtils.loadImage(ivGoods, goods.getGoodsImg());
             tvName.setText(goods.getGoodsName());
             tvPrice.setText(String.format("¥%s", goods.getGoodsPrice()));
             tvNum.setText(String.format("x%s", goods.getGoodsNum()));

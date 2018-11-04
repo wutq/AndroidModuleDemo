@@ -2,6 +2,13 @@
 <resources>
 
     <!--水平滑动Tab自定义属性-->
+    <declare-styleable name="PullToRefreshLayout">
+        <attr name="view_error" format="reference" />
+        <attr name="view_empty" format="reference" />
+        <attr name="view_loading" format="reference" />
+    </declare-styleable>
+
+    <!--下拉 上拉刷新控件-->
     <declare-styleable name="PagerSlidingTabStrip">
         <!--下方 指示线条器颜色-->
         <attr name="pstsIndicatorColor" format="color" />
@@ -19,6 +26,8 @@
         <attr name="pstsBold" format="boolean" />
         <!--是否显示顶部横线-->
         <attr name="pstsHasTopLine" format="boolean" />
+        <!--是否显示底部横线-->
+        <attr name="pstsHasBottomLine" format="boolean" />
 
         <attr name="pstsDividerPadding" format="dimension" />
         <!--指示器高度-->
@@ -28,16 +37,11 @@
         <attr name="pstsTabPaddingLeftRight" format="dimension" />
         <attr name="pstsScrollOffset" format="dimension" />
         <attr name="pstsShouldExpand" format="boolean" />
+        <!--所有文字是否转大写-->
         <attr name="pstsTextAllCaps" format="boolean" />
         <attr name="pstsScaleZoomMax" format="float" />
+        <!--滑动是是否平滑滚动-->
         <attr name="pstsSmoothScrollWhenClickTab" format="boolean" />
-    </declare-styleable>
-
-    <!--下拉 上拉刷新控件-->
-    <declare-styleable name="PullToRefreshLayout">
-        <attr name="view_error" format="reference" />
-        <attr name="view_empty" format="reference" />
-        <attr name="view_loading" format="reference" />
     </declare-styleable>
 
     <!--自定义加载框-->
@@ -73,4 +77,14 @@
         <!--可以点击的字体颜色-->
         <attr name="pressTextColor" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="FlowLayout">
+        <attr name="max_select" format="integer" />
+        <attr name="tag_gravity">
+            <enum name="left" value="-1" />
+            <enum name="center" value="0" />
+            <enum name="right" value="1" />
+        </attr>
+    </declare-styleable>
+
 </resources>

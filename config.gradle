@@ -33,9 +33,9 @@ ext {
             novateVersion           : "1.5.5",
             loggerVersion           : "2.2.0",
             fastjsonVersion         : "1.1.54",
-            barlibraryVersion       : "2.3.0",
+            immersionbarVersion     : "2.3.2-beta01",
             picassoVersion          : "2.71828",
-            bannerVersion           : "1.4.10",
+            bannerVersion           : "2.1.4",
             javaxVersion            : "1.2",
             lombokVersion           : "1.16.6",
             greendaoVersion         : "3.2.2",
@@ -79,10 +79,10 @@ ext {
                     "fastjson"            : "com.alibaba:fastjson:${versions["fastjsonVersion"]}.android",
 
                     //沉浸式状态栏
-                    "barlibrary"          : "com.gyf.barlibrary:barlibrary:${versions["barlibraryVersion"]}",
+                    "immersionbar"        : "com.gyf.immersionbar:immersionbar:${versions["immersionbarVersion"]}",
 
                     //banner
-                    "banner"              : "com.youth.banner:banner:${versions["bannerVersion"]}",
+                    "banner"              : "com.bigkoo:ConvenientBanner:${versions["bannerVersion"]}",
 
                     //图片加载
                     "picasso"             : "com.squareup.picasso:picasso:${versions["picassoVersion"]}",

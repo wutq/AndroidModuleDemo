@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AdmTheme">
 
+        <!--全面屏问题-->
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.2" />
     </application>
 
 </manifest>

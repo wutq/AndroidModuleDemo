@@ -27,7 +27,7 @@ public class MarketMainAdapter extends BaseListAdapter<MarketInfo> {
 
     @Override
     public void onBind(SuperViewHolder holder, int viewType, final int layoutPosition, MarketInfo item) {
-        ImageUtils.loadImage(getContext(), item.getImg(), (ImageView) holder.findViewById(R.id.iv_img));
+        ImageUtils.loadImage((ImageView) holder.findViewById(R.id.iv_img), item.getImg());
         holder.setText(R.id.tv_title, item.getTitle());
         holder.setText(R.id.tv_price, item.getPrice());
         holder.itemView.setOnClickListener(new View.OnClickListener() {

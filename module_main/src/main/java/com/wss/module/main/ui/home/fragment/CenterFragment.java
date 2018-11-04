@@ -1,6 +1,6 @@
 package com.wss.module.main.ui.home.fragment;
 
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.wss.common.base.BaseMvpFragment;
@@ -36,7 +36,7 @@ public class CenterFragment extends BaseMvpFragment<CenterPresenter> implements 
     protected void initView() {
 
         adapter = new CenterRcyAdapter(mContext, data, R.layout.main_item_of_center_list, this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerView.setLayoutManager(new GridLayoutManager(mContext,3));
         recyclerView.setAdapter(adapter);
         presenter.getTabList();
     }

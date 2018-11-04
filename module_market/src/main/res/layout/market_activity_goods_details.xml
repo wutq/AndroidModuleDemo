@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/theme"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/ll_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingStart="10dp"
+            tools:ignore="RtlSymmetry">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_back" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <!-- 商品、详情、评价切换的控件 -->
+            <com.wss.common.widget.PagerSlidingTabStrip
+                android:id="@+id/psts_tabs"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                app:pstsDividerColor="@android:color/transparent"
+                app:pstsHasBottomLine="false"
+                app:pstsHasTopLine="false"
+                app:pstsIndicatorColor="@color/white"
+                app:pstsIndicatorHeight="2dp"
+                app:pstsScaleZoomMax="0.0"
+                app:pstsSmoothScrollWhenClickTab="false"
+                app:pstsTabPaddingLeftRight="12dp"
+                app:pstsTextDefaultColor="@color/white_light"
+                app:pstsTextSelectedColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="图文详情"
+                android:textColor="#ffffff"
+                android:textSize="15sp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <com.wss.module.market.widget.NoScrollViewPager
+        android:id="@+id/vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

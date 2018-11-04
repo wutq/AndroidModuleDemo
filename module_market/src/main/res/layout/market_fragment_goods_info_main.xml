@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.wss.module.market.widget.SlideLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sv_switch"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--嵌套使用了RecycleView 解决加载不全问题 使用NestedScrollView-->
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/sv_goods_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <!--商品图片 轮播-->
+            <com.bigkoo.convenientbanner.ConvenientBanner
+                android:id="@+id/vp_item_goods_img"
+                android:layout_width="match_parent"
+                android:layout_height="260dp"
+                android:background="@color/white"
+                app:canLoop="true" />
+
+            <View style="@style/HorizontalLine" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <!--商品名称-->
+                <TextView
+                    android:id="@+id/tv_goods_name"
+                    style="@style/TextStyle"
+                    android:ellipsize="end"
+                    android:maxLines="2" />
+
+
+                <!--商品价格-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="bottom"
+                    android:minHeight="25dp"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/tv_goods_price"
+                        style="@style/TextStyle"
+                        android:textColor="@color/red"
+                        android:textSize="21sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_old_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/gray"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!-- 当前已选的商品 -->
+            <com.wss.common.widget.MultipleItemView
+                android:id="@+id/miv_current_goods"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                app:leftText="已选：黑色，1件"
+                app:showBottomLine="false"
+                app:showLeftIcon="false"
+                app:showTopLine="false" />
+
+
+            <!-- 商品保障图 -->
+            <ImageView
+                android:id="@+id/iv_ensure"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/market_item_goods_ensure" />
+
+            <!--评论-->
+            <include layout="@layout/market_fragment_goods_comment" />
+
+
+            <!-- 店主推荐 -->
+            <LinearLayout
+                android:id="@+id/ll_recommend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    android:layout_marginTop="14dp"
+                    android:text="店主推荐"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <com.bigkoo.convenientbanner.ConvenientBanner
+                    android:id="@+id/vp_recommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="264dp"
+                    app:canLoop="true" />
+            </LinearLayout>
+
+            <!-- 上拉查看图文详情 -->
+            <LinearLayout
+                android:id="@+id/ll_pull_up"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="9dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/market_top" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="上拉查看图文详情"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <!--商品下方 详情Html 和规格介绍-->
+    <fragment
+        android:id="@+id/goods_detail_fragment"
+        class="com.wss.module.market.main.fragment.GoodsInfoDetailMainFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</com.wss.module.market.widget.SlideLayout>

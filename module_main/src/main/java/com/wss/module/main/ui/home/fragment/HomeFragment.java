@@ -4,12 +4,13 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.wss.common.activity.WebViewActivity;
 import com.wss.common.base.BaseActivity;
 import com.wss.common.base.BaseMvpFragment;
 import com.wss.common.listener.OnListItemClickListener;
 import com.wss.common.utils.ImageUtils;
-import com.wss.common.utils.ToastUtils;
 import com.wss.module.main.R;
 import com.wss.module.main.R2;
 import com.wss.module.main.bean.BannerInfo;
@@ -17,8 +18,6 @@ import com.wss.module.main.bean.MainBlock;
 import com.wss.module.main.ui.home.adapter.HomeRcyAdapter;
 import com.wss.module.main.ui.home.mvp.HomePresenter;
 import com.wss.module.main.ui.home.mvp.IHomeView;
-import com.youth.banner.Banner;
-import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +31,8 @@ import butterknife.BindView;
 
 public class HomeFragment extends BaseMvpFragment<HomePresenter> implements IHomeView, OnListItemClickListener {
 
-    @BindView(R2.id.banner)
-    Banner banner;
+    @BindView(R2.id.cb_banner)
+    ConvenientBanner<String> banner;
 
     @BindView(R2.id.recycle_view)
     RecyclerView recyclerView;
@@ -50,13 +49,6 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements IHom
 
     @Override
     protected void initView() {
-        banner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-                //Banner点击
-                WebViewActivity.actionStart(mContext, bannerList.get(position).getUrl());
-            }
-        });
 
         adapter = new HomeRcyAdapter(mContext, data, R.layout.main_item_of_block_list, this);
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
@@ -79,7 +71,12 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements IHom
         for (BannerInfo bannerInfo : banners) {
             strings.add(bannerInfo.getImagePath());
         }
-        ImageUtils.loadBanner(banner, strings);
+        ImageUtils.loadBanner(banner, strings, new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                WebViewActivity.actionStart(mContext, bannerList.get(position).getUrl());
+            }
+        });
     }
 
     @Override
@@ -99,14 +96,12 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements IHom
         MainBlock mainBlock = data.get(position);
         switch (position) {
             case 0:
-                ToastUtils.showToast(mContext, "跳转wan_android模块");
                 //跳转 玩安卓
                 ARouter.getInstance()
                         .build(mainBlock.getUrl())
                         .navigation();
                 break;
             case 1:
-                ToastUtils.showToast(mContext, "跳转market模块");
                 //跳转 商城
                 ARouter.getInstance()
                         .build(mainBlock.getUrl())
@@ -116,5 +111,19 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements IHom
                 WebViewActivity.actionStart(mContext, mainBlock.getUrl());
                 break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //开始自动翻页
+        banner.startTurning();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        //停止自动翻页
+        banner.stopTurning();
     }
 }

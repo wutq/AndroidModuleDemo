@@ -67,7 +67,7 @@ dependencies {
     //fastJson
     api rootProject.ext.dependencies["fastjson"]
     //沉浸栏
-    api rootProject.ext.dependencies["barlibrary"]
+    api rootProject.ext.dependencies["immersionbar"]
     //banner
     api rootProject.ext.dependencies["banner"]
     //图片加载

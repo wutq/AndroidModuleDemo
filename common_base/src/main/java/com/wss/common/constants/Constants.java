@@ -5,7 +5,7 @@ package com.wss.common.constants;
  * Created by 吴天强 on 2017/10/9.
  */
 
-public class Constant {
+public class Constants {
 
     /**
      * 服务器类型

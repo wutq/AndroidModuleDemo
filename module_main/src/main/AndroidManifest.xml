@@ -23,5 +23,7 @@
         <activity android:name=".ui.observer.ObserverButtonActivity" />
         <activity android:name=".ui.dialog.DialogActivity" />
         <activity android:name=".ui.flow.FlowLayoutActivity" />
+        <activity android:name=".ui.im.IMActivity" />
+        <activity android:name=".ui.im.IMUserInfoActivity" />
     </application>
 </manifest>

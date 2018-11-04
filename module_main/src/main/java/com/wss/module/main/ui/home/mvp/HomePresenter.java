@@ -2,7 +2,7 @@ package com.wss.module.main.ui.home.mvp;
 
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.constants.ARouterConfig;
-import com.wss.common.constants.Constant;
+import com.wss.common.constants.Constants;
 import com.wss.common.net.callback.OnResultListCallBack;
 import com.wss.module.main.R;
 import com.wss.module.main.bean.BannerInfo;
@@ -40,7 +40,7 @@ public class HomePresenter extends BasePresenter<HomeModule, IHomeView> {
 
                         @Override
                         public void onFailure(Object tag, Exception e) {
-                            getView().onError(tag, Constant.ERROR_MESSAGE);
+                            getView().onError(tag, Constants.ERROR_MESSAGE);
                         }
 
                         @Override

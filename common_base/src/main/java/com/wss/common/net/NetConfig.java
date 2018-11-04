@@ -1,6 +1,6 @@
 package com.wss.common.net;
 
-import com.wss.common.constants.Constant;
+import com.wss.common.constants.Constants;
 
 
 /**
@@ -45,12 +45,12 @@ public class NetConfig {
          * 返回服务器基础地址
          */
         static String getBaseUrl() {
-            switch (Constant.SERVER_TYPE) {
-                case Constant.ServerType.SERVER_DEVELOP:
+            switch (Constants.SERVER_TYPE) {
+                case Constants.ServerType.SERVER_DEVELOP:
                     return BaseUrl.SERVER_DEVELOP;
-                case Constant.ServerType.SERVER_TEST:
+                case Constants.ServerType.SERVER_TEST:
                     return BaseUrl.SERVER_TEST;
-                case Constant.ServerType.SERVER_PRODUCTION:
+                case Constants.ServerType.SERVER_PRODUCTION:
                     return BaseUrl.SERVER_PRODUCTION;
             }
             return BaseUrl.SERVER_PRODUCTION;

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.wss.module.market.widget.HinderListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/hlv_config"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:divider="@null"
+    android:listSelector="@android:color/transparent" />
+

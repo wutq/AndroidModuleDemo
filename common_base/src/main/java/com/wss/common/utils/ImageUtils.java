@@ -1,6 +1,5 @@
 package com.wss.common.utils;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -8,12 +7,12 @@ import android.media.ExifInterface;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
+import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
+import com.wss.common.adapter.BannerImgAdapter;
 import com.wss.common.base.R;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.Transformer;
-import com.youth.banner.loader.ImageLoader;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,7 +27,29 @@ import java.util.List;
 public class ImageUtils {
 
 
-    public static void loadImage(Context context, String url, ImageView imageView) {
+    /**
+     * 加载网络图片
+     *
+     * @param url       url
+     * @param imageView imageView
+     * @param imageView transformation 转换器
+     */
+    public static void loadImage(ImageView imageView, String url, Transformation transformation) {
+        Picasso.get()
+                .load(url)
+                .placeholder(R.drawable.bg_load_failed)
+                .error(R.drawable.bg_load_failed)
+                .transform(transformation)
+                .into(imageView);
+    }
+
+    /**
+     * 加载网络图片
+     *
+     * @param url       url
+     * @param imageView imageView
+     */
+    public static void loadImage(ImageView imageView, String url) {
         Picasso.get()
                 .load(url)
                 .placeholder(R.drawable.bg_load_failed)
@@ -37,47 +58,18 @@ public class ImageUtils {
     }
 
     /**
-     * 加载轮播图
+     * 加载只有一张图的Banner
      *
-     * @param banner 轮播图控件
-     * @param images 图片集合
+     * @param banner   banner
+     * @param imgUrl   imgUrl
+     * @param listener listener
      */
-    public static void loadBanner(Banner banner, List<String> images) {
-        if (banner == null || images == null) {
-            return;
-        }
-        //如果没有图片集合 则给出一个默认占位图
-        if (images.size() == 0) {
-            images.add("R.drawable.bg_load_failed");
-        }
-        //设置banner样式
-        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
-        //设置图片加载器
-        banner.setImageLoader(new PicassoImageLoader());
-        //设置banner动画效果
-        banner.setBannerAnimation(Transformer.DepthPage);
-        //设置自动轮播，默认为true
-//        banner.isAutoPlay(false);
-        //设置轮播时间
-        banner.setDelayTime(2000);
-        //设置指示器位置（当banner模式中有指示器时）
-        banner.setIndicatorGravity(BannerConfig.RIGHT);
-        //设置图片集合
-        banner.setImages(images);
-        //banner设置方法全部调用完毕时最后调用
-        banner.start();
-    }
-
-
-    /**
-     * Banner图片加载器
-     */
-    private static class PicassoImageLoader extends ImageLoader {
-
-        @Override
-        public void displayImage(Context context, Object path, ImageView imageView) {
-            loadImage(context, (String) path, imageView);
-        }
+    public static void loadBanner(ConvenientBanner banner, List<String> imgUrl, OnItemClickListener listener) {
+        banner.setPages(new BannerImgAdapter(), imgUrl)
+                .setPageIndicator(new int[]{R.drawable.shape_item_index_white, R.drawable.shape_item_index_red})
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT)
+                .setOnItemClickListener(listener)
+                .startTurning();
     }
 
     /**

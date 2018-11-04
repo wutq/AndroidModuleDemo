@@ -3,7 +3,7 @@ package com.wss.common.utils;
 import android.annotation.SuppressLint;
 import android.text.TextUtils;
 
-import com.wss.common.constants.Constant;
+import com.wss.common.constants.Constants;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,7 +33,7 @@ public class DateUtils {
      * @return String
      */
     public static String getCurrentDateStr() {
-        return getFormatDate(getCurrentTimeStamp(), Constant.DATE_FORMAT_LINE);
+        return getFormatDate(getCurrentTimeStamp(), Constants.DATE_FORMAT_LINE);
     }
 
 
@@ -49,7 +49,7 @@ public class DateUtils {
             timeStamp *= 1000;
         }
         if (TextUtils.isEmpty(pattern)) {
-            pattern = Constant.DATE_FORMAT_DEFAULT;
+            pattern = Constants.DATE_FORMAT_DEFAULT;
         }
         SimpleDateFormat format = new SimpleDateFormat(pattern);
         format.setTimeZone(TimeZone.getDefault());
@@ -146,7 +146,7 @@ public class DateUtils {
      *
      * @return 问候语
      */
-    public static String getTimeToken() {
+    public static String getTimeTransformation() {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         if (hour >= 0 && hour < 5) {
@@ -169,5 +169,29 @@ public class DateUtils {
             return "深夜";
         }
         return "";
+    }
+
+    /**
+     * 时间转换
+     *
+     * @param date 转换的时间戳
+     */
+    public static String dateTransformation(long date) {
+        long difference = (getCurrentTimeStamp() / 1000) - (date / 1000);
+        if (difference > 0) {
+            if (difference < 60 * 60) {
+                return difference / 60 + "分钟前";
+            } else if (difference < 24 * 60 * 60) {
+
+                return (int) (difference / 60 / 60) + "小时前";
+            } else if (difference < 30 * 24 * 60 * 60) {
+
+                return (int) (difference / 60 / 60 / 24) + "日前";
+            } else {
+                return getFormatDate(date, Constants.DATE_FORMAT_SLASH);
+            }
+        } else {
+            return getFormatDate(date, Constants.DATE_FORMAT_SLASH);
+        }
     }
 }

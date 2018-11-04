@@ -3,7 +3,7 @@ package com.wss.common.base;
 import android.support.annotation.CallSuper;
 import android.support.v4.view.ViewPager;
 
-import com.wss.common.base.adapter.FragmentPagerAdapter;
+import com.wss.common.adapter.FragmentPagerAdapter;
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.bean.HorizontalTabTitle;
 import com.wss.common.widget.PagerSlidingTabStrip;

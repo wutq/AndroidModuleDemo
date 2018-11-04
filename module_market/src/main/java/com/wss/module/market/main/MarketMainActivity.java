@@ -5,11 +5,9 @@ import android.support.v7.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.wss.common.base.ActionBarActivity;
-import com.wss.common.listener.OnListItemClickListener;
-import com.wss.common.bean.Event;
 import com.wss.common.constants.ARouterConfig;
-import com.wss.common.constants.EventConstant;
-import com.wss.common.utils.EventBusUtils;
+import com.wss.common.listener.OnListItemClickListener;
+import com.wss.common.utils.ActivityToActivity;
 import com.wss.module.market.R;
 import com.wss.module.market.R2;
 import com.wss.module.market.bean.MarketInfo;
@@ -69,6 +67,7 @@ public class MarketMainActivity extends ActionBarActivity<MarketMainPresenter> i
 
     @Override
     public void onItemClick(int position) {
-        EventBusUtils.sendEvent(new Event<>(EventConstant.EVENT_MARKET_CLICK, "来自Market Module的消息"));
+//        EventBusUtils.sendEvent(new Event<>(EventConstant.EVENT_MARKET_CLICK, "来自Market Module的消息"));
+        ActivityToActivity.toActivity(mContext, GoodsDetailActivity.class);
     }
 }

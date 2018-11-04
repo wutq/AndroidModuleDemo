@@ -3,5 +3,6 @@
 
     <application>
         <activity android:name=".main.MarketMainActivity" />
+        <activity android:name=".main.GoodsDetailActivity" />
     </application>
 </manifest>

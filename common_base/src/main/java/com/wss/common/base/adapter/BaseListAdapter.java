@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.wss.common.listener.OnListItemClickListener;
 
+import org.byteam.superadapter.IMulItemViewType;
 import org.byteam.superadapter.SuperAdapter;
 
 import java.util.List;
@@ -20,9 +21,19 @@ public abstract class BaseListAdapter<T> extends SuperAdapter<T> {
      */
     protected OnListItemClickListener listener;
 
+    /**
+     * 常规列表重写该方法
+     */
     public BaseListAdapter(Context context, List<T> items, int layoutResId, OnListItemClickListener listener) {
         super(context, items, layoutResId);
         this.listener = listener;
+    }
+
+    /**
+     * 多布局列表重写该方法
+     */
+    public BaseListAdapter(Context context, List<T> items, IMulItemViewType<T> multiItemViewType) {
+        super(context, items, multiItemViewType);
     }
 
     /**

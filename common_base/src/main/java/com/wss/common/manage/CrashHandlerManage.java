@@ -76,10 +76,10 @@ public class CrashHandlerManage implements UncaughtExceptionHandler {
             }
             ((BaseApplication) mContext.getApplicationContext()).exitApp();
             // 退出程序
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(1);
         }
     }
+
+
 
     /**
      * 自定义错误处理,收集错误信息 发送错误报告等操作均在此完成.

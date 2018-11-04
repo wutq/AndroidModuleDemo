@@ -125,7 +125,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onEventBus(Event event) {
         if (TextUtils.equals(event.getAction(), EventConstant.EVENT_MARKET_CLICK)) {
-            ToastUtils.showToast(mContext,"main 模块收到"+ event.getData().toString());
+            ToastUtils.showToast(mContext, "main 模块收到" + event.getData().toString());
         }
     }
 
