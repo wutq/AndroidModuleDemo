@@ -1,4 +1,4 @@
-package com.wss.module.market.main.fragment.child;
+package com.wss.module.market.goods.detail.fragment.child;
 
 import android.webkit.WebSettings;
 import android.webkit.WebView;

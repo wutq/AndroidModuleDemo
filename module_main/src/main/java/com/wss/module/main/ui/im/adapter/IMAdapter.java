@@ -28,21 +28,22 @@ public class IMAdapter extends BaseListAdapter<IMMessage> {
         super(context, items, null);
     }
 
+
     @Override
-    public void onBind(SuperViewHolder holder, int viewType, int layoutPosition, final IMMessage item) {
-//        if (viewType == IMMessage.TYPE_SEND) {
+    public void onBindData(SuperViewHolder holder, int viewType, int layoutPosition, final IMMessage data) {
+        //        if (viewType == IMMessage.TYPE_SEND) {
 ////            holder.setBackgroundResource(R.id.iv_head, item.getIcon());
 //            holder.setText(R.id.tv_message, item.getMsg());
 //        } else {
 ////            holder.setBackgroundResource(R.id.iv_head, item.getIcon());
 //        }
         //因为两边布局用的是相同的ID 故可如此设置数据
-        holder.setText(R.id.tv_message, item.getMsg());
+        holder.setText(R.id.tv_message, data.getMsg());
         holder.setOnClickListener(R.id.iv_head, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Map<String, Object> map = new HashMap<>();
-                map.put("IMUserInfoActivity", item);
+                map.put("IMUserInfoActivity", data);
                 ActivityToActivity.toActivity(getContext(), IMUserInfoActivity.class, map);
             }
         });

@@ -1,9 +1,9 @@
-package com.wss.module.market.main.fragment.child;
+package com.wss.module.market.goods.detail.fragment.child;
 
 import com.wss.common.base.BaseFragment;
 import com.wss.module.market.R;
 import com.wss.module.market.R2;
-import com.wss.module.market.main.adapter.GoodsConfigAdapter;
+import com.wss.module.market.goods.detail.adapter.GoodsConfigAdapter;
 import com.wss.module.market.bean.GoodsConfigBean;
 import com.wss.module.market.widget.HinderListView;
 

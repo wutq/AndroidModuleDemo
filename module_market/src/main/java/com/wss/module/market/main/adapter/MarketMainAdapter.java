@@ -1,7 +1,6 @@
 package com.wss.module.market.main.adapter;
 
 import android.content.Context;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.wss.common.base.adapter.BaseListAdapter;
@@ -26,17 +25,9 @@ public class MarketMainAdapter extends BaseListAdapter<MarketInfo> {
     }
 
     @Override
-    public void onBind(SuperViewHolder holder, int viewType, final int layoutPosition, MarketInfo item) {
-        ImageUtils.loadImage((ImageView) holder.findViewById(R.id.iv_img), item.getImg());
-        holder.setText(R.id.tv_title, item.getTitle());
-        holder.setText(R.id.tv_price, item.getPrice());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onItemClick(layoutPosition);
-                }
-            }
-        });
+    public void onBindData(SuperViewHolder holder, int viewType, int layoutPosition, MarketInfo data) {
+        ImageUtils.loadImage((ImageView) holder.findViewById(R.id.iv_img), data.getImg());
+        holder.setText(R.id.tv_title, data.getTitle());
+        holder.setText(R.id.tv_price, data.getPrice());
     }
 }

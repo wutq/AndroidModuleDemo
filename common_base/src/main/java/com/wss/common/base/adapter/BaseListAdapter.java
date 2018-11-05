@@ -1,11 +1,13 @@
 package com.wss.common.base.adapter;
 
 import android.content.Context;
+import android.view.View;
 
 import com.wss.common.listener.OnListItemClickListener;
 
 import org.byteam.superadapter.IMulItemViewType;
 import org.byteam.superadapter.SuperAdapter;
+import org.byteam.superadapter.SuperViewHolder;
 
 import java.util.List;
 
@@ -42,5 +44,24 @@ public abstract class BaseListAdapter<T> extends SuperAdapter<T> {
     public void setOnListItemClickListener(OnListItemClickListener listener) {
         this.listener = listener;
     }
+
+
+    @Override
+    public void onBind(SuperViewHolder viewHolder, int viewType, final int layoutPosition, T data) {
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onItemClick(layoutPosition);
+                }
+            }
+        });
+        onBindData(viewHolder, viewType, layoutPosition, data);
+    }
+
+    /**
+     * 绑定数据
+     */
+    public abstract void onBindData(SuperViewHolder holder, int viewType, int layoutPosition, T data);
 
 }

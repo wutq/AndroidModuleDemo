@@ -1,4 +1,4 @@
-package com.wss.module.market.main.fragment;
+package com.wss.module.market.goods.detail.fragment;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.wss.common.base.BaseFragment;
 import com.wss.module.market.R;
 import com.wss.module.market.R2;
-import com.wss.module.market.main.fragment.child.GoodsConfigFragment;
-import com.wss.module.market.main.fragment.child.GoodsInfoWebFragment;
+import com.wss.module.market.goods.detail.fragment.child.GoodsConfigFragment;
+import com.wss.module.market.goods.detail.fragment.child.GoodsInfoWebFragment;
 
 import java.util.ArrayList;
 import java.util.List;

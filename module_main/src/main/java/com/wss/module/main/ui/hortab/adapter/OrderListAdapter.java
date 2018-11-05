@@ -35,27 +35,19 @@ public class OrderListAdapter extends BaseListAdapter<Order> {
 
 
     @Override
-    public void onBind(SuperViewHolder holder, int viewType, final int layoutPosition, Order item) {
-        holder.setText(R.id.tv_date, item.getOrderDate());
-        holder.setText(R.id.tv_state, getState(item.getOrderState()));
+    public void onBindData(SuperViewHolder holder, int viewType, int layoutPosition, Order data) {
+        holder.setText(R.id.tv_date, data.getOrderDate());
+        holder.setText(R.id.tv_state, getState(data.getOrderState()));
         LinearLayout layout = holder.findViewById(R.id.layout_goods);
         layout.removeAllViews();
         int sum = 0;
-        for (Goods goods : item.getGoodsList()) {
+        for (Goods goods : data.getGoodsList()) {
             View childView = View.inflate(getContext(), R.layout.main_item_of_order_goods_list, null);
             new GoodsVH(childView).bindingData(goods);
             layout.addView(childView);
             sum += goods.getGoodsNum();
         }
-        holder.setText(R.id.tv_total, String.format("共%s种商品，合计：¥%s", sum, item.getOrderTotal()));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onItemClick(layoutPosition);
-                }
-            }
-        });
+        holder.setText(R.id.tv_total, String.format("共%s种商品，合计：¥%s", sum, data.getOrderTotal()));
     }
 
     public class GoodsVH {

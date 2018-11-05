@@ -1,7 +1,6 @@
 package com.wss.module.main.ui.refresh.adapter;
 
 import android.content.Context;
-import android.view.View;
 
 import com.wss.common.base.adapter.BaseListAdapter;
 import com.wss.common.listener.OnListItemClickListener;
@@ -25,19 +24,11 @@ public class ArticleAdapter extends BaseListAdapter<Article> {
     }
 
     @Override
-    public void onBind(SuperViewHolder holder, int viewType, final int layoutPosition, Article item) {
-        holder.setText(R.id.tv_title, item.getTitle());
-        holder.setText(R.id.tv_author, String.format("作者：%s", item.getAuthor()));
-        holder.setText(R.id.tv_date, String.format("时间：%s", item.getNiceDate()));
-        holder.setText(R.id.tv_type1, item.getChapterName());
-        holder.setText(R.id.tv_type2, item.getSuperChapterName());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onItemClick(layoutPosition);
-                }
-            }
-        });
+    public void onBindData(SuperViewHolder holder, int viewType, int layoutPosition, Article data) {
+        holder.setText(R.id.tv_title, data.getTitle());
+        holder.setText(R.id.tv_author, String.format("作者：%s", data.getAuthor()));
+        holder.setText(R.id.tv_date, String.format("时间：%s", data.getNiceDate()));
+        holder.setText(R.id.tv_type1, data.getChapterName());
+        holder.setText(R.id.tv_type2, data.getSuperChapterName());
     }
 }

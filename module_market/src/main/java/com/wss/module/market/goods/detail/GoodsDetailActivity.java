@@ -1,4 +1,4 @@
-package com.wss.module.market.main;
+package com.wss.module.market.goods.detail;
 
 import android.view.View;
 import android.widget.TextView;
@@ -10,9 +10,9 @@ import com.wss.common.bean.HorizontalTabTitle;
 import com.wss.common.widget.PagerSlidingTabStrip;
 import com.wss.module.market.R;
 import com.wss.module.market.R2;
-import com.wss.module.market.main.fragment.GoodsInfoDetailMainFragment;
-import com.wss.module.market.main.fragment.GoodsInfoMainFragment;
-import com.wss.module.market.main.fragment.child.GoodsCommentFragment;
+import com.wss.module.market.goods.detail.fragment.GoodsInfoDetailMainFragment;
+import com.wss.module.market.goods.detail.fragment.GoodsInfoMainFragment;
+import com.wss.module.market.goods.detail.fragment.child.GoodsCommentFragment;
 import com.wss.module.market.widget.NoScrollViewPager;
 
 import java.util.ArrayList;
@@ -75,5 +75,9 @@ public class GoodsDetailActivity extends BaseActivity {
             tvTitle.setVisibility(View.GONE);
             pstsTabs.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void setCurrentFragment(int position) {
+        vpContent.setCurrentItem(position);
     }
 }

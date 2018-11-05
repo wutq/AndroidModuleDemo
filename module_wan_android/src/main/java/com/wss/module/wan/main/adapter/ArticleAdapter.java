@@ -1,7 +1,6 @@
 package com.wss.module.wan.main.adapter;
 
 import android.content.Context;
-import android.view.View;
 
 import com.wss.common.base.adapter.BaseListAdapter;
 import com.wss.common.listener.OnListItemClickListener;
@@ -25,18 +24,11 @@ public class ArticleAdapter extends BaseListAdapter<Article> {
     }
 
     @Override
-    public void onBind(SuperViewHolder holder, int viewType, final int layoutPosition, Article item) {
-        holder.setText(R.id.tv_title, item.getTitle());
-        holder.setText(R.id.tv_author, item.getAuthor());
-        holder.setText(R.id.tv_date, String.format("时间：%s", item.getNiceDate()));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onItemClick(layoutPosition);
-                }
-            }
-        });
+    public void onBindData(SuperViewHolder holder, int viewType, int layoutPosition, Article data) {
+        holder.setText(R.id.tv_title, data.getTitle());
+        holder.setText(R.id.tv_author, data.getAuthor());
+        holder.setText(R.id.tv_date, String.format("时间：%s", data.getNiceDate()));
+
     }
 
 }

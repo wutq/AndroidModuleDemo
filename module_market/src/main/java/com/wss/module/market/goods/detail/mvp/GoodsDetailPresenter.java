@@ -1,4 +1,4 @@
-package com.wss.module.market.main.mvp;
+package com.wss.module.market.goods.detail.mvp;
 
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.module.market.bean.GoodsComment;
@@ -92,10 +92,10 @@ public class GoodsDetailPresenter extends BasePresenter<GoodsDetailModule, IGood
     }
 
     /**
-     * 商品评论
+     * 商品精彩评论
      */
 
-    public void getCommentList() {
+    private void getCommentList() {
         if (isViewAttached()) {
             List<GoodsComment> commentList = new ArrayList<>();
             GoodsComment comment = new GoodsComment();
@@ -133,12 +133,6 @@ public class GoodsDetailPresenter extends BasePresenter<GoodsDetailModule, IGood
             comment.setUserName("补***萨");
             commentList.add(comment);
 
-            comment = new GoodsComment();
-            comment.setComment("手机到了刚弄好，非常流畅，家里好多电器都是小米的 谢谢！");
-            comment.setStar(5);
-            comment.setUserHead("http://img1.touxiang.cn/uploads/20131017/17-090235_674.jpg");
-            comment.setUserName("b***y");
-            commentList.add(comment);
             getView().commentList(commentList);
         }
     }

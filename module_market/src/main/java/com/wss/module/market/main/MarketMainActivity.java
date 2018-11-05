@@ -11,6 +11,7 @@ import com.wss.common.utils.ActivityToActivity;
 import com.wss.module.market.R;
 import com.wss.module.market.R2;
 import com.wss.module.market.bean.MarketInfo;
+import com.wss.module.market.goods.detail.GoodsDetailActivity;
 import com.wss.module.market.main.adapter.MarketMainAdapter;
 import com.wss.module.market.main.mvp.IMarketMainView;
 import com.wss.module.market.main.mvp.MarketMainPresenter;

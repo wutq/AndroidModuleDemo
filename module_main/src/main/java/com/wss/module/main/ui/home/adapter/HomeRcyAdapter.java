@@ -1,7 +1,6 @@
 package com.wss.module.main.ui.home.adapter;
 
 import android.content.Context;
-import android.view.View;
 
 import com.wss.common.base.adapter.BaseListAdapter;
 import com.wss.common.listener.OnListItemClickListener;
@@ -25,16 +24,8 @@ public class HomeRcyAdapter extends BaseListAdapter<MainBlock> {
     }
 
     @Override
-    public void onBind(SuperViewHolder holder, int viewType, final int layoutPosition, MainBlock item) {
-        holder.setText(R.id.tv_text, item.getTitle());
-        holder.setBackgroundResource(R.id.iv_icon, item.getRes());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onItemClick(layoutPosition);
-                }
-            }
-        });
+    public void onBindData(SuperViewHolder holder, int viewType, int layoutPosition, MainBlock data) {
+        holder.setText(R.id.tv_text, data.getTitle());
+        holder.setBackgroundResource(R.id.iv_icon, data.getRes());
     }
 }

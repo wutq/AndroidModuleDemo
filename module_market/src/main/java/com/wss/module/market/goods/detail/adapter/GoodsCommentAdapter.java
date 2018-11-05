@@ -1,4 +1,4 @@
-package com.wss.module.market.main.adapter;
+package com.wss.module.market.goods.detail.adapter;
 
 import android.content.Context;
 import android.widget.ImageView;
@@ -26,9 +26,9 @@ public class GoodsCommentAdapter extends BaseListAdapter<GoodsComment> {
     }
 
     @Override
-    public void onBind(SuperViewHolder superViewHolder, int i, int i1, GoodsComment goodsComment) {
-        ImageUtils.loadImage((ImageView) superViewHolder.findViewById(R.id.iv_head), goodsComment.getUserHead(), new CircleTransform());
-        superViewHolder.setText(R.id.tv_name, goodsComment.getUserName());
-        superViewHolder.setText(R.id.tv_comment, goodsComment.getComment());
+    public void onBindData(SuperViewHolder holder, int viewType, int layoutPosition, GoodsComment data) {
+        ImageUtils.loadImage((ImageView) holder.findViewById(R.id.iv_head), data.getUserHead(), new CircleTransform());
+        holder.setText(R.id.tv_name, data.getUserName());
+        holder.setText(R.id.tv_comment, data.getComment());
     }
 }

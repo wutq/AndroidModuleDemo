@@ -1,4 +1,4 @@
-package com.wss.module.market.main.mvp;
+package com.wss.module.market.goods.detail.mvp;
 
 import com.wss.common.base.mvp.IBaseModule;
 

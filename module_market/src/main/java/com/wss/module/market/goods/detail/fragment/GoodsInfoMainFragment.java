@@ -1,4 +1,4 @@
-package com.wss.module.market.main.fragment;
+package com.wss.module.market.goods.detail.fragment;
 
 import android.content.Context;
 import android.graphics.Paint;
@@ -15,16 +15,15 @@ import com.wss.common.adapter.BannerImgAdapter;
 import com.wss.common.base.BaseMvpFragment;
 import com.wss.module.market.R;
 import com.wss.module.market.R2;
-import com.wss.module.market.main.adapter.RecommendGoodsAdapter;
 import com.wss.module.market.bean.GoodsComment;
 import com.wss.module.market.bean.GoodsInfo;
-import com.wss.module.market.main.GoodsDetailActivity;
-import com.wss.module.market.main.adapter.GoodsCommentAdapter;
-import com.wss.module.market.main.mvp.GoodsDetailPresenter;
-import com.wss.module.market.main.mvp.IGoodsDetailView;
+import com.wss.module.market.goods.detail.GoodsDetailActivity;
+import com.wss.module.market.goods.detail.adapter.GoodsCommentAdapter;
+import com.wss.module.market.goods.detail.adapter.RecommendGoodsAdapter;
+import com.wss.module.market.goods.detail.mvp.GoodsDetailPresenter;
+import com.wss.module.market.goods.detail.mvp.IGoodsDetailView;
 import com.wss.module.market.widget.SlideLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -101,10 +100,13 @@ public class GoodsInfoMainFragment extends BaseMvpFragment<GoodsDetailPresenter>
     }
 
 
-    @OnClick({R2.id.ll_pull_up})
+    @OnClick({R2.id.ll_pull_up, R2.id.ll_comment})
     public void onClick(View v) {
         if (v.getId() == R.id.ll_pull_up) {//上拉查看图文详情
             svSwitch.smoothOpen(true);
+        } else if (v.getId() == R.id.ll_comment) {
+            //查看评论
+            goodsDetailActivity.setCurrentFragment(2);
         }
     }
 
@@ -117,7 +119,7 @@ public class GoodsInfoMainFragment extends BaseMvpFragment<GoodsDetailPresenter>
     }
 
     /**
-     * 商品轮播图
+     * 设置商品头图 轮播
      */
     private void setGoodsHeadImg() {
         if (goodsInfo != null) {
@@ -173,17 +175,8 @@ public class GoodsInfoMainFragment extends BaseMvpFragment<GoodsDetailPresenter>
     public void commentList(List<GoodsComment> commentList) {
         if (commentList.size() > 0) {
             tvEmptyComment.setVisibility(View.GONE);
-            //加载5条精彩评论
-            List<GoodsComment> comments = new ArrayList<>();//商品评论
-            if (commentList.size() > 5) {
-                for (int i = 0; i < 5; i++) {
-                    comments.add(commentList.get(i));
-                }
-            } else {
-                comments.addAll(commentList);
-            }
             recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-            recyclerView.setAdapter(new GoodsCommentAdapter(mContext, comments, R.layout.market_item_of_goods_comment_list));
+            recyclerView.setAdapter(new GoodsCommentAdapter(mContext, commentList, R.layout.market_item_of_goods_comment_list));
         } else {
             tvEmptyComment.setVisibility(View.VISIBLE);
             tvEmptyComment.setText("暂无精彩评论");

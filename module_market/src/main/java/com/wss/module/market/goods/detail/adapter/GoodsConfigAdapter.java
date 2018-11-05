@@ -1,4 +1,4 @@
-package com.wss.module.market.main.adapter;
+package com.wss.module.market.goods.detail.adapter;
 
 import android.content.Context;
 
@@ -22,8 +22,8 @@ public class GoodsConfigAdapter extends BaseListAdapter<GoodsConfigBean> {
     }
 
     @Override
-    public void onBind(SuperViewHolder superViewHolder, int i, int i1, GoodsConfigBean goodsConfigBean) {
-        superViewHolder.setText(R.id.tv_config_key, goodsConfigBean.getKeyProp());
-        superViewHolder.setText(R.id.tv_config_value, goodsConfigBean.getValue());
+    public void onBindData(SuperViewHolder holder, int viewType, int layoutPosition, GoodsConfigBean data) {
+        holder.setText(R.id.tv_config_key, data.getKeyProp());
+        holder.setText(R.id.tv_config_value, data.getValue());
     }
 }
