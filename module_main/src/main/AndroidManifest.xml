@@ -14,7 +14,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.home.MainActivity" />
+        <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.hortab.OrderListActivity" />
         <activity android:name=".ui.refresh.ArticleListActivity" />
         <activity android:name=".ui.selector.SelectorActivity" />
@@ -25,5 +25,6 @@
         <activity android:name=".ui.flow.FlowLayoutActivity" />
         <activity android:name=".ui.im.IMActivity" />
         <activity android:name=".ui.im.IMUserInfoActivity" />
+        <activity android:name=".ui.db.DBActivity" />
     </application>
 </manifest>

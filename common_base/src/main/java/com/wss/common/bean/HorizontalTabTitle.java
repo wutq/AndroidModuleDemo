@@ -23,4 +23,5 @@ public class HorizontalTabTitle<T> extends BaseBean {
         this.title = title;
         this.data = data;
     }
+
 }

@@ -3,8 +3,8 @@ package com.wss.common.base;
 import android.support.annotation.CallSuper;
 import android.support.v7.widget.RecyclerView;
 
-import com.wss.common.listener.OnListItemClickListener;
 import com.wss.common.base.mvp.BasePresenter;
+import com.wss.common.listener.OnListItemClickListener;
 import com.wss.common.widget.pulltorefresh.OnPullRefreshListener;
 import com.wss.common.widget.pulltorefresh.PullToRefreshLayout;
 
@@ -54,7 +54,14 @@ public abstract class RefreshListActivity<P extends BasePresenter> extends Actio
     protected void stopRefresh() {
         refreshLayout.finishRefresh();
         refreshLayout.finishLoadMore();
+    }
 
+    protected PullToRefreshLayout getRefreshLayout() {
+        return refreshLayout;
+    }
+
+    protected RecyclerView getRecyclerView() {
+        return recyclerView;
     }
 
     protected abstract RecyclerView.LayoutManager getLayoutManager();

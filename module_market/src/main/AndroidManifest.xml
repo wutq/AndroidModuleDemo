@@ -4,5 +4,6 @@
     <application>
         <activity android:name=".main.MarketMainActivity" />
         <activity android:name=".goods.detail.GoodsDetailActivity" />
+        <activity android:name=".goods.cart.ShoppingCartActivity" />
     </application>
 </manifest>

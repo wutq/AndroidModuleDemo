@@ -100,6 +100,7 @@ ext {
                     //万能Adapter
                     "superAdapter"        : "org.byteam.superadapter:superadapter:${versions["superAdapterVersion"]}",
 
+
 //                    //图片缩放
 //                    "photoview"                      : "com.github.chrisbanes.photoview:library:1.2.4",
 //                    //SmartRefreshLayout
@@ -112,8 +113,7 @@ ext {
 //                    "bugly"                          : "com.tencent.bugly:crashreport_upgrade:latest.release",
 //                    //仿ios进度条 已抽取到lib中
 //                    "kprogresshud"                   : "com.kaopiz:kprogresshud:1.1.0",
-                    //                    //greendao
-//                    "greendao3"                      : "org.greenrobot:greendao:3.2.2",
+
 //                    //Android屏幕适配
 //                    "autolayout"                     : "com.zhy:autolayout:1.4.5",
 //                    //安卓调试神器-Stetho

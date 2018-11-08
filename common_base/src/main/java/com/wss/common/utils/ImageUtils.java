@@ -37,7 +37,7 @@ public class ImageUtils {
     public static void loadImage(ImageView imageView, String url, Transformation transformation) {
         Picasso.get()
                 .load(url)
-                .placeholder(R.drawable.bg_load_failed)
+//                .placeholder(R.drawable.bg_load_failed)
                 .error(R.drawable.bg_load_failed)
                 .transform(transformation)
                 .into(imageView);
@@ -52,7 +52,7 @@ public class ImageUtils {
     public static void loadImage(ImageView imageView, String url) {
         Picasso.get()
                 .load(url)
-                .placeholder(R.drawable.bg_load_failed)
+//                .placeholder(R.drawable.bg_load_failed)
                 .error(R.drawable.bg_load_failed)
                 .into(imageView);
     }

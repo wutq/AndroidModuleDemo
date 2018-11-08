@@ -3,6 +3,7 @@ package com.wss.common.bean;
 import lombok.Getter;
 import lombok.Setter;
 
+
 /**
  * Describe：EventBus事件类
  * Created by 吴天强 on 2018/10/22.

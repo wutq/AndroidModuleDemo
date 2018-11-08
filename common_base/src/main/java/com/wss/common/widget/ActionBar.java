@@ -140,7 +140,9 @@ public class ActionBar extends RelativeLayout {
         ImageView right = new ImageView(getContext());
         right.setImageResource(res);
         llRight.addView(right);
-        llRight.setOnClickListener(l);
+        if (l != null) {
+            llRight.setOnClickListener(l);
+        }
     }
 
     /**
@@ -222,6 +224,7 @@ public class ActionBar extends RelativeLayout {
         }
     }
 
+
     /**
      * 设置右边文字
      *
@@ -237,7 +240,7 @@ public class ActionBar extends RelativeLayout {
      *
      * @return View
      */
-    public View getRightView() {
+    public LinearLayout getRightView() {
         return llRight;
     }
 
@@ -246,7 +249,7 @@ public class ActionBar extends RelativeLayout {
      *
      * @return View
      */
-    public View getCenterView() {
+    public LinearLayout getCenterView() {
         return llCenter;
     }
 
@@ -255,7 +258,7 @@ public class ActionBar extends RelativeLayout {
      *
      * @return View
      */
-    public View getLeftView() {
+    public LinearLayout getLeftView() {
         return llLeft;
     }
 
@@ -287,9 +290,15 @@ public class ActionBar extends RelativeLayout {
      * @param v v
      */
     public void setRightView(View v) {
-        setViewVisibility(llRight, true);
+        setRightView(v, null);
+    }
+
+    public void setRightView(View v, OnClickListener listener) {
         llRight.removeAllViews();
         llRight.addView(v);
+        if (listener != null) {
+            v.setOnClickListener(listener);
+        }
     }
 
     /**
@@ -324,7 +333,8 @@ public class ActionBar extends RelativeLayout {
      */
     public TextView getTextView() {
         TextView tv = new TextView(getContext());
-        tv.setTextSize(16);
+        tv.setTextSize(centerTextSize);
+        tv.setTextColor(ContextCompat.getColor(getContext(), centerTextColor));
         return tv;
     }
 

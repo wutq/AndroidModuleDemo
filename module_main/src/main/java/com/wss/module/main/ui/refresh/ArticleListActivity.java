@@ -68,7 +68,7 @@ public class ArticleListActivity extends RefreshListActivity<ArticlePresenter> i
 
     @Override
     public void articleList(List<Article> articles) {
-        data.addAll(articles);
+        this.data.addAll(articles);
         adapter.notifyDataSetChanged();
     }
 

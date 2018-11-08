@@ -33,6 +33,7 @@ public class GoodsDetailPresenter extends BasePresenter<GoodsDetailModule, IGood
             GoodsInfo goodsInfo = new GoodsInfo();
             goodsInfo.setGoodsId("1");
             goodsInfo.setGoodsName("小米Mix3 6GB+128GB黑色 骁龙845 全网通4G 双卡双待 全面屏拍照游戏智能手机");
+            goodsInfo.setVendorId("1");
             goodsInfo.setGoodsMasterImg("https://img14.360buyimg.com/n0/jfs/t1/1768/16/11748/360528/5bd072f8E06e4e532/b5d152da8a5dd0dc.jpg");
             List<String> goodsImgs = new ArrayList<>();
             goodsImgs.add("https://img14.360buyimg.com/n0/jfs/t1/1867/31/11716/401006/5bd072f8E6db292ab/f3610e2e816ade0f.jpg");

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.wss.common.base.adapter.BaseListAdapter;
-import com.wss.common.manage.CircleTransform;
+import com.wss.common.manage.CircleTransformation;
 import com.wss.common.utils.ImageUtils;
 import com.wss.module.market.R;
 import com.wss.module.market.bean.GoodsComment;
@@ -27,7 +27,7 @@ public class GoodsCommentAdapter extends BaseListAdapter<GoodsComment> {
 
     @Override
     public void onBindData(SuperViewHolder holder, int viewType, int layoutPosition, GoodsComment data) {
-        ImageUtils.loadImage((ImageView) holder.findViewById(R.id.iv_head), data.getUserHead(), new CircleTransform());
+        ImageUtils.loadImage((ImageView) holder.findViewById(R.id.iv_head), data.getUserHead(), new CircleTransformation());
         holder.setText(R.id.tv_name, data.getUserName());
         holder.setText(R.id.tv_comment, data.getComment());
     }

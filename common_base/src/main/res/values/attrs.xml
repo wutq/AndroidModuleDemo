@@ -65,6 +65,7 @@
         <attr name="showEdtText" format="boolean" />
     </declare-styleable>
 
+    <!--观察者按钮-->
     <declare-styleable name="ObserverButton">
         <!--默认背景-->
         <attr name="defaultBgColor" format="color|reference" />
@@ -78,6 +79,7 @@
         <attr name="pressTextColor" format="color" />
     </declare-styleable>
 
+    <!--流式布局-->
     <declare-styleable name="FlowLayout">
         <attr name="max_select" format="integer" />
         <attr name="tag_gravity">
@@ -87,4 +89,12 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="SlideLayout">
+        <attr name="percent" format="float" />
+        <attr name="duration" format="integer" />
+        <attr name="default_panel" format="enum">
+            <enum name="front" value="0" />
+            <enum name="behind" value="1" />
+        </attr>
+    </declare-styleable>
 </resources>

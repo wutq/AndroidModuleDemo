@@ -16,30 +16,49 @@
             android:layout_width="140dp"
             android:layout_height="140dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center">
 
-            <TextView
-                android:id="@+id/tv_title"
-                style="@style/TextStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:maxLines="2" />
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/TextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="12sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_marginTop="4dp">
 
             <TextView
                 android:id="@+id/tv_price"
                 style="@style/TextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
+                android:layout_alignParentBottom="true"
                 android:maxLines="2"
-                android:textColor="@color/light_yellow"
+                android:textColor="@color/light_yellow" />
+
+            <TextView
+                android:id="@+id/tv_old_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/tv_price"
+                android:gravity="center_vertical"
+                android:textColor="@color/gray"
                 android:textSize="12sp" />
 
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/iv_add_cart"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/market_icon_add_cart" />
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
 

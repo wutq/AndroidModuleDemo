@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="50dp"
+    android:layout_height="50dp">
+
+
+    <ImageView
+        android:id="@+id/iv_cart"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:background="@drawable/market_icon_shopping_cart" />
+
+    <TextView
+        android:id="@+id/tv_count"
+        style="@style/TextStyle"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/market_shape_round_red"
+        android:gravity="center"
+        android:minHeight="15dp"
+        android:minWidth="15dp"
+        android:paddingEnd="2dp"
+        android:paddingStart="2dp"
+        android:text="12"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        tools:ignore="SmallSp" />
+</RelativeLayout>

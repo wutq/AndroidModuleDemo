@@ -27,8 +27,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+
 /**
  * UncaughtException处理类,当程序发生Uncaught异常的时候,由该类来接管程序,并记录发送错误报告.
+ * Created by wtq on 2016/7/22.
  */
 @SuppressLint("StaticFieldLeak")
 public class CrashHandlerManage implements UncaughtExceptionHandler {
@@ -78,7 +80,6 @@ public class CrashHandlerManage implements UncaughtExceptionHandler {
             // 退出程序
         }
     }
-
 
 
     /**

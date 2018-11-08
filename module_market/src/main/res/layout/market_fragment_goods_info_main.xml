@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.wss.module.market.widget.SlideLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.wss.common.widget.SlideLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sv_switch"
     android:layout_width="match_parent"
@@ -163,5 +163,4 @@
         class="com.wss.module.market.goods.detail.fragment.GoodsInfoDetailMainFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
-</com.wss.module.market.widget.SlideLayout>
+</com.wss.common.widget.SlideLayout>

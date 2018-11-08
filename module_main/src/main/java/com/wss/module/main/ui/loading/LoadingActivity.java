@@ -10,7 +10,7 @@ import android.view.WindowManager;
 
 import com.wss.common.base.BaseActivity;
 import com.wss.module.main.R;
-import com.wss.module.main.ui.home.MainActivity;
+import com.wss.module.main.ui.main.MainActivity;
 
 /**
  * Describe：应用启动页
@@ -19,7 +19,7 @@ import com.wss.module.main.ui.home.MainActivity;
 
 public class LoadingActivity extends BaseActivity {
 
-    private long loadingTime = 1500;
+    private long loadingTime = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center_vertical"
+        android:padding="10dp">
+
+        <!--购物车商品-->
+        <ImageView
+            android:id="@+id/iv_goods_check"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/market_shopping_cart_selector" />
+
+
+        <ImageView
+            android:id="@+id/iv_goods"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="10dp"
+            android:contentDescription="@null"
+            android:scaleType="fitXY" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp">
+
+            <TextView
+                android:id="@+id/tv_goods_name"
+                style="@style/TextStyle" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                style="@style/TextStyle"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/orange" />
+
+            <com.wss.common.widget.CountClickView
+                android:id="@+id/ccv_click"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

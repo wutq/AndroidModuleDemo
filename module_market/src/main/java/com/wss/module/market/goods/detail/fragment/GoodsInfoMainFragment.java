@@ -2,7 +2,6 @@ package com.wss.module.market.goods.detail.fragment;
 
 import android.content.Context;
 import android.graphics.Paint;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.wss.common.adapter.BannerImgAdapter;
 import com.wss.common.base.BaseMvpFragment;
+import com.wss.common.widget.SlideLayout;
 import com.wss.module.market.R;
 import com.wss.module.market.R2;
 import com.wss.module.market.bean.GoodsComment;
@@ -22,7 +22,6 @@ import com.wss.module.market.goods.detail.adapter.GoodsCommentAdapter;
 import com.wss.module.market.goods.detail.adapter.RecommendGoodsAdapter;
 import com.wss.module.market.goods.detail.mvp.GoodsDetailPresenter;
 import com.wss.module.market.goods.detail.mvp.IGoodsDetailView;
-import com.wss.module.market.widget.SlideLayout;
 
 import java.util.List;
 
@@ -49,9 +48,6 @@ public class GoodsInfoMainFragment extends BaseMvpFragment<GoodsDetailPresenter>
     @BindView(R2.id.tv_old_price)
     TextView tvOldPrice;
 
-    @BindView(R2.id.iv_ensure)
-    ImageView ivEnsure;
-
     @BindView(R2.id.tv_comment_count)
     TextView tvCommentCount;
 
@@ -66,9 +62,6 @@ public class GoodsInfoMainFragment extends BaseMvpFragment<GoodsDetailPresenter>
 
     @BindView(R2.id.vp_recommend)
     ConvenientBanner<List<GoodsInfo>> vpRecommend; //推荐位置
-
-    @BindView(R2.id.sv_goods_info)
-    NestedScrollView svGoodsInfo;
 
     @BindView(R2.id.sv_switch)
     SlideLayout svSwitch;

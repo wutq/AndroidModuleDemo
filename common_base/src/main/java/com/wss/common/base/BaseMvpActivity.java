@@ -34,6 +34,7 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
         super.onDestroy();
         if (presenter != null) {
             presenter.detachView();
+            presenter = null;
         }
 
     }

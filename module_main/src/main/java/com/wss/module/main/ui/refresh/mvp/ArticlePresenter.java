@@ -24,10 +24,11 @@ public class ArticlePresenter extends BasePresenter<ArticleModule, IArticleView>
                 public void onSuccess(boolean success, int code, String msg, Object tag, String
                         response) {
                     if (code == 0) {
-                        List<Article> articleList = JSON.parseArray(JSON.parseObject(response).getString("datas"), Article.class);
+                        final List<Article> articleList = JSON.parseArray(JSON.parseObject(response).getString("datas"), Article.class);
                         if (articleList == null || articleList.size() < 1) {
                             getView().onEmpty(tag);
                         } else {
+
                             getView().articleList(articleList);
                         }
 

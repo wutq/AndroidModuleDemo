@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion rootProject.ext.versions.compileSdkVersion
@@ -34,8 +35,6 @@ android {
     dexOptions {
         javaMaxHeapSize "4g"
     }
-
-
 }
 
 dependencies {
@@ -79,6 +78,6 @@ dependencies {
     api rootProject.ext.dependencies["pickerView"]
     //万能Adapter
     api rootProject.ext.dependencies["superAdapter"]
-
-
+    //GreenDao
+    api rootProject.ext.dependencies["greenDao"]
 }

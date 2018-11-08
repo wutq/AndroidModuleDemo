@@ -89,13 +89,20 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     //***************************************空页面方法*************************************
-    protected void showEmptyView() {
-        showEmptyOrErrorView(getString(R.string.no_data), R.drawable.bg_no_data);
+    protected void showEmptyView(String text) {
+        showEmptyOrErrorView(text, R.drawable.bg_no_data);
     }
 
+    protected void showEmptyView() {
+        showEmptyView(getString(R.string.no_data));
+    }
+
+    protected void showErrorView(String text) {
+        showEmptyOrErrorView(text, R.drawable.bg_no_net);
+    }
 
     protected void showErrorView() {
-        showEmptyOrErrorView(getString(R.string.error_data), R.drawable.bg_no_net);
+        showErrorView(getString(R.string.error_data));
     }
 
     public void showEmptyOrErrorView(String text, int img) {
@@ -178,7 +185,6 @@ public abstract class BaseActivity extends FragmentActivity {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventBus(Event event) {
-
     }
 
 

@@ -1,7 +1,7 @@
 package com.wss.module.market.main.mvp;
 
 import com.wss.common.base.mvp.IBaseView;
-import com.wss.module.market.bean.MarketInfo;
+import com.wss.module.market.bean.GoodsInfo;
 
 import java.util.List;
 
@@ -13,5 +13,7 @@ import java.util.List;
 public interface IMarketMainView extends IBaseView {
 
 
-    void dataList(List<MarketInfo> dataList);
+    void dataList(List<GoodsInfo> dataList);
+
+    void cartCount(long count);
 }
