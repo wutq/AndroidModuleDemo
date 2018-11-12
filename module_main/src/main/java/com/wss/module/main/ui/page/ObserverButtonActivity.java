@@ -1,4 +1,4 @@
-package com.wss.module.main.ui.observer;
+package com.wss.module.main.ui.page;
 
 import android.view.View;
 import android.widget.EditText;

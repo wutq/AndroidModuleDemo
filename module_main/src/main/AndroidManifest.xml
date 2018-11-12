@@ -14,17 +14,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.hortab.OrderListActivity" />
         <activity android:name=".ui.refresh.ArticleListActivity" />
         <activity android:name=".ui.selector.SelectorActivity" />
-        <activity android:name=".ui.count.CountViewActivity" />
-        <activity android:name=".ui.item.MultipleItemActivity" />
-        <activity android:name=".ui.observer.ObserverButtonActivity" />
-        <activity android:name=".ui.dialog.DialogActivity" />
-        <activity android:name=".ui.flow.FlowLayoutActivity" />
+        <activity android:name=".ui.page.CountViewActivity" />
+        <activity android:name=".ui.page.MultipleItemActivity" />
+        <activity android:name=".ui.page.ObserverButtonActivity" />
+        <activity android:name=".ui.page.DialogActivity" />
+        <activity android:name=".ui.page.FlowLayoutActivity" />
         <activity android:name=".ui.im.IMActivity" />
         <activity android:name=".ui.im.IMUserInfoActivity" />
-        <activity android:name=".ui.db.DBActivity" />
+        <activity android:name=".ui.hotfix.HotfixActivity" />
+        <activity android:name=".ui.main.MainActivity" />
     </application>
 </manifest>

@@ -23,7 +23,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/bg_of_gradient"
             app:leftText="我的订单"
-            app:leftTextColor="@color/white"
+            app:leftTextColor="@color/red"
             app:showLeftIcon="false" />
 
         <com.wss.common.widget.MultipleItemView
@@ -34,7 +34,7 @@
             android:background="@color/blue"
             app:leftIcon="@drawable/main_icon_18"
             app:leftText="我的大哥"
-            app:leftTextColor="@color/white"
+            app:leftTextColor="@color/blue"
             app:rightText="春哥"
             app:rightTextColor="@color/orange" />
 

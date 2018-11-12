@@ -3,13 +3,13 @@ package com.wss.module.main.ui.main.mvp;
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.module.main.R;
 import com.wss.module.main.bean.MainBlock;
-import com.wss.module.main.ui.count.CountViewActivity;
-import com.wss.module.main.ui.dialog.DialogActivity;
-import com.wss.module.main.ui.flow.FlowLayoutActivity;
 import com.wss.module.main.ui.hortab.OrderListActivity;
 import com.wss.module.main.ui.im.IMActivity;
-import com.wss.module.main.ui.item.MultipleItemActivity;
-import com.wss.module.main.ui.observer.ObserverButtonActivity;
+import com.wss.module.main.ui.page.CountViewActivity;
+import com.wss.module.main.ui.page.DialogActivity;
+import com.wss.module.main.ui.page.FlowLayoutActivity;
+import com.wss.module.main.ui.page.MultipleItemActivity;
+import com.wss.module.main.ui.page.ObserverButtonActivity;
 import com.wss.module.main.ui.refresh.ArticleListActivity;
 import com.wss.module.main.ui.selector.SelectorActivity;
 

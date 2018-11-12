@@ -3,12 +3,14 @@ package com.wss.common.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wss.common.base.R;
@@ -24,6 +26,9 @@ import butterknife.ButterKnife;
  */
 
 public class MultipleItemView extends LinearLayout {
+
+    @BindView(R2.id.rl_layout)
+    RelativeLayout rlLayout;
 
     @BindView(R2.id.iv_left)
     ImageView ivLeft;
@@ -107,6 +112,13 @@ public class MultipleItemView extends LinearLayout {
         edtText.setTextColor(rightTextColor);
         tvRight.setTextColor(rightTextColor);
 
+        //如果手动设置了背景 则赋值给layout 否则设置默认颜色
+        Drawable background = getBackground();
+        if (background != null) {
+            rlLayout.setBackground(background);
+        } else {
+            rlLayout.setBackgroundColor(Color.WHITE);
+        }
     }
 
     /**
@@ -130,7 +142,7 @@ public class MultipleItemView extends LinearLayout {
      * @return MultifunctionalItemView
      */
     public MultipleItemView setShowTopLine(boolean show) {
-        topLine.setVisibility(showTopLine ? VISIBLE : GONE);
+        topLine.setVisibility(show ? VISIBLE : GONE);
         return this;
     }
 
@@ -141,7 +153,7 @@ public class MultipleItemView extends LinearLayout {
      * @return MultifunctionalItemView
      */
     public MultipleItemView setShowBottomLine(boolean show) {
-        bottomLine.setVisibility(showBottomLine ? VISIBLE : GONE);
+        bottomLine.setVisibility(show ? VISIBLE : GONE);
         return this;
     }
 

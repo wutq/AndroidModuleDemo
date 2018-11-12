@@ -1,4 +1,4 @@
-package com.wss.module.main.ui.dialog;
+package com.wss.module.main.ui.page;
 
 import android.view.View;
 

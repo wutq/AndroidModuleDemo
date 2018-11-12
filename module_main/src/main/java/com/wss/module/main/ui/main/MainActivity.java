@@ -1,5 +1,7 @@
 package com.wss.module.main.ui.main;
 
+import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,8 +12,6 @@ import android.widget.TextView;
 
 import com.wss.common.base.BaseActivity;
 import com.wss.common.base.BaseApplication;
-import com.wss.common.bean.Event;
-import com.wss.common.constants.EventAction;
 import com.wss.common.utils.ToastUtils;
 import com.wss.module.main.R;
 import com.wss.module.main.R2;
@@ -74,7 +74,6 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-
     /**
      * Fragment 发生改变
      *
@@ -87,7 +86,6 @@ public class MainActivity extends BaseActivity {
         if (fragment != null) {
             transaction.show(fragment);
         } else {
-
             if (TextUtils.equals(tag, HomeFragment.class.getName())) {
                 fragment = new HomeFragment();
             } else if (TextUtils.equals(tag, CenterFragment.class.getName())) {
@@ -116,17 +114,17 @@ public class MainActivity extends BaseActivity {
 
     }
 
-
+    @SuppressLint("CommitTransaction")
     @Override
-    protected boolean regEvent() {
-        return true;
-    }
-
-    @Override
-    public void onEventBus(Event event) {
-        if (TextUtils.equals(event.getAction(), EventAction.EVENT_MARKET_CLICK)) {
-            ToastUtils.showToast(mContext, "main 模块收到" + event.getData().toString());
+    public void onSaveInstanceState(Bundle outState) {
+        //APP崩溃  清除容器中的Fragment 并选中第一个Tab
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        for (Fragment fragment : mFragmentList) {
+            transaction.remove(fragment);
         }
+        transaction.commitAllowingStateLoss();
+        mainTab.check(R.id.rb_main);
+        super.onSaveInstanceState(outState);
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {

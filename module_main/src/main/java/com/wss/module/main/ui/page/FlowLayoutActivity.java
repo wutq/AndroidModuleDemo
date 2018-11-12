@@ -1,4 +1,4 @@
-package com.wss.module.main.ui.flow;
+package com.wss.module.main.ui.page;
 
 import com.wss.common.base.ActionBarActivity;
 import com.wss.common.base.mvp.BasePresenter;
