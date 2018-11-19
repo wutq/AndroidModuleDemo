@@ -2,6 +2,7 @@ package com.wss.module.main.ui.hortab.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.wss.common.base.RefreshListFragment;
 import com.wss.common.bean.HorizontalTabTitle;
@@ -30,9 +31,9 @@ public class OrderFragment extends RefreshListFragment<OrderPresenter> implement
     private List<Order> orderList = new ArrayList<>();
 
     @Override
-    public void setFragmentData(Object data) {
+    public void setFragmentData(HorizontalTabTitle data) {
         super.setFragmentData(data);
-        this.title = (HorizontalTabTitle) data;
+        this.title = data;
     }
 
     @Override
@@ -58,7 +59,7 @@ public class OrderFragment extends RefreshListFragment<OrderPresenter> implement
     }
 
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(View view, int position) {
 
     }
 
@@ -83,8 +84,8 @@ public class OrderFragment extends RefreshListFragment<OrderPresenter> implement
     }
 
     @Override
-    protected void onEmptyViewClick() {
-        super.onEmptyViewClick();
+    protected void onPageClick() {
+        super.onPageClick();
         initData();
     }
 

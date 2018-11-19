@@ -42,7 +42,7 @@ public class RecommendGoodsAdapter implements CBViewHolderCreator {
                 recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
                 recyclerView.setAdapter(new RecommendGoodsInfoAdapter(mContext, data, R.layout.market_item_of_goods_recommend_list, new OnListItemClickListener() {
                     @Override
-                    public void onItemClick(int position) {
+                    public void onItemClick(View view, int position) {
                         //推荐位商品详情
                         ActivityToActivity.toActivity(mContext, GoodsDetailActivity.class);
                     }

@@ -47,12 +47,12 @@ public abstract class BaseListAdapter<T> extends SuperAdapter<T> {
 
 
     @Override
-    public void onBind(SuperViewHolder viewHolder, int viewType, final int layoutPosition, T data) {
+    public void onBind(final SuperViewHolder viewHolder, int viewType, final int layoutPosition, T data) {
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    listener.onItemClick(layoutPosition);
+                    listener.onItemClick((View) viewHolder.itemView.getParent(), layoutPosition);
                 }
             }
         });

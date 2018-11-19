@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/main_update_bg"
+    android:gravity="center"
+    android:minHeight="240dp"
+    android:minWidth="260dp"
+    android:orientation="vertical">
+
+
+    <com.wss.common.widget.NumberProgressBar
+        android:id="@+id/number_progress"
+        android:layout_width="240dp"
+        android:layout_height="150dp" />
+
+    <TextView
+        android:id="@+id/update_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginTop="30dp"
+        android:text="新版本真正更新,请稍等"
+        android:textColor="@color/blue"
+        android:textSize="16sp" />
+
+
+</LinearLayout>

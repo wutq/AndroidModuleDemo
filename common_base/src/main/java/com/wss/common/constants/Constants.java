@@ -41,6 +41,6 @@ public class Constants {
     public static final String DATE_FORMAT_DEFAULT = DATE_FORMAT_SLASH + " HH:mm:ss";
 
     public static final String ERROR_MESSAGE = "网络连接失败";
-
+    public static final int SUCCESS_CODE = 0;
 
 }

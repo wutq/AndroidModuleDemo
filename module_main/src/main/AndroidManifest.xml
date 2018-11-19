@@ -15,7 +15,7 @@
         </activity>
 
         <activity android:name=".ui.hortab.OrderListActivity" />
-        <activity android:name=".ui.refresh.ArticleListActivity" />
+        <activity android:name=".ui.refresh.RefreshStringActivity" />
         <activity android:name=".ui.selector.SelectorActivity" />
         <activity android:name=".ui.page.CountViewActivity" />
         <activity android:name=".ui.page.MultipleItemActivity" />
@@ -26,5 +26,6 @@
         <activity android:name=".ui.im.IMUserInfoActivity" />
         <activity android:name=".ui.hotfix.HotfixActivity" />
         <activity android:name=".ui.main.MainActivity" />
+        <activity android:name=".ui.page.ScaleImageActivity" />
     </application>
 </manifest>

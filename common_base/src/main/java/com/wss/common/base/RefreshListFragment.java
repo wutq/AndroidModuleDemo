@@ -45,6 +45,12 @@ public abstract class RefreshListFragment<P extends BasePresenter> extends BaseM
     public void dismissLoading() {
         super.dismissLoading();
         stopRefresh();
+    }
+
+    @CallSuper
+    @Override
+    public void showLoading() {
+        super.showLoading();
         hideEmptyView();
     }
 
@@ -55,6 +61,14 @@ public abstract class RefreshListFragment<P extends BasePresenter> extends BaseM
         refreshLayout.finishRefresh();
         refreshLayout.finishLoadMore();
 
+    }
+
+    protected RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
+
+    protected PullToRefreshLayout getRefreshLayout() {
+        return refreshLayout;
     }
 
     protected abstract RecyclerView.LayoutManager getLayoutManager();

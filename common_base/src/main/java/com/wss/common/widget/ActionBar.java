@@ -22,6 +22,7 @@ import com.wss.common.utils.PxUtils;
 
 public class ActionBar extends RelativeLayout {
 
+    private LinearLayout llActionbar;
     private LinearLayout llLeft;
     private LinearLayout llCenter;
     private LinearLayout llRight;
@@ -92,6 +93,7 @@ public class ActionBar extends RelativeLayout {
      */
     private void initView(Context context) {
         rootView = View.inflate(context, R.layout.action_bar, this);
+        llActionbar = findViewById(R.id.ll_actionbar);
         llLeft = findViewById(R.id.ll_actionbar_left);
         llCenter = findViewById(R.id.ll_actionbar_centre);
         llRight = findViewById(R.id.ll_actionbar_right);
@@ -314,6 +316,17 @@ public class ActionBar extends RelativeLayout {
                 }
             }
         });
+    }
+
+
+    /**
+     * ActionBar整个替换
+     *
+     * @param v v
+     */
+    public void setActionBarView(View v) {
+        llActionbar.removeAllViews();
+        llActionbar.addView(v);
     }
 
     /**

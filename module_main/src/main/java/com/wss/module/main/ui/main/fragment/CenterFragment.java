@@ -2,13 +2,14 @@ package com.wss.module.main.ui.main.fragment;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.wss.common.base.BaseMvpFragment;
+import com.wss.common.bean.Template;
 import com.wss.common.listener.OnListItemClickListener;
 import com.wss.common.utils.ActivityToActivity;
 import com.wss.module.main.R;
 import com.wss.module.main.R2;
-import com.wss.module.main.bean.MainBlock;
 import com.wss.module.main.ui.main.adapter.CenterRcyAdapter;
 import com.wss.module.main.ui.main.mvp.CenterPresenter;
 import com.wss.module.main.ui.main.mvp.ICenterView;
@@ -28,7 +29,7 @@ public class CenterFragment extends BaseMvpFragment<CenterPresenter> implements 
     RecyclerView recyclerView;
 
 
-    private List<MainBlock> data = new ArrayList<>();
+    private List<Template> data = new ArrayList<>();
 
     private CenterRcyAdapter adapter;
 
@@ -36,7 +37,7 @@ public class CenterFragment extends BaseMvpFragment<CenterPresenter> implements 
     protected void initView() {
 
         adapter = new CenterRcyAdapter(mContext, data, R.layout.main_item_of_center_list, this);
-        recyclerView.setLayoutManager(new GridLayoutManager(mContext,3));
+        recyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
         recyclerView.setAdapter(adapter);
         presenter.getTabList();
     }
@@ -52,7 +53,7 @@ public class CenterFragment extends BaseMvpFragment<CenterPresenter> implements 
     }
 
     @Override
-    public void tabList(List<MainBlock> blockList) {
+    public void tabList(List<Template> blockList) {
         this.data.addAll(blockList);
         adapter.notifyDataSetChanged();
     }
@@ -60,11 +61,8 @@ public class CenterFragment extends BaseMvpFragment<CenterPresenter> implements 
 
     @SuppressWarnings("unchecked")
     @Override
-    public void onItemClick(int position) {
-        MainBlock mainBlock = data.get(position);
-        if (mainBlock.getClazz() != null) {
-            ActivityToActivity.toActivity(mContext, mainBlock.getClazz());
-        }
+    public void onItemClick(View view, int position) {
+        ActivityToActivity.toActivity(mContext, data.get(position));
     }
 
 

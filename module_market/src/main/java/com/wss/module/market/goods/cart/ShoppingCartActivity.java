@@ -131,7 +131,7 @@ public class ShoppingCartActivity extends ActionBarActivity<CartPresenter> imple
     }
 
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(View view, int position) {
         //TODO
     }
 }

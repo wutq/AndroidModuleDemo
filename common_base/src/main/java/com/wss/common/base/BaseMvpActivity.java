@@ -28,7 +28,6 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
         }
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -38,6 +37,7 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
         }
 
     }
+
 
     //***************************************IBaseView方法实现*************************************
     @Override

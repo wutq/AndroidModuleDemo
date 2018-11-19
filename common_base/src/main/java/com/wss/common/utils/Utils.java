@@ -1,7 +1,11 @@
 package com.wss.common.utils;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+
+import com.wss.common.base.BaseApplication;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -72,4 +76,45 @@ public class Utils {
         return isNum.matches();
     }
 
+    /**
+     * 获取APP包名
+     *
+     * @return String
+     */
+    public static String getPackage() {
+        return BaseApplication.getApplication().getPackageName();
+    }
+
+    /**
+     * 获取APP 版本名称
+     *
+     * @return String
+     */
+    public static String getVersionName() {
+        PackageManager packageManager = BaseApplication.getApplication().getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(getPackage(), 0);
+            return packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    /**
+     * 获取APP 版本号
+     *
+     * @return Integer
+     */
+    public static Integer getVersionCode() {
+        PackageManager packageManager = BaseApplication.getApplication().getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(
+                    getPackage(), 0);
+            return packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

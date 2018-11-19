@@ -26,6 +26,7 @@ public class HttpUtils {
     private HttpUtils(Context context) {
         builder = new Novate.Builder(context);
         builder.baseUrl(NetConfig.Url.getBaseUrl());
+        builder.addCookie(true); //是否同步cooike 默认不同步
 
         //https配置 xxx.cer放在asset目录下
 //        builder.skipSSLSocketFactory(true);//信任所有证书
@@ -35,7 +36,6 @@ public class HttpUtils {
 //        builder.addHeader(headers); //添加公共请求头
 //        builder.addParameters(parameters);//公共参数
 //        builder.connectTimeout(10);  //连接时间 可以忽略
-//        builder.addCookie(false); //是否同步cooike 默认不同步
 //        builder.addCache(true);  //是否缓存 默认缓存
 //        builder.addCache(cache, cacheTime);   //自定义缓存
 //        builder.addLog(true);//是否开启log

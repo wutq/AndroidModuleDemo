@@ -19,5 +19,15 @@ public interface EventAction {
     /**
      * 清空购物车
      */
-    String EVENT_SHOPPING_CART_CLEAN = "event__shopping_cart_clean";
+    String EVENT_SHOPPING_CART_CLEAN = "event_shopping_cart_clean";
+
+    /**
+     * 登录成功
+     */
+    String EVENT_LOGIN_SUCCESS = "EVENT_LOGIN_SUCCESS";
+
+    /**
+     * 注册成功
+     */
+    String EVENT_REGISTER_SUCCESS = "EVENT_REGISTER_SUCCESS";
 }

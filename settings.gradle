@@ -1,1 +1,1 @@
-include ':app', ':common_base', ':module_main', ':module_wan_android', ':module_market'
+include ':app', ':common_base', ':module_main', ':module_wan_android', ':module_market', ':module_user'

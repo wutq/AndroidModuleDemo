@@ -45,6 +45,13 @@ public abstract class RefreshListActivity<P extends BasePresenter> extends Actio
     public void dismissLoading() {
         super.dismissLoading();
         stopRefresh();
+    }
+
+
+    @CallSuper
+    @Override
+    public void showLoading() {
+        super.showLoading();
         hideEmptyView();
     }
 

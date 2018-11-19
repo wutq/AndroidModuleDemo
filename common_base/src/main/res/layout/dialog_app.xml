@@ -74,7 +74,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/white_light" />
+                    android:background="@color/light_white" />
 
                 <EditText
                     android:id="@+id/edt_count"
@@ -93,7 +93,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/white_light" />
+                    android:background="@color/light_white" />
 
                 <LinearLayout
                     android:id="@+id/plus"

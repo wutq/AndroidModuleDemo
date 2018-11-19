@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.wss.common.widget.pulltorefresh.PullToRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ptrl_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nsv_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.bigkoo.convenientbanner.ConvenientBanner
+                android:id="@+id/cb_banner"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                app:canLoop="true" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_block"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/ll_go_top"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="right|bottom"
+        android:layout_margin="10dp"
+        android:background="@drawable/shape_item_index_white"
+        android:gravity="center"
+        android:padding="10dp"
+        android:visibility="gone"
+        tools:ignore="RtlHardcoded">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/go_top" />
+    </LinearLayout>
+</com.wss.common.widget.pulltorefresh.PullToRefreshLayout>

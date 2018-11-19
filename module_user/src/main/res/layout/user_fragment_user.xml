@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@color/light_white"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/iv_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:id="@+id/ll_logged"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_head"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:scaleType="centerCrop" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:id="@+id/tv_name"
+                            style="@style/TextStyle"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:textColor="@color/yellow" />
+
+                        <View
+                            style="@style/VerticalLine"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginStart="10dp"
+                            android:background="@color/yellow" />
+
+                        <TextView
+                            android:id="@+id/tv_email"
+                            style="@style/TextStyle"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textColor="@color/yellow" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="立即登录"
+                    android:textColor="@color/theme"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <com.wss.common.widget.MultipleItemView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            app:leftIcon="@drawable/user_icon_33"
+            app:leftText="我的金币"
+            app:rightText="9999"
+            app:rightTextColor="@color/orange" />
+
+        <com.wss.common.widget.MultipleItemView
+            android:id="@+id/miv_collection"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            app:leftIcon="@drawable/user_icon_34"
+            app:leftText="我的收藏"
+            app:showTopLine="false" />
+
+        <com.wss.common.widget.MultipleItemView
+            android:id="@+id/miv_order"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            app:leftIcon="@drawable/user_icon_35"
+            app:leftText="我的订单"
+            app:showTopLine="false" />
+
+        <com.wss.common.widget.MultipleItemView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            app:leftIcon="@drawable/user_icon_36"
+            app:leftText="历史记录"
+            app:showTopLine="false" />
+
+        <com.wss.common.widget.MultipleItemView
+            android:id="@+id/miv_check"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            app:leftIcon="@drawable/user_icon_32"
+            app:leftText="检查更新" />
+
+        <com.wss.common.widget.MultipleItemView
+            android:id="@+id/miv_about"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            app:leftIcon="@drawable/user_icon_31"
+            app:leftText="关于我们"
+            app:showTopLine="false" />
+
+
+        <TextView
+            android:id="@+id/tv_login_out"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/corners_red_shape"
+            android:gravity="center"
+            android:text="退出登录"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</ScrollView>

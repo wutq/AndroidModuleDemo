@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/common_base" />
             <option value="$PROJECT_DIR$/module_main" />
             <option value="$PROJECT_DIR$/module_market" />
+            <option value="$PROJECT_DIR$/module_user" />
             <option value="$PROJECT_DIR$/module_wan_android" />
           </set>
         </option>

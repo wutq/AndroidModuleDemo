@@ -69,8 +69,10 @@ dependencies {
     api rootProject.ext.dependencies["immersionbar"]
     //banner
     api rootProject.ext.dependencies["banner"]
+//    //图片加载
+//    api rootProject.ext.dependencies["picasso"]
     //图片加载
-    api rootProject.ext.dependencies["picasso"]
+    api rootProject.ext.dependencies["glide"]
     //lombok
     api rootProject.ext.dependencies["lombok"]
     api rootProject.ext.dependencies["lombokJavax"]
@@ -80,4 +82,7 @@ dependencies {
     api rootProject.ext.dependencies["superAdapter"]
     //GreenDao
     api rootProject.ext.dependencies["greenDao"]
+    //scaleImageView
+    api rootProject.ext.dependencies["scaleImageView"]
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 }

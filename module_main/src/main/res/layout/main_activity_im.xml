@@ -51,7 +51,7 @@
             android:text="发送"
             android:textColor="@color/black"
             app:defaultBgResource="@drawable/corner_gray_shape"
-            app:pressBgResource="@drawable/main_bg_of_orange_gradient" />
+            app:pressBgResource="@drawable/bg_of_orange_gradient" />
 
     </RelativeLayout>
 </RelativeLayout>

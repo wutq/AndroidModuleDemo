@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wss.module.user">
+
+    <application>
+        <activity
+            android:name=".ui.account.LoginActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity android:name=".ui.account.RegisterActivity" />
+        <activity android:name=".ui.about.AboutActivity" />
+    </application>
+</manifest>

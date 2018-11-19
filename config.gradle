@@ -33,14 +33,16 @@ ext {
             novateVersion           : "1.5.5",
             loggerVersion           : "2.2.0",
             fastjsonVersion         : "1.1.54",
-            immersionbarVersion     : "2.3.2-beta01",
-            picassoVersion          : "2.71828",
+            immersionbarVersion     : "2.3.2-beta05",
+//            picassoVersion          : "2.71828",
+            glideVersion            : "4.8.0",
             bannerVersion           : "2.1.4",
             javaxVersion            : "1.2",
             lombokVersion           : "1.16.6",
             greendaoVersion         : "3.2.2",
             pickerViewVersion       : "4.1.6",
             superAdapterVersion     : "3.6.8",
+            scaleImageViewVersion   : "3.10.0",
 
     ]
     dependencies = ["appcompat_v7"        : "com.android.support:appcompat-v7:${versions["androidSupportSdkVersion"]}",
@@ -85,7 +87,8 @@ ext {
                     "banner"              : "com.bigkoo:ConvenientBanner:${versions["bannerVersion"]}",
 
                     //图片加载
-                    "picasso"             : "com.squareup.picasso:picasso:${versions["picassoVersion"]}",
+//                    "picasso"             : "com.squareup.picasso:picasso:${versions["picassoVersion"]}",
+                    "glide"               : "com.github.bumptech.glide:glide:${versions["glideVersion"]}",
 
                     //lombok
                     "lombokJavax"         : "javax.annotation:javax.annotation-api:${versions["javaxVersion"]}",
@@ -100,6 +103,8 @@ ext {
                     //万能Adapter
                     "superAdapter"        : "org.byteam.superadapter:superadapter:${versions["superAdapterVersion"]}",
 
+                    //展示大图+手势滑动
+                    "scaleImageView"      : "com.davemorrissey.labs:subsampling-scale-image-view:${versions["scaleImageViewVersion"]}"
 
 //                    //图片缩放
 //                    "photoview"                      : "com.github.chrisbanes.photoview:library:1.2.4",

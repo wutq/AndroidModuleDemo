@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.tamic.novate.Throwable;
-import com.wss.common.base.mvp.IBaseModule;
+import com.wss.common.base.mvp.BaseModule;
 import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.common.utils.Utils;
 
@@ -13,7 +13,7 @@ import com.wss.common.utils.Utils;
  * Created by 吴天强 on 2018/10/24.
  */
 
-public class SelectorModule implements IBaseModule {
+public class SelectorModule extends BaseModule {
 
     /**
      * 获取省市区

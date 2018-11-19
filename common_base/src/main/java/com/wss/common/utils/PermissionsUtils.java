@@ -23,7 +23,7 @@ public class PermissionsUtils {
      * @param context     context
      * @param permissions 权限列表
      */
-    public static void checkPermissions(Activity context, String... permissions) {
+    public static boolean checkPermissions(Activity context, String... permissions) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             List<String> permissionsList = new ArrayList<>();
@@ -33,10 +33,14 @@ public class PermissionsUtils {
                         permissionsList.add(permission);
                     }
                 }
-                // 遍历完后申请
-                applyPermissions(context, permissionsList);
+                if (permissionsList.size() > 0) {
+                    // 遍历完后申请
+                    applyPermissions(context, permissionsList);
+                    return false;
+                }
             }
         }
+        return true;
     }
 
     /**
@@ -45,6 +49,7 @@ public class PermissionsUtils {
     private static boolean isHavePermissions(Activity context, String permissions) {
         return ContextCompat.checkSelfPermission(context, permissions) == PackageManager.PERMISSION_GRANTED;
     }
+
 
     /**
      * 申请权限

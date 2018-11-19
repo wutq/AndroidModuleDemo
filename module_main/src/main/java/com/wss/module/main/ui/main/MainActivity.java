@@ -1,7 +1,5 @@
 package com.wss.module.main.ui.main;
 
-import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -12,12 +10,12 @@ import android.widget.TextView;
 
 import com.wss.common.base.BaseActivity;
 import com.wss.common.base.BaseApplication;
+import com.wss.common.constants.ARouterConfig;
+import com.wss.common.utils.ARouterUtils;
 import com.wss.common.utils.ToastUtils;
 import com.wss.module.main.R;
 import com.wss.module.main.R2;
 import com.wss.module.main.ui.main.fragment.CenterFragment;
-import com.wss.module.main.ui.main.fragment.HomeFragment;
-import com.wss.module.main.ui.main.fragment.UserFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,21 +50,21 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        changeFragment(HomeFragment.class.getSimpleName());
+        changeFragment(ARouterConfig.WAN_MAIN_FRAGMENT);
         mainTab.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 if (checkedId == R.id.rb_main) {
-                    changeFragment(HomeFragment.class.getName());
+                    changeFragment(ARouterConfig.WAN_MAIN_FRAGMENT);
                     tvTitle.setText(R.string.main_tab_home);
                 } else if (checkedId == R.id.rb_center) {
                     changeFragment(CenterFragment.class.getName());
                     tvTitle.setText(R.string.main_tab_center);
                 } else if (checkedId == R.id.rb_user) {
-                    changeFragment(UserFragment.class.getName());
+                    changeFragment(ARouterConfig.USER_MAIN_FRAGMENT);
                     tvTitle.setText(R.string.main_tab_user);
                 } else {
-                    changeFragment(HomeFragment.class.getName());
+                    changeFragment(ARouterConfig.WAN_MAIN_FRAGMENT);
                     tvTitle.setText(R.string.main_tab_home);
                 }
 
@@ -86,14 +84,14 @@ public class MainActivity extends BaseActivity {
         if (fragment != null) {
             transaction.show(fragment);
         } else {
-            if (TextUtils.equals(tag, HomeFragment.class.getName())) {
-                fragment = new HomeFragment();
+            if (TextUtils.equals(tag, ARouterConfig.WAN_MAIN_FRAGMENT)) {
+                fragment = ARouterUtils.getFragment(ARouterConfig.WAN_MAIN_FRAGMENT);
             } else if (TextUtils.equals(tag, CenterFragment.class.getName())) {
                 fragment = new CenterFragment();
-            } else if (TextUtils.equals(tag, UserFragment.class.getName())) {
-                fragment = new UserFragment();
+            } else if (TextUtils.equals(tag, ARouterConfig.USER_MAIN_FRAGMENT)) {
+                fragment = ARouterUtils.getFragment(ARouterConfig.USER_MAIN_FRAGMENT);
             } else {
-                fragment = new HomeFragment();
+                fragment = ARouterUtils.getFragment(ARouterConfig.USER_MAIN_FRAGMENT);
             }
             mFragmentList.add(fragment);
             transaction.add(R.id.fl_context, fragment, fragment.getClass().getName());
@@ -114,18 +112,6 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @SuppressLint("CommitTransaction")
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        //APP崩溃  清除容器中的Fragment 并选中第一个Tab
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        for (Fragment fragment : mFragmentList) {
-            transaction.remove(fragment);
-        }
-        transaction.commitAllowingStateLoss();
-        mainTab.check(R.id.rb_main);
-        super.onSaveInstanceState(outState);
-    }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {

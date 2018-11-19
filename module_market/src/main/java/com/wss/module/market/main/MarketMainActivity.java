@@ -96,7 +96,7 @@ public class MarketMainActivity extends ActionBarActivity<MarketMainPresenter> i
     }
 
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(View view, int position) {
         ActivityToActivity.toActivity(mContext, GoodsDetailActivity.class);
     }
 

@@ -2,17 +2,21 @@ package com.wss.common.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.wss.common.adapter.BannerImgAdapter;
 import com.wss.common.base.R;
+import com.wss.common.manage.BlurTransformation;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -34,26 +38,49 @@ public class ImageUtils {
      * @param imageView imageView
      * @param imageView transformation 转换器
      */
-    public static void loadImage(ImageView imageView, String url, Transformation transformation) {
-        Picasso.get()
+    public static void loadImage(ImageView imageView, String url) {
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
+        Glide.with(imageView.getContext())
                 .load(url)
-//                .placeholder(R.drawable.bg_load_failed)
-                .error(R.drawable.bg_load_failed)
-                .transform(transformation)
+                .apply(new RequestOptions()
+                        .placeholder(R.drawable.ic_loading_image)
+                        .error(new ColorDrawable(Color.WHITE))
+                        .fallback(new ColorDrawable(Color.RED)))
                 .into(imageView);
     }
 
     /**
-     * 加载网络图片
+     * 加载圆形
      *
      * @param url       url
      * @param imageView imageView
      */
-    public static void loadImage(ImageView imageView, String url) {
-        Picasso.get()
+    public static void loadImageCircle(ImageView imageView, String url) {
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
+        Glide.with(imageView.getContext())
                 .load(url)
-//                .placeholder(R.drawable.bg_load_failed)
-                .error(R.drawable.bg_load_failed)
+                .apply(RequestOptions.circleCropTransform()
+                        .placeholder(R.drawable.ic_loading_image)
+                        .error(new ColorDrawable(Color.WHITE))
+                        .fallback(new ColorDrawable(Color.RED)))
+                .into(imageView);
+    }
+
+    /**
+     * 加载高斯模糊图
+     *
+     * @param imageView imageView
+     * @param url       url
+     */
+    public static void loadImageBlur(ImageView imageView, String url) {
+        Glide.with(imageView)
+                .load(url)
+                .apply(RequestOptions.bitmapTransform(
+                        new BlurTransformation(imageView.getContext())))
                 .into(imageView);
     }
 

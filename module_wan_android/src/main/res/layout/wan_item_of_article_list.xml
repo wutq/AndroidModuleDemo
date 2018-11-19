@@ -3,55 +3,84 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@color/white"
+        android:minHeight="60dp"
+        android:orientation="vertical"
         android:padding="10dp">
 
         <TextView
             android:id="@+id/tv_title"
             style="@style/TextStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp" />
+            android:layout_height="wrap_content" />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_title"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_author_text"
-                style="@style/TextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="作者："
+                android:text="分类："
+                android:textColor="@color/blue"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_type1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/bg_of_orange_gradient"
+                android:padding="4dp"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_type2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/bg_of_green_gradient"
+                android:padding="4dp"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:id="@+id/tv_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textColor="@color/gray"
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/tv_author"
-                style="@style/TextStyle"
+                android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/tv_author_text"
-                android:textSize="14sp" />
+                android:layout_toStartOf="@+id/iv_collection"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/tv_date"
-                style="@style/TextStyle"
+            <ImageView
+                android:id="@+id/iv_collection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:textSize="14sp" />
+                android:layout_marginStart="10dp"
+                android:background="@drawable/icon_collection" />
         </RelativeLayout>
-
-
-    </RelativeLayout>
-
+    </LinearLayout>
 
 </LinearLayout>

@@ -64,5 +64,11 @@ public class Article extends BaseBean {
     private int zan;
     private List<ArticleTag> tags;
 
+    @Getter
+    @Setter
+    public class ArticleTag extends BaseBean {
 
+        private String name;
+        private String url;
+    }
 }

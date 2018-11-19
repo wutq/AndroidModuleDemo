@@ -46,6 +46,7 @@ dependencies {
         implementation project(':module_main')
         implementation project(':module_market')
         implementation project(':module_wan_android')
+        implementation project(':module_user')
 
     }
 }

@@ -48,7 +48,7 @@
                 app:pstsScaleZoomMax="0.0"
                 app:pstsSmoothScrollWhenClickTab="false"
                 app:pstsTabPaddingLeftRight="12dp"
-                app:pstsTextDefaultColor="@color/white_light"
+                app:pstsTextDefaultColor="@color/light_white"
                 app:pstsTextSelectedColor="@color/white" />
 
             <TextView

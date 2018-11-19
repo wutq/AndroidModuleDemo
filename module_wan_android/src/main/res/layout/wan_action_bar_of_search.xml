@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_back"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:onClick="onViewClicked">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/ic_back_black" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edt_search"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="15dp"
+        android:layout_toEndOf="@+id/ll_back"
+        android:layout_toStartOf="@+id/obt_search"
+        android:background="@drawable/stroke_hollow_white_shape"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/wan_icon_top_search"
+        android:gravity="center_vertical"
+        android:hint="请输入搜索内容"
+        android:imeOptions="actionSearch"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:singleLine="true"
+        android:textSize="14sp" />
+
+    <com.wss.common.widget.ObserverButton
+        android:id="@+id/obt_search"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:onClick="onViewClicked"
+        android:text="搜索"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:defaultBgResource="@drawable/corner_gray_shape"
+        app:pressBgResource="@drawable/bg_of_orange_gradient" />
+
+</RelativeLayout>
+
+

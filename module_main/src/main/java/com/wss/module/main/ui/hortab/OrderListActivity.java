@@ -1,9 +1,11 @@
 package com.wss.module.main.ui.hortab;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.wss.common.base.BaseFragment;
 import com.wss.common.base.HorizontalTabActivity;
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.bean.HorizontalTabTitle;
+import com.wss.common.constants.ARouterConfig;
 import com.wss.module.main.ui.hortab.fragment.OrderFragment;
 
 import java.util.ArrayList;
@@ -13,7 +15,7 @@ import java.util.List;
  * Describe：水平滑动Tab
  * Created by 吴天强 on 2018/10/22.
  */
-
+@Route(path = ARouterConfig.MAIN_ORDER_LIST)
 public class OrderListActivity extends HorizontalTabActivity {
 
 

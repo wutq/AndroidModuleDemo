@@ -1,7 +1,7 @@
 package com.wss.module.main.ui.main.mvp;
 
 import com.wss.common.base.mvp.IBaseView;
-import com.wss.module.main.bean.MainBlock;
+import com.wss.common.bean.Template;
 
 import java.util.List;
 
@@ -12,5 +12,5 @@ import java.util.List;
 
 public interface ICenterView extends IBaseView {
 
-    void tabList(List<MainBlock> blockList);
+    void tabList(List<Template> blockList);
 }

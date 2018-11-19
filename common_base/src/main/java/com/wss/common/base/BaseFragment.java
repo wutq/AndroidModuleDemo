@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.TextView;
 
+import com.wss.common.bean.Event;
+import com.wss.common.bean.HorizontalTabTitle;
 import com.wss.common.widget.dialog.LoadingDialog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -91,7 +93,7 @@ public abstract class BaseFragment extends Fragment {
             rootView.findViewById(R.id.ll_empty).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onEmptyViewClick();
+                    onPageClick();
                 }
             });
         }
@@ -106,7 +108,7 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 空页面被点击
      */
-    protected void onEmptyViewClick() {
+    protected void onPageClick() {
 
     }
 
@@ -116,7 +118,7 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 给Fragment设置数据
      */
-    public void setFragmentData(Object data) {
+    public void setFragmentData(HorizontalTabTitle data) {
 
     }
 
@@ -124,7 +126,7 @@ public abstract class BaseFragment extends Fragment {
      * 子类接受事件 重写该方法
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventBus(Object event) {
+    public void onEventBus(Event event) {
     }
 
     /**

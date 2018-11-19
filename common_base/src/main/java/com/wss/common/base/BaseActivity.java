@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.gyf.barlibrary.ImmersionBar;
@@ -45,17 +46,20 @@ public abstract class BaseActivity extends FragmentActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         if (isActionBar()) {
             setContentView(R.layout.activity_base);
             ((ViewGroup) findViewById(R.id.fl_content)).addView(getLayoutInflater().inflate(getLayoutId(), null));
         } else {
             setContentView(getLayoutId());
         }
-        unbinder = ButterKnife.bind(this);
-        mContext = this;
         //初始化ButterKnife
+        unbinder = ButterKnife.bind(this);
+
         //沉浸式状态栏
         initImmersionBar(R.color.blue);
+
         //加入Activity管理器
         BaseApplication.getApplication().getActivityManage().addActivity(this);
         if (regEvent()) {
@@ -65,10 +69,16 @@ public abstract class BaseActivity extends FragmentActivity {
 
     }
 
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        initView();
+
+    /**
+     * 沉浸栏颜色
+     */
+    protected void initImmersionBar(int color) {
+        mImmersionBar = ImmersionBar.with(this);
+        if (color != 0) {
+            mImmersionBar.statusBarColor(color);
+        }
+        mImmersionBar.init();
     }
 
     @Override
@@ -86,6 +96,12 @@ public abstract class BaseActivity extends FragmentActivity {
         }
         //将Activity从管理器移除
         BaseApplication.getApplication().getActivityManage().removeActivity(this);
+    }
+
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        initView();
     }
 
     //***************************************空页面方法*************************************
@@ -115,7 +131,7 @@ public abstract class BaseActivity extends FragmentActivity {
             findViewById(R.id.ll_empty).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onEmptyViewClick();
+                    onPageClick();
                 }
             });
         }
@@ -130,7 +146,7 @@ public abstract class BaseActivity extends FragmentActivity {
     /**
      * 空页面被点击
      */
-    protected void onEmptyViewClick() {
+    protected void onPageClick() {
 
     }
 
@@ -163,20 +179,6 @@ public abstract class BaseActivity extends FragmentActivity {
             }
         }
         return true;
-    }
-
-
-    /**
-     * 沉浸栏颜色
-     */
-    protected void initImmersionBar(int color) {
-        if (mImmersionBar == null) {
-            mImmersionBar = ImmersionBar.with(this);
-            if (color != 0) {
-                mImmersionBar.statusBarColor(color);
-            }
-            mImmersionBar.init();
-        }
     }
 
 

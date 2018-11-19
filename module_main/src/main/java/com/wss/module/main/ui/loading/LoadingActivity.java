@@ -19,7 +19,7 @@ import com.wss.module.main.ui.main.MainActivity;
 
 public class LoadingActivity extends BaseActivity {
 
-    private long loadingTime = 1;
+    private long loadingTime = 500;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

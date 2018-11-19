@@ -44,41 +44,11 @@ public class UpdateManager {
     private ProgressBar progressBar;
     private AppDialog dialog;
     private static UpdateManager manager;
-    private String downloadUrl;
 
     private UpdateManager(Context context) {
         this.mContext = context;
         //每次启动先删除本地原有APK
         FileUtils.deleteFile(apkPath);
-    }
-
-    public static synchronized UpdateManager getInstance(Context context) {
-        if (manager == null) {
-            manager = new UpdateManager(context);
-        }
-        return manager;
-    }
-
-    /**
-     * 设置下载地址
-     *
-     * @param url url
-     * @return UpdateManager
-     */
-    public UpdateManager setDownloadUrl(String url) {
-        this.downloadUrl = url;
-        return this;
-    }
-
-    /**
-     * 弹出下载框
-     */
-    public void download() {
-        if (TextUtils.isEmpty(downloadUrl)) {
-            ToastUtils.showToast(mContext, "请设置下载Url");
-            return;
-        }
-
         View progressBarView = View.inflate(mContext, R.layout.laytou_update_progress, null);
         progressBar = progressBarView.findViewById(R.id.pb_update_progress);
         dialog = new AppDialog(mContext);
@@ -89,10 +59,28 @@ public class UpdateManager {
                     public void onClick(String val) {
                         ToastUtils.showToast(mContext, "已切换到后台下载···");
                     }
-                })
-                .show();
+                });
+    }
+
+    public static synchronized UpdateManager getInstance(Context context) {
+        if (manager == null) {
+            manager = new UpdateManager(context);
+        }
+        return manager;
+    }
+
+    /**
+     * 弹出下载框
+     */
+    public void download(String url) {
+        if (TextUtils.isEmpty(url)) {
+            ToastUtils.showToast(mContext, "请设置下载Url");
+            return;
+        }
+        dialog.show();
+
         HttpUtils.getInstance(mContext)
-                .downloadFile(downloadUrl, new RxFileCallBack(apkPath, "Temp.apk") {
+                .downloadFile(url, new RxFileCallBack(apkPath, "Temp.apk") {
 
                     @Override
                     public void onNext(Object tag, File file) {
@@ -129,7 +117,8 @@ public class UpdateManager {
                     break;
                 case DOWNLOAD_SUCCESS:
                     dialog.dismiss();
-                    installApk();
+                    ToastUtils.showToast(mContext, "下载完成");
+//                    installApk();
                     break;
                 case DOWNLOAD_FAILED:
                     dialog.dismiss();

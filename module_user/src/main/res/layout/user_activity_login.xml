@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <View style="@style/HorizontalLine" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:paddingStart="10dp"
+            tools:ignore="RtlSymmetry">
+
+            <TextView
+                style="@style/TextStyle"
+                android:text="用户名" />
+
+            <EditText
+                android:id="@+id/edt_name"
+                style="@style/TextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:text="于慢慢家的吴蜀黍"
+                android:layout_marginStart="10dp"
+                android:background="@color/transparent"
+                android:hint="请输入用户名"
+                android:maxLength="20"
+                android:maxLines="1" />
+        </LinearLayout>
+
+        <View style="@style/HorizontalLine" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:paddingStart="10dp"
+            tools:ignore="RtlSymmetry">
+
+            <TextView
+                style="@style/TextStyle"
+                android:text="密     码" />
+
+            <EditText
+                android:id="@+id/edt_pwd"
+                style="@style/TextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="10dp"
+                android:background="@color/transparent"
+                android:hint="请输入密码"
+                android:text="sinian"
+                android:inputType="textPassword"
+                android:maxLength="20"
+                android:maxLines="1" />
+        </LinearLayout>
+
+        <View style="@style/HorizontalLine" />
+    </LinearLayout>
+
+    <com.wss.common.widget.ObserverButton
+        android:id="@+id/ob_login"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="登录"
+        android:textColor="@color/black"
+        app:defaultBgResource="@drawable/corner_gray_shape"
+        app:pressBgResource="@drawable/bg_of_orange_gradient" />
+
+    <TextView
+        android:id="@+id/ob_register"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_of_orange_gradient"
+        android:gravity="center"
+        android:text="注册"
+        android:textColor="@color/white" />
+</LinearLayout>
