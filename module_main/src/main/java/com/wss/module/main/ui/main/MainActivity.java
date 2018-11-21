@@ -1,21 +1,29 @@
 package com.wss.module.main.ui.main;
 
+import android.Manifest;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
-import com.wss.common.base.BaseActivity;
+import com.wss.common.base.ActionBarActivity;
 import com.wss.common.base.BaseApplication;
+import com.wss.common.base.BaseFragment;
 import com.wss.common.constants.ARouterConfig;
+import com.wss.common.manage.UpdateManager;
+import com.wss.common.net.Api;
 import com.wss.common.utils.ARouterUtils;
+import com.wss.common.utils.PermissionsUtils;
 import com.wss.common.utils.ToastUtils;
+import com.wss.common.widget.dialog.AppDialog;
 import com.wss.module.main.R;
 import com.wss.module.main.R2;
+import com.wss.module.main.bean.AppInfo;
 import com.wss.module.main.ui.main.fragment.CenterFragment;
+import com.wss.module.main.ui.main.mvp.IMainView;
+import com.wss.module.main.ui.main.mvp.MainPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,21 +35,22 @@ import butterknife.BindView;
  * Created by 吴天强 on 2018/10/15.
  */
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends ActionBarActivity<MainPresenter> implements IMainView {
 
 
     @BindView(R2.id.rg_main)
     RadioGroup mainTab;
-
-    @BindView(R2.id.tv_title)
-    TextView tvTitle;
-
 
     private long mExitTime;
     /**
      * 存放切换Fragment
      */
     private List<Fragment> mFragmentList = new ArrayList<>();
+
+    //玩android模块Fragment
+    private BaseFragment wanFragment = ARouterUtils.getFragment(ARouterConfig.WAN_MAIN_FRAGMENT);
+    //我的模块Fragment
+    private BaseFragment userFragment = ARouterUtils.getFragment(ARouterConfig.USER_MAIN_FRAGMENT);
 
     @Override
     protected int getLayoutId() {
@@ -50,27 +59,33 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        actionBar.showBackImg(false);
         changeFragment(ARouterConfig.WAN_MAIN_FRAGMENT);
+        setTitleText(R.string.main_tab_home);
         mainTab.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 if (checkedId == R.id.rb_main) {
                     changeFragment(ARouterConfig.WAN_MAIN_FRAGMENT);
-                    tvTitle.setText(R.string.main_tab_home);
+                    setTitleText(R.string.main_tab_home);
                 } else if (checkedId == R.id.rb_center) {
                     changeFragment(CenterFragment.class.getName());
-                    tvTitle.setText(R.string.main_tab_center);
+                    setTitleText(R.string.main_tab_center);
                 } else if (checkedId == R.id.rb_user) {
                     changeFragment(ARouterConfig.USER_MAIN_FRAGMENT);
-                    tvTitle.setText(R.string.main_tab_user);
+                    setTitleText(R.string.main_tab_user);
                 } else {
                     changeFragment(ARouterConfig.WAN_MAIN_FRAGMENT);
-                    tvTitle.setText(R.string.main_tab_home);
+                    setTitleText(R.string.main_tab_home);
                 }
 
             }
-        });
+        });  //检查文件权限
+        if (PermissionsUtils.checkPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            presenter.checkUpdate();
+        }
     }
+
 
     /**
      * Fragment 发生改变
@@ -85,16 +100,16 @@ public class MainActivity extends BaseActivity {
             transaction.show(fragment);
         } else {
             if (TextUtils.equals(tag, ARouterConfig.WAN_MAIN_FRAGMENT)) {
-                fragment = ARouterUtils.getFragment(ARouterConfig.WAN_MAIN_FRAGMENT);
+                fragment = wanFragment;
             } else if (TextUtils.equals(tag, CenterFragment.class.getName())) {
                 fragment = new CenterFragment();
             } else if (TextUtils.equals(tag, ARouterConfig.USER_MAIN_FRAGMENT)) {
-                fragment = ARouterUtils.getFragment(ARouterConfig.USER_MAIN_FRAGMENT);
+                fragment = userFragment;
             } else {
-                fragment = ARouterUtils.getFragment(ARouterConfig.USER_MAIN_FRAGMENT);
+                fragment = wanFragment;
             }
             mFragmentList.add(fragment);
-            transaction.add(R.id.fl_context, fragment, fragment.getClass().getName());
+            transaction.add(R.id.fl_context, fragment, tag);
         }
         transaction.commitAllowingStateLoss();
     }
@@ -126,4 +141,26 @@ public class MainActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected MainPresenter createPresenter() {
+        return new MainPresenter();
+    }
+
+    @Override
+    public void needUpdate(AppInfo appInfo) {
+        String context = "版本更新！";
+        if (appInfo != null && !TextUtils.isEmpty(appInfo.getDescribe())) {
+            context = appInfo.getDescribe();
+        }
+        new AppDialog(mContext)
+                .setTitle("提示更新")
+                .setContent(context)
+                .setRightButton("更新", new AppDialog.OnButtonClickListener() {
+                    @Override
+                    public void onClick(String val) {
+                        UpdateManager.getInstance(mContext).download(Api.DOWNLOAD_APK);
+                    }
+                })
+                .show();
+    }
 }

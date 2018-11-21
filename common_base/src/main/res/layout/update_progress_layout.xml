@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:background="@drawable/main_update_bg"
+    android:background="@drawable/update_bg"
     android:gravity="center"
     android:minHeight="240dp"
     android:minWidth="260dp"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginTop="30dp"
-        android:text="新版本真正更新,请稍等"
+        android:text="新版本正在更新,请稍等"
         android:textColor="@color/blue"
         android:textSize="16sp" />
 

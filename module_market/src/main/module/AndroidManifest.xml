@@ -9,12 +9,14 @@
         android:label="@string/app_name"
         android:theme="@style/AdmTheme">
 
-        <activity android:name="com.wss.module.market.main.MarketMainActivity">
+        <activity android:name=".main.MarketMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".goods.detail.GoodsDetailActivity" />
+        <activity android:name=".goods.cart.ShoppingCartActivity" />
     </application>
 </manifest>

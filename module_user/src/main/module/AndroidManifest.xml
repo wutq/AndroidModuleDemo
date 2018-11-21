@@ -9,6 +9,20 @@
         android:label="@string/app_name"
         android:theme="@style/AdmTheme">
 
+        <activity android:name=".ui.main.UserMainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity
+            android:name=".ui.account.LoginActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity android:name=".ui.account.RegisterActivity" />
+        <activity android:name=".ui.about.AboutActivity" />
+
 
     </application>
 </manifest>

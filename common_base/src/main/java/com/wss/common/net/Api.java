@@ -7,6 +7,7 @@ package com.wss.common.net;
 
 public interface Api {
 
+    //**********************************************鸿洋开放接口**************************************
     /**
      * 获取Banner
      */
@@ -65,8 +66,22 @@ public interface Api {
      */
     String COLLECTION_LIST = "/lg/collect/list/%s/json";
 
+
+    //**********************************************鸿洋开放接口**************************************
+
+
+    //**********************************************自己服务器接口************************************
+
     /**
-     * 下载文件
+     * 检查更新
      */
-    String DOWNLOAD_FILE = "http://wap.dl.pinyin.sogou.com/wapdl/hole/201512/03/SogouInput_android_v7.11_sweb.apk";
+    String CHECK_UPDATE = "/app/checkUpdate.json";
+
+    /**
+     * 下载更新APK
+     */
+    String DOWNLOAD_APK = "/app/download.json";
+
+    //**********************************************自己服务器接口************************************
+
 }

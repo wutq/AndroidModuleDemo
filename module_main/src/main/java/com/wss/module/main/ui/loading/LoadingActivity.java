@@ -25,14 +25,6 @@ public class LoadingActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        if (!UserUtils.getInstance().isFirstBoot()) {
-//            GuideActivity.actionStart(mContext);
-//            finish();
-//        } else {
-//            handler.sendEmptyMessageDelayed(0, loadingTime);
-//        }
-//        CountryDaoUtils.initialization();
-
         handler.sendEmptyMessageDelayed(0, loadingTime);
     }
 

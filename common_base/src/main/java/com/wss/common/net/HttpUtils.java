@@ -1,6 +1,7 @@
 package com.wss.common.net;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.orhanobut.logger.Logger;
 import com.tamic.novate.Novate;
@@ -21,11 +22,11 @@ public class HttpUtils {
     private static final int REQUEST_POST = 1;
     private static final int REQUEST_JSON = 2;
     private Novate.Builder builder;
-    private static HttpUtils httpUtils;
+    //    private static HttpUtils httpUtils;
+    private String baseUrl;
 
     private HttpUtils(Context context) {
         builder = new Novate.Builder(context);
-        builder.baseUrl(NetConfig.Url.getBaseUrl());
         builder.addCookie(true); //是否同步cooike 默认不同步
 
         //https配置 xxx.cer放在asset目录下
@@ -47,12 +48,16 @@ public class HttpUtils {
     }
 
     public static synchronized HttpUtils getInstance(Context context) {
-        if (httpUtils == null) {
-            httpUtils = new HttpUtils(context);
-        }
-        return httpUtils;
+//        if (httpUtils == null) {
+//            httpUtils = new HttpUtils(context);
+//        }
+        return new HttpUtils(context);
     }
 
+    public HttpUtils setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
+        return this;
+    }
 
     ////////////////////////////////////////// GET请求 /////////////////////////////////////////////
 
@@ -147,7 +152,7 @@ public class HttpUtils {
         request(REQUEST_POST, url, params, tag, callback);
     }
 
-    ////////////////////////////////////////// JSON格式请求 /////////////////////////////////////////////
+    ////////////////////////////////////////// JSON格式请求 /////////////////////////////////////////
 
     /**
      * Post 无参无TAG
@@ -204,8 +209,8 @@ public class HttpUtils {
      * @param callback   请求回调
      */
     private void request(int methodType, String url, RequestParam params, String tag, ResponseCallback callback) {
-        Logger.e(NetConfig.Url.getBaseUrl() + url + params.toJson());
-//        builder.header("");
+        checkBaseUrl();
+        Logger.e(baseUrl + url + params.toJson());
         switch (methodType) {
             case REQUEST_POST:
                 builder.build().rxPost(tag, url, params.getParameter(), callback);
@@ -221,6 +226,8 @@ public class HttpUtils {
                 break;
         }
     }
+
+    ////////////////////////////////////////// 上传文件 /////////////////////////////////////////////
 
     /**
      * 上传单个文件
@@ -243,6 +250,7 @@ public class HttpUtils {
      */
     public void upLoadFile(String url, File file, String tag, ResponseCallback callback) {
         //使用Part 方式上传文件
+        checkBaseUrl();
         Logger.e(NetConfig.Url.getBaseUrl() + url + file.getAbsolutePath());
         builder.build().rxUploadWithPart(url, file, callback);
     }
@@ -268,8 +276,12 @@ public class HttpUtils {
      * @param callback 回调
      */
     public void upLoadFile(String url, List<File> files, String tag, ResponseCallback callback) {
+        checkBaseUrl();
+        Logger.e(NetConfig.Url.getBaseUrl() + url + files.size());
         builder.build().rxUploadWithPartListByFile(tag, url, files, callback);
     }
+
+    ////////////////////////////////////////// 下载文件 /////////////////////////////////////////////
 
     /**
      * 文件下载
@@ -278,12 +290,20 @@ public class HttpUtils {
      * @param callBack 回调
      */
     public void downloadFile(String url, RxFileCallBack callBack) {
+        checkBaseUrl();
+        Logger.e(NetConfig.Url.getBaseUrl() + url);
         builder.build().rxDownload(url, callBack);
     }
 
-
-    private boolean judgeUrl(String url) {
-        return url.startsWith("http://") || url.startsWith("https://");
+    /**
+     * 检查是否设置BaseURL
+     */
+    private void checkBaseUrl() {
+        //如果没有设置请求BaseUrl  则使用默认的BaseUrl
+        if (TextUtils.isEmpty(baseUrl)) {
+            baseUrl = NetConfig.Url.getBaseUrl();
+        }
+        builder.baseUrl(baseUrl);
     }
 
 }

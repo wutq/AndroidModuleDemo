@@ -8,8 +8,6 @@ import android.view.View;
 
 import com.wss.common.base.ActionBarActivity;
 import com.wss.common.base.mvp.BasePresenter;
-import com.wss.common.manage.UpdateManager;
-import com.wss.common.net.Api;
 import com.wss.common.utils.PermissionsUtils;
 import com.wss.common.utils.ToastUtils;
 import com.wss.common.widget.NumberProgressBar;
@@ -56,7 +54,7 @@ public class DialogActivity extends ActionBarActivity {
      * 注意：lib中使用  ButterKnife 绑定事件用R2 判断 用if else 判断里面用R
      */
     @OnClick({R2.id.btn_01, R2.id.btn_02, R2.id.btn_03, R2.id.btn_04, R2.id.btn_05, R2.id.btn_06,
-            R2.id.btn_07, R2.id.btn_08})
+            R2.id.btn_07})
     public void onBtnClick(View view) {
         if (view.getId() == R.id.btn_01) {
             new AppDialog(mContext)
@@ -114,7 +112,7 @@ public class DialogActivity extends ActionBarActivity {
                     .show();
 
         } else if (view.getId() == R.id.btn_07) {
-            View progressView = View.inflate(mContext, R.layout.main_update_progress_layout, null);
+            View progressView = View.inflate(mContext, R.layout.update_progress_layout, null);
             progressBar = progressView.findViewById(R.id.number_progress);
             progressDialog = new AppDialog(mContext);
             mProgress = 0;
@@ -125,8 +123,6 @@ public class DialogActivity extends ActionBarActivity {
                     .show();
             update();
 
-        } else if (view.getId() == R.id.btn_08) {
-            UpdateManager.getInstance(mContext).download(Api.DOWNLOAD_FILE);
         }
     }
 

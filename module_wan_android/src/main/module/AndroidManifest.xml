@@ -15,7 +15,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
 
+
+        </activity>
+        <activity android:name=".ui.setup.SetupActivity" />
+        <activity android:name=".ui.setup.ArticleListActivity" />
+        <activity android:name=".ui.project.ProjectActivity" />
+        <activity android:name=".ui.wxnumber.WXNumberActivity" />
+        <activity android:name=".ui.search.SearchActivity" />
+        <activity android:name=".ui.collection.CollectionActivity" />
     </application>
 </manifest>

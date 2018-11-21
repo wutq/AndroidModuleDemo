@@ -97,7 +97,7 @@ public class ActionBar extends RelativeLayout {
         llLeft = findViewById(R.id.ll_actionbar_left);
         llCenter = findViewById(R.id.ll_actionbar_centre);
         llRight = findViewById(R.id.ll_actionbar_right);
-        showBackImg();
+        showBackImg(true);
     }
 
     /**
@@ -107,7 +107,8 @@ public class ActionBar extends RelativeLayout {
      * @param l   监听器
      */
     public void setLeftIcon(int res, OnClickListener l) {
-        setViewVisibility(llLeft, true);
+        llLeft.setVisibility(VISIBLE);
+        llLeft.setVisibility(VISIBLE);
         llLeft.removeAllViews();
         ImageView ivLeft = new ImageView(getContext());
         ivLeft.setImageResource(res);
@@ -122,7 +123,7 @@ public class ActionBar extends RelativeLayout {
      * @param l   监听器
      */
     public void setCenterIcon(int res, OnClickListener l) {
-        setViewVisibility(llCenter, true);
+        llCenter.setVisibility(VISIBLE);
         llCenter.removeAllViews();
         ImageView center = new ImageView(getContext());
         center.setImageResource(res);
@@ -137,7 +138,7 @@ public class ActionBar extends RelativeLayout {
      * @param l   监听器
      */
     public void setRightIcon(int res, OnClickListener l) {
-        setViewVisibility(llRight, true);
+        llRight.setVisibility(VISIBLE);
         llRight.removeAllViews();
         ImageView right = new ImageView(getContext());
         right.setImageResource(res);
@@ -154,7 +155,7 @@ public class ActionBar extends RelativeLayout {
      * @param l    监听器
      */
     public void setLeftText(CharSequence text, OnClickListener l) {
-        setViewVisibility(llLeft, true);
+        llLeft.setVisibility(VISIBLE);
         llLeft.removeAllViews();
         TextView left = getTextView();
         left.setText(text);
@@ -183,7 +184,7 @@ public class ActionBar extends RelativeLayout {
      * @param l    监听器
      */
     public void setCenterText(CharSequence text, OnClickListener l) {
-        setViewVisibility(llCenter, true);
+        llCenter.setVisibility(VISIBLE);
         llCenter.removeAllViews();
         TextView center = getTextView();
         center.setTextSize(centerTextSize);
@@ -214,7 +215,7 @@ public class ActionBar extends RelativeLayout {
      * @param l    监听器
      */
     public void setRightText(CharSequence text, OnClickListener l) {
-        setViewVisibility(llRight, true);
+        llRight.setVisibility(VISIBLE);
         llRight.removeAllViews();
         TextView tvRight = getTextView();
         tvRight.setText(text);
@@ -270,7 +271,7 @@ public class ActionBar extends RelativeLayout {
      * @param v v
      */
     public void setLeftView(View v) {
-        setViewVisibility(llLeft, true);
+        llLeft.setVisibility(VISIBLE);
         llLeft.removeAllViews();
         llLeft.addView(v);
     }
@@ -281,7 +282,7 @@ public class ActionBar extends RelativeLayout {
      * @param v v
      */
     public void setCenterView(View v) {
-        setViewVisibility(llCenter, true);
+        llCenter.setVisibility(VISIBLE);
         llCenter.removeAllViews();
         llCenter.addView(v);
     }
@@ -306,16 +307,20 @@ public class ActionBar extends RelativeLayout {
     /**
      * 显示默认的左边的按钮
      */
-    public void showBackImg() {
-        setLeftIcon(R.drawable.ic_back, new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context ctx = ActionBar.this.getContext();
-                if (ctx instanceof Activity) {
-                    ((Activity) ctx).onBackPressed();
+    public void showBackImg(boolean show) {
+        if (show) {
+            setLeftIcon(R.drawable.ic_back, new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context ctx = ActionBar.this.getContext();
+                    if (ctx instanceof Activity) {
+                        ((Activity) ctx).onBackPressed();
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            llLeft.setVisibility(INVISIBLE);
+        }
     }
 
 
@@ -327,18 +332,6 @@ public class ActionBar extends RelativeLayout {
     public void setActionBarView(View v) {
         llActionbar.removeAllViews();
         llActionbar.addView(v);
-    }
-
-    /**
-     * 设置View是否显示
-     *
-     * @param v
-     * @param visibility 是否显示
-     */
-    private void setViewVisibility(View v, boolean visibility) {
-        if (v != null) {
-            v.setVisibility(visibility ? VISIBLE : INVISIBLE);
-        }
     }
 
     /**

@@ -23,8 +23,20 @@ android {
         }
 
     }
+    signingConfigs {
+        config {
+            keyAlias 'amd'
+            keyPassword '123456'
+            storeFile file('../key/amd.jsk')
+            storePassword '123456'
+        }
+    }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.config
+        }
         release {
+            signingConfig signingConfigs.config
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

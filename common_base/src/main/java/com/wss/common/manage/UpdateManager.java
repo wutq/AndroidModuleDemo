@@ -4,19 +4,20 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.tamic.novate.Throwable;
 import com.tamic.novate.callback.RxFileCallBack;
-import com.wss.common.base.BaseApplication;
 import com.wss.common.base.R;
 import com.wss.common.net.HttpUtils;
+import com.wss.common.net.NetConfig;
 import com.wss.common.utils.FileUtils;
 import com.wss.common.utils.ToastUtils;
+import com.wss.common.widget.NumberProgressBar;
 import com.wss.common.widget.dialog.AppDialog;
 
 import java.io.File;
@@ -33,33 +34,21 @@ public class UpdateManager {
     private static final int DOWNLOAD_SUCCESS = 0x02;
     private static final int DOWNLOAD_FAILED = 0x03;
     private static final int DOWNLOAD_CANCEL = 0x04;
-    private static String DOWNLOAD_PATH = "/updateApkFile/";
-    private static String APK_NAME = BaseApplication.getApplication().getPackageName() + "Temp.apk";
-    /**
-     * 下载之后存放路径
-     */
-    private String apkPath = FileUtils.getTempPath() + DOWNLOAD_PATH + APK_NAME;
-
     private Context mContext;
-    private ProgressBar progressBar;
-    private AppDialog dialog;
+    private NumberProgressBar progressBar;
+    private AppDialog progressDialog;
     private static UpdateManager manager;
+    private File tempFile;//下载后存文件路径
 
     private UpdateManager(Context context) {
         this.mContext = context;
-        //每次启动先删除本地原有APK
-        FileUtils.deleteFile(apkPath);
-        View progressBarView = View.inflate(mContext, R.layout.laytou_update_progress, null);
-        progressBar = progressBarView.findViewById(R.id.pb_update_progress);
-        dialog = new AppDialog(mContext);
-        dialog.setTitle("版本更新中···")
-                .addContentView(progressBarView)
-                .setSingleButton("后台下载", new AppDialog.OnButtonClickListener() {
-                    @Override
-                    public void onClick(String val) {
-                        ToastUtils.showToast(mContext, "已切换到后台下载···");
-                    }
-                });
+        View progressView = View.inflate(mContext, R.layout.update_progress_layout, null);
+        progressBar = progressView.findViewById(R.id.number_progress);
+        progressBar.setProgress(0);
+        progressDialog = new AppDialog(mContext);
+        progressDialog.setTitle("版本更新中···")
+                .addDialogView(progressView)
+                .show();
     }
 
     public static synchronized UpdateManager getInstance(Context context) {
@@ -77,13 +66,14 @@ public class UpdateManager {
             ToastUtils.showToast(mContext, "请设置下载Url");
             return;
         }
-        dialog.show();
-
+        progressDialog.show();
         HttpUtils.getInstance(mContext)
-                .downloadFile(url, new RxFileCallBack(apkPath, "Temp.apk") {
+                .setBaseUrl(NetConfig.Url.MY_SERVICE_URL)
+                .downloadFile(url, new RxFileCallBack("temp.apk") {
 
                     @Override
                     public void onNext(Object tag, File file) {
+                        tempFile = file;
                         updateHandler.sendEmptyMessage(DOWNLOAD_SUCCESS);
                     }
 
@@ -116,16 +106,16 @@ public class UpdateManager {
                     progressBar.setProgress((Integer) msg.obj);
                     break;
                 case DOWNLOAD_SUCCESS:
-                    dialog.dismiss();
+                    progressDialog.dismiss();
                     ToastUtils.showToast(mContext, "下载完成");
-//                    installApk();
+                    installApk();
                     break;
                 case DOWNLOAD_FAILED:
-                    dialog.dismiss();
+                    progressDialog.dismiss();
                     ToastUtils.showToast(mContext, "下载失败");
                     break;
                 case DOWNLOAD_CANCEL:
-                    dialog.dismiss();
+                    progressDialog.dismiss();
                     ToastUtils.showToast(mContext, "已取消下载");
                     break;
                 default:
@@ -141,7 +131,14 @@ public class UpdateManager {
     private void installApk() {
         // 安装，如果签名不一致，可能出现程序未安装提示
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(new File(apkPath)), "application/vnd.android.package-archive");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Uri uriForFile = FileUtils.getUriForFile(mContext, tempFile);
+        intent.setDataAndType(uriForFile, "application/vnd.android.package-archive");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            //7.0需要临时授权文件
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
         mContext.startActivity(intent);
     }
 }

@@ -24,7 +24,6 @@ public class PermissionsUtils {
      * @param permissions 权限列表
      */
     public static boolean checkPermissions(Activity context, String... permissions) {
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             List<String> permissionsList = new ArrayList<>();
             if (permissions != null && permissions.length != 0) {

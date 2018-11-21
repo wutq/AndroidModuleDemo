@@ -81,7 +81,7 @@ public class Utils {
      *
      * @return String
      */
-    public static String getPackage() {
+    public static String getPackageName() {
         return BaseApplication.getApplication().getPackageName();
     }
 
@@ -93,7 +93,7 @@ public class Utils {
     public static String getVersionName() {
         PackageManager packageManager = BaseApplication.getApplication().getPackageManager();
         try {
-            PackageInfo packageInfo = packageManager.getPackageInfo(getPackage(), 0);
+            PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), 0);
             return packageInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -110,7 +110,7 @@ public class Utils {
         PackageManager packageManager = BaseApplication.getApplication().getPackageManager();
         try {
             PackageInfo packageInfo = packageManager.getPackageInfo(
-                    getPackage(), 0);
+                    getPackageName(), 0);
             return packageInfo.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();

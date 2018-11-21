@@ -33,6 +33,8 @@ public class NetConfig {
      */
     public static class Url {
 
+        //自己服务器IP
+        public static String MY_SERVICE_URL = "http://sdk.xiaoyuyu.com.cn";
 
         //服务器地址
         interface BaseUrl {
