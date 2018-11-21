@@ -2,8 +2,8 @@
     package="com.wss.module.market">
 
     <application>
-        <activity android:name=".main.MarketMainActivity" />
-        <activity android:name=".goods.detail.GoodsDetailActivity" />
-        <activity android:name=".goods.cart.ShoppingCartActivity" />
+        <activity android:name=".ui.main.MarketMainActivity" />
+        <activity android:name=".ui.goods.detail.GoodsDetailActivity" />
+        <activity android:name=".ui.goods.cart.ShoppingCartActivity" />
     </application>
 </manifest>

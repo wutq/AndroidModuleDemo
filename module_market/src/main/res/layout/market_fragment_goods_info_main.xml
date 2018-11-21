@@ -160,7 +160,7 @@
     <!--商品下方 详情Html 和规格介绍-->
     <fragment
         android:id="@+id/goods_detail_fragment"
-        class="com.wss.module.market.goods.detail.fragment.GoodsInfoDetailMainFragment"
+        class="com.wss.module.market.ui.goods.detail.fragment.GoodsInfoDetailMainFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </com.wss.common.widget.SlideLayout>

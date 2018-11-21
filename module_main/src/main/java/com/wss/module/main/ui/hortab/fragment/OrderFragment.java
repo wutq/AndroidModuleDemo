@@ -10,7 +10,7 @@ import com.wss.common.utils.ToastUtils;
 import com.wss.module.main.R;
 import com.wss.module.main.bean.Order;
 import com.wss.module.main.ui.hortab.adapter.OrderListAdapter;
-import com.wss.module.main.ui.hortab.mvp.IOrderView;
+import com.wss.module.main.ui.hortab.mvp.contract.OrderContract;
 import com.wss.module.main.ui.hortab.mvp.OrderPresenter;
 
 import org.byteam.superadapter.SuperViewHolder;
@@ -23,7 +23,7 @@ import java.util.List;
  * Created by 吴天强 on 2018/10/22.
  */
 
-public class OrderFragment extends RefreshListFragment<OrderPresenter> implements IOrderView {
+public class OrderFragment extends RefreshListFragment<OrderPresenter> implements OrderContract.View {
 
 
     private int page = 0;
@@ -45,7 +45,7 @@ public class OrderFragment extends RefreshListFragment<OrderPresenter> implement
     private void initData() {
         page = 0;
         orderList.clear();
-        presenter.getOrderList();
+        presenter.start();
     }
 
     @Override

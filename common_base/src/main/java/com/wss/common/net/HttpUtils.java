@@ -1,12 +1,12 @@
 package com.wss.common.net;
 
-import android.content.Context;
 import android.text.TextUtils;
 
 import com.orhanobut.logger.Logger;
 import com.tamic.novate.Novate;
 import com.tamic.novate.callback.ResponseCallback;
 import com.tamic.novate.callback.RxFileCallBack;
+import com.wss.common.base.BaseApplication;
 
 import java.io.File;
 import java.util.List;
@@ -22,11 +22,11 @@ public class HttpUtils {
     private static final int REQUEST_POST = 1;
     private static final int REQUEST_JSON = 2;
     private Novate.Builder builder;
-    //    private static HttpUtils httpUtils;
+    private static HttpUtils httpUtils;
     private String baseUrl;
 
-    private HttpUtils(Context context) {
-        builder = new Novate.Builder(context);
+    private HttpUtils() {
+        builder = new Novate.Builder(BaseApplication.getApplication());
         builder.addCookie(true); //是否同步cooike 默认不同步
 
         //https配置 xxx.cer放在asset目录下
@@ -47,11 +47,11 @@ public class HttpUtils {
 //        builder.client(client); //clent 默认不需要
     }
 
-    public static synchronized HttpUtils getInstance(Context context) {
-//        if (httpUtils == null) {
-//            httpUtils = new HttpUtils(context);
-//        }
-        return new HttpUtils(context);
+    public static synchronized HttpUtils getInstance() {
+        if (httpUtils == null) {
+            httpUtils = new HttpUtils();
+        }
+        return new HttpUtils();
     }
 
     public HttpUtils setBaseUrl(String baseUrl) {

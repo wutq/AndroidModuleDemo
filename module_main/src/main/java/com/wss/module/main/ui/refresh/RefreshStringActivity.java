@@ -8,7 +8,7 @@ import com.wss.common.base.RefreshListActivity;
 import com.wss.module.main.R;
 import com.wss.module.main.ui.refresh.adapter.StringAdapter;
 import com.wss.module.main.ui.refresh.mvp.StringPresenter;
-import com.wss.module.main.ui.refresh.mvp.IStringView;
+import com.wss.module.main.ui.refresh.mvp.contract.RefreshContract;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
  * Created by 吴天强 on 2018/10/23.
  */
 
-public class RefreshStringActivity extends RefreshListActivity<StringPresenter> implements IStringView {
+public class RefreshStringActivity extends RefreshListActivity<StringPresenter> implements RefreshContract.View {
 
 
     private List<String> data = new ArrayList<>();

@@ -8,29 +8,23 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.wss.common.base.BaseMvpFragment;
-import com.wss.common.base.mvp.BasePresenter;
+import com.wss.common.bean.AppInfo;
 import com.wss.common.bean.Event;
 import com.wss.common.bean.User;
 import com.wss.common.constants.ARouterConfig;
-import com.wss.common.constants.Constants;
 import com.wss.common.constants.EventAction;
 import com.wss.common.manage.UpdateManager;
 import com.wss.common.net.Api;
-import com.wss.common.net.HttpUtils;
-import com.wss.common.net.NetConfig;
-import com.wss.common.net.RequestParam;
-import com.wss.common.net.callback.OnResultObjectCallBack;
 import com.wss.common.utils.ActivityToActivity;
 import com.wss.common.utils.ImageUtils;
-import com.wss.common.utils.ToastUtils;
 import com.wss.common.utils.UserInfoUtils;
-import com.wss.common.utils.Utils;
 import com.wss.common.widget.dialog.AppDialog;
 import com.wss.module.user.R;
 import com.wss.module.user.R2;
 import com.wss.module.user.ui.about.AboutActivity;
 import com.wss.module.user.ui.account.LoginActivity;
-import com.wss.module.user.ui.main.AppInfo;
+import com.wss.module.user.ui.main.fragment.mvp.contract.UserContract;
+import com.wss.module.user.ui.main.fragment.mvp.UserPresenter;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -40,7 +34,7 @@ import butterknife.OnClick;
  * Created by 吴天强 on 2018/10/17.
  */
 @Route(path = ARouterConfig.USER_MAIN_FRAGMENT)
-public class UserFragment extends BaseMvpFragment {
+public class UserFragment extends BaseMvpFragment<UserPresenter> implements UserContract.View {
 
     public static final String URL = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542110989472&di=e206dfdad3d1197025ddc03bca0b013c&imgtype=0&src=http%3A%2F%2Fwww.pig66.com%2Fuploadfile%2F2017%2F1209%2F20171209121323978.png";
 
@@ -118,50 +112,7 @@ public class UserFragment extends BaseMvpFragment {
             ActivityToActivity.toActivity(mContext, AboutActivity.class);
 
         } else if (i == R.id.miv_check) {
-            //fixme  此处测试使用 未使用 MVP 后续优化
-            showLoading();
-            RequestParam param = new RequestParam();
-            param.addParameter("versionCode", Utils.getVersionCode());
-            HttpUtils.getInstance(mContext)
-                    .setBaseUrl(NetConfig.Url.MY_SERVICE_URL)
-                    .getRequest(Api.CHECK_UPDATE, param, new OnResultObjectCallBack<AppInfo>() {
-                        @Override
-                        public void onSuccess(boolean success, int code, String msg, Object tag, AppInfo response) {
-                            if (code == 1000) {
-                                String context = "版本更新！";
-                                if (response != null && !TextUtils.isEmpty(response.getDescribe())) {
-                                    context = response.getDescribe();
-                                }
-                                new AppDialog(mContext)
-                                        .setTitle("提示更新")
-                                        .setContent(context)
-                                        .setRightButton("更新", new AppDialog.OnButtonClickListener() {
-                                            @Override
-                                            public void onClick(String val) {
-                                                UpdateManager.getInstance(mContext).download(Api.DOWNLOAD_APK);
-                                            }
-                                        })
-                                        .show();
-                            } else if (code == 0) {
-                                new AppDialog(mContext)
-                                        .setContent("当前已是最新版本")
-                                        .setSingleButton("确定")
-                                        .show();
-                            } else {
-                                ToastUtils.showToast(mContext, msg);
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Object tag, Exception e) {
-                            ToastUtils.showToast(mContext, Constants.ERROR_MESSAGE);
-                        }
-
-                        @Override
-                        public void onCompleted() {
-                            dismissLoading();
-                        }
-                    });
+            presenter.checkUpdate();
 
         } else if (i == R.id.tv_login_out) {
             new AppDialog(mContext)
@@ -208,10 +159,35 @@ public class UserFragment extends BaseMvpFragment {
         return true;
     }
 
+
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    public void needUpdate(AppInfo appInfo) {
+        String context = "版本更新！";
+        if (appInfo != null && !TextUtils.isEmpty(appInfo.getDescribe())) {
+            context = appInfo.getDescribe();
+        }
+        new AppDialog(mContext)
+                .setTitle("提示更新")
+                .setContent(context)
+                .setRightButton("更新", new AppDialog.OnButtonClickListener() {
+                    @Override
+                    public void onClick(String val) {
+                        UpdateManager.getInstance(mContext).download(Api.DOWNLOAD_APK);
+                    }
+                })
+                .show();
     }
 
+    @Override
+    public void isLastVersion() {
+        new AppDialog(mContext)
+                .setContent("当前已是最新版本")
+                .setSingleButton("确定")
+                .show();
+    }
 
+    @Override
+    protected UserPresenter createPresenter() {
+        return new UserPresenter();
+    }
 }

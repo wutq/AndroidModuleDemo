@@ -11,8 +11,8 @@ import com.wss.common.utils.ActivityToActivity;
 import com.wss.common.utils.ToastUtils;
 import com.wss.module.wan.R;
 import com.wss.module.wan.bean.Article;
+import com.wss.module.wan.ui.collection.mvp.contract.CollectionContract;
 import com.wss.module.wan.ui.collection.mvp.CollectionPresenter;
-import com.wss.module.wan.ui.collection.mvp.ICollectionView;
 import com.wss.module.wan.ui.project.adapter.ProjectListAdapter;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import java.util.List;
  * Created by 吴天强 on 2018/11/16.
  */
 @Route(path = ARouterConfig.WAN_COLLECTION)
-public class CollectionActivity extends RefreshListActivity<CollectionPresenter> implements ICollectionView {
+public class CollectionActivity extends RefreshListActivity<CollectionPresenter> implements CollectionContract.View {
 
     private int page = 0;
 
@@ -40,7 +40,7 @@ public class CollectionActivity extends RefreshListActivity<CollectionPresenter>
     public void onRefresh() {
         page = 0;
         collectionList.clear();
-        presenter.getCollectionList();
+        presenter.start();
     }
 
     @Override

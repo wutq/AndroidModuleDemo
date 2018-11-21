@@ -13,7 +13,7 @@ import com.wss.common.widget.ObserverButton;
 import com.wss.module.wan.R;
 import com.wss.module.wan.bean.Article;
 import com.wss.module.wan.ui.main.adapter.ArticleAdapter;
-import com.wss.module.wan.ui.search.mvp.ISearchView;
+import com.wss.module.wan.ui.search.mvp.contract.SearchContract;
 import com.wss.module.wan.ui.search.mvp.SearchPresenter;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import java.util.List;
  * Created by 吴天强 on 2018/11/15.
  */
 
-public class SearchActivity extends RefreshListActivity<SearchPresenter> implements ISearchView {
+public class SearchActivity extends RefreshListActivity<SearchPresenter> implements SearchContract.View {
 
 
     private EditText editText;
@@ -81,7 +81,7 @@ public class SearchActivity extends RefreshListActivity<SearchPresenter> impleme
         if (i == R.id.ll_back) {
             finish();
         } else if (i == R.id.obt_search) {
-            presenter.search();
+            onRefresh();
         }
     }
 

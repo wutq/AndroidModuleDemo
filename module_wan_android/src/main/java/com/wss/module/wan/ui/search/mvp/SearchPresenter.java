@@ -5,21 +5,22 @@ import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.constants.Constants;
 import com.wss.common.net.callback.OnResultStringCallBack;
 import com.wss.module.wan.bean.Article;
+import com.wss.module.wan.ui.search.mvp.contract.SearchContract;
 
 import java.util.List;
 
 /**
- * Describe：
+ * Describe：搜索Presenter
  * Created by 吴天强 on 2018/11/15.
  */
 
-public class SearchPresenter extends BasePresenter<SearchModule, ISearchView> {
+public class SearchPresenter extends BasePresenter<SearchContract.Module, SearchContract.View> implements SearchContract.Presenter {
 
 
     public void search() {
         if (isViewAttached()) {
             getView().showLoading();
-            getModule().searchData(getContext(), getView().getPage(), getView().getWord(), new OnResultStringCallBack() {
+            getModule().searchData(getView().getPage(), getView().getWord(), new OnResultStringCallBack() {
                 @Override
                 public void onSuccess(boolean success, int code, String msg, Object tag, String response) {
                     if (code == Constants.SUCCESS_CODE) {
@@ -51,5 +52,10 @@ public class SearchPresenter extends BasePresenter<SearchModule, ISearchView> {
     @Override
     protected SearchModule createModule() {
         return new SearchModule();
+    }
+
+    @Override
+    public void start() {
+
     }
 }

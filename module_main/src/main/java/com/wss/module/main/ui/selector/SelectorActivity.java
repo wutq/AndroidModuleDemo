@@ -22,7 +22,7 @@ import com.wss.common.utils.ToastUtils;
 import com.wss.module.main.R;
 import com.wss.module.main.R2;
 import com.wss.module.main.bean.Province;
-import com.wss.module.main.ui.selector.mvp.ISelectorView;
+import com.wss.module.main.ui.selector.mvp.contract.SelectContract;
 import com.wss.module.main.ui.selector.mvp.SelectorPresenter;
 
 import java.text.SimpleDateFormat;
@@ -38,7 +38,7 @@ import butterknife.OnClick;
  * Created by 吴天强 on 2018/10/24.
  */
 
-public class SelectorActivity extends ActionBarActivity<SelectorPresenter> implements ISelectorView {
+public class SelectorActivity extends ActionBarActivity<SelectorPresenter> implements SelectContract.View {
     private Calendar selectDate;
     private List<Province> options1Items = new ArrayList<>();
     private List<List<String>> options2Items = new ArrayList<>();
@@ -64,7 +64,7 @@ public class SelectorActivity extends ActionBarActivity<SelectorPresenter> imple
         Logger.e("SelectorActivity initView");
         setTitleText("多功能选择器");
         selectDate = Calendar.getInstance();
-        presenter.init();
+        presenter.start();
     }
 
     /**
@@ -258,8 +258,9 @@ public class SelectorActivity extends ActionBarActivity<SelectorPresenter> imple
         return format.format(date);
     }
 
+
     @Override
-    public void dataList(List<Province> options1Items, List<List<String>> options2Items, List<List<List<String>>> options3Items) {
+    public void addressList(List<Province> options1Items, List<List<String>> options2Items, List<List<List<String>>> options3Items) {
         this.options1Items.addAll(options1Items);
         this.options2Items.addAll(options2Items);
         this.options3Items.addAll(options3Items);

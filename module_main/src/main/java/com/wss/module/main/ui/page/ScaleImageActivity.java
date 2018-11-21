@@ -4,10 +4,6 @@ import android.view.View;
 
 import com.wss.common.base.ActionBarActivity;
 import com.wss.common.base.mvp.BasePresenter;
-import com.wss.common.net.HttpUtils;
-import com.wss.common.net.NetConfig;
-import com.wss.common.net.callback.OnResultStringCallBack;
-import com.wss.common.utils.Utils;
 import com.wss.common.widget.scaleImg.ImageViewer;
 import com.wss.module.main.R;
 import com.wss.module.main.R2;
@@ -40,7 +36,7 @@ public class ScaleImageActivity extends ActionBarActivity {
     }
 
 
-    @OnClick({R2.id.btn_01, R2.id.btn_02})
+    @OnClick({R2.id.btn_01})
     public void onViewClicked(View v) {
         if (v.getId() == R.id.btn_01) {
             List<String> urls = new ArrayList<>();
@@ -52,29 +48,6 @@ public class ScaleImageActivity extends ActionBarActivity {
             ImageViewer.create(this)
                     .setUrls(urls)
                     .build();
-        } else if (v.getId() == R.id.btn_02) {
-
-            HttpUtils.getInstance(mContext)
-                    .setBaseUrl(NetConfig.Url.MY_SERVICE_URL)
-                    .getRequest("/app/checkUpdate.json?versionCode=" + Utils.getVersionCode(), new
-
-                            OnResultStringCallBack() {
-                                @Override
-                                public void onSuccess(boolean success, int code, String msg, Object tag, String response) {
-
-                                }
-
-                                @Override
-                                public void onFailure(Object tag, Exception e) {
-
-                                }
-
-                                @Override
-                                public void onCompleted() {
-
-                                }
-                            });
-
         }
 
     }

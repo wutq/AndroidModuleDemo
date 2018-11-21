@@ -11,19 +11,5 @@
         android:layout_height="45dp"
         android:layout_marginTop="10dp"
         android:text="图片查看" />
-    <Button
-        android:id="@+id/btn_02"
-        style="@style/ButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="10dp"
-        android:text="Novate" />
 
-    <Button
-        android:id="@+id/btn_03"
-        style="@style/ButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="10dp"
-        android:text="Retrofit" />
 </LinearLayout>

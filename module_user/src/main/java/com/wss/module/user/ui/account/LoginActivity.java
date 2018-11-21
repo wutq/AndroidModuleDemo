@@ -18,8 +18,8 @@ import com.wss.common.utils.UserInfoUtils;
 import com.wss.common.widget.ObserverButton;
 import com.wss.module.user.R;
 import com.wss.module.user.R2;
-import com.wss.module.user.ui.account.mvp.IUserView;
-import com.wss.module.user.ui.account.mvp.UserPresenter;
+import com.wss.module.user.ui.account.mvp.LoginPresenter;
+import com.wss.module.user.ui.account.mvp.contract.LonginContract;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -29,7 +29,7 @@ import butterknife.OnClick;
  * Created by 吴天强 on 2018/11/13.
  */
 @Route(path = ARouterConfig.USER_LOGIN)
-public class LoginActivity extends ActionBarActivity<UserPresenter> implements IUserView {
+public class LoginActivity extends ActionBarActivity<LoginPresenter> implements LonginContract.View {
 
     @BindView(R2.id.edt_name)
     EditText edtName;
@@ -66,26 +66,12 @@ public class LoginActivity extends ActionBarActivity<UserPresenter> implements I
     }
 
     @Override
-    public String getName() {
-        return edtName.getText().toString().trim();
-    }
-
-    @Override
-    public String getPassword() {
-        return edtPwd.getText().toString().trim();
-    }
-
-    @Override
     public void loginSuccess(User user) {
         UserInfoUtils.saveUser(user);
         EventBusUtils.sendEvent(new Event(EventAction.EVENT_LOGIN_SUCCESS));
         finish();
     }
 
-    @Override
-    public void registerSuccess(User user) {
-
-    }
 
     @Override
     public void onError(Object tag, String errorMsg) {
@@ -94,8 +80,8 @@ public class LoginActivity extends ActionBarActivity<UserPresenter> implements I
     }
 
     @Override
-    protected UserPresenter createPresenter() {
-        return new UserPresenter();
+    protected LoginPresenter createPresenter() {
+        return new LoginPresenter();
     }
 
     @Override
@@ -109,5 +95,10 @@ public class LoginActivity extends ActionBarActivity<UserPresenter> implements I
     @Override
     protected boolean regEvent() {
         return true;
+    }
+
+    @Override
+    public User getUserInfo() {
+        return new User(edtName.getText().toString().trim(), edtPwd.getText().toString().trim());
     }
 }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 
 import com.wss.common.base.mvp.BasePresenter;
+import com.wss.module.main.ui.refresh.mvp.contract.RefreshContract;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +14,11 @@ import java.util.List;
  * Created by 吴天强 on 2018/10/23.
  */
 
-public class StringPresenter extends BasePresenter<StringModule, IStringView> {
+public class StringPresenter extends BasePresenter<RefreshContract.Module, RefreshContract.View>
+        implements RefreshContract.Presenter {
 
 
+    @Override
     public void getStringList() {
         if (isViewAttached()) {
             getView().showLoading();
@@ -49,7 +52,12 @@ public class StringPresenter extends BasePresenter<StringModule, IStringView> {
 
 
     @Override
-    protected StringModule createModule() {
-        return new StringModule();
+    protected RefreshContract.Module createModule() {
+        return null;
+    }
+
+    @Override
+    public void start() {
+
     }
 }

@@ -11,8 +11,8 @@ import com.wss.module.wan.R;
 import com.wss.module.wan.bean.Article;
 import com.wss.module.wan.bean.WXNumber;
 import com.wss.module.wan.ui.wxnumber.adapter.WXArticleAdapter;
-import com.wss.module.wan.ui.wxnumber.mvp.IWXArticleView;
 import com.wss.module.wan.ui.wxnumber.mvp.WXArticlePresenter;
+import com.wss.module.wan.ui.wxnumber.mvp.contract.WXNumberContract;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
  * Created by 吴天强 on 2018/11/15.
  */
 
-public class WXArticleFragment extends RefreshListFragment<WXArticlePresenter> implements IWXArticleView {
+public class WXArticleFragment extends RefreshListFragment<WXArticlePresenter> implements WXNumberContract.View {
 
 
     private List<Article> wxArticles = new ArrayList<>();
@@ -39,13 +39,13 @@ public class WXArticleFragment extends RefreshListFragment<WXArticlePresenter> i
     public void onRefresh() {
         page = 1;
         wxArticles.clear();
-        presenter.getList();
+        presenter.start();
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        presenter.getList();
+        presenter.start();
     }
 
     @Override

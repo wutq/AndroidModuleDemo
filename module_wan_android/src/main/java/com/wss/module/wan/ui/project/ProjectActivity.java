@@ -2,7 +2,6 @@ package com.wss.module.wan.ui.project;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 
 import com.wss.common.base.RefreshListActivity;
@@ -12,7 +11,7 @@ import com.wss.module.wan.R;
 import com.wss.module.wan.bean.Article;
 import com.wss.module.wan.bean.Classification;
 import com.wss.module.wan.ui.project.adapter.ProjectListAdapter;
-import com.wss.module.wan.ui.project.mvp.IProjectView;
+import com.wss.module.wan.ui.project.mvp.contract.ProjectContract;
 import com.wss.module.wan.ui.project.mvp.ProjectPresenter;
 
 import java.util.ArrayList;
@@ -23,10 +22,8 @@ import java.util.List;
  * Created by 吴天强 on 2018/11/15.
  */
 
-public class ProjectActivity extends RefreshListActivity<ProjectPresenter> implements IProjectView,
+public class ProjectActivity extends RefreshListActivity<ProjectPresenter> implements ProjectContract.View,
         TypePopupWindow.OnProjectTypeClickListener {
-    private static final String TAG_TYPE = "TAG_TYPE";
-    private static final String TAG_PROJECT = "TAG_PROJECT";
 
     private List<Classification> types = new ArrayList<>();
     private List<Article> projects = new ArrayList<>();
@@ -47,20 +44,20 @@ public class ProjectActivity extends RefreshListActivity<ProjectPresenter> imple
                         .show(v);
             }
         });
-        presenter.getType(TAG_TYPE);
+        presenter.getProjectType();
     }
 
     @Override
     public void onRefresh() {
         page = 1;
         projects.clear();
-        presenter.getProject(TAG_PROJECT);
+        presenter.getProject();
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        presenter.getProject(TAG_PROJECT);
+        presenter.getProject();
     }
 
     @Override
@@ -79,17 +76,39 @@ public class ProjectActivity extends RefreshListActivity<ProjectPresenter> imple
     }
 
     @Override
-    public void projectType(List<Classification> types) {
+    public void projectTypeList(List<Classification> types) {
         this.types.addAll(types);
         currentClassification = types.get(0);
-        setTitleText(currentClassification.getName());
-        onRefresh();
+        if (currentClassification != null) {
+            setTitleText(currentClassification.getName());
+            onRefresh();
+        } else {
+            showEmptyView("暂无项目数据");
+        }
     }
 
     @Override
     public void projectList(List<Article> projects) {
         this.projects.addAll(projects);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onProjectError(String message) {
+        if (page == 1) {
+            showEmptyView(message);
+        } else {
+            ToastUtils.showToast(mContext, message);
+        }
+    }
+
+    @Override
+    public void onProjectEmpty() {
+        if (page == 1) {
+            showEmptyView("暂无项目数据");
+        } else {
+            ToastUtils.showToast(mContext, "暂无更多项目数据");
+        }
     }
 
     @Override
@@ -105,29 +124,14 @@ public class ProjectActivity extends RefreshListActivity<ProjectPresenter> imple
     @Override
     public void onEmpty(Object tag) {
         super.onEmpty(tag);
-        if (TextUtils.equals(tag.toString(), TAG_TYPE)) {
-            showEmptyView("暂无项目");
-        } else {
-            if (page == 1) {
-                showEmptyView("暂无项目数据");
-            } else {
-                ToastUtils.showToast(mContext, "暂无更多项目数据");
-            }
-        }
+        showEmptyView("暂无项目");
+
     }
 
     @Override
     public void onError(Object tag, String errorMsg) {
         super.onError(tag, errorMsg);
-        if (TextUtils.equals(tag.toString(), TAG_TYPE)) {
-            showEmptyView(errorMsg);
-        } else {
-            if (page == 1) {
-                showEmptyView(errorMsg);
-            } else {
-                ToastUtils.showToast(mContext, errorMsg);
-            }
-        }
+        showEmptyView(errorMsg);
     }
 
     @Override

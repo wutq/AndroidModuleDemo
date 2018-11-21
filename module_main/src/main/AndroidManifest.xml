@@ -24,7 +24,6 @@
         <activity android:name=".ui.page.FlowLayoutActivity" />
         <activity android:name=".ui.im.IMActivity" />
         <activity android:name=".ui.im.IMUserInfoActivity" />
-        <activity android:name=".ui.hotfix.HotfixActivity" />
         <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.page.ScaleImageActivity" />
     </application>

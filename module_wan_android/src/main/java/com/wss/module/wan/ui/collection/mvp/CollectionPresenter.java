@@ -5,6 +5,7 @@ import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.constants.Constants;
 import com.wss.common.net.callback.OnResultStringCallBack;
 import com.wss.module.wan.bean.Article;
+import com.wss.module.wan.ui.collection.mvp.contract.CollectionContract;
 
 import java.util.List;
 
@@ -13,13 +14,15 @@ import java.util.List;
  * Created by 吴天强 on 2018/11/16.
  */
 
-public class CollectionPresenter extends BasePresenter<CollectionModule, ICollectionView> {
+public class CollectionPresenter extends BasePresenter<CollectionContract.Module, CollectionContract.View>
+        implements CollectionContract.Presenter {
 
 
+    @Override
     public void getCollectionList() {
         if (isViewAttached()) {
             getView().showLoading();
-            getModule().getCollectionList(getContext(), getView().getPage(), new OnResultStringCallBack() {
+            getModule().getCollectionList(getView().getPage(), new OnResultStringCallBack() {
                 @Override
                 public void onSuccess(boolean success, int code, String msg, Object tag, String response) {
                     if (code == Constants.SUCCESS_CODE) {
@@ -51,4 +54,10 @@ public class CollectionPresenter extends BasePresenter<CollectionModule, ICollec
     protected CollectionModule createModule() {
         return new CollectionModule();
     }
+
+    @Override
+    public void start() {
+        getCollectionList();
+    }
+
 }

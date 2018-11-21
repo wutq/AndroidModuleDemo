@@ -18,8 +18,8 @@
 
 
         </activity>
-        <activity android:name=".ui.setup.SetupActivity" />
-        <activity android:name=".ui.setup.ArticleListActivity" />
+        <activity android:name=".ui.setup.SystemActivity" />
+        <activity android:name=".ui.setup.SystemArticleActivity" />
         <activity android:name=".ui.project.ProjectActivity" />
         <activity android:name=".ui.wxnumber.WXNumberActivity" />
         <activity android:name=".ui.search.SearchActivity" />

@@ -5,26 +5,24 @@ import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.constants.Constants;
 import com.wss.common.net.callback.OnResultStringCallBack;
 import com.wss.module.main.bean.Province;
+import com.wss.module.main.ui.selector.mvp.contract.SelectContract;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Describe：
+ * Describe：选择器Presenter
  * Created by 吴天强 on 2018/10/24.
  */
 
-public class SelectorPresenter extends BasePresenter<SelectorModule, ISelectorView> {
+public class SelectorPresenter extends BasePresenter<SelectContract.Module, SelectContract.View> implements SelectContract.Presenter {
 
-    public void init() {
-        getProvince();
-        getUserList();
-    }
 
-    private void getProvince() {
+    @Override
+    public void getAddressList() {
         if (isViewAttached()) {
             showLoading();
-            getModule().getProvince(getContext(), new OnResultStringCallBack() {
+            getModule().getAddress(getContext(), new OnResultStringCallBack() {
                 @Override
                 public void onSuccess(boolean success, int code, String msg, Object tag, String response) {
                     List<Province> provinceList = JSON.parseArray(response, Province.class);
@@ -53,7 +51,7 @@ public class SelectorPresenter extends BasePresenter<SelectorModule, ISelectorVi
                         options3Items.add(Province_AreaList);
 
                     }
-                    getView().dataList(provinceList, options2Items, options3Items);
+                    getView().addressList(provinceList, options2Items, options3Items);
                 }
 
                 @Override
@@ -69,7 +67,8 @@ public class SelectorPresenter extends BasePresenter<SelectorModule, ISelectorVi
         }
     }
 
-    private void getUserList() {
+    @Override
+    public void getUserList() {
         List<String> userlist = new ArrayList<>();
         userlist.add("秦始皇");
         userlist.add("汉武帝");
@@ -97,9 +96,14 @@ public class SelectorPresenter extends BasePresenter<SelectorModule, ISelectorVi
         getView().userList(userlist, userFrom, useDes);
     }
 
+    @Override
+    protected SelectContract.Module createModule() {
+        return new SelectorModule();
+    }
 
     @Override
-    protected SelectorModule createModule() {
-        return new SelectorModule();
+    public void start() {
+        getAddressList();
+        getUserList();
     }
 }

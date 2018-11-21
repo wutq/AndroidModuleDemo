@@ -45,4 +45,5 @@ public class CountViewActivity extends ActionBarActivity {
         ccvCust.setBtnSize(20, 20);
         ccvCust.setCountViewAttr(R.color.transparent, 0, 4, 4);
     }
+
 }

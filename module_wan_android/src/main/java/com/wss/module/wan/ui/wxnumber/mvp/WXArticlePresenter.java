@@ -5,21 +5,24 @@ import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.constants.Constants;
 import com.wss.common.net.callback.OnResultStringCallBack;
 import com.wss.module.wan.bean.Article;
+import com.wss.module.wan.ui.wxnumber.mvp.contract.WXNumberContract;
 
 import java.util.List;
 
 /**
- * Describe：
+ * Describe：公众号Presenter
  * Created by 吴天强 on 2018/11/15.
  */
 
-public class WXArticlePresenter extends BasePresenter<WXArticleModule, IWXArticleView> {
+public class WXArticlePresenter extends BasePresenter<WXNumberContract.Module, WXNumberContract.View>
+        implements WXNumberContract.Presenter {
 
 
-    public void getList() {
+    @Override
+    public void getWXArticle() {
         if (isViewAttached()) {
             getView().showLoading();
-            getModule().getWXArticle(getContext(), getView().getWXNumberId(), getView().getPage(), new OnResultStringCallBack() {
+            getModule().getWXArticle(getView().getWXNumberId(), getView().getPage(), new OnResultStringCallBack() {
                 @Override
                 public void onSuccess(boolean success, int code, String msg, Object tag, String
                         response) {
@@ -52,5 +55,10 @@ public class WXArticlePresenter extends BasePresenter<WXArticleModule, IWXArticl
     @Override
     protected WXArticleModule createModule() {
         return new WXArticleModule();
+    }
+
+    @Override
+    public void start() {
+        getWXArticle();
     }
 }

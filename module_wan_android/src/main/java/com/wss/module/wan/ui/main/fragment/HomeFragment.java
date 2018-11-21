@@ -25,8 +25,8 @@ import com.wss.module.wan.bean.BannerInfo;
 import com.wss.module.wan.bean.WXNumber;
 import com.wss.module.wan.ui.main.adapter.ArticleAdapter;
 import com.wss.module.wan.ui.main.adapter.HomeRcyAdapter;
+import com.wss.module.wan.ui.main.mvp.contract.HomeContract;
 import com.wss.module.wan.ui.main.mvp.HomePresenter;
-import com.wss.module.wan.ui.main.mvp.IHomeView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +41,7 @@ import butterknife.OnClick;
  * Created by 吴天强 on 2018/10/17.
  */
 @Route(path = ARouterConfig.WAN_MAIN_FRAGMENT)
-public class HomeFragment extends BaseMvpFragment<HomePresenter> implements IHomeView, OnListItemClickListener,
+public class HomeFragment extends BaseMvpFragment<HomePresenter> implements HomeContract.View, OnListItemClickListener,
         OnPullRefreshListener, ArticleAdapter.OnTagClickListener {
 
     @BindView(R2.id.cb_banner)
@@ -101,7 +101,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements IHom
             }
         });
         articleAdapter.setOnTagListener(this);
-        presenter.init();
+        onRefresh();
     }
 
 
@@ -149,6 +149,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements IHom
 
     @Override
     public void onItemClick(View view, int position) {
+
         if (view.getId() == R.id.rv_block) {
             Template template = blockList.get(position);
             Map<String, ArrayList<WXNumber>> wx = new HashMap<>();
@@ -183,13 +184,13 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements IHom
         bannerList.clear();
         blockList.clear();
         articleList.clear();
-        presenter.init();
+        presenter.start();
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        presenter.getArticle();
+        presenter.getArticleList();
     }
 
     @Override

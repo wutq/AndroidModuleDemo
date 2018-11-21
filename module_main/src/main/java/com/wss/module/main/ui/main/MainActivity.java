@@ -11,6 +11,8 @@ import android.widget.RadioGroup;
 import com.wss.common.base.ActionBarActivity;
 import com.wss.common.base.BaseApplication;
 import com.wss.common.base.BaseFragment;
+import com.wss.common.bean.AppInfo;
+import com.wss.common.bean.Template;
 import com.wss.common.constants.ARouterConfig;
 import com.wss.common.manage.UpdateManager;
 import com.wss.common.net.Api;
@@ -20,9 +22,8 @@ import com.wss.common.utils.ToastUtils;
 import com.wss.common.widget.dialog.AppDialog;
 import com.wss.module.main.R;
 import com.wss.module.main.R2;
-import com.wss.module.main.bean.AppInfo;
 import com.wss.module.main.ui.main.fragment.CenterFragment;
-import com.wss.module.main.ui.main.mvp.IMainView;
+import com.wss.module.main.ui.main.mvp.contract.MainContract;
 import com.wss.module.main.ui.main.mvp.MainPresenter;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ import butterknife.BindView;
  * Created by 吴天强 on 2018/10/15.
  */
 
-public class MainActivity extends ActionBarActivity<MainPresenter> implements IMainView {
+public class MainActivity extends ActionBarActivity<MainPresenter> implements MainContract.View {
 
 
     @BindView(R2.id.rg_main)
@@ -51,6 +52,8 @@ public class MainActivity extends ActionBarActivity<MainPresenter> implements IM
     private BaseFragment wanFragment = ARouterUtils.getFragment(ARouterConfig.WAN_MAIN_FRAGMENT);
     //我的模块Fragment
     private BaseFragment userFragment = ARouterUtils.getFragment(ARouterConfig.USER_MAIN_FRAGMENT);
+    //中间FragmentData
+    private ArrayList<Template> centerFragmentData = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -84,6 +87,7 @@ public class MainActivity extends ActionBarActivity<MainPresenter> implements IM
         if (PermissionsUtils.checkPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             presenter.checkUpdate();
         }
+        presenter.getTabList();
     }
 
 
@@ -102,7 +106,7 @@ public class MainActivity extends ActionBarActivity<MainPresenter> implements IM
             if (TextUtils.equals(tag, ARouterConfig.WAN_MAIN_FRAGMENT)) {
                 fragment = wanFragment;
             } else if (TextUtils.equals(tag, CenterFragment.class.getName())) {
-                fragment = new CenterFragment();
+                fragment = CenterFragment.getInstance(centerFragmentData);
             } else if (TextUtils.equals(tag, ARouterConfig.USER_MAIN_FRAGMENT)) {
                 fragment = userFragment;
             } else {
@@ -162,5 +166,10 @@ public class MainActivity extends ActionBarActivity<MainPresenter> implements IM
                     }
                 })
                 .show();
+    }
+
+    @Override
+    public void tabList(List<Template> blockList) {
+        this.centerFragmentData.addAll(blockList);
     }
 }

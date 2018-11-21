@@ -1,0 +1,47 @@
+package com.wss.module.user.ui.main.fragment.mvp.contract;
+
+import com.tamic.novate.callback.ResponseCallback;
+import com.wss.common.base.mvp.IBaseModule;
+import com.wss.common.base.mvp.IBaseView;
+import com.wss.common.bean.AppInfo;
+
+/**
+ * Describe：契约类
+ * Created by 吴天强 on 2018/11/21.
+ */
+
+public interface UserContract {
+
+    interface Module extends IBaseModule {
+        /**
+         * 检查更新
+         *
+         * @param callback 回调函数
+         */
+        void checkUpdate(ResponseCallback callback);
+    }
+
+    interface View extends IBaseView {
+
+        /**
+         * 需要更新
+         *
+         * @param appInfo appInfo
+         */
+        void needUpdate(AppInfo appInfo);
+
+        /**
+         * 已经是最新版本
+         */
+        void isLastVersion();
+    }
+
+    interface Presenter {
+
+        /**
+         * 检查更新
+         */
+        void checkUpdate();
+    }
+
+}

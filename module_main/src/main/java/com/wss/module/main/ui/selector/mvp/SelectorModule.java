@@ -4,21 +4,20 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.tamic.novate.Throwable;
-import com.wss.common.base.mvp.BaseModule;
 import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.common.utils.Utils;
+import com.wss.module.main.ui.selector.mvp.contract.SelectContract;
 
 /**
  * Describe：获取数据
  * Created by 吴天强 on 2018/10/24.
  */
 
-public class SelectorModule extends BaseModule {
+public class SelectorModule implements SelectContract.Module {
 
-    /**
-     * 获取省市区
-     */
-    void getProvince(Context mContext, OnResultCallBack<String> callBack) {
+
+    @Override
+    public void getAddress(Context mContext, OnResultCallBack<String> callBack) {
         if (callBack == null) {
             return;
         }

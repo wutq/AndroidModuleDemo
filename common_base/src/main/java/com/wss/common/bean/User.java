@@ -30,4 +30,12 @@ public class User extends BaseBean {
     private String password;
     private String token;
     private int type;
+
+    public User() {
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 }

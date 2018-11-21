@@ -67,7 +67,7 @@ public class UpdateManager {
             return;
         }
         progressDialog.show();
-        HttpUtils.getInstance(mContext)
+        HttpUtils.getInstance()
                 .setBaseUrl(NetConfig.Url.MY_SERVICE_URL)
                 .downloadFile(url, new RxFileCallBack("temp.apk") {
 

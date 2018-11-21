@@ -13,8 +13,8 @@ import com.wss.common.utils.UserInfoUtils;
 import com.wss.common.widget.ObserverButton;
 import com.wss.module.user.R;
 import com.wss.module.user.R2;
-import com.wss.module.user.ui.account.mvp.IUserView;
-import com.wss.module.user.ui.account.mvp.UserPresenter;
+import com.wss.module.user.ui.account.mvp.RegisterPresenter;
+import com.wss.module.user.ui.account.mvp.contract.RegisterContract;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -24,7 +24,7 @@ import butterknife.OnClick;
  * Created by 吴天强 on 2018/11/13.
  */
 
-public class RegisterActivity extends ActionBarActivity<UserPresenter> implements IUserView {
+public class RegisterActivity extends ActionBarActivity<RegisterPresenter> implements RegisterContract.View {
 
 
     @BindView(R2.id.edt_name)
@@ -68,25 +68,14 @@ public class RegisterActivity extends ActionBarActivity<UserPresenter> implement
     }
 
     @Override
-    public String getName() {
-        return edtName.getText().toString().trim();
-    }
-
-    @Override
-    public String getPassword() {
-        return edtPwd.getText().toString().trim();
-    }
-
-    @Override
-    public void loginSuccess(User user) {
-
-    }
-
-
-    @Override
     public void onError(Object tag, String errorMsg) {
         super.onError(tag, errorMsg);
         ToastUtils.showToast(mContext, errorMsg);
+    }
+
+    @Override
+    public User getUserInfo() {
+        return new User(edtName.getText().toString().trim(), edtPwd.getText().toString().trim());
     }
 
     @Override
@@ -99,7 +88,7 @@ public class RegisterActivity extends ActionBarActivity<UserPresenter> implement
     }
 
     @Override
-    protected UserPresenter createPresenter() {
-        return new UserPresenter();
+    protected RegisterPresenter createPresenter() {
+        return new RegisterPresenter();
     }
 }

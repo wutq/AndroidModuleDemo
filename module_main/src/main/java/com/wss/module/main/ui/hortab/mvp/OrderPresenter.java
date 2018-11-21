@@ -3,6 +3,7 @@ package com.wss.module.main.ui.hortab.mvp;
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.module.main.bean.Goods;
 import com.wss.module.main.bean.Order;
+import com.wss.module.main.ui.hortab.mvp.contract.OrderContract;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +14,10 @@ import java.util.Random;
  * Created by 吴天强 on 2018/10/23.
  */
 
-public class OrderPresenter extends BasePresenter<OrderModule, IOrderView> {
+public class OrderPresenter extends BasePresenter<OrderContract.Module, OrderContract.View> implements OrderContract.Presenter {
 
 
+    @Override
     public void getOrderList() {
         if (isViewAttached()) {
 
@@ -66,9 +68,14 @@ public class OrderPresenter extends BasePresenter<OrderModule, IOrderView> {
         return list;
     }
 
+    @Override
+    protected OrderContract.Module createModule() {
+        return null;
+    }
 
     @Override
-    protected OrderModule createModule() {
-        return new OrderModule();
+    public void start() {
+        getOrderList();
     }
+
 }

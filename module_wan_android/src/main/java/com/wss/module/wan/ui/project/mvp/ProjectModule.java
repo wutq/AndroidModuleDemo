@@ -1,26 +1,28 @@
 package com.wss.module.wan.ui.project.mvp;
 
-import android.content.Context;
 
 import com.tamic.novate.callback.ResponseCallback;
-import com.wss.common.base.mvp.BaseModule;
 import com.wss.common.net.Api;
 import com.wss.common.net.HttpUtils;
+import com.wss.module.wan.ui.project.mvp.contract.ProjectContract;
 
 /**
- * Describe：
+ * Describe：项目Module
  * Created by 吴天强 on 2018/11/15.
  */
 
-public class ProjectModule extends BaseModule {
+public class ProjectModule implements ProjectContract.Module {
 
-    void getType(Context context, String tag, ResponseCallback callback) {
-        HttpUtils.getInstance(context)
-                .getRequest(Api.PROJECT, tag, callback);
+
+    @Override
+    public void getProjectType(ResponseCallback callback) {
+        HttpUtils.getInstance()
+                .getRequest(Api.PROJECT, callback);
     }
 
-    void getProject(Context context, String tag, int page, int id, ResponseCallback callback) {
-        HttpUtils.getInstance(context)
-                .getRequest(String.format(Api.PROJECT_LIST, page, id), tag, callback);
+    @Override
+    public void getProject(int page, int id, ResponseCallback callback) {
+        HttpUtils.getInstance()
+                .getRequest(String.format(Api.PROJECT_LIST, page, id), callback);
     }
 }
