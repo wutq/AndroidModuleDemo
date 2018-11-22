@@ -1,7 +1,7 @@
 package com.wss.module.wan.ui.wxnumber.mvp.contract;
 
 import com.tamic.novate.callback.ResponseCallback;
-import com.wss.common.base.mvp.IBaseModule;
+import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
 import com.wss.module.wan.bean.Article;
 
@@ -15,7 +15,7 @@ import java.util.List;
 public interface WXNumberContract {
 
 
-    interface Module extends IBaseModule {
+    interface Model extends IBaseModel {
         /**
          * 获取公众号文章列表
          *

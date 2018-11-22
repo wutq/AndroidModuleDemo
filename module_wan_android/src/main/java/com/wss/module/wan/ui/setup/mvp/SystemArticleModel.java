@@ -10,7 +10,7 @@ import com.wss.module.wan.ui.setup.mvp.contract.SystemArticleContract;
  * Created by 吴天强 on 2018/11/21.
  */
 
-public class SystemArticleModule implements SystemArticleContract.Module {
+public class SystemArticleModel implements SystemArticleContract.Model {
 
 
     @Override

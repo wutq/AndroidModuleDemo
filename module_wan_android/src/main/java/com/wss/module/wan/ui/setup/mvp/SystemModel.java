@@ -10,7 +10,7 @@ import com.wss.module.wan.ui.setup.mvp.contract.SystemContract;
  * Created by 吴天强 on 2018/11/21.
  */
 
-public class SystemModule implements SystemContract.Module {
+public class SystemModel implements SystemContract.Model {
 
     @Override
     public void getSystem(ResponseCallback callback) {

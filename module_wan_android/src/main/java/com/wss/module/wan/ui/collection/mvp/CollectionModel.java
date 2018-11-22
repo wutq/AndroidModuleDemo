@@ -10,7 +10,7 @@ import com.wss.module.wan.ui.collection.mvp.contract.CollectionContract;
  * Created by 吴天强 on 2018/11/16.
  */
 
-public class CollectionModule implements CollectionContract.Module {
+public class CollectionModel implements CollectionContract.Model {
 
 
     @Override

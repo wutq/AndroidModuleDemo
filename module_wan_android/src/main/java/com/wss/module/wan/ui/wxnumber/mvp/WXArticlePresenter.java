@@ -14,7 +14,7 @@ import java.util.List;
  * Created by 吴天强 on 2018/11/15.
  */
 
-public class WXArticlePresenter extends BasePresenter<WXNumberContract.Module, WXNumberContract.View>
+public class WXArticlePresenter extends BasePresenter<WXNumberContract.Model, WXNumberContract.View>
         implements WXNumberContract.Presenter {
 
 
@@ -53,8 +53,8 @@ public class WXArticlePresenter extends BasePresenter<WXNumberContract.Module, W
     }
 
     @Override
-    protected WXArticleModule createModule() {
-        return new WXArticleModule();
+    protected WXArticleModel createModule() {
+        return new WXArticleModel();
     }
 
     @Override

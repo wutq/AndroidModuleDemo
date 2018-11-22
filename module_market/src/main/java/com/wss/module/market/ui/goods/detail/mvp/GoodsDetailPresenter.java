@@ -13,7 +13,7 @@ import java.util.List;
  * Created by 吴天强 on 2018/11/1.
  */
 
-public class GoodsDetailPresenter extends BasePresenter<GoodsDetailContract.Module, GoodsDetailContract.View>
+public class GoodsDetailPresenter extends BasePresenter<GoodsDetailContract.Model, GoodsDetailContract.View>
         implements GoodsDetailContract.Presenter {
 
 
@@ -134,7 +134,7 @@ public class GoodsDetailPresenter extends BasePresenter<GoodsDetailContract.Modu
     }
 
     @Override
-    protected GoodsDetailContract.Module createModule() {
+    protected GoodsDetailContract.Model createModule() {
         return null;
     }
 

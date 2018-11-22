@@ -14,7 +14,7 @@ import java.util.List;
  * Created by 吴天强 on 2018/11/15.
  */
 
-public class SystemArticlePresenter extends BasePresenter<SystemArticleContract.Module, SystemArticleContract.View>
+public class SystemArticlePresenter extends BasePresenter<SystemArticleContract.Model, SystemArticleContract.View>
         implements SystemArticleContract.Presenter {
 
 
@@ -53,8 +53,8 @@ public class SystemArticlePresenter extends BasePresenter<SystemArticleContract.
 
 
     @Override
-    protected SystemArticleModule createModule() {
-        return new SystemArticleModule();
+    protected SystemArticleModel createModule() {
+        return new SystemArticleModel();
     }
 
     @Override

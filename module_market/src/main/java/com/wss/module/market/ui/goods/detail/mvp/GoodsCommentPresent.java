@@ -12,7 +12,7 @@ import java.util.List;
  * Created by 吴天强 on 2018/11/5.
  */
 
-public class GoodsCommentPresent extends BasePresenter<GoodsCommentContract.Module, GoodsCommentContract.View>
+public class GoodsCommentPresent extends BasePresenter<GoodsCommentContract.Model, GoodsCommentContract.View>
         implements GoodsCommentContract.Presenter {
 
 
@@ -103,7 +103,7 @@ public class GoodsCommentPresent extends BasePresenter<GoodsCommentContract.Modu
 
 
     @Override
-    protected GoodsCommentContract.Module createModule() {
+    protected GoodsCommentContract.Model createModule() {
         return null;
     }
 

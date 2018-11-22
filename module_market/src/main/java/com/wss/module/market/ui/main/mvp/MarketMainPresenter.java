@@ -2,6 +2,7 @@ package com.wss.module.market.ui.main.mvp;
 
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.module.market.bean.GoodsInfo;
+import com.wss.module.market.ui.main.mvp.contract.MarketMainContract;
 import com.wss.module.market.utils.ShoppingCartUtils;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
  * Created by 吴天强 on 2018/10/19.
  */
 
-public class MarketMainPresenter extends BasePresenter<MarketMainContract.Module, MarketMainContract.View>
+public class MarketMainPresenter extends BasePresenter<MarketMainContract.Model, MarketMainContract.View>
         implements MarketMainContract.Presenter {
 
     @Override
@@ -38,7 +39,7 @@ public class MarketMainPresenter extends BasePresenter<MarketMainContract.Module
     }
 
     @Override
-    protected MarketMainContract.Module createModule() {
+    protected MarketMainContract.Model createModule() {
         return null;
     }
 

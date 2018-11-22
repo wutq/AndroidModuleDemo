@@ -5,6 +5,6 @@ package com.wss.common.base.mvp;
  * Created by 吴天强 on 2018/10/17.
  */
 
-public interface IBaseModule {
+public interface IBaseModel {
 
 }

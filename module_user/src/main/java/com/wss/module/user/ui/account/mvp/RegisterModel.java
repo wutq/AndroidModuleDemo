@@ -13,7 +13,7 @@ import com.wss.module.user.ui.account.mvp.contract.RegisterContract;
  * Created by 吴天强 on 2018/11/13.
  */
 
-public class RegisterModule implements RegisterContract.Module {
+public class RegisterModel implements RegisterContract.Model {
 
 
     @Override

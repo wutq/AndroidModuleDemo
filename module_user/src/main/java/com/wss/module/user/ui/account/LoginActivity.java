@@ -19,7 +19,7 @@ import com.wss.common.widget.ObserverButton;
 import com.wss.module.user.R;
 import com.wss.module.user.R2;
 import com.wss.module.user.ui.account.mvp.LoginPresenter;
-import com.wss.module.user.ui.account.mvp.contract.LonginContract;
+import com.wss.module.user.ui.account.mvp.contract.LoginContract;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -29,7 +29,7 @@ import butterknife.OnClick;
  * Created by 吴天强 on 2018/11/13.
  */
 @Route(path = ARouterConfig.USER_LOGIN)
-public class LoginActivity extends ActionBarActivity<LoginPresenter> implements LonginContract.View {
+public class LoginActivity extends ActionBarActivity<LoginPresenter> implements LoginContract.View {
 
     @BindView(R2.id.edt_name)
     EditText edtName;

@@ -13,7 +13,7 @@ import java.util.List;
  * Created by 吴天强 on 2018/11/21.
  */
 
-public class SystemPresenter extends BasePresenter<SystemContract.Module, SystemContract.View>
+public class SystemPresenter extends BasePresenter<SystemContract.Model, SystemContract.View>
         implements SystemContract.Presenter {
 
     @Override
@@ -46,8 +46,8 @@ public class SystemPresenter extends BasePresenter<SystemContract.Module, System
     }
 
     @Override
-    protected SystemContract.Module createModule() {
-        return new SystemModule();
+    protected SystemContract.Model createModule() {
+        return new SystemModel();
     }
 
     @Override

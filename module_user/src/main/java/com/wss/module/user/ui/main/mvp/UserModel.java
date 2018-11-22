@@ -1,19 +1,18 @@
-package com.wss.module.main.ui.main.mvp;
+package com.wss.module.user.ui.main.mvp;
 
 import com.tamic.novate.callback.ResponseCallback;
 import com.wss.common.net.Api;
 import com.wss.common.net.HttpUtils;
 import com.wss.common.net.RequestParam;
 import com.wss.common.utils.Utils;
-import com.wss.module.main.ui.main.mvp.contract.MainContract;
+import com.wss.module.user.ui.main.mvp.contract.UserContract;
 
 /**
- * Describe：首页Module
+ * Describe：我的Module
  * Created by 吴天强 on 2018/11/21.
  */
 
-public class MainModule implements MainContract.Module {
-
+public class UserModel implements UserContract.Model {
 
     @Override
     public void checkUpdate(ResponseCallback callback) {

@@ -2,7 +2,7 @@ package com.wss.module.main.ui.selector.mvp.contract;
 
 import android.content.Context;
 
-import com.wss.common.base.mvp.IBaseModule;
+import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
 import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.main.bean.Province;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public interface SelectContract {
 
-    interface Module extends IBaseModule {
+    interface Module extends IBaseModel {
         /**
          * 获取省市区
          */

@@ -23,8 +23,8 @@ import com.wss.module.user.R;
 import com.wss.module.user.R2;
 import com.wss.module.user.ui.about.AboutActivity;
 import com.wss.module.user.ui.account.LoginActivity;
-import com.wss.module.user.ui.main.fragment.mvp.contract.UserContract;
-import com.wss.module.user.ui.main.fragment.mvp.UserPresenter;
+import com.wss.module.user.ui.main.mvp.UserPresenter;
+import com.wss.module.user.ui.main.mvp.contract.UserContract;
 
 import butterknife.BindView;
 import butterknife.OnClick;

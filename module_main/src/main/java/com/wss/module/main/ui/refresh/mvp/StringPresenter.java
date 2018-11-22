@@ -14,7 +14,7 @@ import java.util.List;
  * Created by 吴天强 on 2018/10/23.
  */
 
-public class StringPresenter extends BasePresenter<RefreshContract.Module, RefreshContract.View>
+public class StringPresenter extends BasePresenter<RefreshContract.Model, RefreshContract.View>
         implements RefreshContract.Presenter {
 
 
@@ -52,7 +52,7 @@ public class StringPresenter extends BasePresenter<RefreshContract.Module, Refre
 
 
     @Override
-    protected RefreshContract.Module createModule() {
+    protected RefreshContract.Model createModule() {
         return null;
     }
 

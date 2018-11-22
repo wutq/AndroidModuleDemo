@@ -1,7 +1,7 @@
 package com.wss.module.user.ui.account.mvp.contract;
 
 import com.tamic.novate.callback.ResponseCallback;
-import com.wss.common.base.mvp.IBaseModule;
+import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
 import com.wss.common.bean.User;
 
@@ -10,9 +10,9 @@ import com.wss.common.bean.User;
  * Created by 吴天强 on 2018/11/21.
  */
 
-public interface LonginContract {
+public interface LoginContract {
 
-    interface Module extends IBaseModule {
+    interface Model extends IBaseModel {
 
         /**
          * 登录
@@ -41,5 +41,9 @@ public interface LonginContract {
 
     interface Presenter {
 
+        /**
+         * 登录
+         */
+        void login();
     }
 }

@@ -12,7 +12,7 @@ import java.lang.reflect.Proxy;
  * Created by 吴天强 on 2018/10/17.
  */
 
-public abstract class BasePresenter<M, V extends IBaseView> {
+public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> {
 
     private V mProxyView;
     private M module;

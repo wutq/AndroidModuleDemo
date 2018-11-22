@@ -24,7 +24,7 @@ import java.util.List;
  * Created by 吴天强 on 2018/10/17.
  */
 
-public class HomePresenter extends BasePresenter<HomeContract.Module, HomeContract.View> implements
+public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContract.View> implements
         HomeContract.Presenter {
 
 
@@ -135,8 +135,8 @@ public class HomePresenter extends BasePresenter<HomeContract.Module, HomeContra
 
 
     @Override
-    protected HomeModule createModule() {
-        return new HomeModule();
+    protected HomeModel createModule() {
+        return new HomeModel();
     }
 
     @Override

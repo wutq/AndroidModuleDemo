@@ -10,7 +10,7 @@ import com.wss.module.wan.ui.wxnumber.mvp.contract.WXNumberContract;
  * Created by 吴天强 on 2018/11/15.
  */
 
-public class WXArticleModule implements WXNumberContract.Module {
+public class WXArticleModel implements WXNumberContract.Model {
 
 
     @Override

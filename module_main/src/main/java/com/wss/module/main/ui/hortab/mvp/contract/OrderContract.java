@@ -1,6 +1,6 @@
 package com.wss.module.main.ui.hortab.mvp.contract;
 
-import com.wss.common.base.mvp.IBaseModule;
+import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
 import com.wss.module.main.bean.Order;
 
@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface OrderContract {
 
-    interface Module extends IBaseModule {
+    interface Module extends IBaseModel {
 
     }
 

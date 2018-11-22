@@ -11,7 +11,7 @@ import com.wss.module.wan.ui.project.mvp.contract.ProjectContract;
  * Created by 吴天强 on 2018/11/15.
  */
 
-public class ProjectModule implements ProjectContract.Module {
+public class ProjectModel implements ProjectContract.Model {
 
 
     @Override

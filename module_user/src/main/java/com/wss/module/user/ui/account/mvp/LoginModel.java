@@ -6,14 +6,14 @@ import com.wss.common.bean.User;
 import com.wss.common.net.Api;
 import com.wss.common.net.HttpUtils;
 import com.wss.common.net.RequestParam;
-import com.wss.module.user.ui.account.mvp.contract.LonginContract;
+import com.wss.module.user.ui.account.mvp.contract.LoginContract;
 
 /**
  * Describe：登录Module
  * Created by 吴天强 on 2018/11/13.
  */
 
-public class LoginModule implements LonginContract.Module {
+public class LoginModel implements LoginContract.Model {
 
     @Override
     public void login(User user, ResponseCallback callback) {

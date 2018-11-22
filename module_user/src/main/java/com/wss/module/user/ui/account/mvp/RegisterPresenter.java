@@ -12,10 +12,10 @@ import com.wss.module.user.ui.account.mvp.contract.RegisterContract;
  * Created by 吴天强 on 2018/11/13.
  */
 
-public class RegisterPresenter extends BasePresenter<RegisterContract.Module, RegisterContract.View>
+public class RegisterPresenter extends BasePresenter<RegisterContract.Model, RegisterContract.View>
         implements RegisterContract.Presenter {
 
-
+    @Override
     public void register() {
         if (isViewAttached()) {
             getView().showLoading();
@@ -44,8 +44,8 @@ public class RegisterPresenter extends BasePresenter<RegisterContract.Module, Re
     }
 
     @Override
-    protected RegisterModule createModule() {
-        return new RegisterModule();
+    protected RegisterModel createModule() {
+        return new RegisterModel();
     }
 
     @Override

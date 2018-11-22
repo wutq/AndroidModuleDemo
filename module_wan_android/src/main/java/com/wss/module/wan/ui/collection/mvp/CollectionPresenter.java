@@ -14,7 +14,7 @@ import java.util.List;
  * Created by 吴天强 on 2018/11/16.
  */
 
-public class CollectionPresenter extends BasePresenter<CollectionContract.Module, CollectionContract.View>
+public class CollectionPresenter extends BasePresenter<CollectionContract.Model, CollectionContract.View>
         implements CollectionContract.Presenter {
 
 
@@ -51,8 +51,8 @@ public class CollectionPresenter extends BasePresenter<CollectionContract.Module
     }
 
     @Override
-    protected CollectionModule createModule() {
-        return new CollectionModule();
+    protected CollectionModel createModule() {
+        return new CollectionModel();
     }
 
     @Override

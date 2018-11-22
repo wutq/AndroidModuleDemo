@@ -1,18 +1,18 @@
-package com.wss.module.user.ui.main.fragment.mvp;
+package com.wss.module.user.ui.main.mvp;
 
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.bean.AppInfo;
 import com.wss.common.constants.Constants;
 import com.wss.common.net.callback.OnResultObjectCallBack;
 import com.wss.common.utils.ToastUtils;
-import com.wss.module.user.ui.main.fragment.mvp.contract.UserContract;
+import com.wss.module.user.ui.main.mvp.contract.UserContract;
 
 /**
  * Describe：我的Presenter
  * Created by 吴天强 on 2018/11/21.
  */
 
-public class UserPresenter extends BasePresenter<UserContract.Module, UserContract.View>
+public class UserPresenter extends BasePresenter<UserContract.Model, UserContract.View>
         implements UserContract.Presenter {
 
     @Override
@@ -44,8 +44,8 @@ public class UserPresenter extends BasePresenter<UserContract.Module, UserContra
     }
 
     @Override
-    protected UserContract.Module createModule() {
-        return new UserModule();
+    protected UserContract.Model createModule() {
+        return new UserModel();
     }
 
     @Override

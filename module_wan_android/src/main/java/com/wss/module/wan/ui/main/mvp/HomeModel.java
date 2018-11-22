@@ -10,7 +10,7 @@ import com.wss.module.wan.ui.main.mvp.contract.HomeContract;
  * Created by 吴天强 on 2018/10/17.
  */
 
-public class HomeModule implements HomeContract.Module {
+public class HomeModel implements HomeContract.Model {
     @Override
     public void getBanner(ResponseCallback callback) {
         HttpUtils.getInstance()

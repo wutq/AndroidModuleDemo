@@ -27,12 +27,12 @@ import java.util.List;
  * Created by 吴天强 on 2018/11/20.
  */
 
-public class MainPresenter extends BasePresenter<MainContract.Module, MainContract.View> implements MainContract.Presenter {
+public class MainPresenter extends BasePresenter<MainContract.Model, MainContract.View> implements MainContract.Presenter {
 
 
     @Override
-    protected MainModule createModule() {
-        return new MainModule();
+    protected MainModel createModule() {
+        return new MainModel();
     }
 
     @Override

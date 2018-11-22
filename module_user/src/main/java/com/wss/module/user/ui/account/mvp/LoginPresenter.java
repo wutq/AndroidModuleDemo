@@ -5,17 +5,18 @@ import android.text.TextUtils;
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.bean.User;
 import com.wss.common.net.callback.OnResultObjectCallBack;
-import com.wss.module.user.ui.account.mvp.contract.LonginContract;
+import com.wss.module.user.ui.account.mvp.contract.LoginContract;
 
 /**
  * Describe：登录Presenter
  * Created by 吴天强 on 2018/11/13.
  */
 
-public class LoginPresenter extends BasePresenter<LonginContract.Module, LonginContract.View>
-        implements LonginContract.Presenter {
+public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginContract.View>
+        implements LoginContract.Presenter {
 
 
+    @Override
     public void login() {
         if (isViewAttached()) {
             getView().showLoading();
@@ -44,8 +45,8 @@ public class LoginPresenter extends BasePresenter<LonginContract.Module, LonginC
 
 
     @Override
-    protected LoginModule createModule() {
-        return new LoginModule();
+    protected LoginModel createModule() {
+        return new LoginModel();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.wss.module.market.ui.goods.detail.mvp.contract;
 
+import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
 import com.wss.module.market.bean.GoodsComment;
 import com.wss.module.market.bean.GoodsInfo;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public interface GoodsDetailContract {
 
-    interface Module extends IBaseView {
+    interface Model extends IBaseModel {
 
     }
 

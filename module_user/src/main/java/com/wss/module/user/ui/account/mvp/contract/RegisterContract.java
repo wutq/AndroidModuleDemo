@@ -1,7 +1,7 @@
 package com.wss.module.user.ui.account.mvp.contract;
 
 import com.tamic.novate.callback.ResponseCallback;
-import com.wss.common.base.mvp.IBaseModule;
+import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
 import com.wss.common.bean.User;
 
@@ -12,7 +12,7 @@ import com.wss.common.bean.User;
 
 public interface RegisterContract {
 
-    interface Module extends IBaseModule {
+    interface Model extends IBaseModel {
         /**
          * 注册
          *
@@ -39,5 +39,9 @@ public interface RegisterContract {
 
     interface Presenter {
 
+        /**
+         * 注册
+         */
+        void register();
     }
 }

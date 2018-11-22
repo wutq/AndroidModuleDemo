@@ -1,5 +1,6 @@
 package com.wss.module.market.ui.goods.cart.mvp.contract;
 
+import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
 import com.wss.module.market.bean.Vendor;
 
@@ -12,7 +13,7 @@ import java.util.List;
 
 public interface ShoppingCartContract {
 
-    interface Module extends IBaseView {
+    interface Model extends IBaseModel{
 
     }
 

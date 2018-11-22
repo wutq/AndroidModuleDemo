@@ -19,7 +19,7 @@ import com.wss.module.market.bean.GoodsInfo;
 import com.wss.module.market.ui.goods.cart.ShoppingCartActivity;
 import com.wss.module.market.ui.goods.detail.GoodsDetailActivity;
 import com.wss.module.market.ui.main.adapter.MarketMainAdapter;
-import com.wss.module.market.ui.main.mvp.MarketMainContract;
+import com.wss.module.market.ui.main.mvp.contract.MarketMainContract;
 import com.wss.module.market.ui.main.mvp.MarketMainPresenter;
 
 import java.util.ArrayList;

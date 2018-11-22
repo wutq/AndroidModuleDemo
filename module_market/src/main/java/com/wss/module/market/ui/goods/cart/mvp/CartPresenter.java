@@ -12,7 +12,7 @@ import java.util.List;
  * Created by 吴天强 on 2018/11/5.
  */
 
-public class CartPresenter extends BasePresenter<ShoppingCartContract.Module, ShoppingCartContract.View>
+public class CartPresenter extends BasePresenter<ShoppingCartContract.Model, ShoppingCartContract.View>
         implements ShoppingCartContract.Presenter {
     @Override
     public void getCartData() {
@@ -27,7 +27,7 @@ public class CartPresenter extends BasePresenter<ShoppingCartContract.Module, Sh
     }
 
     @Override
-    protected ShoppingCartContract.Module createModule() {
+    protected ShoppingCartContract.Model createModule() {
         return null;
     }
 

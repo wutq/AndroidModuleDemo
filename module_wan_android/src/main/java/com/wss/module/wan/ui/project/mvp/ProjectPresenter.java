@@ -16,12 +16,12 @@ import java.util.List;
  * Created by 吴天强 on 2018/11/15.
  */
 
-public class ProjectPresenter extends BasePresenter<ProjectContract.Module, ProjectContract.View>
+public class ProjectPresenter extends BasePresenter<ProjectContract.Model, ProjectContract.View>
         implements ProjectContract.Presenter {
 
     @Override
-    protected ProjectModule createModule() {
-        return new ProjectModule();
+    protected ProjectModel createModule() {
+        return new ProjectModel();
     }
 
     @Override

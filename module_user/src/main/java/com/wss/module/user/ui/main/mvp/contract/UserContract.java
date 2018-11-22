@@ -1,7 +1,7 @@
-package com.wss.module.user.ui.main.fragment.mvp.contract;
+package com.wss.module.user.ui.main.mvp.contract;
 
 import com.tamic.novate.callback.ResponseCallback;
-import com.wss.common.base.mvp.IBaseModule;
+import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
 import com.wss.common.bean.AppInfo;
 
@@ -12,7 +12,7 @@ import com.wss.common.bean.AppInfo;
 
 public interface UserContract {
 
-    interface Module extends IBaseModule {
+    interface Model extends IBaseModel {
         /**
          * 检查更新
          *
