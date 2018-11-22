@@ -50,5 +50,4 @@ public abstract class OnResultCallBack<T> extends RxGenericsCallback<T, Response
 
     public abstract void onCompleted();
 
-
 }

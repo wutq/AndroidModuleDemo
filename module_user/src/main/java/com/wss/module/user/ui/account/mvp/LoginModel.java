@@ -1,11 +1,11 @@
 package com.wss.module.user.ui.account.mvp;
 
 import com.tamic.novate.Throwable;
-import com.tamic.novate.callback.ResponseCallback;
 import com.wss.common.bean.User;
 import com.wss.common.net.Api;
 import com.wss.common.net.HttpUtils;
 import com.wss.common.net.RequestParam;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.user.ui.account.mvp.contract.LoginContract;
 
 /**
@@ -16,7 +16,7 @@ import com.wss.module.user.ui.account.mvp.contract.LoginContract;
 public class LoginModel implements LoginContract.Model {
 
     @Override
-    public void login(User user, ResponseCallback callback) {
+    public void login(User user, OnResultCallBack callback) {
         if (user == null) {
             callback.onError("", (Throwable) new Exception("用户信息为空"));
         }

@@ -1,9 +1,9 @@
 package com.wss.module.user.ui.main.mvp.contract;
 
-import com.tamic.novate.callback.ResponseCallback;
 import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
 import com.wss.common.bean.AppInfo;
+import com.wss.common.net.callback.OnResultCallBack;
 
 /**
  * Describe：契约类
@@ -18,7 +18,7 @@ public interface UserContract {
          *
          * @param callback 回调函数
          */
-        void checkUpdate(ResponseCallback callback);
+        void checkUpdate(OnResultCallBack callback);
     }
 
     interface View extends IBaseView {

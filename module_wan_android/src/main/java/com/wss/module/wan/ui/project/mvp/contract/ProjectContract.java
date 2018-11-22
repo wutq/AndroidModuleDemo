@@ -1,8 +1,8 @@
 package com.wss.module.wan.ui.project.mvp.contract;
 
-import com.tamic.novate.callback.ResponseCallback;
 import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.wan.bean.Article;
 import com.wss.module.wan.bean.Classification;
 
@@ -22,7 +22,7 @@ public interface ProjectContract {
          *
          * @param callback 回调
          */
-        void getProjectType(ResponseCallback callback);
+        void getProjectType(OnResultCallBack callback);
 
         /**
          * 获取分类下的项目
@@ -31,7 +31,7 @@ public interface ProjectContract {
          * @param id       分类ID
          * @param callback 回调
          */
-        void getProject(int page, int id, ResponseCallback callback);
+        void getProject(int page, int id, OnResultCallBack callback);
     }
 
     interface View extends IBaseView {

@@ -63,5 +63,8 @@ public abstract class BaseMvpFragment<P extends BasePresenter> extends BaseFragm
     }
     //***************************************IBaseView方法实现*************************************
 
+    /**
+     * 创建Presenter
+     */
     protected abstract P createPresenter();
 }

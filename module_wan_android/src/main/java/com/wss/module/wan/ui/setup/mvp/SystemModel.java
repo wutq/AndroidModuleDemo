@@ -1,8 +1,8 @@
 package com.wss.module.wan.ui.setup.mvp;
 
-import com.tamic.novate.callback.ResponseCallback;
 import com.wss.common.net.Api;
 import com.wss.common.net.HttpUtils;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.wan.ui.setup.mvp.contract.SystemContract;
 
 /**
@@ -13,7 +13,7 @@ import com.wss.module.wan.ui.setup.mvp.contract.SystemContract;
 public class SystemModel implements SystemContract.Model {
 
     @Override
-    public void getSystem(ResponseCallback callback) {
+    public void getSystem(OnResultCallBack callback) {
         HttpUtils.getInstance()
                 .getRequest(Api.TREE, callback);
     }

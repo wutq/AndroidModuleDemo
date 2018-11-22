@@ -1,8 +1,8 @@
 package com.wss.module.wan.ui.wxnumber.mvp.contract;
 
-import com.tamic.novate.callback.ResponseCallback;
 import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.wan.bean.Article;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public interface WXNumberContract {
          * @param page     页码
          * @param callback 回调
          */
-        void getWXArticle(int id, int page, ResponseCallback callback);
+        void getWXArticle(int id, int page, OnResultCallBack callback);
 
     }
 

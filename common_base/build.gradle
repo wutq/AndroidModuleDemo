@@ -84,4 +84,5 @@ dependencies {
     api rootProject.ext.dependencies["greenDao"]
     //scaleImageView
     api rootProject.ext.dependencies["scaleImageView"]
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 }

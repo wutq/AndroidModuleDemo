@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.bean.User;
+import com.wss.common.constants.Constants;
 import com.wss.common.net.callback.OnResultObjectCallBack;
 import com.wss.module.user.ui.account.mvp.contract.RegisterContract;
 
@@ -22,22 +23,17 @@ public class RegisterPresenter extends BasePresenter<RegisterContract.Model, Reg
             getModule().register(getView().getUserInfo(), new OnResultObjectCallBack<User>() {
                 @Override
                 public void onSuccess(boolean success, int code, String msg, Object tag, User response) {
-                    if (code == 0 && response != null &&
-                            !TextUtils.isEmpty(String.valueOf(response.getId()))) {
-                        getView().registerSuccess(response);
-                    } else {
-                        getView().onError(tag, msg);
-                    }
+
                 }
 
                 @Override
                 public void onFailure(Object tag, Exception e) {
-                    getView().onError(tag, msg);
+
                 }
 
                 @Override
                 public void onCompleted() {
-                    getView().dismissLoading();
+
                 }
             });
         }

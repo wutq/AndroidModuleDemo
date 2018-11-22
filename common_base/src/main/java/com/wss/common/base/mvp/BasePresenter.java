@@ -21,7 +21,6 @@ public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> {
     /**
      * 绑定View
      */
-
     @SuppressWarnings("unchecked")
     public void attachView(V view) {
         weakReference = new WeakReference<>(view);

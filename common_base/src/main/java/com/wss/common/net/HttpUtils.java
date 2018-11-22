@@ -7,6 +7,7 @@ import com.tamic.novate.Novate;
 import com.tamic.novate.callback.ResponseCallback;
 import com.tamic.novate.callback.RxFileCallBack;
 import com.wss.common.base.BaseApplication;
+import com.wss.common.net.callback.OnResultCallBack;
 
 import java.io.File;
 import java.util.List;
@@ -67,7 +68,7 @@ public class HttpUtils {
      * @param url      请求地址
      * @param callback 回调
      */
-    public void getRequest(String url, ResponseCallback callback) {
+    public void getRequest(String url, OnResultCallBack callback) {
         request(REQUEST_GET, url, new RequestParam(), null, callback);
     }
 
@@ -78,7 +79,7 @@ public class HttpUtils {
      * @param tag      标签
      * @param callback 回调
      */
-    public void getRequest(String url, String tag, ResponseCallback callback) {
+    public void getRequest(String url, String tag, OnResultCallBack callback) {
         request(REQUEST_GET, url, new RequestParam(), tag, callback);
     }
 
@@ -89,7 +90,7 @@ public class HttpUtils {
      * @param params   请求参数
      * @param callback 回调
      */
-    public void getRequest(String url, RequestParam params, ResponseCallback callback) {
+    public void getRequest(String url, RequestParam params, OnResultCallBack callback) {
         request(REQUEST_GET, url, params, null, callback);
     }
 
@@ -101,7 +102,7 @@ public class HttpUtils {
      * @param tag      标签
      * @param callback 回调
      */
-    public void getRequest(String url, RequestParam params, String tag, ResponseCallback callback) {
+    public void getRequest(String url, RequestParam params, String tag, OnResultCallBack callback) {
         request(REQUEST_GET, url, params, tag, callback);
     }
 
@@ -114,7 +115,7 @@ public class HttpUtils {
      * @param url      请求地址
      * @param callback 回调
      */
-    public void postRequest(String url, ResponseCallback callback) {
+    public void postRequest(String url, OnResultCallBack callback) {
         request(REQUEST_POST, url, new RequestParam(), null, callback);
     }
 
@@ -125,7 +126,7 @@ public class HttpUtils {
      * @param tag      标签
      * @param callback 回调
      */
-    public void postRequest(String url, String tag, ResponseCallback callback) {
+    public void postRequest(String url, String tag, OnResultCallBack callback) {
         request(REQUEST_POST, url, new RequestParam(), tag, callback);
     }
 
@@ -136,7 +137,7 @@ public class HttpUtils {
      * @param params   请求参数
      * @param callback 回调
      */
-    public void postRequest(String url, RequestParam params, ResponseCallback callback) {
+    public void postRequest(String url, RequestParam params, OnResultCallBack callback) {
         request(REQUEST_POST, url, params, null, callback);
     }
 
@@ -148,7 +149,7 @@ public class HttpUtils {
      * @param tag      标签
      * @param callback 回调
      */
-    public void postRequest(String url, RequestParam params, String tag, ResponseCallback callback) {
+    public void postRequest(String url, RequestParam params, String tag, OnResultCallBack callback) {
         request(REQUEST_POST, url, params, tag, callback);
     }
 
@@ -160,7 +161,7 @@ public class HttpUtils {
      * @param url      请求地址
      * @param callback 回调
      */
-    public void jsonRequest(String url, ResponseCallback callback) {
+    public void jsonRequest(String url, OnResultCallBack callback) {
         request(REQUEST_JSON, url, new RequestParam(), null, callback);
     }
 
@@ -171,7 +172,7 @@ public class HttpUtils {
      * @param tag      标签
      * @param callback 回调
      */
-    public void jsonRequest(String url, String tag, ResponseCallback callback) {
+    public void jsonRequest(String url, String tag, OnResultCallBack callback) {
         request(REQUEST_JSON, url, new RequestParam(), tag, callback);
     }
 
@@ -182,7 +183,7 @@ public class HttpUtils {
      * @param params   请求参数
      * @param callback 回调
      */
-    public void jsonRequest(String url, RequestParam params, ResponseCallback callback) {
+    public void jsonRequest(String url, RequestParam params, OnResultCallBack callback) {
         request(REQUEST_JSON, url, params, null, callback);
     }
 
@@ -194,7 +195,7 @@ public class HttpUtils {
      * @param tag      标签
      * @param callback 回调
      */
-    public void jsonRequest(String url, RequestParam params, String tag, ResponseCallback callback) {
+    public void jsonRequest(String url, RequestParam params, String tag, OnResultCallBack callback) {
         request(REQUEST_JSON, url, params, tag, callback);
     }
 
@@ -236,7 +237,7 @@ public class HttpUtils {
      * @param file     文件
      * @param callback 回调
      */
-    public void upLoadFile(String url, File file, ResponseCallback callback) {
+    public void upLoadFile(String url, File file, OnResultCallBack callback) {
         upLoadFile(url, file, null, callback);
     }
 
@@ -252,7 +253,7 @@ public class HttpUtils {
         //使用Part 方式上传文件
         checkBaseUrl();
         Logger.e(NetConfig.Url.getBaseUrl() + url + file.getAbsolutePath());
-        builder.build().rxUploadWithPart(url, file, callback);
+        builder.build().rxUploadWithPart(tag, url, file, callback);
     }
 
     /**
@@ -262,7 +263,7 @@ public class HttpUtils {
      * @param files    文件
      * @param callback 回调
      */
-    public void upLoadFile(String url, List<File> files, ResponseCallback callback) {
+    public void upLoadFile(String url, List<File> files, OnResultCallBack callback) {
         upLoadFile(url, files, null, callback);
     }
 

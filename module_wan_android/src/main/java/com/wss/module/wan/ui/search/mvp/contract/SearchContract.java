@@ -1,8 +1,8 @@
 package com.wss.module.wan.ui.search.mvp.contract;
 
-import com.tamic.novate.callback.ResponseCallback;
 import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.wan.bean.Article;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public interface SearchContract {
          * @param word     关键字
          * @param callback 回调
          */
-        void searchData(int page, String word, ResponseCallback callback);
+        void searchData(int page, String word, OnResultCallBack callback);
     }
 
     interface View extends IBaseView {

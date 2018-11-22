@@ -1,9 +1,9 @@
 package com.wss.module.main.ui.main.mvp;
 
-import com.tamic.novate.callback.ResponseCallback;
 import com.wss.common.net.Api;
 import com.wss.common.net.HttpUtils;
 import com.wss.common.net.RequestParam;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.common.utils.Utils;
 import com.wss.module.main.ui.main.mvp.contract.MainContract;
 
@@ -16,7 +16,7 @@ public class MainModel implements MainContract.Model {
 
 
     @Override
-    public void checkUpdate(ResponseCallback callback) {
+    public void checkUpdate(OnResultCallBack callback) {
         RequestParam param = new RequestParam();
         param.addParameter("versionCode", Utils.getVersionCode());
         HttpUtils.getInstance()

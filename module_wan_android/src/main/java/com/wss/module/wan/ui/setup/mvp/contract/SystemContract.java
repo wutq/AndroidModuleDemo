@@ -1,8 +1,8 @@
 package com.wss.module.wan.ui.setup.mvp.contract;
 
-import com.tamic.novate.callback.ResponseCallback;
 import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.wan.bean.Classification;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public interface SystemContract {
          *
          * @param callback 回调
          */
-        void getSystem(ResponseCallback callback);
+        void getSystem(OnResultCallBack callback);
 
     }
 

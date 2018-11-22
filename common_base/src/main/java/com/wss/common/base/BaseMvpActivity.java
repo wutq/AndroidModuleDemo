@@ -70,5 +70,8 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
     }
     //***************************************IBaseView方法实现*************************************
 
+    /**
+     * 创建Presenter
+     */
     protected abstract P createPresenter();
 }

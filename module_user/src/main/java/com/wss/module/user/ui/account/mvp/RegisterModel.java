@@ -1,11 +1,10 @@
 package com.wss.module.user.ui.account.mvp;
 
-import com.tamic.novate.Throwable;
-import com.tamic.novate.callback.ResponseCallback;
 import com.wss.common.bean.User;
 import com.wss.common.net.Api;
 import com.wss.common.net.HttpUtils;
 import com.wss.common.net.RequestParam;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.user.ui.account.mvp.contract.RegisterContract;
 
 /**
@@ -17,10 +16,9 @@ public class RegisterModel implements RegisterContract.Model {
 
 
     @Override
-    public void register(User user, ResponseCallback callback) {
-        if (user == null) {
-            callback.onError("", (Throwable) new Exception("用户信息为空"));
-        }
+    public void register(User user, OnResultCallBack callback) {
+        if (user == null)
+            callback.onError("",null);
         RequestParam param = new RequestParam();
         param.addParameter("username", user.getUsername());
         param.addParameter("password", user.getPassword());

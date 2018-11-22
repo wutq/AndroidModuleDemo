@@ -1,9 +1,9 @@
 package com.wss.module.user.ui.account.mvp.contract;
 
-import com.tamic.novate.callback.ResponseCallback;
 import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
 import com.wss.common.bean.User;
+import com.wss.common.net.callback.OnResultCallBack;
 
 /**
  * Describe：注册契约类
@@ -19,7 +19,7 @@ public interface RegisterContract {
          * @param user     用户信息
          * @param callback 回调
          */
-        void register(User user, ResponseCallback callback);
+        void register(User user, OnResultCallBack callback);
     }
 
     interface View extends IBaseView {

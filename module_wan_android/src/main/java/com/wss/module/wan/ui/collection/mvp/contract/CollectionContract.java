@@ -1,8 +1,8 @@
 package com.wss.module.wan.ui.collection.mvp.contract;
 
-import com.tamic.novate.callback.ResponseCallback;
 import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.wan.bean.Article;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public interface CollectionContract {
          * @param page     分页
          * @param callback 回调
          */
-        void getCollectionList(int page, ResponseCallback callback);
+        void getCollectionList(int page, OnResultCallBack callback);
     }
 
     interface View extends IBaseView {

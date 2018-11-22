@@ -1,10 +1,10 @@
 package com.wss.module.main.ui.main.mvp.contract;
 
-import com.tamic.novate.callback.ResponseCallback;
 import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
 import com.wss.common.bean.AppInfo;
 import com.wss.common.bean.Template;
+import com.wss.common.net.callback.OnResultCallBack;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public interface MainContract {
          *
          * @param callback 回调函数
          */
-        void checkUpdate(ResponseCallback callback);
+        void checkUpdate(OnResultCallBack callback);
     }
 
     interface View extends IBaseView {

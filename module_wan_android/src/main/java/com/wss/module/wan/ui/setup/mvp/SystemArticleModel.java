@@ -1,8 +1,8 @@
 package com.wss.module.wan.ui.setup.mvp;
 
-import com.tamic.novate.callback.ResponseCallback;
 import com.wss.common.net.Api;
 import com.wss.common.net.HttpUtils;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.wan.ui.setup.mvp.contract.SystemArticleContract;
 
 /**
@@ -14,7 +14,7 @@ public class SystemArticleModel implements SystemArticleContract.Model {
 
 
     @Override
-    public void getArticle(int page, String id, ResponseCallback callback) {
+    public void getArticle(int page, String id, OnResultCallBack callback) {
         HttpUtils.getInstance()
                 .getRequest(String.format(Api.TREE_ARTICLE, page, id), callback);
     }

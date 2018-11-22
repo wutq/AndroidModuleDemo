@@ -1,8 +1,8 @@
 package com.wss.module.wan.ui.setup.mvp.contract;
 
-import com.tamic.novate.callback.ResponseCallback;
 import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.wan.bean.Article;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public interface SystemArticleContract {
          * @param id       体系二级分类ID
          * @param callback 回调
          */
-        void getArticle(int page, String id, ResponseCallback callback);
+        void getArticle(int page, String id, OnResultCallBack callback);
     }
 
     interface View extends IBaseView {
