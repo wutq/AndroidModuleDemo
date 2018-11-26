@@ -2,6 +2,7 @@ package com.wss.module.main.ui.main.mvp;
 
 import com.wss.common.net.Api;
 import com.wss.common.net.HttpUtils;
+import com.wss.common.net.NetConfig;
 import com.wss.common.net.RequestParam;
 import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.common.utils.Utils;
@@ -20,6 +21,7 @@ public class MainModel implements MainContract.Model {
         RequestParam param = new RequestParam();
         param.addParameter("versionCode", Utils.getVersionCode());
         HttpUtils.getInstance()
+                .setBaseUrl(NetConfig.Url.MY_SERVICE_URL)
                 .getRequest(Api.CHECK_UPDATE, param, callback);
     }
 }
