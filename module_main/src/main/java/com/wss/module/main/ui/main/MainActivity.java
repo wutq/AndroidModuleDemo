@@ -85,7 +85,7 @@ public class MainActivity extends ActionBarActivity<MainPresenter> implements Ma
             }
         });  //检查文件权限
         if (PermissionsUtils.checkPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-//            presenter.checkUpdate();
+            presenter.checkUpdate();
         }
         presenter.getTabList();
     }
