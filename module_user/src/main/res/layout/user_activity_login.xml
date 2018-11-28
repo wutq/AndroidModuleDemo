@@ -78,14 +78,14 @@
         android:text="登录"
         android:textColor="@color/black"
         app:defaultBgResource="@drawable/corner_gray_shape"
-        app:pressBgResource="@drawable/bg_of_orange_gradient" />
+        app:pressBgResource="@drawable/bg_of_orange_gradient_radius" />
 
     <TextView
         android:id="@+id/ob_register"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/bg_of_orange_gradient"
+        android:background="@drawable/bg_of_orange_gradient_radius"
         android:gravity="center"
         android:text="注册"
         android:textColor="@color/white" />

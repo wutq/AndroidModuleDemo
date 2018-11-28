@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:background="@drawable/bg_of_orange_gradient"
+                android:background="@drawable/bg_of_orange_gradient_radius"
                 android:padding="4dp"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:background="@drawable/bg_of_green_gradient"
+                android:background="@drawable/bg_of_green_gradient_radius"
                 android:padding="4dp"
                 android:textColor="@color/white"
                 android:textSize="12sp" />

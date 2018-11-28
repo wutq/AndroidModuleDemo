@@ -14,6 +14,7 @@ import com.wss.common.listener.OnListItemClickListener;
 import com.wss.common.utils.ToastUtils;
 import com.wss.module.market.R;
 import com.wss.module.market.R2;
+import com.wss.module.market.bean.GoodsInfo;
 import com.wss.module.market.bean.Vendor;
 import com.wss.module.market.ui.goods.cart.adapter.ShoppingCartAdapter;
 import com.wss.module.market.ui.goods.cart.mvp.CartPresenter;
@@ -44,6 +45,9 @@ public class ShoppingCartActivity extends ActionBarActivity<CartPresenter> imple
     @BindView(R2.id.btn_buy)
     TextView btnBuy;
 
+    private TextView tvRight;//右上角文字
+    private boolean isEdit;//是否属于编辑状态
+
     @Override
     protected CartPresenter createPresenter() {
         return new CartPresenter();
@@ -55,7 +59,6 @@ public class ShoppingCartActivity extends ActionBarActivity<CartPresenter> imple
 
     @Override
     protected int getLayoutId() {
-
         return R.layout.market_activity_shopping_cart;
     }
 
@@ -65,14 +68,35 @@ public class ShoppingCartActivity extends ActionBarActivity<CartPresenter> imple
         adapter = new ShoppingCartAdapter(mContext, mData, R.layout.market_item_of_shopping_cart_list, this);
         recycleView.setLayoutManager(new LinearLayoutManager(mContext));
         recycleView.setAdapter(adapter);
-        actionBar.setRightText("清空", new View.OnClickListener() {
+        tvRight = actionBar.getTextView();
+        tvRight.setText("编辑");
+        tvRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShoppingCartUtils.cleanLocal();
+                onRightChange();
             }
         });
+        actionBar.setRightView(tvRight);
         presenter.start();
     }
+
+
+    private void onRightChange() {
+        isEdit = !isEdit;
+        if (isEdit) {
+            tvRight.setText("完成");
+            tvTotal.setVisibility(View.GONE);
+            btnBuy.setText("删除");
+            btnBuy.setBackgroundResource(R.drawable.market_shopping_cart_next_btn_red);
+        } else {
+            tvTotal.setVisibility(View.VISIBLE);
+            tvRight.setText("编辑");
+            btnBuy.setText("下一步");
+            btnBuy.setBackgroundResource(R.drawable.market_shopping_cart_next_btn);
+        }
+        adapter.setEdit(isEdit);
+    }
+
 
     @Override
     protected boolean regEvent() {
@@ -82,19 +106,20 @@ public class ShoppingCartActivity extends ActionBarActivity<CartPresenter> imple
     @Override
     public void onEventBus(Event event) {
         super.onEventBus(event);
-        if (TextUtils.equals(EventAction.EVENT_SHOPPING_CART_REFRESH, event.getAction())) {
+        if (TextUtils.equals(EventAction.EVENT_SHOPPING_CART_CHANGED, event.getAction())) {
             //购物车有变化
             adapter.notifyDataSetChanged();
             ivCheckAll.setSelected(ShoppingCartUtils.isAllVendorChecked(mData));
             displayResult();
-        } else if (TextUtils.equals(EventAction.EVENT_SHOPPING_CART_CLEAN, event.getAction())) {
-            showEmptyView("车里空空如也");
+        } else if (TextUtils.equals(EventAction.EVENT_SHOPPING_CART_REFRESH, event.getAction())) {
+            //重新获取购物车数据
+            presenter.getCartData();
         }
     }
 
     private void displayResult() {
         btnBuy.setSelected(ShoppingCartUtils.isCheckedLeastOne(mData));
-        tvTotal.setText(String.format("%s%s", getString(R.string.total), ShoppingCartUtils.getCartCountPrice(mData)));
+        tvTotal.setText(String.format("%s%s", getString(R.string.market_total), ShoppingCartUtils.getCartCountPrice(mData)));
     }
 
 
@@ -103,9 +128,6 @@ public class ShoppingCartActivity extends ActionBarActivity<CartPresenter> imple
         this.mData.clear();
         this.mData.addAll(dataList);
         adapter.notifyDataSetChanged();
-        //默认全部选中
-        ShoppingCartUtils.checkAll(mData, true);
-        ivCheckAll.setSelected(true);
         displayResult();
     }
 
@@ -120,7 +142,15 @@ public class ShoppingCartActivity extends ActionBarActivity<CartPresenter> imple
             adapter.notifyDataSetChanged();
             displayResult();
         } else if (i == R.id.btn_buy) {
-            ToastUtils.showToast(mContext, "可点击");
+            List<GoodsInfo> checkedGoods = ShoppingCartUtils.getAllCheckedGoods(mData);
+            if (checkedGoods.size() > 0) {
+                if (isEdit) {
+                    //删除
+                    ShoppingCartUtils.delete(checkedGoods);
+                } else {
+                    ToastUtils.showToast(mContext, "去结算");
+                }
+            }
         }
     }
 

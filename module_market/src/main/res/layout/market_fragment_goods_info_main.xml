@@ -45,32 +45,39 @@
 
 
                 <!--商品价格-->
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
                     android:layout_marginTop="5dp"
-                    android:gravity="bottom"
-                    android:minHeight="25dp"
                     android:orientation="horizontal">
 
 
                     <TextView
                         android:id="@+id/tv_goods_price"
                         style="@style/TextStyle"
+                        android:layout_alignParentBottom="true"
                         android:textColor="@color/red"
                         android:textSize="21sp"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:layout_marginBottom="2dp"
                         android:id="@+id/tv_old_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
                         android:layout_marginStart="5dp"
+                        android:layout_toEndOf="@+id/tv_goods_price"
                         android:gravity="center_vertical"
                         android:textColor="@color/gray"
                         android:textSize="13sp" />
 
-                </LinearLayout>
+                    <com.wss.common.widget.CountClickView
+                        android:id="@+id/ccv_click"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true" />
+                </RelativeLayout>
 
             </LinearLayout>
 

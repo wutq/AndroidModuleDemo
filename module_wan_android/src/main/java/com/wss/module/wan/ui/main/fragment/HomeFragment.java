@@ -16,6 +16,7 @@ import com.wss.common.listener.OnListItemClickListener;
 import com.wss.common.utils.ActivityToActivity;
 import com.wss.common.utils.ImageUtils;
 import com.wss.common.utils.PxUtils;
+import com.wss.common.utils.ToastUtils;
 import com.wss.common.widget.pulltorefresh.OnPullRefreshListener;
 import com.wss.common.widget.pulltorefresh.PullToRefreshLayout;
 import com.wss.module.wan.R;
@@ -25,8 +26,8 @@ import com.wss.module.wan.bean.BannerInfo;
 import com.wss.module.wan.bean.WXNumber;
 import com.wss.module.wan.ui.main.adapter.ArticleAdapter;
 import com.wss.module.wan.ui.main.adapter.HomeRcyAdapter;
-import com.wss.module.wan.ui.main.mvp.contract.HomeContract;
 import com.wss.module.wan.ui.main.mvp.HomePresenter;
+import com.wss.module.wan.ui.main.mvp.contract.HomeContract;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -123,6 +124,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
                 ActivityToActivity.toWebView(mContext, bannerList.get(position).getUrl());
             }
         });
+        ToastUtils.showToast(mContext, "收到消息");
     }
 
     @Override

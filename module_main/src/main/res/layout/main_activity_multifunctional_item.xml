@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/bg_of_gradient"
+            android:background="@drawable/bg_of_orange_gradient"
             app:leftText="我的订单"
             app:leftTextColor="@color/red"
             app:showLeftIcon="false" />

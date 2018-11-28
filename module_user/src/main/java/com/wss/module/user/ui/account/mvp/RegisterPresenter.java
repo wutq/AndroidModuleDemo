@@ -1,11 +1,8 @@
 package com.wss.module.user.ui.account.mvp;
 
-import android.text.TextUtils;
-
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.bean.User;
-import com.wss.common.constants.Constants;
-import com.wss.common.net.callback.OnResultObjectCallBack;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.user.ui.account.mvp.contract.RegisterContract;
 
 /**
@@ -20,7 +17,7 @@ public class RegisterPresenter extends BasePresenter<RegisterContract.Model, Reg
     public void register() {
         if (isViewAttached()) {
             getView().showLoading();
-            getModule().register(getView().getUserInfo(), new OnResultObjectCallBack<User>() {
+            getModule().register(getView().getUserInfo(), new OnResultCallBack<User>() {
                 @Override
                 public void onSuccess(boolean success, int code, String msg, Object tag, User response) {
 

@@ -3,7 +3,7 @@ package com.wss.module.user.ui.main.mvp;
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.bean.AppInfo;
 import com.wss.common.constants.Constants;
-import com.wss.common.net.callback.OnResultObjectCallBack;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.common.utils.ToastUtils;
 import com.wss.module.user.ui.main.mvp.contract.UserContract;
 
@@ -19,7 +19,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
     public void checkUpdate() {
         if (isViewAttached()) {
             getView().showLoading();
-            getModule().checkUpdate(new OnResultObjectCallBack<AppInfo>() {
+            getModule().checkUpdate(new OnResultCallBack<AppInfo>() {
                 @Override
                 public void onSuccess(boolean success, int code, String msg, Object tag, AppInfo response) {
                     if (code == 1000 || response != null) {

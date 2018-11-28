@@ -3,7 +3,7 @@ package com.wss.module.main.ui.selector.mvp;
 import com.alibaba.fastjson.JSON;
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.constants.Constants;
-import com.wss.common.net.callback.OnResultStringCallBack;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.main.bean.Province;
 import com.wss.module.main.ui.selector.mvp.contract.SelectContract;
 
@@ -22,7 +22,7 @@ public class SelectorPresenter extends BasePresenter<SelectContract.Module, Sele
     public void getAddressList() {
         if (isViewAttached()) {
             showLoading();
-            getModule().getAddress(getContext(), new OnResultStringCallBack() {
+            getModule().getAddress(getContext(), new OnResultCallBack<String>() {
                 @Override
                 public void onSuccess(boolean success, int code, String msg, Object tag, String response) {
                     List<Province> provinceList = JSON.parseArray(response, Province.class);

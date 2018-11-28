@@ -38,6 +38,7 @@ public class ShoppingCartAdapter extends BaseListAdapter<Vendor> implements OnCl
 
     public void setEdit(boolean edit) {
         isEdit = edit;
+        notifyDataSetChanged();
     }
 
     public ShoppingCartAdapter(Context context, List<Vendor> items, int layoutResId, OnListItemClickListener listener) {
@@ -138,6 +139,6 @@ public class ShoppingCartAdapter extends BaseListAdapter<Vendor> implements OnCl
 
     private void updateCart() {
         //刷新购物车
-        EventBusUtils.sendEvent(new Event(EventAction.EVENT_SHOPPING_CART_REFRESH));
+        EventBusUtils.sendEvent(new Event(EventAction.EVENT_SHOPPING_CART_CHANGED));
     }
 }

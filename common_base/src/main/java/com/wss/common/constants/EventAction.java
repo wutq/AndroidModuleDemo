@@ -7,20 +7,18 @@ package com.wss.common.constants;
 
 public interface EventAction {
 
-    /**
-     * 商城商品被点击
-     */
-    String EVENT_MARKET_CLICK = "event_market_click";
 
+    //************************************Market模块*****************************************/
     /**
-     * 刷新购物车
+     * 购物车有变化
+     */
+    String EVENT_SHOPPING_CART_CHANGED = "event_shopping_cart_changed";
+    /**
+     * 刷新购物车 重新获取数据
      */
     String EVENT_SHOPPING_CART_REFRESH = "event_shopping_cart_refresh";
-    /**
-     * 清空购物车
-     */
-    String EVENT_SHOPPING_CART_CLEAN = "event_shopping_cart_clean";
 
+    //************************************User模块*****************************************/
     /**
      * 登录成功
      */

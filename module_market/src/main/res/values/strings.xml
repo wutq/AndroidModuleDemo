@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">module_market</string>
-    <string name="check_all">全选</string>
-    <string name="total">合计：</string>
-    <string name="next">下一步</string>
+    <string name="market_check_all">全选</string>
+    <string name="market_total">合计：</string>
+    <string name="market_next">下一步</string>
+    <string name="market_add_to_cart">加入购物车</string>
+    <string name="market_buy_now">立即购买</string>
 </resources>

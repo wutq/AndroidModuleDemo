@@ -121,12 +121,16 @@ public class ShoppingCartUtils {
         return price;
     }
 
-    public static void cleanLocal() {
-
+    /**
+     * 删除购物车数据
+     *
+     * @param goodsList goodsList
+     */
+    public static void delete(List<GoodsInfo> goodsList) {
         MarketDBFactory.getInstance()
                 .getGoodsInfoManage()
-                .deleteAll();
-        EventBusUtils.sendEvent(new Event(EventAction.EVENT_SHOPPING_CART_CLEAN));
+                .delete(goodsList);
+        EventBusUtils.sendEvent(new Event(EventAction.EVENT_SHOPPING_CART_REFRESH));
     }
 
     //**********************************购物车点击逻辑操作*******************************************

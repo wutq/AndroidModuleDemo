@@ -3,7 +3,7 @@ package com.wss.module.wan.ui.setup.mvp;
 import com.alibaba.fastjson.JSON;
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.constants.Constants;
-import com.wss.common.net.callback.OnResultStringCallBack;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.wan.bean.Article;
 import com.wss.module.wan.ui.setup.mvp.contract.SystemArticleContract;
 
@@ -22,7 +22,7 @@ public class SystemArticlePresenter extends BasePresenter<SystemArticleContract.
     public void getArticle() {
         if (isViewAttached()) {
             getView().showLoading();
-            getModule().getArticle(getView().getPage(), getView().getSetupId(), new OnResultStringCallBack() {
+            getModule().getArticle(getView().getPage(), getView().getSetupId(), new OnResultCallBack<String>() {
                 @Override
                 public void onSuccess(boolean success, int code, String msg, Object tag, String response) {
                     if (code == Constants.SUCCESS_CODE) {

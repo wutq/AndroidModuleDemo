@@ -2,11 +2,15 @@ package com.wss.module.wan.bean;
 
 import com.wss.common.base.bean.BaseBean;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Describe：Banner实体类
  * Created by 吴天强 on 2018/10/17.
  */
-
+@Getter
+@Setter
 public class BannerInfo extends BaseBean {
 
 
@@ -30,67 +34,4 @@ public class BannerInfo extends BaseBean {
     private int type;
     private String url;
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    public void setIsVisible(int isVisible) {
-        this.isVisible = isVisible;
-    }
-
-    public void setOrder(int order) {
-        this.order = order;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public int getIsVisible() {
-        return isVisible;
-    }
-
-    public int getOrder() {
-        return order;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public String getUrl() {
-        return url;
-    }
 }

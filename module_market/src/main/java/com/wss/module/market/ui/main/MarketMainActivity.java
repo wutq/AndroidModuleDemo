@@ -23,7 +23,9 @@ import com.wss.module.market.ui.main.mvp.contract.MarketMainContract;
 import com.wss.module.market.ui.main.mvp.MarketMainPresenter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -97,14 +99,16 @@ public class MarketMainActivity extends ActionBarActivity<MarketMainPresenter> i
 
     @Override
     public void onItemClick(View view, int position) {
-        ActivityToActivity.toActivity(mContext, GoodsDetailActivity.class);
+        Map<String, Object> param = new HashMap<>();
+        param.put("GoodsInfo", marketInfoList.get(position));
+        ActivityToActivity.toActivity(mContext, GoodsDetailActivity.class, param);
     }
 
     @Override
     public void onEventBus(Event event) {
         super.onEventBus(event);
-        if (TextUtils.equals(EventAction.EVENT_SHOPPING_CART_REFRESH, event.getAction()) ||
-                TextUtils.equals(EventAction.EVENT_SHOPPING_CART_CLEAN, event.getAction())) {
+        if (TextUtils.equals(EventAction.EVENT_SHOPPING_CART_CHANGED, event.getAction()) ||
+                TextUtils.equals(EventAction.EVENT_SHOPPING_CART_REFRESH, event.getAction())) {
             //刷新购物车
             presenter.getCartCount();
         }

@@ -26,8 +26,8 @@ public class GoodsInfo extends BaseBean {
     private String praiseRate;//好评率
     private String commentCount;//用户点评数
     private int num;//数量
-    @Transient
-    private boolean checked;//
+    @Transient//该字段不入库
+    private boolean checked;//是否选择
     @Transient//该字段不入库
     private List<String> goodsHeadImg;//商品头图
     private String vendorId;//供应商ID

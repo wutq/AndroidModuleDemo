@@ -23,8 +23,8 @@ import com.wss.common.widget.dialog.AppDialog;
 import com.wss.module.main.R;
 import com.wss.module.main.R2;
 import com.wss.module.main.ui.main.fragment.CenterFragment;
-import com.wss.module.main.ui.main.mvp.contract.MainContract;
 import com.wss.module.main.ui.main.mvp.MainPresenter;
+import com.wss.module.main.ui.main.mvp.contract.MainContract;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +85,7 @@ public class MainActivity extends ActionBarActivity<MainPresenter> implements Ma
             }
         });  //检查文件权限
         if (PermissionsUtils.checkPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            presenter.checkUpdate();
+//            presenter.checkUpdate();
         }
         presenter.getTabList();
     }

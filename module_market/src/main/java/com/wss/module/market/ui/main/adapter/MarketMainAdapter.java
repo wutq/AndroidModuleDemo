@@ -38,15 +38,16 @@ public class MarketMainAdapter extends BaseListAdapter<GoodsInfo> {
         holder.setText(R.id.tv_price, data.getGoodsPrice());
         TextView tvOldPrice = holder.findViewById(R.id.tv_old_price);
         tvOldPrice.setText(data.getGoodsOldPrice());
-        //设置文字中间一条横线,
+
         final GoodsInfo goodsInfo = data;
+        //设置文字中间一条横线,
         tvOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         holder.findViewById(R.id.iv_add_cart).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //加入购物车
                 ShoppingCartUtils.addCartGoods(goodsInfo);
-                EventBusUtils.sendEvent(new Event(EventAction.EVENT_SHOPPING_CART_REFRESH));
+                EventBusUtils.sendEvent(new Event(EventAction.EVENT_SHOPPING_CART_CHANGED));
             }
         });
     }

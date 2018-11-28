@@ -68,6 +68,6 @@
         android:text="注册"
         android:textColor="@color/black"
         app:defaultBgResource="@drawable/corner_gray_shape"
-        app:pressBgResource="@drawable/bg_of_orange_gradient" />
+        app:pressBgResource="@drawable/bg_of_orange_gradient_radius" />
 
 </LinearLayout>

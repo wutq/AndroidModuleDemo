@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.bean.User;
-import com.wss.common.net.callback.OnResultObjectCallBack;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.user.ui.account.mvp.contract.LoginContract;
 
 /**
@@ -20,7 +20,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
     public void login() {
         if (isViewAttached()) {
             getView().showLoading();
-            getModule().login(getView().getUserInfo(), new OnResultObjectCallBack<User>() {
+            getModule().login(getView().getUserInfo(), new OnResultCallBack<User>() {
                 @Override
                 public void onSuccess(boolean success, int code, String msg, Object tag, User response) {
                     if (code == 0 && response != null && !TextUtils.isEmpty(String.valueOf(response.getId()))) {

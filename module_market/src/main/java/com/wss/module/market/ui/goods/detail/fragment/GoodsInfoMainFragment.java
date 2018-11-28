@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.wss.common.adapter.BannerImgAdapter;
 import com.wss.common.base.BaseMvpFragment;
+import com.wss.common.widget.CountClickView;
 import com.wss.common.widget.SlideLayout;
 import com.wss.module.market.R;
 import com.wss.module.market.R2;
@@ -66,6 +67,9 @@ public class GoodsInfoMainFragment extends BaseMvpFragment<GoodsDetailPresenter>
     @BindView(R2.id.sv_switch)
     SlideLayout svSwitch;
 
+    @BindView(R2.id.ccv_click)
+    CountClickView ccvClick;//商品数量加减控件
+
 
     /**
      * 当前商品详情数据页的索引分别是图文详情、规格参数
@@ -86,6 +90,9 @@ public class GoodsInfoMainFragment extends BaseMvpFragment<GoodsDetailPresenter>
 
     @Override
     protected void initView() {
+
+        ccvClick.setMinCount(1);
+        ccvClick.setCurrCount(1);
         svSwitch.setOnSlideDetailsListener(this);
         //设置文字中间一条横线
         tvOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
@@ -181,5 +188,14 @@ public class GoodsInfoMainFragment extends BaseMvpFragment<GoodsDetailPresenter>
     @Override
     protected GoodsDetailPresenter createPresenter() {
         return new GoodsDetailPresenter();
+    }
+
+    /**
+     * 得到当前商品增减数量
+     *
+     * @return int
+     */
+    public int getGoodsCount() {
+        return ccvClick.getCount();
     }
 }

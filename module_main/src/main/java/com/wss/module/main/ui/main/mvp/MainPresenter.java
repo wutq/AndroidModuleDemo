@@ -5,7 +5,7 @@ import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.bean.AppInfo;
 import com.wss.common.bean.Template;
 import com.wss.common.constants.ARouterConfig;
-import com.wss.common.net.callback.OnResultObjectCallBack;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.main.R;
 import com.wss.module.main.ui.hortab.OrderListActivity;
 import com.wss.module.main.ui.im.IMActivity;
@@ -43,7 +43,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
     @Override
     public void checkUpdate() {
         if (isViewAttached()) {
-            getModule().checkUpdate(new OnResultObjectCallBack<AppInfo>() {
+            getModule().checkUpdate(new OnResultCallBack<AppInfo>() {
                 @Override
                 public void onSuccess(boolean success, int code, String msg, Object tag, AppInfo response) {
                     if (code == 1000 || response != null) {

@@ -2,7 +2,7 @@ package com.wss.module.wan.ui.setup.mvp;
 
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.constants.Constants;
-import com.wss.common.net.callback.OnResultListCallBack;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.wan.bean.Classification;
 import com.wss.module.wan.ui.setup.mvp.contract.SystemContract;
 
@@ -19,7 +19,7 @@ public class SystemPresenter extends BasePresenter<SystemContract.Model, SystemC
     @Override
     public void getSystem() {
         getView().showLoading();
-        getModule().getSystem(new OnResultListCallBack<List<Classification>>() {
+        getModule().getSystem(new OnResultCallBack<List<Classification>>() {
             @Override
             public void onSuccess(boolean success, int code, String msg, Object tag, List<Classification> response) {
                 if (code == 0) {

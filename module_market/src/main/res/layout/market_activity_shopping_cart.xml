@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="@string/check_all"
+                android:text="@string/market_check_all"
                 android:textSize="12sp" />
 
         </LinearLayout>
@@ -48,7 +48,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
             android:layout_toEndOf="@+id/ll_checked_view"
-            android:text="@string/total" />
+            android:text="@string/market_total" />
 
         <TextView
             android:id="@+id/btn_buy"
@@ -58,7 +58,7 @@
             android:layout_centerVertical="true"
             android:background="@drawable/market_shopping_cart_next_btn"
             android:gravity="center"
-            android:text="@string/next"
+            android:text="@string/market_next"
             android:textColor="@color/white"
             android:textSize="16sp" />
     </RelativeLayout>

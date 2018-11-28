@@ -3,7 +3,7 @@ package com.wss.module.wan.ui.search.mvp;
 import com.alibaba.fastjson.JSON;
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.constants.Constants;
-import com.wss.common.net.callback.OnResultStringCallBack;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.wan.bean.Article;
 import com.wss.module.wan.ui.search.mvp.contract.SearchContract;
 
@@ -20,7 +20,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.Module, Search
     public void search() {
         if (isViewAttached()) {
             getView().showLoading();
-            getModule().searchData(getView().getPage(), getView().getWord(), new OnResultStringCallBack() {
+            getModule().searchData(getView().getPage(), getView().getWord(), new OnResultCallBack<String>() {
                 @Override
                 public void onSuccess(boolean success, int code, String msg, Object tag, String response) {
                     if (code == Constants.SUCCESS_CODE) {

@@ -4,8 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.bean.Template;
 import com.wss.common.constants.Constants;
-import com.wss.common.net.callback.OnResultListCallBack;
-import com.wss.common.net.callback.OnResultStringCallBack;
+import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.wan.R;
 import com.wss.module.wan.bean.Article;
 import com.wss.module.wan.bean.BannerInfo;
@@ -31,32 +30,31 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
     @Override
     public void getBanner() {
         if (isViewAttached()) {
-            getView().showLoading();
-            getModule().getBanner(
-                    new OnResultListCallBack<List<BannerInfo>>() {
-
-                        @Override
-                        public void onSuccess(boolean success, int code, String msg, Object tag, List<BannerInfo> response) {
-                            if (code == 0) {
-                                if (response != null && response.size() > 0) {
-                                    getView().bannerList(response);
-                                } else {
-                                    getView().onEmpty(tag);
-                                }
-                            } else {
-                                getView().onError(tag, msg);
-                            }
+            showLoading();
+            getModule().getBanner(new OnResultCallBack<List<BannerInfo>>() {
+                @Override
+                public void onSuccess(boolean success, int code, String msg, Object tag, List<BannerInfo> response) {
+                    if (code == 0) {
+                        if (response != null && response.size() > 0) {
+                            getView().bannerList(response);
+                        } else {
+                            getView().onEmpty(tag);
                         }
+                    } else {
+                        getView().onError(tag, msg);
+                    }
+                }
 
-                        @Override
-                        public void onFailure(Object tag, Exception e) {
-                            getView().onError(tag, Constants.ERROR_MESSAGE);
-                        }
+                @Override
+                public void onFailure(Object tag, Exception e) {
+                    getView().onError(tag, Constants.ERROR_MESSAGE);
+                }
 
-                        @Override
-                        public void onCompleted() {
-                        }
-                    });
+                @Override
+                public void onCompleted() {
+                }
+            });
+
         }
     }
 
@@ -78,7 +76,7 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
     @Override
     public void getWXNumber() {
         if (isViewAttached()) {
-            getModule().getWXNumber(new OnResultListCallBack<List<WXNumber>>() {
+            getModule().getWXNumber(new OnResultCallBack<List<WXNumber>>() {
                 @Override
                 public void onSuccess(boolean success, int code, String msg, Object tag, List<WXNumber> response) {
                     if (code == Constants.SUCCESS_CODE && response != null && response.size() > 0) {
@@ -88,7 +86,6 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
 
                 @Override
                 public void onFailure(Object tag, Exception e) {
-
                 }
 
                 @Override
@@ -103,12 +100,14 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
     public void getArticleList() {
         if (isViewAttached()) {
             getView().showLoading();
-            getModule().getArticleList(getView().getPage(), new OnResultStringCallBack() {
+            getModule().getArticleList(getView().getPage(), new OnResultCallBack<String>() {
+
+
                 @Override
-                public void onSuccess(boolean success, int code, String msg, Object tag, String
-                        response) {
+                public void onSuccess(boolean success, int code, String msg, Object tag, String response) {
                     if (code == Constants.SUCCESS_CODE) {
-                        final List<Article> articleList = JSON.parseArray(JSON.parseObject(response).getString("datas"), Article.class);
+                        final List<Article> articleList = JSON.parseArray(
+                                JSON.parseObject(response).getString("datas"), Article.class);
                         if (articleList == null || articleList.size() < 1) {
                             getView().onEmpty(tag);
                         } else {
@@ -122,12 +121,11 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
 
                 @Override
                 public void onFailure(Object tag, Exception e) {
-                    getView().onError(tag, Constants.ERROR_MESSAGE);
                 }
 
                 @Override
                 public void onCompleted() {
-                    getView().dismissLoading();
+                    dismissLoading();
                 }
             });
         }
@@ -143,7 +141,6 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
     public void start() {
         getBanner();
         getBlockList();
-        getBanner();
         getWXNumber();
         getArticleList();
     }
