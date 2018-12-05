@@ -15,7 +15,10 @@ import android.view.View;
 
 import com.wss.common.base.R;
 
-
+/**
+ * Describe:数字进度条
+ * Created by 吴天强 on 2018/11/1.
+ */
 public class NumberProgressBar extends View {
 
 

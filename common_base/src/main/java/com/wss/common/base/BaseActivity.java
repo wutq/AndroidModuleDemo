@@ -122,19 +122,19 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     public void showEmptyOrErrorView(String text, int img) {
-        emptyView = findViewById(R.id.vs_empty);
 
-        if (emptyView != null) {
-            emptyView.setVisibility(View.VISIBLE);
-            findViewById(R.id.iv_empty).setBackgroundResource(img);
-            ((TextView) findViewById(R.id.tv_empty)).setText(text);
-            findViewById(R.id.ll_empty).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onPageClick();
-                }
-            });
+        if (emptyView == null) {
+            emptyView = findViewById(R.id.vs_empty);
         }
+        emptyView.setVisibility(View.VISIBLE);
+        findViewById(R.id.iv_empty).setBackgroundResource(img);
+        ((TextView) findViewById(R.id.tv_empty)).setText(text);
+        findViewById(R.id.ll_empty).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onPageClick();
+            }
+        });
     }
 
     protected void hideEmptyView() {

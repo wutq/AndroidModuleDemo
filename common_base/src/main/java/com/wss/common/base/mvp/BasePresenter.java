@@ -12,6 +12,7 @@ import java.lang.reflect.Proxy;
  * Created by 吴天强 on 2018/10/17.
  */
 
+@SuppressWarnings("unchecked")
 public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> {
 
     private V mProxyView;
@@ -21,7 +22,6 @@ public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> {
     /**
      * 绑定View
      */
-    @SuppressWarnings("unchecked")
     public void attachView(V view) {
         weakReference = new WeakReference<>(view);
         mProxyView = (V) Proxy.newProxyInstance(

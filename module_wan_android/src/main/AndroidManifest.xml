@@ -9,6 +9,5 @@
         <activity android:name=".ui.wxnumber.WXNumberActivity" />
         <activity android:name=".ui.search.SearchActivity" />
         <activity android:name=".ui.collection.CollectionActivity" />
-        <activity android:name="com.wss.module.main.ui.page.CountViewActivity.TestActivity" />
     </application>
 </manifest>

@@ -84,19 +84,18 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void showEmptyOrErrorView(String text, int img) {
-        emptyView = rootView.findViewById(R.id.vs_empty);
-
-        if (emptyView != null) {
-            emptyView.setVisibility(View.VISIBLE);
-            rootView.findViewById(R.id.iv_empty).setBackgroundResource(img);
-            ((TextView) rootView.findViewById(R.id.tv_empty)).setText(text);
-            rootView.findViewById(R.id.ll_empty).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onPageClick();
-                }
-            });
+        if (emptyView == null) {
+            emptyView = rootView.findViewById(R.id.vs_empty);
         }
+        emptyView.setVisibility(View.VISIBLE);
+        rootView.findViewById(R.id.iv_empty).setBackgroundResource(img);
+        ((TextView) rootView.findViewById(R.id.tv_empty)).setText(text);
+        rootView.findViewById(R.id.ll_empty).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onPageClick();
+            }
+        });
     }
 
     protected void hideEmptyView() {

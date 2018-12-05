@@ -13,8 +13,8 @@ import java.util.List;
 
 /**
  * Describe：滑动Fragment适配器
- * 如果滑动Fragment是同一个 使用双参构造方法 则覆写 getTabFragment 返回Fragment
- * 如果滑动Fragment是不同的Fragment 使用第三参个构造方法 传入对应的Fragment
+ * 如果滑动Fragment是同一个 使用双参构造方法 覆写 getTabFragment 返回Fragment
+ * 如果滑动Fragment是不同的Fragment 使用第三参构造方法 传入对应的Fragment集合
  * <p>
  * Created by 吴天强 on 2018/10/22.
  */

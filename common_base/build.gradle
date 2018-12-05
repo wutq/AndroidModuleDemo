@@ -48,6 +48,7 @@ dependencies {
     api rootProject.ext.dependencies["support-v4"]
     api rootProject.ext.dependencies["design"]
     api rootProject.ext.dependencies["support_annotations"]
+    api rootProject.ext.dependencies["junit"]
     //MultiDex分包方法
     api rootProject.ext.dependencies["multidex"]
     //黄油刀
