@@ -88,6 +88,7 @@ public class MainActivity extends ActionBarActivity<MainPresenter> implements Ma
             presenter.checkUpdate();
         }
         presenter.getTabList();
+
     }
 
 

@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wss.module.main">
 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <application>
 
 
@@ -26,5 +27,7 @@
         <activity android:name=".ui.im.IMUserInfoActivity" />
         <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.page.ScaleImageActivity" />
+        <activity android:name=".ui.page.YumanmanActivity" />
+        <activity android:name=".ui.page.RadioGroupActivity" />
     </application>
 </manifest>

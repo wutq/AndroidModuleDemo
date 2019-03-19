@@ -31,9 +31,9 @@ public class GoodsInfoWebFragment extends BaseFragment {
     }
 
     public void initWebView() {
-        String url = "http://m.okhqb.com/item/description/1000334264.html?fromApp=true";
+//        String url = "http://m.okhqb.com/item/description/1000334264.html?fromApp=true";
         webView.setFocusable(false);
-        webView.loadUrl(url);
+        webView.loadUrl("file:///android_asset/html/goods_detail.html");
         webSettings = webView.getSettings();
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setBuiltInZoomControls(true);

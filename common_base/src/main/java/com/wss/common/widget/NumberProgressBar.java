@@ -32,7 +32,7 @@ public class NumberProgressBar extends View {
      */
     private Context context;
 
-    /**
+    /**l
      * 主线程传过来进程 0 - 100
      */
     private int progress;

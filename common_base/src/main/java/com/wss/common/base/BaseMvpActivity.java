@@ -3,6 +3,7 @@ package com.wss.common.base;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.base.mvp.IBaseView;
@@ -41,7 +42,14 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
     //***************************************IBaseView方法实现*************************************
     @Override
     public void showLoading() {
+        showLoading("");
+    }
+
+    public void showLoading(String msg) {
         if (loadingDialog != null && !loadingDialog.isShowing()) {
+            if (!TextUtils.isEmpty(msg)) {
+                loadingDialog.setTitleText(msg);
+            }
             loadingDialog.show();
         }
     }

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#AF000000"
+    android:fitsSystemWindows="true"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="117dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="12dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp">
+
+            <ImageView
+                android:id="@+id/iv_goods_img"
+                android:layout_width="75dp"
+                android:layout_height="90dp" />
+
+            <TextView
+                style="@style/TextStyle"
+                android:layout_above="@+id/tv_goods_no"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@+id/iv_goods_img"
+                android:text="¥3496.00"
+                android:textColor="@color/red"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_goods_no"
+                style="@style/TextStyle"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@+id/iv_goods_img"
+                android:text="商品编号：100001378187"
+                android:textSize="10sp" />
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/popup_icon_close" />
+        </RelativeLayout>
+
+        <TextView
+            style="@style/TextStyle"
+            android:layout_marginTop="15dp"
+            android:text="颜色"
+            android:textSize="12sp" />
+
+        <com.wss.common.widget.FlowLayout
+            android:id="@+id/fl_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            style="@style/TextStyle"
+            android:layout_marginTop="15dp"
+            android:text="版本"
+            android:textSize="12sp" />
+
+        <com.wss.common.widget.FlowLayout
+            android:id="@+id/fl_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            style="@style/TextStyle"
+            android:layout_marginTop="15dp"
+            android:text="购买方式"
+            android:textSize="12sp" />
+
+        <com.wss.common.widget.FlowLayout
+            android:id="@+id/fl_buy_way"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

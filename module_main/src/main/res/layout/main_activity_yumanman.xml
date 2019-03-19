@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/values"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:paddingStart="10dp"
+            tools:ignore="RtlSymmetry">
+
+            <TextView
+                android:id="@+id/tv_initial"
+                style="@style/TextStyle"
+                android:layout_width="70dp"
+                android:layout_centerVertical="true"
+                android:text="初  始  值：" />
+
+            <EditText
+                android:id="@+id/edt_initial_value"
+                style="@style/TextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/tv_initial"
+                android:inputType="numberDecimal"
+                android:maxLength="5" />
+
+        </RelativeLayout>
+
+        <View style="@style/HorizontalLine" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:paddingStart="10dp"
+            tools:ignore="RtlSymmetry">
+
+            <TextView
+                android:id="@+id/tv_count"
+                style="@style/TextStyle"
+                android:layout_width="70dp"
+                android:layout_centerVertical="true"
+                android:maxLength="5"
+                android:text="递增次数：" />
+
+            <EditText
+                android:id="@+id/edt_count_value"
+                style="@style/TextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/tv_count"
+                android:inputType="number"
+                android:maxLength="5" />
+
+        </RelativeLayout>
+
+        <View style="@style/HorizontalLine" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:paddingStart="10dp"
+            tools:ignore="RtlSymmetry">
+
+            <TextView
+                android:id="@+id/tv_increment"
+                style="@style/TextStyle"
+                android:layout_width="70dp"
+                android:layout_centerVertical="true"
+                android:maxLength="5"
+                android:text="每次增量：" />
+
+            <EditText
+                android:id="@+id/edt_increment_value"
+                style="@style/TextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/tv_increment"
+                android:inputType="numberDecimal"
+                android:maxLength="5" />
+
+        </RelativeLayout>
+
+        <View style="@style/HorizontalLine" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:paddingStart="10dp"
+            tools:ignore="RtlSymmetry">
+
+            <TextView
+                android:id="@+id/tv_result"
+                style="@style/TextStyle"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="计算结果：" />
+        </RelativeLayout>
+
+        <View style="@style/HorizontalLine" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="38dp"
+            android:padding="10dp"
+            tools:ignore="RtlSymmetry">
+
+            <TextView
+                android:id="@+id/tv_result_detail"
+                style="@style/TextStyle"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:lineSpacingExtra="4dp"
+                android:text="计算详情：" />
+        </RelativeLayout>
+
+        <View style="@style/HorizontalLine" />
+
+        <com.wss.common.widget.ObserverButton
+            android:id="@+id/ob_btn"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="30dp"
+            android:gravity="center"
+            android:text="计算"
+            android:textColor="@color/black"
+            app:defaultBgResource="@drawable/corner_gray_shape"
+            app:pressBgResource="@drawable/bg_of_orange_gradient_radius" />
+    </LinearLayout>
+</ScrollView>

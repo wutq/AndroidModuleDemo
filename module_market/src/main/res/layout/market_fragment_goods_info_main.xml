@@ -61,11 +61,11 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:layout_marginBottom="2dp"
                         android:id="@+id/tv_old_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="2dp"
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/tv_goods_price"
                         android:gravity="center_vertical"
@@ -84,7 +84,7 @@
 
             <!-- 当前已选的商品 -->
             <com.wss.common.widget.MultipleItemView
-                android:id="@+id/miv_current_goods"
+                android:id="@+id/miv_goods_specification"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
@@ -99,7 +99,7 @@
             <ImageView
                 android:id="@+id/iv_ensure"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/market_item_goods_ensure" />

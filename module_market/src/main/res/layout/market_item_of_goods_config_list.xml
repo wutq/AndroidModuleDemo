@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
@@ -24,9 +24,8 @@
 
         <View
             android:layout_width="1px"
-            android:layout_height="fill_parent"
-            android:background="#e2e2e2"
-            android:visibility="visible" />
+            android:layout_height="match_parent"
+            android:background="@color/gray" />
 
         <TextView
             android:id="@+id/tv_config_value"
@@ -38,15 +37,9 @@
             android:textSize="14sp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/pro_line"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="#EDEDED" />
-    </LinearLayout>
+        android:layout_height="1px"
+        android:background="@color/gray" />
 </LinearLayout>
 

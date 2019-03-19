@@ -22,6 +22,7 @@ import com.wss.module.market.bean.GoodsInfo;
 import com.wss.module.market.ui.goods.detail.GoodsDetailActivity;
 import com.wss.module.market.ui.goods.detail.adapter.GoodsCommentAdapter;
 import com.wss.module.market.ui.goods.detail.adapter.RecommendGoodsAdapter;
+import com.wss.module.market.ui.goods.detail.helper.GoodsSpecificationPop;
 import com.wss.module.market.ui.goods.detail.mvp.GoodsDetailPresenter;
 import com.wss.module.market.ui.goods.detail.mvp.contract.GoodsDetailContract;
 
@@ -100,13 +101,17 @@ public class GoodsInfoMainFragment extends BaseMvpFragment<GoodsDetailPresenter>
     }
 
 
-    @OnClick({R2.id.ll_pull_up, R2.id.ll_comment})
+    @OnClick({R2.id.ll_pull_up, R2.id.ll_comment, R2.id.miv_goods_specification})
     public void onClick(View v) {
-        if (v.getId() == R.id.ll_pull_up) {//上拉查看图文详情
+        if (v.getId() == R.id.ll_pull_up) {
+            //上拉查看图文详情
             svSwitch.smoothOpen(true);
         } else if (v.getId() == R.id.ll_comment) {
             //查看评论
             goodsDetailActivity.setCurrentFragment(2);
+        } else if (v.getId() == R.id.miv_goods_specification) {
+            //选择商品规格
+            GoodsSpecificationPop.getInstance(mContext).show(v);
         }
     }
 

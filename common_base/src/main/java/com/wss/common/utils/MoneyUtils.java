@@ -24,9 +24,9 @@ public class MoneyUtils {
          * @param v2
          * @return
          */
-        public static String add(String v1, String v2) {
-            BigDecimal b1 = new BigDecimal(v1);
-            BigDecimal b2 = new BigDecimal(v2);
+        public static String add(Object v1, Object v2) {
+            BigDecimal b1 = new BigDecimal(String.valueOf(v1));
+            BigDecimal b2 = new BigDecimal(String.valueOf(v2));
             return b1.add(b2).toString();
         }
 

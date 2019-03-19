@@ -15,7 +15,9 @@ import com.wss.module.main.ui.page.DialogActivity;
 import com.wss.module.main.ui.page.FlowLayoutActivity;
 import com.wss.module.main.ui.page.MultipleItemActivity;
 import com.wss.module.main.ui.page.ObserverButtonActivity;
+import com.wss.module.main.ui.page.RadioGroupActivity;
 import com.wss.module.main.ui.page.ScaleImageActivity;
+import com.wss.module.main.ui.page.YumanmanActivity;
 import com.wss.module.main.ui.refresh.RefreshStringActivity;
 import com.wss.module.main.ui.selector.SelectorActivity;
 
@@ -80,6 +82,8 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
             list.add(new Template("流式布局", R.drawable.main_icon_15, FlowLayoutActivity.class, "流式布局，从左上角位置开始，自动换行"));
             list.add(new Template("聊天", R.drawable.main_icon_16, IMActivity.class, "聊天布局样式，用于测试多功能列表适配器"));
             list.add(new Template("图片查看器", R.drawable.main_icon_18, ScaleImageActivity.class, "大图查看器、支持下载、删除、缩放等操作"));
+            list.add(new Template("于慢慢计算器", R.drawable.main_icon_19, YumanmanActivity.class, "某一个初始值递增某次计算结果"));
+            list.add(new Template("自定义RadioGroup", R.drawable.main_icon_20, RadioGroupActivity.class, "自定义RadioGroup"));
             getView().tabList(list);
         }
     }

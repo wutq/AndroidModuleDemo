@@ -60,6 +60,7 @@ public class DialogActivity extends ActionBarActivity {
             new AppDialog(mContext)
                     .setContent("我的自定义默认对话框")
                     .show();
+
         } else if (view.getId() == R.id.btn_02) {
             new AppDialog(mContext, DialogType.INPUT)
                     .setTitle("来一段文字")
@@ -112,16 +113,17 @@ public class DialogActivity extends ActionBarActivity {
                     .show();
 
         } else if (view.getId() == R.id.btn_07) {
-            View progressView = View.inflate(mContext, R.layout.update_progress_layout, null);
-            progressBar = progressView.findViewById(R.id.number_progress);
-            progressDialog = new AppDialog(mContext);
-            mProgress = 0;
-            progressBar.setProgress(mProgress);
+//            View progressView = View.inflate(mContext, R.layout.update_progress_layout, null);
+//            progressBar = progressView.findViewById(R.id.number_progress);
+//            progressDialog = new AppDialog(mContext);
+//            mProgress = 0;
+//            progressBar.setProgress(mProgress);
+//
+//            progressDialog.setTitle("更新")
+//                    .addDialogView(progressView)
+//                    .show();
+//            update();
 
-            progressDialog.setTitle("更新")
-                    .addDialogView(progressView)
-                    .show();
-            update();
 
         }
     }

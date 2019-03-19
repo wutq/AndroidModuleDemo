@@ -2,6 +2,8 @@ package com.wss.common.utils;
 
 import android.content.Context;
 
+import com.wss.common.base.BaseApplication;
+
 /**
  * Describe：尺寸工具类
  * Created by 吴天强 on 2017/9/19.
@@ -34,6 +36,11 @@ public class PxUtils {
      */
     public static int dp2px(Context context, float dipValue) {
         final float scale = getScreenDensity(context);
+        return (int) (dipValue * scale + 0.5);
+    }
+
+    public static int dp2px(float dipValue) {
+        final float scale = getScreenDensity(BaseApplication.getApplication());
         return (int) (dipValue * scale + 0.5);
     }
 
