@@ -54,12 +54,12 @@ public class RegisterActivity extends ActionBarActivity<RegisterPresenter> imple
         if (edtName.getText().toString().trim().length() < 6 ||
                 edtPwd.getText().toString().trim().length() < 6 ||
                 edtConfirm.getText().toString().trim().length() < 6) {
-            ToastUtils.showToast(mContext, "用户名或密码长度至少6位！");
+            ToastUtils.show(mContext, "用户名或密码长度至少6位！");
             return;
         }
         if (!TextUtils.equals(edtPwd.getText().toString().trim(),
                 edtConfirm.getText().toString().trim())) {
-            ToastUtils.showToast(mContext, "两次输入密码不一致！");
+            ToastUtils.show(mContext, "两次输入密码不一致！");
             edtPwd.setText("");
             edtConfirm.setText("");
             return;
@@ -70,7 +70,7 @@ public class RegisterActivity extends ActionBarActivity<RegisterPresenter> imple
     @Override
     public void onError(Object tag, String errorMsg) {
         super.onError(tag, errorMsg);
-        ToastUtils.showToast(mContext, errorMsg);
+        ToastUtils.show(mContext, errorMsg);
     }
 
     @Override

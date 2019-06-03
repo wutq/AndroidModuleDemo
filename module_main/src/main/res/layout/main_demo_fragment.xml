@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_stickynavlayout_innerscrollview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <!--这个ID是为了寻找下面的RecyclerView使用-->
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.wss.common.widget.pulltorefresh.PullToRefreshLayout
+        android:id="@+id/pull_to_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.wss.common.widget.pulltorefresh.PullToRefreshLayout>
+
+</LinearLayout>

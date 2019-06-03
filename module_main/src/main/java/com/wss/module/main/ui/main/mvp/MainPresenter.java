@@ -15,6 +15,7 @@ import com.wss.module.main.ui.page.DialogActivity;
 import com.wss.module.main.ui.page.FlowLayoutActivity;
 import com.wss.module.main.ui.page.MultipleItemActivity;
 import com.wss.module.main.ui.page.ObserverButtonActivity;
+import com.wss.module.main.ui.page.QRCodeActivity;
 import com.wss.module.main.ui.page.RadioGroupActivity;
 import com.wss.module.main.ui.page.ScaleImageActivity;
 import com.wss.module.main.ui.page.YumanmanActivity;
@@ -84,6 +85,8 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
             list.add(new Template("图片查看器", R.drawable.main_icon_18, ScaleImageActivity.class, "大图查看器、支持下载、删除、缩放等操作"));
             list.add(new Template("于慢慢计算器", R.drawable.main_icon_19, YumanmanActivity.class, "某一个初始值递增某次计算结果"));
             list.add(new Template("自定义RadioGroup", R.drawable.main_icon_20, RadioGroupActivity.class, "自定义RadioGroup"));
+            list.add(new Template("扫描二维码", R.drawable.main_icon_21, QRCodeActivity.class, "扫描二维码"));
+
             getView().tabList(list);
         }
     }

@@ -86,7 +86,7 @@ public class CollectionActivity extends RefreshListActivity<CollectionPresenter>
         if (page == 0) {
             showEmptyView("您还没有收藏任何东西");
         } else {
-            ToastUtils.showToast(mContext, "暂无更多收藏~");
+            ToastUtils.show(mContext, "暂无更多收藏~");
         }
     }
 
@@ -96,7 +96,7 @@ public class CollectionActivity extends RefreshListActivity<CollectionPresenter>
         if (page == 0) {
             showEmptyView(msg);
         } else {
-            ToastUtils.showToast(mContext, msg);
+            ToastUtils.show(mContext, msg);
         }
     }
 }

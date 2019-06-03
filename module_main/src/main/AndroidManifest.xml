@@ -29,5 +29,12 @@
         <activity android:name=".ui.page.ScaleImageActivity" />
         <activity android:name=".ui.page.YumanmanActivity" />
         <activity android:name=".ui.page.RadioGroupActivity" />
+        <activity android:name=".ui.page.QRCodeActivity" />
+        <activity
+            android:name=".ui.slide.CoordinatorLayoutActivity"
+            android:theme="@style/Theme.Design.NoActionBar" />
+        <activity
+            android:name=".ui.zhihu.DemoActivity"
+            android:theme="@style/Theme.Design.NoActionBar" />
     </application>
 </manifest>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="阿萨德"
+        android:textColor="@color/theme" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@color/gray"
+        android:gravity="center"
+        android:text="假装有数据的假东西"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@color/orange"
+        android:gravity="center"
+        android:text="假装有数据的假东西"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@color/light_yellow"
+        android:gravity="center"
+        android:text="假装有数据的假东西"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@color/black"
+        android:gravity="center"
+        android:text="假装有数据的假东西"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@color/light_blue"
+        android:gravity="center"
+        android:text="假装有数据的假东西最后一个"
+        android:textColor="@color/black" />
+</LinearLayout>

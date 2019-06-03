@@ -35,6 +35,10 @@ android {
     dexOptions {
         javaMaxHeapSize "4g"
     }
+    compileOptions {
+        targetCompatibility rootProject.ext.versions.javaSDKVersion
+        sourceCompatibility rootProject.ext.versions.javaSDKVersion
+    }
 }
 
 dependencies {
@@ -85,4 +89,11 @@ dependencies {
     api rootProject.ext.dependencies["greenDao"]
     //scaleImageView
     api rootProject.ext.dependencies["scaleImageView"]
+    //二维码扫描
+    api rootProject.ext.dependencies["zxing"]
+    //危险权限
+    api rootProject.ext.dependencies["xxpermissions"]
+    //RX
+    api rootProject.ext.dependencies["rx2_java"]
+    api rootProject.ext.dependencies["rx2_android"]
 }

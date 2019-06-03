@@ -148,7 +148,7 @@ public class ShoppingCartActivity extends ActionBarActivity<CartPresenter> imple
                     //删除
                     ShoppingCartUtils.delete(checkedGoods);
                 } else {
-                    ToastUtils.showToast(mContext, "去结算");
+                    ToastUtils.show(mContext, "去结算");
                 }
             }
         }

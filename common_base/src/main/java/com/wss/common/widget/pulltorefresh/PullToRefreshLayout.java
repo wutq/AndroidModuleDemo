@@ -75,22 +75,13 @@ public class PullToRefreshLayout extends FrameLayout {
         init();
     }
 
-    private void cal() {
+    private void init() {
         head_height = PxUtils.dp2px(getContext(), HEAD_HEIGHT);
         foot_height = PxUtils.dp2px(getContext(), FOOT_HEIGHT);
         head_height_2 = PxUtils.dp2px(getContext(), HEAD_HEIGHT * 2);
         foot_height_2 = PxUtils.dp2px(getContext(), FOOT_HEIGHT * 2);
 
         mTouchSlope = ViewConfiguration.get(getContext()).getScaledTouchSlop();
-    }
-
-    private void init() {
-        cal();
-        int count = getChildCount();
-        if (count != 1) {
-            new IllegalArgumentException("child only can be one");
-        }
-
     }
 
     @Override
@@ -110,6 +101,7 @@ public class PullToRefreshLayout extends FrameLayout {
     private void addHeadView() {
         if (mHeaderView == null) {
             mHeaderView = new RefreshView(getContext());
+            mHeaderView.setType(true);
         } else {
             removeView(mHeaderView.getView());
         }

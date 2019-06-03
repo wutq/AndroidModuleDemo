@@ -98,7 +98,7 @@ public class ProjectActivity extends RefreshListActivity<ProjectPresenter> imple
         if (page == 1) {
             showEmptyView(message);
         } else {
-            ToastUtils.showToast(mContext, message);
+            ToastUtils.show(mContext, message);
         }
     }
 
@@ -107,7 +107,7 @@ public class ProjectActivity extends RefreshListActivity<ProjectPresenter> imple
         if (page == 1) {
             showEmptyView("暂无项目数据");
         } else {
-            ToastUtils.showToast(mContext, "暂无更多项目数据");
+            ToastUtils.show(mContext, "暂无更多项目数据");
         }
     }
 

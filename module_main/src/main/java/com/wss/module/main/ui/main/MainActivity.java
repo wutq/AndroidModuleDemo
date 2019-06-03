@@ -1,6 +1,5 @@
 package com.wss.module.main.ui.main;
 
-import android.Manifest;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -8,6 +7,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.widget.RadioGroup;
 
+import com.hjq.permissions.Permission;
 import com.wss.common.base.ActionBarActivity;
 import com.wss.common.base.BaseApplication;
 import com.wss.common.base.BaseFragment;
@@ -84,9 +84,11 @@ public class MainActivity extends ActionBarActivity<MainPresenter> implements Ma
 
             }
         });  //检查文件权限
-        if (PermissionsUtils.checkPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            presenter.checkUpdate();
-        }
+        PermissionsUtils.checkPermissions(this, Permission.WRITE_EXTERNAL_STORAGE).subscribe(r -> {
+            if (r) {
+                presenter.checkUpdate();
+            }
+        });
         presenter.getTabList();
 
     }
@@ -136,7 +138,7 @@ public class MainActivity extends ActionBarActivity<MainPresenter> implements Ma
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if ((System.currentTimeMillis() - mExitTime) > 2000) {
-                ToastUtils.showToast(mContext, getString(R.string.main_exit_app));
+                ToastUtils.show(mContext, getString(R.string.main_exit_app));
                 mExitTime = System.currentTimeMillis();
             } else {
                 BaseApplication.getApplication().exitApp();

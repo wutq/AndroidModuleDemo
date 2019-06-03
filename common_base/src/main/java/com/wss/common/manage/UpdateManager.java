@@ -63,7 +63,7 @@ public class UpdateManager {
      */
     public void download(String url) {
         if (TextUtils.isEmpty(url)) {
-            ToastUtils.showToast(mContext, "请设置下载Url");
+            ToastUtils.show(mContext, "请设置下载Url");
             return;
         }
         progressDialog.show();
@@ -107,16 +107,16 @@ public class UpdateManager {
                     break;
                 case DOWNLOAD_SUCCESS:
                     progressDialog.dismiss();
-                    ToastUtils.showToast(mContext, "下载完成");
+                    ToastUtils.show(mContext, "下载完成");
                     installApk();
                     break;
                 case DOWNLOAD_FAILED:
                     progressDialog.dismiss();
-                    ToastUtils.showToast(mContext, "下载失败");
+                    ToastUtils.show(mContext, "下载失败");
                     break;
                 case DOWNLOAD_CANCEL:
                     progressDialog.dismiss();
-                    ToastUtils.showToast(mContext, "已取消下载");
+                    ToastUtils.show(mContext, "已取消下载");
                     break;
                 default:
                     break;

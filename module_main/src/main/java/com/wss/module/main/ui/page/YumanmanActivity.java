@@ -83,7 +83,7 @@ public class YumanmanActivity extends ActionBarActivity {
         } else {
             ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             cm.setPrimaryClip(ClipData.newPlainText(null, ((TextView) v).getText()));
-            ToastUtils.showToast(mContext, "结果已复制到粘贴板");
+            ToastUtils.show(mContext, "结果已复制到粘贴板");
         }
     }
 

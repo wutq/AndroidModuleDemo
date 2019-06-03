@@ -32,7 +32,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
 
                 @Override
                 public void onFailure(Object tag, Exception e) {
-                    ToastUtils.showToast(getContext(), Constants.ERROR_MESSAGE);
+                    ToastUtils.show(getContext(), Constants.ERROR_MESSAGE);
                 }
 
                 @Override

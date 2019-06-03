@@ -69,7 +69,7 @@ public class OrderFragment extends RefreshListFragment<OrderPresenter> implement
         if (page == 0) {
             showErrorView();
         } else {
-            ToastUtils.showToast(mContext, errorMsg);
+            ToastUtils.show(mContext, errorMsg);
         }
     }
 
@@ -79,7 +79,7 @@ public class OrderFragment extends RefreshListFragment<OrderPresenter> implement
         if (page == 0) {
             showEmptyView();
         } else {
-            ToastUtils.showToast(mContext, "暂无更多数据");
+            ToastUtils.show(mContext, "暂无更多数据");
         }
     }
 

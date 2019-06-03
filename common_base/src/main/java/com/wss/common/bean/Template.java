@@ -1,6 +1,7 @@
 package com.wss.common.bean;
 
-import com.wss.common.base.BaseActivity;
+import android.app.Activity;
+
 import com.wss.common.base.bean.BaseBean;
 
 import java.util.Map;
@@ -32,11 +33,11 @@ public class Template extends BaseBean {
         this.describe = describe;
     }
 
-    public Template(String title, int res, Class<? extends BaseActivity> clazz) {
+    public Template(String title, int res, Class<? extends Activity> clazz) {
         this(title, res, clazz, "");
     }
 
-    public Template(String title, int res, Class<? extends BaseActivity> clazz, String describe) {
+    public Template(String title, int res, Class<? extends Activity> clazz, String describe) {
         this.title = title;
         this.res = res;
         this.clazz = clazz;

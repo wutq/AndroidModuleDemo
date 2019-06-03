@@ -1,13 +1,16 @@
 package com.wss.common.utils;
 
 import android.app.Activity;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 
-import java.util.ArrayList;
+import com.hjq.permissions.OnPermission;
+import com.hjq.permissions.Permission;
+import com.hjq.permissions.XXPermissions;
+
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Describe：6.0动态权限管理帮助类
@@ -16,47 +19,93 @@ import java.util.List;
 
 public class PermissionsUtils {
 
-
     /**
-     * 判断权限
+     * 授权所有权限
      *
-     * @param context     context
-     * @param permissions 权限列表
+     * @param activity activity
      */
-    public static boolean checkPermissions(Activity context, String... permissions) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            List<String> permissionsList = new ArrayList<>();
-            if (permissions != null && permissions.length != 0) {
-                for (String permission : permissions) {
-                    if (!isHavePermissions(context, permission)) {
-                        permissionsList.add(permission);
+    public static void authorizationAllPermissions(Activity activity) {
+        XXPermissions.with(activity)
+                .request(new OnPermission() {
+                    @Override
+                    public void hasPermission(List<String> granted, boolean isAll) {
                     }
-                }
-                if (permissionsList.size() > 0) {
-                    // 遍历完后申请
-                    applyPermissions(context, permissionsList);
-                    return false;
-                }
-            }
-        }
-        return true;
+
+                    @Override
+                    public void noPermission(List<String> denied, boolean quick) {
+                    }
+                });
     }
 
     /**
-     * 检查是否授权某权限
+     * 检查相机权限
      */
-    private static boolean isHavePermissions(Activity context, String permissions) {
-        return ContextCompat.checkSelfPermission(context, permissions) == PackageManager.PERMISSION_GRANTED;
+    public static Observable<Boolean> checkPermissions(Activity activity, String... permissions) {
+        return Observable.<Boolean>create(
+                subscriber -> {
+                    if (XXPermissions.isHasPermission(activity, permissions)) {
+                        subscriber.onNext(true);
+                    } else {
+                        XXPermissions.with(activity)
+                                .permission(permissions)
+                                .request(new OnPermission() {
+                                    @Override
+                                    public void hasPermission(List<String> granted, boolean isAll) {
+                                        subscriber.onNext(true);
+                                    }
+
+                                    @Override
+                                    public void noPermission(List<String> denied, boolean quick) {
+                                        subscriber.onNext(false);
+                                        ToastUtils.show(activity, "您必须授权必要权限才可使用该功能！");
+                                    }
+                                });
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
 
     /**
-     * 申请权限
+     * 检查相机权限
      */
-    private static void applyPermissions(Activity context, List<String> permissions) {
-        if (!permissions.isEmpty()) {
-            ActivityCompat.requestPermissions(context, permissions.toArray(new String[permissions.size()]), 1);
-        }
+    public static Observable<Boolean> checkCamera(Activity activity) {
+        return checkPermissions(activity, Permission.CAMERA);
+    }
+
+
+    /**
+     * 检查相机、文件读写权限
+     *
+     * @param activity activity
+     * @return boolean
+     */
+    public static Observable<Boolean> checkCameraAndStorage(Activity activity) {
+        String[] storage = {
+                Permission.READ_EXTERNAL_STORAGE,
+                Permission.WRITE_EXTERNAL_STORAGE,
+                Permission.CAMERA};
+        return checkPermissions(activity, storage);
+    }
+
+
+    /**
+     * 检查录音相关权限
+     */
+    public static Observable<Boolean> checkRecord(Activity activity) {
+        String[] storage = {
+                Permission.READ_EXTERNAL_STORAGE,
+                Permission.WRITE_EXTERNAL_STORAGE,
+                Permission.RECORD_AUDIO};
+        return checkPermissions(activity, storage);
+    }
+
+    /**
+     * 检查拨打电话相关权限
+     */
+    public static Observable<Boolean> checkCallPhone(Activity activity) {
+        return checkPermissions(activity, Permission.CALL_PHONE);
     }
 
 

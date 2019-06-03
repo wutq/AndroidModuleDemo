@@ -53,7 +53,7 @@ public class ObserverButtonActivity extends ActionBarActivity {
 
     @OnClick(R2.id.ob_btn)
     public void onClick(View v) {
-        ToastUtils.showToast(mContext, "可点击");
+        ToastUtils.show(mContext, "可点击");
     }
 
 

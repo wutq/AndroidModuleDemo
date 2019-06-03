@@ -76,7 +76,7 @@ public class LoginActivity extends ActionBarActivity<LoginPresenter> implements 
     @Override
     public void onError(Object tag, String errorMsg) {
         super.onError(tag, errorMsg);
-        ToastUtils.showToast(mContext, errorMsg);
+        ToastUtils.show(mContext, errorMsg);
     }
 
     @Override

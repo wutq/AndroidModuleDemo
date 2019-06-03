@@ -34,6 +34,7 @@ public abstract class BaseFragment extends Fragment {
     private Unbinder unBinder;
     protected Context mContext;
     protected LoadingDialog loadingDialog;
+    protected HorizontalTabTitle tabTitle;
 
 
     @Override
@@ -118,7 +119,7 @@ public abstract class BaseFragment extends Fragment {
      * 给Fragment设置数据
      */
     public void setFragmentData(HorizontalTabTitle data) {
-
+        this.tabTitle = data;
     }
 
     /**

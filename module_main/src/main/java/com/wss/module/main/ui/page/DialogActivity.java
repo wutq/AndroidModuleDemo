@@ -1,17 +1,18 @@
 package com.wss.module.main.ui.page;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 
+import com.hjq.permissions.Permission;
 import com.wss.common.base.ActionBarActivity;
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.utils.PermissionsUtils;
 import com.wss.common.utils.ToastUtils;
 import com.wss.common.widget.NumberProgressBar;
 import com.wss.common.widget.dialog.AppDialog;
+import com.wss.common.widget.dialog.AppDialog.OnButtonClickListener;
 import com.wss.common.widget.dialog.DialogType;
 import com.wss.module.main.R;
 import com.wss.module.main.R2;
@@ -47,7 +48,7 @@ public class DialogActivity extends ActionBarActivity {
     @Override
     protected void initView() {
         setTitleText("对话框");
-        PermissionsUtils.checkPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        PermissionsUtils.checkPermissions(this, Permission.WRITE_EXTERNAL_STORAGE).subscribe();
     }
 
     /**
@@ -64,22 +65,17 @@ public class DialogActivity extends ActionBarActivity {
         } else if (view.getId() == R.id.btn_02) {
             new AppDialog(mContext, DialogType.INPUT)
                     .setTitle("来一段文字")
-                    .setLeftButton("输好了", new AppDialog.OnButtonClickListener() {
-                        @Override
-                        public void onClick(String val) {
-                            ToastUtils.showToast(mContext, val);
-                        }
-                    })
+                    .setLeftButton("输好了", val -> ToastUtils.show(mContext, val))
                     .setRightButton("不输了")
                     .show();
         } else if (view.getId() == R.id.btn_03) {
             new AppDialog(mContext, DialogType.COUNT)
                     .setTitle("修改数量")
                     .setNumber(1, 10, 2)
-                    .setLeftButton("OK", new AppDialog.OnButtonClickListener() {
+                    .setLeftButton("OK", new OnButtonClickListener() {
                         @Override
                         public void onClick(String val) {
-                            ToastUtils.showToast(mContext, val);
+                            ToastUtils.show(mContext, val);
                         }
                     })
                     .setLeftButtonTextColor(R.color.red)
@@ -103,28 +99,21 @@ public class DialogActivity extends ActionBarActivity {
             list.add("相册");
             new AppDialog(mContext, DialogType.BOTTOM_IN)
                     .setTitle("多条目")
-                    .setBottomItems(list, new AppDialog.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(int position) {
-                            ToastUtils.showToast(mContext, list.get(position));
-                        }
-                    })
+                    .setBottomItems(list, position -> ToastUtils.show(mContext, list.get(position)))
                     .setBottomCancelText("再见")
                     .show();
 
         } else if (view.getId() == R.id.btn_07) {
-//            View progressView = View.inflate(mContext, R.layout.update_progress_layout, null);
-//            progressBar = progressView.findViewById(R.id.number_progress);
-//            progressDialog = new AppDialog(mContext);
-//            mProgress = 0;
-//            progressBar.setProgress(mProgress);
-//
-//            progressDialog.setTitle("更新")
-//                    .addDialogView(progressView)
-//                    .show();
-//            update();
+            View progressView = View.inflate(mContext, R.layout.update_progress_layout, null);
+            progressBar = progressView.findViewById(R.id.number_progress);
+            progressDialog = new AppDialog(mContext);
+            mProgress = 0;
+            progressBar.setProgress(mProgress);
 
-
+            progressDialog.setTitle("更新")
+                    .addDialogView(progressView)
+                    .show();
+            update();
         }
     }
 
@@ -150,7 +139,7 @@ public class DialogActivity extends ActionBarActivity {
             int progress = (int) msg.obj;
             progressBar.setProgress(progress);
             if (progress >= mMaxProgress) {
-                ToastUtils.showToast(mContext, "下载完成");
+                ToastUtils.show(mContext, "下载完成");
                 progressDialog.dismiss();
             } else {
                 update();

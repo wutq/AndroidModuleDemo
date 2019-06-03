@@ -57,6 +57,7 @@ dependencies {
     //公用依赖包
     implementation project(':common_base')
 
+
     //Arouter路由
     annotationProcessor rootProject.ext.dependencies["arouter_compiler"]
     //黄油刀

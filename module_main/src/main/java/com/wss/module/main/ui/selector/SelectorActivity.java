@@ -100,7 +100,7 @@ public class SelectorActivity extends ActionBarActivity<SelectorPresenter> imple
         lunarPicker = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
-                ToastUtils.showToast(mContext, getTime(date));
+                ToastUtils.show(mContext, getTime(date));
             }
         })
                 .setDate(selectedDate)
@@ -169,7 +169,7 @@ public class SelectorActivity extends ActionBarActivity<SelectorPresenter> imple
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(date);
                 selectDate = calendar;
-                ToastUtils.showToast(mContext, getTime(date));
+                ToastUtils.show(mContext, getTime(date));
             }
         }).build();
         //注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，
@@ -191,7 +191,7 @@ public class SelectorActivity extends ActionBarActivity<SelectorPresenter> imple
                 String tx = options1Items.get(options1).getPickerViewText() +
                         options2Items.get(options1).get(options2) +
                         options3Items.get(options1).get(options2).get(options3);
-                ToastUtils.showToast(mContext, tx);
+                ToastUtils.show(mContext, tx);
             }
         })
 
@@ -215,7 +215,7 @@ public class SelectorActivity extends ActionBarActivity<SelectorPresenter> imple
             @Override
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
-                ToastUtils.showToast(mContext, user.get(options1));
+                ToastUtils.show(mContext, user.get(options1));
             }
         })
                 .setSelectOptions(2)
@@ -234,7 +234,7 @@ public class SelectorActivity extends ActionBarActivity<SelectorPresenter> imple
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 String str = user.get(options1) + "来自" + userFrom.get(options2) + "是一个" + userDes.get(options3);
-                ToastUtils.showToast(mContext, str);
+                ToastUtils.show(mContext, str);
             }
         })
                 .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {

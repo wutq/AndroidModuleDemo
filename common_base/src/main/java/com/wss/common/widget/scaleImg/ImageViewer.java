@@ -1,6 +1,5 @@
 package com.wss.common.widget.scaleImg;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -17,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+import com.hjq.permissions.Permission;
 import com.orhanobut.logger.Logger;
 import com.wss.common.base.R;
 import com.wss.common.utils.PermissionsUtils;
@@ -43,21 +43,18 @@ public class ImageViewer {
     private Activity mActivity;
 
     //图片下载器
-    private ImageDownloader mImageDownloader = new ImageDownloader() {
-        @Override
-        public File downLoad(String url, Activity activity) {
-            File file = null;
-            try {
-                file = Glide.with(activity)
-                        .load(url)
-                        .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                        .get();
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-                Logger.e("下载图片异常" + e.getMessage());
-            }
-            return file;
+    private ImageDownloader mImageDownloader = (url, activity) -> {
+        File file = null;
+        try {
+            file = Glide.with(activity)
+                    .load(url)
+                    .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                    .get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            Logger.e("下载图片异常" + e.getMessage());
         }
+        return file;
     };
 
     private List<String> mUrls = new ArrayList<>();
@@ -207,16 +204,19 @@ public class ImageViewer {
         imDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (PermissionsUtils.checkPermissions(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    try {
-                        MediaStore.Images.Media.insertImage(mActivity.getContentResolver(),
-                                mDownloadFiles.get(mSelectedPosition).getAbsolutePath(),
-                                mDownloadFiles.get(mSelectedPosition).getName(), null);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
+
+                PermissionsUtils.checkPermissions(mActivity, Permission.WRITE_EXTERNAL_STORAGE).subscribe(r -> {
+                    if (r) {
+                        try {
+                            MediaStore.Images.Media.insertImage(mActivity.getContentResolver(),
+                                    mDownloadFiles.get(mSelectedPosition).getAbsolutePath(),
+                                    mDownloadFiles.get(mSelectedPosition).getName(), null);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        ToastUtils.show(mActivity, "图片保存成功");
                     }
-                    ToastUtils.showToast(mActivity, "图片保存成功");
-                }
+                });
             }
         });
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

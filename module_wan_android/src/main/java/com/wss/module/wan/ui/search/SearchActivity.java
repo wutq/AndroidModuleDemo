@@ -107,7 +107,7 @@ public class SearchActivity extends RefreshListActivity<SearchPresenter> impleme
         if (page == 0) {
             showErrorView(errorMsg);
         } else {
-            ToastUtils.showToast(mContext, errorMsg);
+            ToastUtils.show(mContext, errorMsg);
         }
     }
 
@@ -117,7 +117,7 @@ public class SearchActivity extends RefreshListActivity<SearchPresenter> impleme
         if (page == 0) {
             showEmptyView("木有搜到你想要的");
         } else {
-            ToastUtils.showToast(mContext, "没有更多啦~");
+            ToastUtils.show(mContext, "没有更多啦~");
         }
     }
 }

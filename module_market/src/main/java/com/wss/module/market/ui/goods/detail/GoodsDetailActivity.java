@@ -154,11 +154,11 @@ public class GoodsDetailActivity extends BaseActivity {
                 }, time * 2 );
 
             } else {
-                ToastUtils.showToast(mContext, "没有正经的商品信息~");
+                ToastUtils.show(mContext, "没有正经的商品信息~");
             }
         } else if (i == R.id.tv_buy_now) {
             //立即购买
-            ToastUtils.showToast(mContext, "立即购买");
+            ToastUtils.show(mContext, "立即购买");
         }
     }
 

@@ -50,13 +50,16 @@ android {
             }
         }
     }
+    compileOptions {
+        targetCompatibility rootProject.ext.versions.javaSDKVersion
+        sourceCompatibility rootProject.ext.versions.javaSDKVersion
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //公用依赖包
     implementation project(':common_base')
-
     //Arouter路由
     annotationProcessor rootProject.ext.dependencies["arouter_compiler"]
     //黄油刀

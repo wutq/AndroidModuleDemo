@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/theme"
+        android:gravity="center">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="标题"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <com.wss.common.widget.pulltorefresh.PullToRefreshLayout
+        android:id="@+id/pull_to_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.wss.module.main.ui.zhihu.w.StickyNavLayout
+            android:id="@id/id_stickynavlayout_innerscrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="50dp">
+
+                <LinearLayout
+                    android:id="@id/id_stickynavlayout_topview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:background="#00FFAA"
+                        android:gravity="center"
+                        android:text="固定顶部" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="160dp"
+                        android:background="#AAAAAA"
+                        android:gravity="center"
+                        android:text="动态APP" />
+
+
+                </LinearLayout>
+
+                <com.wss.module.main.ui.zhihu.w.PagerSlidingTabStrip
+                    android:id="@id/id_stickynavlayout_indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#f4f4f4"
+                    android:scrollbars="none" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@id/id_stickynavlayout_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </com.wss.module.main.ui.zhihu.w.StickyNavLayout>
+    </com.wss.common.widget.pulltorefresh.PullToRefreshLayout>
+</LinearLayout>
