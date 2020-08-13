@@ -71,6 +71,10 @@ public interface Dic {
      * 系列子类
      */
     String CLASSIFICATION_CHILD = "classification_child";
+    /**
+     * HouseFragment中的ViewPager
+     */
+    String HOUSE_FRAGMENT_VIEWPAGER = "viewpager";
 
 
 }

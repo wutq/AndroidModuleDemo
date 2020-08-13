@@ -1,4 +1,4 @@
-package com.wss.module.main.ui.selector.mvp.model;
+package com.wss.module.main.ui.page.selector.mvp.model;
 
 import android.content.Context;
 
@@ -7,7 +7,7 @@ import com.wss.common.utils.JsonUtils;
 import com.wss.common.utils.Utils;
 import com.wss.common.utils.ValidUtils;
 import com.wss.module.main.bean.Province;
-import com.wss.module.main.ui.selector.mvp.contract.SelectContract;
+import com.wss.module.main.ui.page.selector.mvp.contract.SelectContract;
 
 import java.util.List;
 

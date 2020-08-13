@@ -1,4 +1,4 @@
-package com.wss.module.main.ui.selector;
+package com.wss.module.main.ui.page.selector;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -19,8 +19,8 @@ import com.wss.common.utils.ToastUtils;
 import com.wss.module.main.R;
 import com.wss.module.main.R2;
 import com.wss.module.main.bean.Province;
-import com.wss.module.main.ui.selector.mvp.SelectorPresenter;
-import com.wss.module.main.ui.selector.mvp.contract.SelectContract;
+import com.wss.module.main.ui.page.selector.mvp.SelectorPresenter;
+import com.wss.module.main.ui.page.selector.mvp.contract.SelectContract;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

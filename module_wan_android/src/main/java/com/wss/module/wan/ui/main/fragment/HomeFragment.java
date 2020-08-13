@@ -41,8 +41,7 @@ import butterknife.OnClick;
  * Created by 吴天强 on 2018/10/17.
  */
 @Route(path = ARouterConfig.WAN_MAIN_FRAGMENT)
-public class HomeFragment extends BaseMvpFragment<HomePresenter> implements HomeContract.View/*, OnListItemClickListener,
-        OnPullRefreshListener, ArticleAdapter.OnTagClickListener*/ {
+public class HomeFragment extends BaseMvpFragment<HomePresenter> implements HomeContract.View {
 
     @BindView(R2.id.cb_banner)
     ConvenientBanner<Banner> banner;

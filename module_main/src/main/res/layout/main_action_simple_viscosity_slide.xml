@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.wss.common.widget.StickyNavLayout
+        android:id="@+id/sticky_nav_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/light_green"
+                android:gravity="center"
+                android:text="这个区域可以跟着一起滑动，并且会滑出屏幕" />
+
+            <!--这部分区域不会滑出屏幕 会固定在顶部-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:tag="sticky">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/theme"
+                    android:gravity="center"
+                    android:text="张良"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/theme"
+                    android:gravity="center"
+                    android:text="萧何"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/theme"
+                    android:gravity="center"
+                    android:text="韩信"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/theme"
+                    android:gravity="center"
+                    android:text="龙且"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+            <!--这是个列表-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </com.wss.common.widget.StickyNavLayout>
+
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>

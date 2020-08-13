@@ -1,4 +1,4 @@
-package com.wss.module.main.ui.selector.mvp.contract;
+package com.wss.module.main.ui.page.selector.mvp.contract;
 
 import android.content.Context;
 

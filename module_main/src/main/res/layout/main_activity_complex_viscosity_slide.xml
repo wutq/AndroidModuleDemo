@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/pull_to_refresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:theme="@style/Theme.AppCompat">
+
+    <!--协调滑动悬停等操作-->
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <!--滑动悬停ViewGroup-->
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- "scroll|exitUntilCollapsed"表示滑动滚出屏幕-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <!--轮播图-->
+                <com.bigkoo.convenientbanner.ConvenientBanner
+                    android:id="@+id/top_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="128dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    app:canLoop="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="20dp"
+                    android:text="这是可以划出去的View"
+                    android:textColor="#00FF00"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <!--不设置layout_scrollFlags表示到顶了就悬停-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/layout_side_margin"
+                android:paddingEnd="@dimen/layout_side_margin">
+
+                <com.wss.common.widget.PagerSlidingTabStrip
+                    android:id="@+id/pst_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    app:pstsBold="true"
+                    app:pstsHasBottomLine="false"
+                    app:pstsHasTopLine="false"
+                    app:pstsIndicatorColor="@color/theme"
+                    app:pstsIndicatorHeight="1.5dp"
+                    app:pstsShouldExpand="false"
+                    app:pstsTextDefaultColor="@color/color_333333"
+                    app:pstsTextSelectedColor="@color/color_333333"
+                    app:pstsTextSize="16sp" />
+
+            </LinearLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <!--下面滑动区域-->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <!--这里再塞一个ImageView-->
+                <ImageView
+                    android:id="@+id/middle_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="84dp"
+                    android:layout_marginStart="@dimen/layout_side_margin"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="@dimen/layout_side_margin"
+                    android:scaleType="centerCrop" />
+
+                <!--重写过可以在ScrollView正常加载滑动的ViewPager-->
+                <com.wss.common.widget.ViewPagerForScrollView
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/layout_side_margin" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>

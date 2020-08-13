@@ -317,6 +317,21 @@ public class ImageUtils {
     }
 
     /**
+     * 加载只有一张图的Banner
+     *
+     * @param banner   banner控件
+     * @param imgUrl   banner图片集合
+     * @param listener listener
+     */
+    public static <T> void loadBanner(ConvenientBanner<T> banner, List<T> imgUrl, boolean circle, OnItemClickListener listener) {
+        banner.setPages(new BannerImgAdapter(circle), imgUrl)
+                .setPageIndicator(new int[]{R.drawable.shape_item_index_white, R.drawable.shape_item_index_red})
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT)
+                .setOnItemClickListener(listener)
+                .startTurning();
+    }
+
+    /**
      * 压缩图片
      *
      * @param filePath 图片地址

@@ -1,8 +1,8 @@
-package com.wss.module.main.ui.selector.mvp;
+package com.wss.module.main.ui.page.selector.mvp;
 
 import com.wss.common.base.mvp.BasePresenter;
-import com.wss.module.main.ui.selector.mvp.contract.SelectContract;
-import com.wss.module.main.ui.selector.mvp.model.SelectorModule;
+import com.wss.module.main.ui.page.selector.mvp.contract.SelectContract;
+import com.wss.module.main.ui.page.selector.mvp.model.SelectorModule;
 
 import java.util.ArrayList;
 import java.util.List;
