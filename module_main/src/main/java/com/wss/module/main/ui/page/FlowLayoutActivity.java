@@ -1,6 +1,6 @@
 package com.wss.module.main.ui.page;
 
-import com.wss.common.base.ActionBarActivity;
+import com.wss.common.base.BaseActionBarActivity;
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.module.main.R;
 
@@ -8,8 +8,7 @@ import com.wss.module.main.R;
  * Describe：流式布局
  * Created by 吴天强 on 2018/10/29.
  */
-
-public class FlowLayoutActivity extends ActionBarActivity {
+public class FlowLayoutActivity extends BaseActionBarActivity {
     @Override
     protected BasePresenter createPresenter() {
         return null;
@@ -22,6 +21,6 @@ public class FlowLayoutActivity extends ActionBarActivity {
 
     @Override
     protected void initView() {
-        setTitleText("流式布局");
+        setCenterText("流式布局");
     }
 }

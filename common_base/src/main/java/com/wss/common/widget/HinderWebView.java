@@ -34,7 +34,6 @@ public class HinderWebView extends WebView {
             case MotionEvent.ACTION_MOVE:
                 float Y = ev.getY();
                 float Ys = Y - oldY;
-
                 //滑动到顶部让父控件重新获得触摸事件
                 if (Ys > 0 && t == 0) {
                     getParent().getParent().requestDisallowInterceptTouchEvent(false);

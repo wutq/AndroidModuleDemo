@@ -2,8 +2,6 @@ package com.wss.module.market.ui.goods.detail.fragment;
 
 import android.content.Context;
 import android.graphics.Paint;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -13,6 +11,7 @@ import android.widget.TextView;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.wss.common.adapter.BannerImgAdapter;
 import com.wss.common.base.BaseMvpFragment;
+import com.wss.common.bean.Banner;
 import com.wss.common.widget.CountClickView;
 import com.wss.common.widget.SlideLayout;
 import com.wss.module.market.R;
@@ -28,6 +27,8 @@ import com.wss.module.market.ui.goods.detail.mvp.contract.GoodsDetailContract;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -39,7 +40,7 @@ public class GoodsInfoMainFragment extends BaseMvpFragment<GoodsDetailPresenter>
         SlideLayout.OnSlideDetailsListener, GoodsDetailContract.View {
 
     @BindView(R2.id.vp_item_goods_img)
-    ConvenientBanner<String> vpItemGoodsImg;
+    ConvenientBanner<Banner> vpItemGoodsImg;
 
     @BindView(R2.id.tv_goods_name)
     TextView tvGoodsName;
@@ -97,7 +98,7 @@ public class GoodsInfoMainFragment extends BaseMvpFragment<GoodsDetailPresenter>
         svSwitch.setOnSlideDetailsListener(this);
         //设置文字中间一条横线
         tvOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        presenter.start();
+        getPresenter().start();
     }
 
 
@@ -111,7 +112,7 @@ public class GoodsInfoMainFragment extends BaseMvpFragment<GoodsDetailPresenter>
             goodsDetailActivity.setCurrentFragment(2);
         } else if (v.getId() == R.id.miv_goods_specification) {
             //选择商品规格
-            GoodsSpecificationPop.getInstance(mContext).show(v);
+            GoodsSpecificationPop.getInstance(context).show(v);
         }
     }
 
@@ -131,7 +132,7 @@ public class GoodsInfoMainFragment extends BaseMvpFragment<GoodsDetailPresenter>
             vpItemGoodsImg.setPages(new BannerImgAdapter() {
                 @Override
                 public ImageView getImageView() {
-                    ImageView imageView = new ImageView(mContext);
+                    ImageView imageView = new ImageView(context);
                     imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                             ViewGroup.LayoutParams.MATCH_PARENT));
                     return imageView;
@@ -162,27 +163,27 @@ public class GoodsInfoMainFragment extends BaseMvpFragment<GoodsDetailPresenter>
     }
 
     @Override
-    public void goodsInfo(GoodsInfo goodsInfo) {
+    public void refreshGoodsInfo(GoodsInfo goodsInfo) {
         this.goodsInfo = goodsInfo;
         setGoodsHeadImg();
         setGoodsInfo();
     }
 
     @Override
-    public void recommendList(List<List<GoodsInfo>> recommendList) {
+    public void refreshRecommendList(List<List<GoodsInfo>> recommendList) {
         //加载推荐位商品
-        vpRecommend.setPages(new RecommendGoodsAdapter(mContext), recommendList)
+        vpRecommend.setPages(new RecommendGoodsAdapter(context), recommendList)
                 .setCanLoop(recommendList.size() != 1)
                 .setPageIndicator(new int[]{R.drawable.shape_item_index_white, R.drawable.shape_item_index_red})
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
     }
 
     @Override
-    public void commentList(List<GoodsComment> commentList) {
+    public void refreshCommentList(List<GoodsComment> commentList) {
         if (commentList.size() > 0) {
             tvEmptyComment.setVisibility(View.GONE);
-            recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-            recyclerView.setAdapter(new GoodsCommentAdapter(mContext, commentList, R.layout.market_item_of_goods_comment_list));
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            recyclerView.setAdapter(new GoodsCommentAdapter(context, commentList));
         } else {
             tvEmptyComment.setVisibility(View.VISIBLE);
             tvEmptyComment.setText("暂无精彩评论");

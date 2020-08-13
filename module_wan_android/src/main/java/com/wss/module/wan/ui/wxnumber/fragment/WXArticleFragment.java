@@ -1,56 +1,45 @@
 package com.wss.module.wan.ui.wxnumber.fragment;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-
-import com.wss.common.base.RefreshListFragment;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.wss.common.base.BaseRefreshListFragment;
 import com.wss.common.bean.HorizontalTabTitle;
-import com.wss.common.utils.ActivityToActivity;
-import com.wss.module.wan.R;
+import com.wss.common.manage.ActivityToActivity;
+import com.wss.common.utils.ToastUtils;
+import com.wss.common.utils.ValidUtils;
+import com.wss.common.widget.manager.ScrollSpeedLinearLayoutManger;
 import com.wss.module.wan.bean.Article;
 import com.wss.module.wan.bean.WXNumber;
 import com.wss.module.wan.ui.wxnumber.adapter.WXArticleAdapter;
 import com.wss.module.wan.ui.wxnumber.mvp.WXArticlePresenter;
-import com.wss.module.wan.ui.wxnumber.mvp.contract.WXNumberContract;
+import com.wss.module.wan.ui.wxnumber.mvp.contract.WXArticleContract;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Describe：公众号文章列表
  * Created by 吴天强 on 2018/11/15.
  */
-
-public class WXArticleFragment extends RefreshListFragment<WXArticlePresenter> implements WXNumberContract.View {
+public class WXArticleFragment extends BaseRefreshListFragment<WXArticlePresenter> implements WXArticleContract.View {
 
 
     private List<Article> wxArticles = new ArrayList<>();
-    private WXNumber wxNumber;
-    private int page = 1;
+    private int page = 0;
 
     @Override
     protected void initView() {
         super.initView();
-        onRefresh();
+        getPresenter().start();
     }
 
-    @Override
-    public void onRefresh() {
-        page = 1;
+    private void resetPage() {
+        page = 0;
         wxArticles.clear();
-        presenter.start();
-    }
-
-    @Override
-    public void onLoadMore() {
-        page++;
-        presenter.start();
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-        ActivityToActivity.toWebView(mContext, wxArticles.get(position).getLink());
+        getRefreshLayout().setEnableLoadMore(true);
     }
 
     @Override
@@ -60,12 +49,28 @@ public class WXArticleFragment extends RefreshListFragment<WXArticlePresenter> i
 
     @Override
     protected RecyclerView.LayoutManager getLayoutManager() {
-        return new LinearLayoutManager(mContext);
+        return new ScrollSpeedLinearLayoutManger(context);
+    }
+
+    @Override
+    protected OnRefreshLoadMoreListener createRefreshListener() {
+        return new OnRefreshLoadMoreListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                resetPage();
+            }
+
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                getPresenter().getArticle();
+            }
+        };
     }
 
     @Override
     protected RecyclerView.Adapter createAdapter() {
-        return new WXArticleAdapter(mContext, wxArticles, R.layout.wan_item_of_wx_article_list, this);
+        return new WXArticleAdapter(context, wxArticles,
+                ((data, position) -> ActivityToActivity.toWebView(context, data.getLink())));
     }
 
     @Override
@@ -74,19 +79,35 @@ public class WXArticleFragment extends RefreshListFragment<WXArticlePresenter> i
     }
 
     @Override
-    public void setFragmentData(HorizontalTabTitle data) {
-        super.setFragmentData(data);
-        wxNumber = (WXNumber) data.getData();
+    public int getWxId() {
+        HorizontalTabTitle tabTitle = getTabTitle();
+        if (ValidUtils.isValid(tabTitle) && ValidUtils.isValid(tabTitle.getData())) {
+            return ((WXNumber) tabTitle.getData()).getId();
+        }
+        return -1;
     }
 
     @Override
-    public int getWXNumberId() {
-        return wxNumber.getId();
+    public void refreshWxArticle(List<Article> articleList) {
+        int position = this.wxArticles.size();
+        this.wxArticles.addAll(articleList);
+        getAdapter().notifyDataSetChanged();
+        if (page > 0) {
+            getRecyclerView().smoothScrollToPosition(position + 3);
+        }
+        page++;
+        stopRefresh();
     }
 
     @Override
-    public void wxArticleList(List<Article> wxArticles) {
-        this.wxArticles.addAll(wxArticles);
-        adapter.notifyDataSetChanged();
+    public void onError(Object tag, String errorMsg) {
+        super.onError(tag, errorMsg);
+        ToastUtils.show(errorMsg);
+    }
+
+    @Override
+    public void onEmpty(Object tag) {
+        super.onEmpty(tag);
+        ToastUtils.show("暂无数据");
     }
 }

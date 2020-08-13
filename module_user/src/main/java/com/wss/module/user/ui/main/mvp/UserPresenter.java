@@ -1,51 +1,33 @@
 package com.wss.module.user.ui.main.mvp;
 
+import android.os.Handler;
+
 import com.wss.common.base.mvp.BasePresenter;
-import com.wss.common.bean.AppInfo;
-import com.wss.common.constants.Constants;
-import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.common.utils.ToastUtils;
 import com.wss.module.user.ui.main.mvp.contract.UserContract;
+import com.wss.module.user.ui.main.mvp.model.UserModel;
 
 /**
  * Describe：我的Presenter
  * Created by 吴天强 on 2018/11/21.
  */
 
-public class UserPresenter extends BasePresenter<UserContract.Model, UserContract.View>
+public class UserPresenter extends BasePresenter<UserModel, UserContract.View>
         implements UserContract.Presenter {
 
     @Override
     public void checkUpdate() {
-        if (isViewAttached()) {
-            getView().showLoading();
-            getModule().checkUpdate(new OnResultCallBack<AppInfo>() {
-                @Override
-                public void onSuccess(boolean success, int code, String msg, Object tag, AppInfo response) {
-                    if (code == 1000 || response != null) {
-                        //需要更新
-                        getView().needUpdate(response);
-                    } else {
-                        getView().isLastVersion();
-                    }
-                }
+        showLoading();
+        new Handler().postDelayed(() -> {
+            dismissLoading();
+            ToastUtils.show("已是最新版本~");
+        }, 1200);
 
-                @Override
-                public void onFailure(Object tag, Exception e) {
-                    ToastUtils.show(getContext(), Constants.ERROR_MESSAGE);
-                }
-
-                @Override
-                public void onCompleted() {
-                    getView().dismissLoading();
-                }
-            });
-        }
     }
 
     @Override
-    protected UserContract.Model createModule() {
-        return new UserModel();
+    protected UserModel createModule() {
+        return new UserModel(getLifecycleOwner());
     }
 
     @Override

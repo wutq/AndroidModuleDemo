@@ -45,7 +45,7 @@ public class GoodsConfigFragment extends BaseFragment {
         data.add(new GoodsConfigBean("摄像头", "2400万+2000万像素"));
         data.add(new GoodsConfigBean("电池容量（mAh）", "3200mAh （typ）/ 3100mAh (min)"));
         data.add(new GoodsConfigBean("数据接口", "蓝牙/NFC"));
-        listView.setAdapter(new GoodsConfigAdapter(mContext, data, R.layout.market_item_of_goods_config_list));
+        listView.setAdapter(new GoodsConfigAdapter(context, data));
     }
 
 

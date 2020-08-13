@@ -7,12 +7,13 @@
 
     <LinearLayout
         android:id="@+id/ll_center"
-        android:layout_width="330dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:background="@drawable/corners_white_shape"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingTop="20dp">
+        android:paddingTop="15dp"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_title"
@@ -23,99 +24,43 @@
             android:textColor="@color/black"
             android:textSize="18sp" />
 
-        <LinearLayout
-            android:id="@+id/ll_content_layout"
+        <ScrollView
+            android:id="@+id/center_scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_content"
-                style="@style/TextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <EditText
-                android:id="@+id/edt_input"
-                style="@style/TextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:background="@drawable/stroke_hollow_white_shape"
-                android:gravity="center"
-                android:minWidth="200dp"
-                android:textCursorDrawable="@null"
-                android:visibility="gone" />
-
-            <!--加减模式对话框-->
             <LinearLayout
-                android:id="@+id/ll_count_view"
-                android:layout_width="184dp"
-                android:layout_height="44dp"
-                android:background="@drawable/stroke_hollow_white_shape"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:id="@+id/ll_content_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
-                <LinearLayout
-                    android:id="@+id/minus"
-                    android:layout_width="44dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/iv_minus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/light_white" />
+                <TextView
+                    android:id="@+id/tv_content"
+                    style="@style/TextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
                 <EditText
-                    android:id="@+id/edt_count"
+                    android:id="@+id/edt_input"
                     style="@style/TextStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/stroke_gray_white_shape"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:text="1"
-                    android:textColor="@color/black"
+                    android:minWidth="240dp"
                     android:textCursorDrawable="@null"
-                    android:textSize="20sp" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/light_white" />
-
-                <LinearLayout
-                    android:id="@+id/plus"
-                    android:layout_width="44dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/iv_plus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-
+                    android:visibility="gone" />
             </LinearLayout>
-        </LinearLayout>
+        </ScrollView>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginTop="23dp">
+            android:layout_marginTop="15dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -152,7 +97,6 @@
         </RelativeLayout>
     </LinearLayout>
 
-
     <LinearLayout
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
@@ -161,19 +105,9 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <TextView
-            android:id="@+id/tv_bottom_title"
-            style="@style/TextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/white"
-            android:gravity="center"
-            android:textSize="18sp" />
-
-        <View style="@style/HorizontalLine" />
 
         <ScrollView
-            android:id="@+id/sLayout_content"
+            android:id="@+id/bottom_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -187,7 +121,6 @@
                 android:background="@color/white"
                 android:orientation="vertical" />
         </ScrollView>
-
 
         <TextView
             android:id="@+id/tv_cancel"

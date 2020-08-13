@@ -11,19 +11,20 @@ import android.widget.EditText;
 
 import com.wss.common.base.R;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.widget.AppCompatTextView;
 
 /**
  * Describe：观察多个输入框的Button
  * Created by 吴天强 on 2018/10/26.
  */
-
-public class ObserverButton extends android.support.v7.widget.AppCompatTextView {
-
+public class ObserverButton extends AppCompatTextView {
 
     private List<EditText> editTextList = new ArrayList<>();
-
 
     private boolean canPress;
     private int defaultBg = Color.GRAY;
@@ -55,7 +56,7 @@ public class ObserverButton extends android.support.v7.widget.AppCompatTextView 
     }
 
 
-    public void observer(EditText... editTexts) {
+    public void observer(@NotNull EditText... editTexts) {
         for (EditText editText : editTexts) {
             editText.addTextChangedListener(textWatcher);
             editTextList.add(editText);

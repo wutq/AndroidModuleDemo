@@ -1,8 +1,122 @@
 <resources>
     <string name="app_name">AMD</string>
 
+
+    <!--iconfont的所有声明放在该处  start-->
+    <!--房源-->
+    <string name="icon_house_resource">&#xe6bc;</string>
+    <string name="icon_house_resource_checked">&#xe6c0;</string>
+    <!--客户-->
+    <string name="icon_customer">&#xe6df;</string>
+    <string name="icon_customer_checked">&#xe6b3;</string>
+    <!--消息-->
+    <string name="icon_message">&#xe6c9;</string>
+    <string name="icon_message_checked">&#xe6b2;</string>
+    <!--我的-->
+    <string name="icon_mine">&#xe6b9;</string>
+    <string name="icon_mine_checked">&#xe6cd;</string>
+    <!--工作台-->
+    <string name="icon_workbench">&#xe6d7;</string>
+
+    <!--登录  账号-->
+    <string name="icon_login_account">&#xe6a1;</string>
+    <!--登录 密码-->
+    <string name="icon_login_password">&#xe6a0;</string>
+    <!--气泡-->
+    <string name="icon_bubble">&#xe6ab;</string>
+    <!--添加-->
+    <string name="icon_add_1">&#xe6aa;</string>
+    <string name="icon_add_2">&#xe6c2;</string>
+    <string name="icon_add_3">&#xe6b8;</string>
+    <!--定位-->
+    <string name="icon_location">&#xe6a9;</string>
+    <!--地图-->
+    <string name="icon_map">&#xe664;</string>
+    <!--提示-->
+    <string name="icon_notice">&#xe6d5;</string>
+    <!--地址-->
+    <string name="icon_address">&#xe6d3;</string>
+    <!--三角-->
+    <string name="icon_triangle_1">&#xe6a8;</string>
+    <string name="icon_triangle_2">&#xe6b4;</string>
+    <string name="icon_triangle_3">&#xe6d4;</string>
+    <!--计算器-->
+    <string name="icon_calculator">&#xe6a7;</string>
+    <!--视频播放-->
+    <string name="icon_play_default">&#xe6a2;</string>
+    <!--VR-->
+    <string name="icon_vr">&#xe6ac;</string>
+    <!--聊天-->
+    <string name="icon_im_chat">&#xe6ad;</string>
+    <!--电话-->
+    <string name="icon_phone_1">&#xe6b0;</string>
+    <string name="icon_phone_2">&#xe6ae;</string>
+    <string name="icon_phone_3">&#xe6ca;</string>
+    <string name="icon_phone_4">&#xe6bb;</string>
+    <string name="icon_phone_5">&#xe6cc;</string>
+    <!--添加来访-->
+    <string name="icon_add_visit">&#xe6b1;</string>
+    <!--喜报-->
+    <string name="icon_good_news">&#xe6c7;</string>
+    <!--代办提醒-->
+    <string name="icon_agency">&#xe6c6;</string>
+    <!--微信-->
+    <string name="icon_wechat">&#xe6c5;</string>
+    <!--设置-->
+    <string name="icon_setting">&#xe6c4;</string>
+    <!--说话-->
+    <string name="icon_speak">&#xe6bf;</string>
+    <!--未接电话-->
+    <string name="icon_missed_call">&#xe6be;</string>
+    <!--笑脸-->
+    <string name="icon_face">&#xe6bd;</string>
+    <!--客户变动-->
+    <string name="icon_customer_change">&#xe6ba;</string>
+    <!--分配客户-->
+    <string name="icon_assign_customers">&#xe6b6;</string>
+    <!--数据分析-->
+    <string name="icon_data_analysis_1">&#xe6b5;</string>
+    <string name="icon_data_analysis_2">&#xe6cb;</string>
+    <!--盘客-->
+    <string name="icon_check_customer">&#xe6c8;</string>
+    <!--报备-->
+    <string name="icon_report">&#xe6c1;</string>
+    <!--下载-->
+    <string name="icon_download">&#xe6ce;</string>
+    <!--关闭-->
+    <string name="icon_close">&#xe6d0;</string>
+    <!--单选框-->
+    <string name="icon_radio">&#xe663;</string>
+    <string name="icon_radio_checked_1">&#xe662;</string>
+    <string name="icon_radio_point">&#xe6d1;</string>
+    <!--搜索-->
+    <string name="icon_search">&#xe660;</string>
+    <!--更多-->
+    <string name="icon_more">&#xe6d2;</string>
+    <!--删除-->
+    <string name="icon_delete">&#xe66f;</string>
+    <!-- 活动-->
+    <string name="icon_active">&#xe6d6;</string>
+    <!-- 通知-->
+    <string name="icon_notification">&#xe6d8;</string>
+    <!-- 圆圈-->
+    <string name="icon_circle">&#xe6d9;</string>
+    <!-- 键盘-->
+    <string name="icon_keyboard">&#xe6dc;</string>
+    <!-- 名片-->
+    <string name="icon_card">&#xe6de;</string>
+    <!-- 扫一扫-->
+    <string name="icon_scan">&#xe6dd;</string>
+    <!--视频播放标志-->
+    <string name="icon_video_play">&#xe6a2;</string>
+    <!--带点的菜单icon-->
+    <string name="icon_point_menu">&#xe701;</string>
+    <!--iconfont的所有声明放在该处  end-->
+
     <string name="no_data">暂无数据</string>
-    <string name="error_data">网络请求失败</string>
+    <string name="network_error_no_net">网络连接失败, 请检查网络</string>
+    <string name="network_error_server_error">服务器异常</string>
+    <string name="request_time_out">请求超时</string>
     <string name="pull_up_loading">上拉加载</string>
     <string name="pull_down_refresh">下拉刷新</string>
     <string name="pull_loose_refreshing">松开刷新</string>
@@ -11,5 +125,44 @@
     <string name="cancel">取消</string>
     <string name="confirm">确定</string>
     <string name="prompt">提示</string>
+    <string name="authorise_necessary_authorities">您必须授权必要权限才可使用该功能</string>
+    <string name="back">返回</string>
+    <string name="close">关闭</string>
+    <string name="delete_success">删除成功</string>
+    <string name="max_select_image">您最多可选%d张图片</string>
+    <string name="max_select_file">您最多可选%d个文件</string>
+    <string name="slelect_image">选择图片</string>
+    <string name="select_file">选择文件</string>
+    <string name="no_select">您还未选择呢</string>
+    <string name="please_setting_image">请先设置图片</string>
+    <string name="choose_image_fail">选择图片失败</string>
+    <string name="scan_scan">扫一扫</string>
+    <string name="camera">相机</string>
+    <string name="album">相册</string>
+    <string name="no_more_data">~没有更多拉~</string>
 
+
+    <!--下拉刷新、上拉加载资源覆盖 请勿动 start-->
+    <string name="srl_header_pulling">下拉可以刷新</string>
+    <string name="srl_header_refreshing">正在刷新…</string>
+    <string name="srl_header_loading">正在加载…</string>
+    <string name="srl_header_release">释放立即刷新</string>
+    <string name="srl_header_finish">刷新完成</string>
+    <string name="srl_header_failed">刷新失败</string>
+    <string name="srl_header_update">上次更新 MM-dd HH:mm</string>
+    <string name="srl_header_secondary">释放进入二楼</string>
+
+    <string name="srl_footer_pulling">上拉加载更多</string>
+    <string name="srl_footer_release">释放立即加载</string>
+    <string name="srl_footer_loading">正在加载…</string>
+    <string name="srl_footer_refreshing">正在刷新…</string>
+    <string name="srl_footer_finish">加载完成</string>
+    <string name="srl_footer_failed">加载失败</string>
+    <string name="srl_footer_nothing">~没有更多啦~</string>
+    <string name="refresh_try_again">刷新重试</string>
+    <string name="start_date">开始时间</string>
+    <string name="end_date">结束时间</string>
+    <string name="to">至</string>
+    <string name="reset">重置</string>
+    <!--下拉刷新、上拉加载资源覆盖 请勿动 END-->
 </resources>

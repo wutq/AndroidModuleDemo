@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
@@ -17,6 +16,7 @@ import com.wss.common.base.R;
 import com.wss.common.base.R2;
 import com.wss.common.utils.PxUtils;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -237,8 +237,7 @@ public class MultipleItemView extends LinearLayout {
      */
     public MultipleItemView setLeftIconMargin(int left, int top, int right, int bottom) {
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) ivLeft.getLayoutParams();
-        layoutParams.setMargins(PxUtils.dp2px(getContext(), left), PxUtils.dp2px(getContext(), top),
-                PxUtils.dp2px(getContext(), right), PxUtils.dp2px(getContext(), bottom));
+        layoutParams.setMargins(PxUtils.dp2px(left), PxUtils.dp2px(top), PxUtils.dp2px(right), PxUtils.dp2px(bottom));
         return this;
     }
 
@@ -253,8 +252,8 @@ public class MultipleItemView extends LinearLayout {
      */
     public MultipleItemView setRightIconMargin(int left, int top, int right, int bottom) {
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) ivRight.getLayoutParams();
-        layoutParams.setMargins(PxUtils.dp2px(getContext(), left), PxUtils.dp2px(getContext(), top),
-                PxUtils.dp2px(getContext(), right), PxUtils.dp2px(getContext(), bottom));
+        layoutParams.setMargins(PxUtils.dp2px(left), PxUtils.dp2px(top),
+                PxUtils.dp2px(right), PxUtils.dp2px(bottom));
         return this;
     }
 
@@ -289,8 +288,8 @@ public class MultipleItemView extends LinearLayout {
      * @return MultifunctionalItemView
      */
     public MultipleItemView setLeftIconSize(int width, int height) {
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(PxUtils.dp2px(getContext(), width),
-                PxUtils.dp2px(getContext(), height));
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(PxUtils.dp2px(width),
+                PxUtils.dp2px(height));
         lp.setMargins(0, 0, 4, 0);
         ivLeft.setLayoutParams(lp);
         return this;
@@ -327,8 +326,8 @@ public class MultipleItemView extends LinearLayout {
      * @return MultifunctionalItemView
      */
     public MultipleItemView setRightIconSize(int width, int height) {
-        ivRight.setLayoutParams(new LinearLayout.LayoutParams(PxUtils.dp2px(getContext(), width),
-                PxUtils.dp2px(getContext(), height)));
+        ivRight.setLayoutParams(new LinearLayout.LayoutParams(PxUtils.dp2px(width),
+                PxUtils.dp2px(height)));
         return this;
     }
 
@@ -342,8 +341,8 @@ public class MultipleItemView extends LinearLayout {
      * @return MultifunctionalItemView
      */
     public MultipleItemView setContentPadding(int left, int top, int right, int bottom) {
-        content.setPadding(PxUtils.dp2px(getContext(), left), PxUtils.dp2px(getContext(), top),
-                PxUtils.dp2px(getContext(), right), PxUtils.dp2px(getContext(), bottom));
+        content.setPadding(PxUtils.dp2px(left), PxUtils.dp2px(top),
+                PxUtils.dp2px(right), PxUtils.dp2px(bottom));
         return this;
     }
 

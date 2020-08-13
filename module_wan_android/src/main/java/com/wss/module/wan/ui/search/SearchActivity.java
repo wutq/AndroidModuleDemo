@@ -1,30 +1,33 @@
 package com.wss.module.wan.ui.search;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 
-import com.wss.common.base.RefreshListActivity;
-import com.wss.common.utils.ActivityToActivity;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.wss.common.base.BaseRefreshListActivity;
+import com.wss.common.manage.ActivityToActivity;
 import com.wss.common.utils.KeyboardUtils;
 import com.wss.common.utils.ToastUtils;
 import com.wss.common.widget.ObserverButton;
+import com.wss.common.widget.manager.ScrollSpeedLinearLayoutManger;
 import com.wss.module.wan.R;
 import com.wss.module.wan.bean.Article;
 import com.wss.module.wan.ui.main.adapter.ArticleAdapter;
-import com.wss.module.wan.ui.search.mvp.contract.SearchContract;
 import com.wss.module.wan.ui.search.mvp.SearchPresenter;
+import com.wss.module.wan.ui.search.mvp.contract.SearchContract;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Describe：搜索页面
  * Created by 吴天强 on 2018/11/15.
  */
-
-public class SearchActivity extends RefreshListActivity<SearchPresenter> implements SearchContract.View {
+public class SearchActivity extends BaseRefreshListActivity<SearchPresenter> implements SearchContract.View {
 
 
     private EditText editText;
@@ -34,45 +37,56 @@ public class SearchActivity extends RefreshListActivity<SearchPresenter> impleme
     @Override
     protected void initView() {
         super.initView();
-        View actionBarView = View.inflate(mContext, R.layout.wan_action_bar_of_search, null);
+        View actionBarView = View.inflate(context, R.layout.wan_action_bar_of_search, null);
         editText = actionBarView.findViewById(R.id.edt_search);
         ObserverButton oButton = actionBarView.findViewById(R.id.obt_search);
         oButton.observer(editText);
-        actionBar.setActionBarView(actionBarView);
-        KeyboardUtils.showKeyboard(actionBarView);
+        getTitleBar().setActionBarView(actionBarView);
+        KeyboardUtils.showKeyboard(editText);
+        editText.setOnEditorActionListener((v, actionId, event) -> {
+            KeyboardUtils.hideKeyboard(v);
+            resetPage();
+            return true;
+        });
     }
 
-    @Override
-    public void onRefresh() {
+    private void resetPage() {
         page = 0;
         data.clear();
-        presenter.search();
+        getPresenter().search();
     }
 
     @Override
-    public void onLoadMore() {
-        page++;
-        presenter.search();
+    protected RecyclerView.LayoutManager getLayoutManager() {
+        return new ScrollSpeedLinearLayoutManger(context);
     }
 
-    @Override
-    public void onItemClick(View view, int position) {
-        ActivityToActivity.toWebView(mContext, data.get(position).getLink());
-    }
 
     @Override
     protected SearchPresenter createPresenter() {
         return new SearchPresenter();
     }
 
+
     @Override
-    protected RecyclerView.LayoutManager getLayoutManager() {
-        return new LinearLayoutManager(mContext);
+    protected OnRefreshLoadMoreListener createRefreshListener() {
+        return new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                getPresenter().search();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                resetPage();
+            }
+        };
     }
 
     @Override
     protected RecyclerView.Adapter createAdapter() {
-        return new ArticleAdapter(mContext, data, R.layout.wan_item_of_article_list, this);
+        return new ArticleAdapter(context, data,
+                ((data1, position) -> ActivityToActivity.toWebView(context, data1.getLink())));
     }
 
 
@@ -81,7 +95,7 @@ public class SearchActivity extends RefreshListActivity<SearchPresenter> impleme
         if (i == R.id.ll_back) {
             finish();
         } else if (i == R.id.obt_search) {
-            onRefresh();
+            resetPage();
         }
     }
 
@@ -96,9 +110,15 @@ public class SearchActivity extends RefreshListActivity<SearchPresenter> impleme
     }
 
     @Override
-    public void searchData(List<Article> searchs) {
+    public void refreshSearchData(List<Article> searchs) {
+        int position = this.data.size();
         this.data.addAll(searchs);
-        adapter.notifyDataSetChanged();
+        getAdapter().notifyDataSetChanged();
+        if (page > 0) {
+            getRecyclerView().smoothScrollToPosition(position + 3);
+        }
+        page++;
+        stopRefresh();
     }
 
     @Override
@@ -107,7 +127,7 @@ public class SearchActivity extends RefreshListActivity<SearchPresenter> impleme
         if (page == 0) {
             showErrorView(errorMsg);
         } else {
-            ToastUtils.show(mContext, errorMsg);
+            ToastUtils.show(errorMsg);
         }
     }
 
@@ -117,7 +137,7 @@ public class SearchActivity extends RefreshListActivity<SearchPresenter> impleme
         if (page == 0) {
             showEmptyView("木有搜到你想要的");
         } else {
-            ToastUtils.show(mContext, "没有更多啦~");
+            ToastUtils.show("没有更多啦~");
         }
     }
 }

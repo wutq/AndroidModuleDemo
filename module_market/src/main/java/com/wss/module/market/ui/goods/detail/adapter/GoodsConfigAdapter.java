@@ -17,8 +17,8 @@ import java.util.List;
 public class GoodsConfigAdapter extends BaseListAdapter<GoodsConfigBean> {
 
 
-    public GoodsConfigAdapter(Context context, List<GoodsConfigBean> items, int layoutResId) {
-        super(context, items, layoutResId, null);
+    public GoodsConfigAdapter(Context context, List<GoodsConfigBean> items) {
+        super(context, items,  R.layout.market_item_of_goods_config_list, null);
     }
 
     @Override

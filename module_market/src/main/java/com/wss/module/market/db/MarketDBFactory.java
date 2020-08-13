@@ -30,7 +30,7 @@ public class MarketDBFactory {
      */
     public GoodsInfoManage getGoodsInfoManage() {
         if (goodsInfoManage == null) {
-            goodsInfoManage = new GoodsInfoManage(MarketDBManage.getInstance(BaseApplication.getApplication()).getDaoSession().getGoodsInfoDao());
+            goodsInfoManage = new GoodsInfoManage(MarketDBManage.getInstance(BaseApplication.i()).getDaoSession().getGoodsInfoDao());
         }
         return goodsInfoManage;
     }

@@ -10,6 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/AdmTheme">
 
+        <activity
+            android:name=".main.LoadingActivity"
+            android:theme="@style/Theme.AppStartLoadTranslucent">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <!--全面屏问题-->
         <meta-data
             android:name="android.max_aspect"

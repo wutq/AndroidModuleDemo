@@ -3,27 +3,38 @@ apply from: "config.gradle"
 buildscript {
 
     repositories {
-        google()
-        jcenter()
-        mavenCentral()
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+//        google()
+//        jcenter(
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:3.0.1"
-        //黄油刀
-        classpath "com.jakewharton:butterknife-gradle-plugin:8.4.0"
+        classpath 'com.android.tools.build:gradle:3.6.2'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:10.2.1'
         //数据库GreenDAO
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
-    }
-
-    allprojects {
-        repositories {
-            google()
-            jcenter()
-            maven { url 'https://jitpack.io' }
-        }
+        //听云
+        classpath 'com.networkbench.newlens.agent.android:agent-gradle-plugin:2.7.1'
     }
 }
+
+allprojects {
+    repositories {
+        maven { url "https://dl.bintray.com/tencentqcloudterminal/maven" }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://jitpack.io' }
+        maven { url "http://mvn.gt.igexin.com/nexus/content/repositories/releases/" }
+//        google()
+//        jcenter()
+    }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+
 

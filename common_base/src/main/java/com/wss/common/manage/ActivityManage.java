@@ -9,10 +9,11 @@ import java.util.Set;
  * Describe：管理所有的Activity
  * Created by 吴天强 on 2018/10/15.
  */
-
 public class ActivityManage {
 
-    //保存所有创建的Activity
+    /**
+     * 保存所有创建的Activity
+     */
     private Set<Activity> allActivities = new HashSet<>();
 
     /**
@@ -45,7 +46,5 @@ public class ActivityManage {
         for (Activity activity : allActivities) {
             activity.finish();
         }
-
     }
-
 }

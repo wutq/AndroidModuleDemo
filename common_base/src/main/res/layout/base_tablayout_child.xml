@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--TabLayout的TextView-->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_house_tab_tv_all1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="25dp"
+    android:gravity="center"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:singleLine="true"
+    android:textColor="@color/color_333333"
+    android:textSize="14sp" />

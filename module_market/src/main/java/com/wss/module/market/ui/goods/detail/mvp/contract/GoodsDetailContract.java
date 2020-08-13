@@ -1,6 +1,5 @@
 package com.wss.module.market.ui.goods.detail.mvp.contract;
 
-import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
 import com.wss.module.market.bean.GoodsComment;
 import com.wss.module.market.bean.GoodsInfo;
@@ -14,7 +13,7 @@ import java.util.List;
 
 public interface GoodsDetailContract {
 
-    interface Model extends IBaseModel {
+    interface Model {
 
     }
 
@@ -27,18 +26,24 @@ public interface GoodsDetailContract {
 
         /**
          * 商品详情
+         *
+         * @param goodsInfo 商品详情
          */
-        void goodsInfo(GoodsInfo goodsInfo);
+        void refreshGoodsInfo(GoodsInfo goodsInfo);
 
         /**
          * 推荐商品列表
+         *
+         * @param recommendList 推荐商品列表
          */
-        void recommendList(List<List<GoodsInfo>> recommendList);
+        void refreshRecommendList(List<List<GoodsInfo>> recommendList);
 
         /**
          * 商品评论列表
+         *
+         * @param commentList 商品评论列表
          */
-        void commentList(List<GoodsComment> commentList);
+        void refreshCommentList(List<GoodsComment> commentList);
     }
 
     interface Presenter {

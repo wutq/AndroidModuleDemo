@@ -13,16 +13,16 @@
         android:background="@color/white"
         app:pstsBold="true"
         app:pstsHasTopLine="false"
-        app:pstsIndicatorColor="@color/blue"
+        app:pstsIndicatorColor="@color/theme"
         app:pstsIndicatorHeight="1.5dp"
         app:pstsShouldExpand="true"
         app:pstsTextDefaultColor="@color/black"
-        app:pstsTextSelectedColor="@color/blue"
+        app:pstsTextSelectedColor="@color/theme"
         app:pstsTextSize="14sp"
         app:pstsUnderlineColor="@color/gray"
         app:pstsUnderlineHeight="1px" />
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

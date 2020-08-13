@@ -14,13 +14,9 @@ import android.widget.RadioButton;
  * Describe：可添加任意ViewGroup的RadioGroup
  * Created by 吴天强 on 2019/3/18.
  */
-
 public class StrongRadioGroup extends LinearLayout {
-    // holds the checked id; the selection is empty by default
     private int mCheckedId = -1;
-    // tracks children radio buttons checked state
     private CompoundButton.OnCheckedChangeListener mChildOnCheckedChangeListener;
-    // when true, mOnCheckedChangeListener discards events
     private boolean mProtectFromCheckedChange = false;
     private OnCheckedChangeListener mOnCheckedChangeListener;
     private PassThroughHierarchyChangeListener mPassThroughListener;
@@ -192,7 +188,7 @@ public class StrongRadioGroup extends LinearLayout {
      */
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
-        return new StrongRadioGroup.LayoutParams(getContext(), attrs);
+        return new LayoutParams(getContext(), attrs);
     }
 
     /**
@@ -200,7 +196,7 @@ public class StrongRadioGroup extends LinearLayout {
      */
     @Override
     protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
-        return p instanceof StrongRadioGroup.LayoutParams;
+        return p instanceof LayoutParams;
     }
 
     @Override
@@ -260,9 +256,9 @@ public class StrongRadioGroup extends LinearLayout {
         /**
          * <p>
          * Fixes the child's width to
-         * {@link android.view.ViewGroup.LayoutParams#WRAP_CONTENT} and the
+         * {@link ViewGroup.LayoutParams#WRAP_CONTENT} and the
          * child's height to
-         * {@link android.view.ViewGroup.LayoutParams#WRAP_CONTENT} when not
+         * {@link ViewGroup.LayoutParams#WRAP_CONTENT} when not
          * specified in the XML file.
          * </p>
          *
@@ -335,8 +331,8 @@ public class StrongRadioGroup extends LinearLayout {
      * </p>
      */
     private class PassThroughHierarchyChangeListener implements
-            ViewGroup.OnHierarchyChangeListener {
-        private ViewGroup.OnHierarchyChangeListener mOnHierarchyChangeListener;
+            OnHierarchyChangeListener {
+        private OnHierarchyChangeListener mOnHierarchyChangeListener;
 
         public void onChildViewAdded(View parent, View child) {
             if (parent == StrongRadioGroup.this && child instanceof RadioButton) {

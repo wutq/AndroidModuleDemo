@@ -8,21 +8,24 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
-import android.support.annotation.NonNull;
 
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
 import java.security.MessageDigest;
 
+import androidx.annotation.NonNull;
+
 /**
- * Describe：glide 加载图片转换器之模糊转换器
+ * Describe：加载图片转换器之模糊转换器
  * Created by 吴天强 on 2018/11/8.
  */
-
 public class BlurTransformation extends BitmapTransformation {
     private Context context;
-    private int blurRadius = 20;//模糊度 0=< blurRadius >=25
+    /**
+     * 模糊度 0=< blurRadius<=25
+     */
+    private float blurRadius = 15;
 
     public BlurTransformation(Context context) {
         this.context = context;
@@ -32,7 +35,7 @@ public class BlurTransformation extends BitmapTransformation {
      * @param context    context
      * @param blurRadius 模糊度 最大25
      */
-    public BlurTransformation(Context context, int blurRadius) {
+    public BlurTransformation(Context context, float blurRadius) {
         this.context = context;
         this.blurRadius = blurRadius;
     }
@@ -69,13 +72,11 @@ public class BlurTransformation extends BitmapTransformation {
         Allocation tmpIn = Allocation.createFromBitmap(rs, inputBitmap);
         Allocation tmpOut = Allocation.createFromBitmap(rs, outputBitmap);
         // 设置渲染的模糊程度, 25f是最大模糊度
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            //模糊度最大到25
-            if (blurRadius < 0 || blurRadius > 25) {
-                blurRadius = 20;
-            }
-            blurScript.setRadius(blurRadius);
+        //模糊度最大到25
+        if (blurRadius < 0 || blurRadius > 25) {
+            blurRadius = 20;
         }
+        blurScript.setRadius(blurRadius);
         // 设置blurScript对象的输入内存
         blurScript.setInput(tmpIn);
         // 将输出数据保存到输出内存中

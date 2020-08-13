@@ -1,15 +1,19 @@
 package com.wss.common.adapter;
 
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.view.ViewGroup;
+import android.util.Log;
 
 import com.wss.common.base.BaseFragment;
 import com.wss.common.bean.HorizontalTabTitle;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+
 
 /**
  * Describe：滑动Fragment适配器
@@ -18,18 +22,25 @@ import java.util.List;
  * <p>
  * Created by 吴天强 on 2018/10/22.
  */
-
 public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
     private List<HorizontalTabTitle> titles;
     private List<BaseFragment> fragments;
 
     /**
      * 使用该构造方法 必须重写 getTabFragment 返回对应的Fragment
+     *
+     * @param fm     FragmentManager
+     * @param titles Tab
      */
     public FragmentPagerAdapter(FragmentManager fm, List<HorizontalTabTitle> titles) {
         this(fm, titles, null);
     }
 
+    /**
+     * @param fm        FragmentManager
+     * @param titles    Tab
+     * @param fragments 滑动的Fragment集合
+     */
     public FragmentPagerAdapter(FragmentManager fm, List<HorizontalTabTitle> titles, List<BaseFragment> fragments) {
         super(fm);
         this.titles = titles;
@@ -43,18 +54,20 @@ public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
     }
 
 
+    @NotNull
     @Override
     public Fragment getItem(int position) {
-        BaseFragment fragment;
+        Log.e("调用了Fragment", "postion:" + position);
+        BaseFragment fragment = null;
         if (fragments == null || fragments.isEmpty()) {
             fragment = getTabFragment();
         } else {
             fragment = fragments.get(position);
         }
         if (fragment == null) {
-            throw new NullPointerException("Fragment is  null,please give me a fragment!");
+            throw new NullPointerException("Switch Fragment can not be empty!");
         }
-        fragment.setFragmentData(titles.get(position));
+        fragment.setTabTitle(titles.get(position));
         return fragment;
     }
 
@@ -63,10 +76,6 @@ public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
         return POSITION_NONE;
     }
 
-    @Override
-    public void startUpdate(ViewGroup container) {
-        super.startUpdate(container);
-    }
 
     @Override
     public CharSequence getPageTitle(int position) {
@@ -75,8 +84,11 @@ public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     /**
      * 使用两参构造方法 必须重写 该方法 返回对应的Fragment
+     *
+     * @return BaseFragment
      */
     public BaseFragment getTabFragment() {
         return null;
     }
+
 }

@@ -50,6 +50,10 @@ android {
             }
         }
     }
+    compileOptions {
+        targetCompatibility rootProject.ext.versions.javaSDKVersion
+        sourceCompatibility rootProject.ext.versions.javaSDKVersion
+    }
 }
 
 dependencies {
@@ -58,8 +62,8 @@ dependencies {
     implementation project(':common_base')
 
     //Arouter路由
-    annotationProcessor rootProject.ext.dependencies["arouter_compiler"]
+    annotationProcessor rootProject.ext.dependencies["arouterCompiler"]
     //黄油刀
-    annotationProcessor rootProject.ext.dependencies["butterknife_compiler"]
+    annotationProcessor rootProject.ext.dependencies["butterknifeCompiler"]
 
 }

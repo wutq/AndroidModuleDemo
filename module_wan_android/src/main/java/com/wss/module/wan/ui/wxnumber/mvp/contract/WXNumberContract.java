@@ -1,53 +1,41 @@
 package com.wss.module.wan.ui.wxnumber.mvp.contract;
 
-import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
-import com.wss.common.net.callback.OnResultCallBack;
-import com.wss.module.wan.bean.Article;
+import com.wss.module.wan.bean.WXNumber;
 
 import java.util.List;
+
+import io.reactivex.Observable;
 
 /**
  * Describe：微信公众号 契约类
  * Created by 吴天强 on 2018/11/21.
  */
-
 public interface WXNumberContract {
 
 
-    interface Model extends IBaseModel {
+    interface Model {
+
         /**
-         * 获取公众号文章列表
+         * 获取微信公众号
          *
-         * @param id       公众号ID
-         * @param page     页码
-         * @param callback 回调
+         * @return 公众号列表
          */
-        void getWXArticle(int id, int page, OnResultCallBack callback);
+        Observable<List<WXNumber>> getWxNumber();
 
     }
 
     interface View extends IBaseView {
-        /**
-         * 返回页码
-         */
-        int getPage();
 
         /**
-         * 公众号ID
+         * 刷新公众号列表
+         *
+         * @param numberList 公众号列表
          */
-        int getWXNumberId();
-
-        /**
-         * 公众号文章类表
-         */
-        void wxArticleList(List<Article> wxArticles);
+        void refreshWxNumber(List<WXNumber> numberList);
     }
 
     interface Presenter {
-        /**
-         * 获取公众号文章
-         */
-        void getWXArticle();
+
     }
 }

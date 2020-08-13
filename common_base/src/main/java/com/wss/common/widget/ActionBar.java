@@ -2,7 +2,7 @@ package com.wss.common.widget;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
+import android.graphics.Typeface;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -14,12 +14,13 @@ import android.widget.TextView;
 import com.wss.common.base.R;
 import com.wss.common.utils.PxUtils;
 
+import androidx.core.content.ContextCompat;
+
 
 /**
  * Describe：自定义的ActionBar
  * Created by 吴天强 on 2017/8/22.
  */
-
 public class ActionBar extends RelativeLayout {
 
     private LinearLayout llActionbar;
@@ -35,16 +36,20 @@ public class ActionBar extends RelativeLayout {
     /**
      * 字体颜色
      */
-    private int leftTextColor = R.color.white;
-    private int centerTextColor = R.color.white;
-    private int rightTextColor = R.color.white;
+    private int leftTextColor = R.color.black;
+    private int centerTextColor = R.color.black;
+    private int rightTextColor = R.color.black;
     /**
      * 字体大小
      */
     private int lefTextSize = 16;
-    private int centerTextSize = 16;
+    private int centerTextSize = 18;
     private int rightTextSize = 16;
 
+    /**
+     * 中间显示字体是否加粗
+     */
+    private boolean isCenterTextBold;
 
     public ActionBar(Context context) {
         this(context, null);
@@ -82,9 +87,18 @@ public class ActionBar extends RelativeLayout {
     }
 
     /**
+     * 是否加粗中间显示的字体
+     *
+     * @param centerTextBold 是否加粗
+     */
+    public void setCenterTextBold(boolean centerTextBold) {
+        isCenterTextBold = centerTextBold;
+    }
+
+    /**
      * 获取跟布局
      */
-    public View getRootView() {
+    public View getActionBarRootView() {
         return rootView;
     }
 
@@ -110,10 +124,12 @@ public class ActionBar extends RelativeLayout {
         llLeft.setVisibility(VISIBLE);
         llLeft.setVisibility(VISIBLE);
         llLeft.removeAllViews();
-        ImageView ivLeft = new ImageView(getContext());
+        ImageView ivLeft = getImageView();
         ivLeft.setImageResource(res);
         llLeft.addView(ivLeft);
-        llLeft.setOnClickListener(l);
+        if (l != null) {
+            llLeft.setOnClickListener(l);
+        }
     }
 
     /**
@@ -125,7 +141,7 @@ public class ActionBar extends RelativeLayout {
     public void setCenterIcon(int res, OnClickListener l) {
         llCenter.setVisibility(VISIBLE);
         llCenter.removeAllViews();
-        ImageView center = new ImageView(getContext());
+        ImageView center = getImageView();
         center.setImageResource(res);
         llCenter.addView(center);
         llCenter.setOnClickListener(l);
@@ -140,7 +156,7 @@ public class ActionBar extends RelativeLayout {
     public void setRightIcon(int res, OnClickListener l) {
         llRight.setVisibility(VISIBLE);
         llRight.removeAllViews();
-        ImageView right = new ImageView(getContext());
+        ImageView right = getImageView();
         right.setImageResource(res);
         llRight.addView(right);
         if (l != null) {
@@ -192,6 +208,9 @@ public class ActionBar extends RelativeLayout {
         center.setEllipsize(TextUtils.TruncateAt.END);
         center.setMaxLines(1);
         center.setTextColor(getResources().getColor(centerTextColor));
+        if (isCenterTextBold) {
+            center.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        }
         llCenter.addView(center);
         if (l != null) {
             llCenter.setOnClickListener(l);
@@ -309,13 +328,10 @@ public class ActionBar extends RelativeLayout {
      */
     public void showBackImg(boolean show) {
         if (show) {
-            setLeftIcon(R.drawable.ic_back, new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context ctx = ActionBar.this.getContext();
-                    if (ctx instanceof Activity) {
-                        ((Activity) ctx).onBackPressed();
-                    }
+            setLeftIcon(R.drawable.ic_back_black, v -> {
+                Context ctx = ActionBar.this.getContext();
+                if (ctx instanceof Activity) {
+                    ((Activity) ctx).onBackPressed();
                 }
             });
         } else {
@@ -349,7 +365,7 @@ public class ActionBar extends RelativeLayout {
      */
     public ImageView getImageView() {
         ImageView iv = new ImageView(getContext());
-        iv.setLayoutParams(new LayoutParams(PxUtils.dp2px(getContext(), 25), PxUtils.dp2px(getContext(), 25)));
+        iv.setLayoutParams(new LayoutParams(PxUtils.dp2px(24), PxUtils.dp2px(24)));
         return iv;
 
     }

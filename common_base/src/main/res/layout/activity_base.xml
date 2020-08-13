@@ -2,15 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <com.wss.common.widget.ActionBar
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/blue" />
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/white"
+        android:visibility="gone" />
 
-    <include layout="@layout/fragment_base" />
+    <View
+        android:id="@+id/action_bar_line"
+        style="@style/HorizontalLine"
+        android:visibility="gone" />
+
+    <include layout="@layout/layout_base" />
 </LinearLayout>

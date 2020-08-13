@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.TextView;
 
 import com.wss.common.base.adapter.BaseListAdapter;
-import com.wss.common.listener.OnListItemClickListener;
+import com.wss.common.base.adapter.listener.OnListItemClickListener;
 import com.wss.module.wan.R;
 import com.wss.module.wan.bean.Article;
 
@@ -16,11 +16,10 @@ import java.util.List;
  * Describe：公众号文章适配器
  * Created by 吴天强 on 2018/11/15.
  */
-
 public class WXArticleAdapter extends BaseListAdapter<Article> {
 
-    public WXArticleAdapter(Context context, List<Article> items, int layoutResId, OnListItemClickListener listener) {
-        super(context, items, layoutResId, listener);
+    public WXArticleAdapter(Context context, List<Article> items, OnListItemClickListener<Article> listener) {
+        super(context, items, R.layout.wan_item_of_wx_article_list, listener);
     }
 
     @Override

@@ -4,6 +4,11 @@
     <!--应用主题-->
     <style name="AdmTheme" parent="@android:style/Theme.NoTitleBar" />
 
+    <!--Activity主题-->
+    <style name="ActivityTheme" parent="android:Theme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 
     <style name="Theme.AppStartLoadTranslucent" parent="android:Theme">
         <item name="android:windowIsTranslucent">true</item>

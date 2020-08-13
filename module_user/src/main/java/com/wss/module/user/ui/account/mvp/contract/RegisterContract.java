@@ -1,9 +1,9 @@
 package com.wss.module.user.ui.account.mvp.contract;
 
-import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
 import com.wss.common.bean.User;
-import com.wss.common.net.callback.OnResultCallBack;
+
+import io.reactivex.Observable;
 
 /**
  * Describe：注册契约类
@@ -12,28 +12,19 @@ import com.wss.common.net.callback.OnResultCallBack;
 
 public interface RegisterContract {
 
-    interface Model extends IBaseModel {
+    interface Model {
         /**
          * 注册
          *
-         * @param user     用户信息
-         * @param callback 回调
+         * @param userName 用户名
+         * @param password 密码
+         * @return 用户
          */
-        void register(User user, OnResultCallBack callback);
+        Observable<User> register(String userName, String password);
     }
 
     interface View extends IBaseView {
 
-        /**
-         * 返回用户信息
-         */
-        User getUserInfo();
-
-
-        /**
-         * 注册成功
-         */
-        void registerSuccess(User user);
 
     }
 
@@ -41,7 +32,11 @@ public interface RegisterContract {
 
         /**
          * 注册
+         *
+         * @param userName        用户名
+         * @param password        密码
+         * @param passwordConfirm 密码
          */
-        void register();
+        void register(String userName, String password, String passwordConfirm);
     }
 }

@@ -6,11 +6,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Describe：用户信息
- * Created by 吴天强 on 2018/11/13.
+ * Describe：置业顾问信息
+ * Created by 吴天强 on 2020/5/6.
  */
-@Setter
 @Getter
+@Setter
 public class User extends BaseBean {
 
     /**
@@ -23,7 +23,7 @@ public class User extends BaseBean {
      * username : 于慢慢家的吴蜀黍
      */
 
-    private int id;
+    private Integer id;
     private String username;
     private String email;
     private String icon;
@@ -38,4 +38,5 @@ public class User extends BaseBean {
         this.username = username;
         this.password = password;
     }
+
 }

@@ -1,16 +1,13 @@
 package com.wss.module.market.ui.goods.cart;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.wss.common.base.ActionBarActivity;
+import com.wss.common.base.BaseActionBarActivity;
 import com.wss.common.bean.Event;
 import com.wss.common.constants.EventAction;
-import com.wss.common.listener.OnListItemClickListener;
 import com.wss.common.utils.ToastUtils;
 import com.wss.module.market.R;
 import com.wss.module.market.R2;
@@ -24,6 +21,8 @@ import com.wss.module.market.utils.ShoppingCartUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -31,22 +30,23 @@ import butterknife.OnClick;
  * Describe：购物车
  * Created by 吴天强 on 2018/11/5.
  */
-
-public class ShoppingCartActivity extends ActionBarActivity<CartPresenter> implements ShoppingCartContract.View,
-        OnListItemClickListener {
+public class ShoppingCartActivity extends BaseActionBarActivity<CartPresenter> implements ShoppingCartContract.View {
 
 
     @BindView(R2.id.recycle_view)
     RecyclerView recycleView;
+
     @BindView(R2.id.iv_check_all)
     ImageView ivCheckAll;
+
     @BindView(R2.id.tv_total)
     TextView tvTotal;
+
     @BindView(R2.id.btn_buy)
     TextView btnBuy;
 
-    private TextView tvRight;//右上角文字
-    private boolean isEdit;//是否属于编辑状态
+    private TextView tvRight;
+    private boolean isEdit;
 
     @Override
     protected CartPresenter createPresenter() {
@@ -64,20 +64,17 @@ public class ShoppingCartActivity extends ActionBarActivity<CartPresenter> imple
 
     @Override
     protected void initView() {
-        setTitleText("购物车");
-        adapter = new ShoppingCartAdapter(mContext, mData, R.layout.market_item_of_shopping_cart_list, this);
-        recycleView.setLayoutManager(new LinearLayoutManager(mContext));
-        recycleView.setAdapter(adapter);
-        tvRight = actionBar.getTextView();
-        tvRight.setText("编辑");
-        tvRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRightChange();
-            }
+        setCenterText("购物车");
+        adapter = new ShoppingCartAdapter(context, mData, (data, position) -> {
+
         });
-        actionBar.setRightView(tvRight);
-        presenter.start();
+        recycleView.setLayoutManager(new LinearLayoutManager(context));
+        recycleView.setAdapter(adapter);
+        tvRight = getTitleBar().getTextView();
+        tvRight.setText("编辑");
+        tvRight.setOnClickListener(v -> onRightChange());
+        getTitleBar().setRightView(tvRight);
+        getPresenter().start();
     }
 
 
@@ -99,7 +96,7 @@ public class ShoppingCartActivity extends ActionBarActivity<CartPresenter> imple
 
 
     @Override
-    protected boolean regEvent() {
+    protected boolean registerEventBus() {
         return true;
     }
 
@@ -113,7 +110,7 @@ public class ShoppingCartActivity extends ActionBarActivity<CartPresenter> imple
             displayResult();
         } else if (TextUtils.equals(EventAction.EVENT_SHOPPING_CART_REFRESH, event.getAction())) {
             //重新获取购物车数据
-            presenter.getCartData();
+            getPresenter().getCartData();
         }
     }
 
@@ -124,7 +121,7 @@ public class ShoppingCartActivity extends ActionBarActivity<CartPresenter> imple
 
 
     @Override
-    public void cartData(List<Vendor> dataList) {
+    public void refreshCartData(List<Vendor> dataList) {
         this.mData.clear();
         this.mData.addAll(dataList);
         adapter.notifyDataSetChanged();
@@ -148,7 +145,7 @@ public class ShoppingCartActivity extends ActionBarActivity<CartPresenter> imple
                     //删除
                     ShoppingCartUtils.delete(checkedGoods);
                 } else {
-                    ToastUtils.show(mContext, "去结算");
+                    ToastUtils.show("去结算");
                 }
             }
         }
@@ -158,10 +155,5 @@ public class ShoppingCartActivity extends ActionBarActivity<CartPresenter> imple
     public void onEmpty(Object tag) {
         super.onEmpty(tag);
         showEmptyView("车里空空如也");
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-        //TODO
     }
 }

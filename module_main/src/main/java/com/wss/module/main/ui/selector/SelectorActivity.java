@@ -5,25 +5,22 @@ import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.CustomListener;
-import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
-import com.orhanobut.logger.Logger;
-import com.wss.common.base.ActionBarActivity;
+import com.wss.common.base.BaseActionBarActivity;
 import com.wss.common.utils.ToastUtils;
 import com.wss.module.main.R;
 import com.wss.module.main.R2;
 import com.wss.module.main.bean.Province;
-import com.wss.module.main.ui.selector.mvp.contract.SelectContract;
 import com.wss.module.main.ui.selector.mvp.SelectorPresenter;
+import com.wss.module.main.ui.selector.mvp.contract.SelectContract;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,8 +34,7 @@ import butterknife.OnClick;
  * Describe：多种选择器
  * Created by 吴天强 on 2018/10/24.
  */
-
-public class SelectorActivity extends ActionBarActivity<SelectorPresenter> implements SelectContract.View {
+public class SelectorActivity extends BaseActionBarActivity<SelectorPresenter> implements SelectContract.View {
     private Calendar selectDate;
     private List<Province> options1Items = new ArrayList<>();
     private List<List<String>> options2Items = new ArrayList<>();
@@ -61,10 +57,9 @@ public class SelectorActivity extends ActionBarActivity<SelectorPresenter> imple
 
     @Override
     protected void initView() {
-        Logger.e("SelectorActivity initView");
-        setTitleText("多功能选择器");
+        setCenterText("多功能选择器");
         selectDate = Calendar.getInstance();
-        presenter.start();
+        getPresenter().start();
     }
 
     /**
@@ -97,11 +92,8 @@ public class SelectorActivity extends ActionBarActivity<SelectorPresenter> imple
         endDate.set(2069, 2, 28);
 
         //时间选择器 ，自定义布局
-        lunarPicker = new TimePickerBuilder(this, new OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                ToastUtils.show(mContext, getTime(date));
-            }
+        lunarPicker = new TimePickerBuilder(this, (date, v) -> {//选中事件回调
+            ToastUtils.show( getTime(date));
         })
                 .setDate(selectedDate)
                 .setRangDate(startDate, endDate)
@@ -109,28 +101,17 @@ public class SelectorActivity extends ActionBarActivity<SelectorPresenter> imple
 
                     @Override
                     public void customLayout(final View v) {
-                        v.findViewById(R.id.tv_finish).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                lunarPicker.returnData();
-                                lunarPicker.dismiss();
-                            }
+                        v.findViewById(R.id.tv_finish).setOnClickListener(v1 -> {
+                            lunarPicker.returnData();
+                            lunarPicker.dismiss();
                         });
-                        v.findViewById(R.id.tv_cancle).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                lunarPicker.dismiss();
-                            }
-                        });
+                        v.findViewById(R.id.tv_cancle).setOnClickListener(v12 -> lunarPicker.dismiss());
                         //公农历切换
                         CheckBox cb_lunar = v.findViewById(R.id.cb_lunar);
-                        cb_lunar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                lunarPicker.setLunarCalendar(!lunarPicker.isLunarCalendar());
-                                //自适应宽
-                                setTimePickerChildWeight(v, isChecked ? 0.8f : 1f, isChecked ? 1f : 1.1f);
-                            }
+                        cb_lunar.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                            lunarPicker.setLunarCalendar(!lunarPicker.isLunarCalendar());
+                            //自适应宽
+                            setTimePickerChildWeight(v, isChecked ? 0.8f : 1f, isChecked ? 1f : 1.1f);
                         });
 
                     }
@@ -169,7 +150,7 @@ public class SelectorActivity extends ActionBarActivity<SelectorPresenter> imple
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(date);
                 selectDate = calendar;
-                ToastUtils.show(mContext, getTime(date));
+                ToastUtils.show( getTime(date));
             }
         }).build();
         //注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，
@@ -183,16 +164,12 @@ public class SelectorActivity extends ActionBarActivity<SelectorPresenter> imple
      * 三级联动地址
      */
     private void showAddress() {// 弹出选择器
-
-        OptionsPickerView pvOptions = new OptionsPickerBuilder(mContext, new OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                //返回的分别是三个级别的选中位置
-                String tx = options1Items.get(options1).getPickerViewText() +
-                        options2Items.get(options1).get(options2) +
-                        options3Items.get(options1).get(options2).get(options3);
-                ToastUtils.show(mContext, tx);
-            }
+        OptionsPickerView pvOptions = new OptionsPickerBuilder(context, (options1, options2, options3, v) -> {
+            //返回的分别是三个级别的选中位置
+            String tx = options1Items.get(options1).getPickerViewText() +
+                    options2Items.get(options1).get(options2) +
+                    options3Items.get(options1).get(options2).get(options3);
+            ToastUtils.show( tx);
         })
 
                 .setTitleText("城市选择")
@@ -211,11 +188,11 @@ public class SelectorActivity extends ActionBarActivity<SelectorPresenter> imple
      */
     private void showUserList() {//条件选择器初始化，自定义布局
 
-        OptionsPickerView<String> pvCustomOptions = new OptionsPickerBuilder(mContext, new OnOptionsSelectListener() {
+        OptionsPickerView<String> pvCustomOptions = new OptionsPickerBuilder(context, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
-                ToastUtils.show(mContext, user.get(options1));
+                ToastUtils.show( user.get(options1));
             }
         })
                 .setSelectOptions(2)
@@ -234,14 +211,11 @@ public class SelectorActivity extends ActionBarActivity<SelectorPresenter> imple
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 String str = user.get(options1) + "来自" + userFrom.get(options2) + "是一个" + userDes.get(options3);
-                ToastUtils.show(mContext, str);
+                ToastUtils.show( str);
             }
         })
-                .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
-                    @Override
-                    public void onOptionsSelectChanged(int options1, int options2, int options3) {
+                .setOptionsSelectChangeListener((options1, options2, options3) -> {
 
-                    }
                 })
                 .setSelectOptions(0, 1, 1)
                 .build();
@@ -260,14 +234,14 @@ public class SelectorActivity extends ActionBarActivity<SelectorPresenter> imple
 
 
     @Override
-    public void addressList(List<Province> options1Items, List<List<String>> options2Items, List<List<List<String>>> options3Items) {
+    public void refreshAddressList(List<Province> options1Items, List<List<String>> options2Items, List<List<List<String>>> options3Items) {
         this.options1Items.addAll(options1Items);
         this.options2Items.addAll(options2Items);
         this.options3Items.addAll(options3Items);
     }
 
     @Override
-    public void userList(List<String> userList, List<String> userFrom, List<String> userDes) {
+    public void refreshNonLinkageList(List<String> userList, List<String> userFrom, List<String> userDes) {
         this.user.addAll(userList);
         this.userFrom.addAll(userFrom);
         this.userDes.addAll(userDes);

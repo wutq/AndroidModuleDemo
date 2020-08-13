@@ -16,11 +16,11 @@ import android.view.animation.LinearInterpolator;
 
 import com.wss.common.base.R;
 
+
 /**
  * 自定义加载框View
- * Created by wtq on 2016/12/15.
+ * Created by 吴天强 on 2016/12/15.
  */
-
 public class LVCircularRing extends View {
     private float mWidth = 0f;
     private float mPadding = 0f;

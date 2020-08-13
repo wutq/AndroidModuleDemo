@@ -1,41 +1,29 @@
 package com.wss.module.user.ui.account.mvp.contract;
 
-import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
 import com.wss.common.bean.User;
-import com.wss.common.net.callback.OnResultCallBack;
+
+import io.reactivex.Observable;
 
 /**
  * Describe：登录契约类
  * Created by 吴天强 on 2018/11/21.
  */
-
 public interface LoginContract {
 
-    interface Model extends IBaseModel {
+    interface Model {
 
         /**
          * 登录
          *
-         * @param user     用户信息
-         * @param callback 回调
+         * @param userName 账号
+         * @param password 密码
+         * @return 用户
          */
-        void login(User user, OnResultCallBack callback);
+        Observable<User> login(String userName, String password);
     }
 
     interface View extends IBaseView {
-
-
-        /**
-         * 返回用户信息
-         */
-        User getUserInfo();
-
-        /**
-         * 登录成功
-         */
-        void loginSuccess(User user);
-
 
     }
 
@@ -43,7 +31,10 @@ public interface LoginContract {
 
         /**
          * 登录
+         *
+         * @param userName 用户名
+         * @param password 密码
          */
-        void login();
+        void login(String userName, String password);
     }
 }

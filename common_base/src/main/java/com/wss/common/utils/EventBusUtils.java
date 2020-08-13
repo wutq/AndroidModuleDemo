@@ -1,14 +1,14 @@
 package com.wss.common.utils;
 
+
 import com.wss.common.bean.Event;
 
 import org.greenrobot.eventbus.EventBus;
 
 /**
- * Describe：EventBusUtils
+ * Describe：EventBus帮助类
  * Created by 吴天强 on 2018/10/22.
  */
-
 public class EventBusUtils {
 
     /**
@@ -31,5 +31,18 @@ public class EventBusUtils {
     public static void sendEvent(Event event) {
         EventBus.getDefault().post(event);
     }
-    //...
+
+    /**
+     * 发送普通事件
+     */
+    public static void sendEvent(String action) {
+        sendEvent(new Event<String>(action));
+    }
+
+    /**
+     * 发送普通事件
+     */
+    public static void sendEvent(String action, Object data) {
+        sendEvent(new Event<>(action, data));
+    }
 }

@@ -10,10 +10,11 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.View;
 
 import com.wss.common.base.R;
+import com.wss.common.utils.PxUtils;
+
 
 /**
  * Describe:数字进度条
@@ -25,14 +26,15 @@ public class NumberProgressBar extends View {
     /**
      * 右侧未完成进度条的颜色
      */
-    private int paintStartColor = 0xffe5e5e5;
+    private static final int PAINT_START_COLOR = 0xffe5e5e5;
 
     /**
-     * Contxt
+     * context
      */
     private Context context;
 
-    /**l
+    /**
+     * l
      * 主线程传过来进程 0 - 100
      */
     private int progress;
@@ -102,10 +104,10 @@ public class NumberProgressBar extends View {
         super(context, attrs);
         this.context = context;
         // 构造器中初始化数据
-        smallR = dip2px(context, 4);//小圆半径
-        bigR = dip2px(context, 8);//大圆半径
-        radius = dip2px(context, 10) / 2;//进度条高度
-        jR = dip2px(context, 6);//矩形
+        smallR = PxUtils.dp2px(4);//小圆半径
+        bigR = PxUtils.dp2px(8);//大圆半径
+        radius = PxUtils.dp2px(10) / 2;//进度条高度
+        jR = PxUtils.dp2px(6);//矩形
 
         initData();
     }
@@ -116,15 +118,15 @@ public class NumberProgressBar extends View {
     private void initData() {
 
         // 未完成进度条画笔的属性
-        paintStart.setColor(paintStartColor);
-        paintStart.setStrokeWidth(dip2px(context, 1));
+        paintStart.setColor(PAINT_START_COLOR);
+        paintStart.setStrokeWidth(PxUtils.dp2px(1));
         paintStart.setDither(true);
         paintStart.setAntiAlias(true);
         paintStart.setStyle(Paint.Style.FILL);
 
         // 已完成进度条画笔的属性
-        paintInit.setColor(context.getResources().getColor(R.color.blue));
-        paintInit.setStrokeWidth(dip2px(context, 1));
+        paintInit.setColor(context.getResources().getColor(R.color.theme));
+        paintInit.setStrokeWidth(PxUtils.dp2px(1));
         paintInit.setAntiAlias(true);
         paintInit.setDither(true);
         paintInit.setStyle(Paint.Style.FILL);
@@ -136,14 +138,14 @@ public class NumberProgressBar extends View {
         paintSmall.setStyle(Paint.Style.FILL);
 
         // 大圆画笔
-        paintEndBig.setColor(context.getResources().getColor(R.color.blue));
+        paintEndBig.setColor(context.getResources().getColor(R.color.theme));
         paintEndBig.setAntiAlias(true);
         paintEndBig.setStyle(Paint.Style.FILL);
 
 
         // 百分比文字画笔的属性
-        int paintTextSizePx = sp2px(context, 11);  //设置百分比文字的尺寸
-        paintText.setColor(context.getResources().getColor(R.color.blue));
+        int paintTextSizePx = PxUtils.sp2px(11);  //设置百分比文字的尺寸
+        paintText.setColor(context.getResources().getColor(R.color.theme));
         paintText.setTextSize(paintTextSizePx);
         paintText.setAntiAlias(true);
         paintText.setTypeface(Typeface.DEFAULT_BOLD);
@@ -214,15 +216,5 @@ public class NumberProgressBar extends View {
     public void setProgress(int progress) {
         this.progress = progress;
         invalidate();
-    }
-
-    public static int dip2px(Context ctx, float dp) {
-        float density = ctx.getResources().getDisplayMetrics().density;
-        int px = (int) (dp * density + 0.5f);
-        return px;
-    }
-
-    public static int sp2px(Context context, float spValue) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spValue, context.getResources().getDisplayMetrics());
     }
 }

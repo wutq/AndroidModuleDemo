@@ -1,60 +1,60 @@
 package com.wss.module.wan.ui.main.fragment;
 
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bigkoo.convenientbanner.ConvenientBanner;
-import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.wss.common.base.BaseMvpFragment;
+import com.wss.common.bean.Banner;
 import com.wss.common.bean.Template;
 import com.wss.common.constants.ARouterConfig;
-import com.wss.common.listener.OnListItemClickListener;
-import com.wss.common.utils.ActivityToActivity;
+import com.wss.common.manage.ActivityToActivity;
 import com.wss.common.utils.ImageUtils;
 import com.wss.common.utils.PxUtils;
-import com.wss.common.widget.pulltorefresh.OnPullRefreshListener;
-import com.wss.common.widget.pulltorefresh.PullToRefreshLayout;
+import com.wss.common.utils.ToastUtils;
 import com.wss.module.wan.R;
 import com.wss.module.wan.R2;
 import com.wss.module.wan.bean.Article;
 import com.wss.module.wan.bean.BannerInfo;
-import com.wss.module.wan.bean.WXNumber;
 import com.wss.module.wan.ui.main.adapter.ArticleAdapter;
-import com.wss.module.wan.ui.main.adapter.HomeRcyAdapter;
+import com.wss.module.wan.ui.main.adapter.HomeMenuAdapter;
 import com.wss.module.wan.ui.main.mvp.HomePresenter;
 import com.wss.module.wan.ui.main.mvp.contract.HomeContract;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * Describe：首页
+ * Describe：玩android首页
  * Created by 吴天强 on 2018/10/17.
  */
 @Route(path = ARouterConfig.WAN_MAIN_FRAGMENT)
-public class HomeFragment extends BaseMvpFragment<HomePresenter> implements HomeContract.View, OnListItemClickListener,
-        OnPullRefreshListener, ArticleAdapter.OnTagClickListener {
+public class HomeFragment extends BaseMvpFragment<HomePresenter> implements HomeContract.View/*, OnListItemClickListener,
+        OnPullRefreshListener, ArticleAdapter.OnTagClickListener*/ {
 
     @BindView(R2.id.cb_banner)
-    ConvenientBanner<String> banner;
+    ConvenientBanner<Banner> banner;
 
     @BindView(R2.id.rv_block)
-    RecyclerView rvBlockList;//豆腐块
+    RecyclerView rvMenuList;
 
     @BindView(R2.id.rv_list)
-    RecyclerView rvArticleList;//文章列表
+    RecyclerView rvArticleList;
 
-    @BindView(R2.id.ptrl_list)
-    PullToRefreshLayout refreshLayout;
+    @BindView(R2.id.refresh_layout)
+    SmartRefreshLayout refreshLayout;
 
     @BindView(R2.id.ll_go_top)
     View goTop;
@@ -63,12 +63,8 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     NestedScrollView scrollView;
 
 
-    private HomeRcyAdapter blockAdapter;
     private ArticleAdapter articleAdapter;
-    private List<BannerInfo> bannerList = new ArrayList<>();
-    private List<Template> blockList = new ArrayList<>();
     private List<Article> articleList = new ArrayList<>();
-    private ArrayList<WXNumber> wxNumbers = new ArrayList<>();//公众号列表
     private int page = 0;
 
     @Override
@@ -78,30 +74,43 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
 
     @Override
     protected void initView() {
-
-        blockAdapter = new HomeRcyAdapter(mContext, blockList, R.layout.wan_item_of_block_list, this);
-        rvBlockList.setLayoutManager(new GridLayoutManager(mContext, 4));
-        rvBlockList.setAdapter(blockAdapter);
-
-        articleAdapter = new ArticleAdapter(mContext, articleList, R.layout.wan_item_of_article_list, this);
-        rvArticleList.setLayoutManager(new LinearLayoutManager(mContext));
-        rvArticleList.setAdapter(articleAdapter);
-        rvArticleList.setNestedScrollingEnabled(false);
-        refreshLayout.setOnPullRefreshListener(this);
-
-        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+        refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
-            public void onScrollChange(NestedScrollView nestedScrollView, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                getPresenter().getArticleList();
+            }
 
-                if (scrollY >= PxUtils.getScreenHeight(mContext) / 5) {
-                    goTop.setVisibility(View.VISIBLE);
-                } else if (scrollY < PxUtils.getScreenHeight(mContext) / 5) {
-                    goTop.setVisibility(View.GONE);
-                }
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                resetPage();
             }
         });
-        articleAdapter.setOnTagListener(this);
-        onRefresh();
+        refreshLayout.setEnableAutoLoadMore(true);
+
+
+        articleAdapter = new ArticleAdapter(context, articleList,
+                (data, position) -> ActivityToActivity.toWebView(context, data.getLink()));
+        articleAdapter.setOnTagListener(position -> {
+        });
+        rvArticleList.setLayoutManager(new LinearLayoutManager(context));
+        rvArticleList.setAdapter(articleAdapter);
+        rvArticleList.setNestedScrollingEnabled(false);
+
+        scrollView.setOnScrollChangeListener(
+                (NestedScrollView.OnScrollChangeListener) (nestedScrollView, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                    if (scrollY >= PxUtils.getScreenHeight(context) / 5) {
+                        goTop.setVisibility(View.VISIBLE);
+                    } else if (scrollY < PxUtils.getScreenHeight(context) / 5) {
+                        goTop.setVisibility(View.GONE);
+                    }
+                });
+        getPresenter().start();
+    }
+
+    private void resetPage() {
+        page = 0;
+        articleList.clear();
+        getPresenter().getArticleList();
     }
 
 
@@ -111,24 +120,19 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     }
 
     @Override
-    public void bannerList(List<BannerInfo> banners) {
-        this.bannerList.addAll(banners);
-        List<String> strings = new ArrayList<>();
+    public void refreshBannerList(List<BannerInfo> banners) {
+        List<Banner> bannerList = new ArrayList<>();
         for (BannerInfo bannerInfo : banners) {
-            strings.add(bannerInfo.getImagePath());
+            bannerList.add(new Banner(bannerInfo.getImagePath(), (bannerInfo.getUrl())));
         }
-        ImageUtils.loadBanner(banner, strings, new OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                ActivityToActivity.toWebView(mContext, bannerList.get(position).getUrl());
-            }
-        });
+        ImageUtils.loadBanner(banner, bannerList, position -> ActivityToActivity.toWebView(context, bannerList.get(position).getRedirectUrl()));
     }
 
     @Override
-    public void blockList(List<Template> blockList) {
-        this.blockList.addAll(blockList);
-        blockAdapter.notifyDataSetChanged();
+    public void refreshMenuList(List<Template> menuList) {
+        rvMenuList.setLayoutManager(new GridLayoutManager(context, 4));
+        rvMenuList.setNestedScrollingEnabled(false);
+        rvMenuList.setAdapter(new HomeMenuAdapter(context, menuList, (data, position) -> ActivityToActivity.toActivity(getActivity(), data)));
     }
 
     @Override
@@ -137,31 +141,15 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     }
 
     @Override
-    public void articleList(List<Article> articles) {
+    public void refreshArticleList(List<Article> articles) {
+        int position = this.articleList.size();
         this.articleList.addAll(articles);
         articleAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void wxNumber(List<WXNumber> wxNumbers) {
-        this.wxNumbers.addAll(wxNumbers);
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-
-        if (view.getId() == R.id.rv_block) {
-            Template template = blockList.get(position);
-            Map<String, ArrayList<WXNumber>> wx = new HashMap<>();
-            wx.put("WXNumbers", wxNumbers);
-            template.setParams(wx);
-
-            //点击豆腐块
-            ActivityToActivity.toActivity(mContext, template);
-        } else if (view.getId() == R.id.rv_list) {
-            //点击文章
-            ActivityToActivity.toWebView(mContext, articleList.get(position).getLink());
+        if (page > 0) {
+            rvArticleList.smoothScrollToPosition(position + 3);
         }
+        stopRefresh(refreshLayout);
+        page++;
     }
 
     @Override
@@ -179,37 +167,36 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter> implements Home
     }
 
     @Override
-    public void onRefresh() {
-        page = 0;
-        bannerList.clear();
-        blockList.clear();
-        articleList.clear();
-        presenter.start();
+    public void onError(Object tag, String errorMsg) {
+        super.onError(tag, errorMsg);
+        if (getPage() > 0) {
+            ToastUtils.show(errorMsg);
+        } else {
+            showErrorView(errorMsg);
+        }
+        stopRefresh(refreshLayout);
     }
 
     @Override
-    public void onLoadMore() {
-        page++;
-        presenter.getArticleList();
+    public void onEmpty(Object tag) {
+        super.onEmpty(tag);
+        if (getPage() > 0) {
+            ToastUtils.show("暂无更多数据啦~");
+        } else {
+            showEmptyView();
+        }
+        stopRefresh(refreshLayout);
     }
 
     @Override
-    public void dismissLoading() {
-        super.dismissLoading();
-        refreshLayout.finishRefresh();
-        refreshLayout.finishLoadMore();
+    protected void onRefreshRetry() {
+        super.onRefreshRetry();
+        getPresenter().start();
     }
-
 
     @OnClick(R2.id.ll_go_top)
     public void onViewClicked() {
         scrollView.fling(0);
         scrollView.smoothScrollTo(0, 0);
-    }
-
-
-    @Override
-    public void onCollectionClick(int position) {
-
     }
 }

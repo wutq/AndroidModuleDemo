@@ -6,15 +6,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.wss.common.base.ActionBarActivity;
+import com.wss.common.base.BaseActionBarActivity;
 import com.wss.common.bean.Event;
-import com.wss.common.bean.User;
 import com.wss.common.constants.ARouterConfig;
 import com.wss.common.constants.EventAction;
-import com.wss.common.utils.ActivityToActivity;
-import com.wss.common.utils.EventBusUtils;
-import com.wss.common.utils.ToastUtils;
-import com.wss.common.utils.UserInfoUtils;
+import com.wss.common.manage.ActivityToActivity;
 import com.wss.common.widget.ObserverButton;
 import com.wss.module.user.R;
 import com.wss.module.user.R2;
@@ -29,7 +25,7 @@ import butterknife.OnClick;
  * Created by 吴天强 on 2018/11/13.
  */
 @Route(path = ARouterConfig.USER_LOGIN)
-public class LoginActivity extends ActionBarActivity<LoginPresenter> implements LoginContract.View {
+public class LoginActivity extends BaseActionBarActivity<LoginPresenter> implements LoginContract.View {
 
     @BindView(R2.id.edt_name)
     EditText edtName;
@@ -50,7 +46,7 @@ public class LoginActivity extends ActionBarActivity<LoginPresenter> implements 
 
     @Override
     protected void initView() {
-        setTitleText("登录");
+        setCenterText("登录");
         obLogin.observer(edtName, edtPwd);
     }
 
@@ -59,24 +55,10 @@ public class LoginActivity extends ActionBarActivity<LoginPresenter> implements 
     public void onViewClicked(View view) {
         int i = view.getId();
         if (i == R.id.ob_login) {
-            presenter.login();
+            getPresenter().login(edtName.getText().toString().trim(), edtPwd.getText().toString().trim());
         } else if (i == R.id.ob_register) {
-            ActivityToActivity.toActivity(mContext, RegisterActivity.class);
+            ActivityToActivity.toActivity(context, RegisterActivity.class);
         }
-    }
-
-    @Override
-    public void loginSuccess(User user) {
-        UserInfoUtils.saveUser(user);
-        EventBusUtils.sendEvent(new Event(EventAction.EVENT_LOGIN_SUCCESS));
-        finish();
-    }
-
-
-    @Override
-    public void onError(Object tag, String errorMsg) {
-        super.onError(tag, errorMsg);
-        ToastUtils.show(mContext, errorMsg);
     }
 
     @Override
@@ -93,12 +75,7 @@ public class LoginActivity extends ActionBarActivity<LoginPresenter> implements 
     }
 
     @Override
-    protected boolean regEvent() {
+    protected boolean registerEventBus() {
         return true;
-    }
-
-    @Override
-    public User getUserInfo() {
-        return new User(edtName.getText().toString().trim(), edtPwd.getText().toString().trim());
     }
 }

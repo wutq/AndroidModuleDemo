@@ -1,56 +1,51 @@
 package com.wss.module.user.ui.account.mvp;
 
-import android.text.TextUtils;
+import android.app.Activity;
 
+import com.wss.common.base.BaseApplication;
 import com.wss.common.base.mvp.BasePresenter;
-import com.wss.common.bean.User;
-import com.wss.common.net.callback.OnResultCallBack;
+import com.wss.common.bean.Event;
+import com.wss.common.constants.EventAction;
+import com.wss.common.utils.EventBusUtils;
+import com.wss.common.utils.ValidUtils;
+import com.wss.common.widget.dialog.AppDialog;
 import com.wss.module.user.ui.account.mvp.contract.LoginContract;
+import com.wss.module.user.ui.account.mvp.model.LoginModel;
 
 /**
  * Describe：登录Presenter
  * Created by 吴天强 on 2018/11/13.
  */
 
-public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginContract.View>
-        implements LoginContract.Presenter {
-
+public class LoginPresenter extends BasePresenter<LoginModel, LoginContract.View> implements LoginContract.Presenter {
 
     @Override
-    public void login() {
-        if (isViewAttached()) {
-            getView().showLoading();
-            getModule().login(getView().getUserInfo(), new OnResultCallBack<User>() {
-                @Override
-                public void onSuccess(boolean success, int code, String msg, Object tag, User response) {
-                    if (code == 0 && response != null && !TextUtils.isEmpty(String.valueOf(response.getId()))) {
-                        getView().loginSuccess(response);
-                    } else {
-                        getView().onError(tag, msg);
-                    }
-                }
+    public void login(String userName, String password) {
+        showLoading();
+        getModel().login(userName, password).subscribe(
+                user -> {
+                    dismissLoading();
+                    BaseApplication.i().setUser(user);
+                    EventBusUtils.sendEvent(new Event(EventAction.EVENT_LOGIN_SUCCESS));
+                    ((Activity) getContext()).finish();
+                }, t -> {
+                    dismissLoading();
+                    new AppDialog.Builder(getContext())
+                            .setContent(ValidUtils.isValid(t.getMessage()) ? t.getMessage() : "登录失败")
+                            .setSingleButton("确定")
+                            .create()
+                            .show();
 
-                @Override
-                public void onFailure(Object tag, Exception e) {
-                    getView().onError(tag, msg);
-                }
-
-                @Override
-                public void onCompleted() {
-                    getView().dismissLoading();
-                }
-            });
-        }
+                });
     }
 
 
     @Override
     protected LoginModel createModule() {
-        return new LoginModel();
+        return new LoginModel(getLifecycleOwner());
     }
 
     @Override
     public void start() {
-
     }
 }

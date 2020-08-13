@@ -1,11 +1,20 @@
 package com.wss.common.net;
 
+
+import com.wss.common.profile.ProfileManager;
+
+import rxhttp.wrapper.annotation.DefaultDomain;
+
 /**
- * Describe：接口
+ * Describe：接口名称
  * Created by 吴天强 on 2018/10/17.
  */
-
 public interface Api {
+    /**
+     * 网络请求BaseUrl
+     */
+    @DefaultDomain
+    String BASE_URL = ProfileManager.profile().getServiceBase();
 
     //**********************************************鸿洋开放接口**************************************
     /**
@@ -83,5 +92,6 @@ public interface Api {
     String DOWNLOAD_APK = "/app/download.json";
 
     //**********************************************自己服务器接口************************************
+
 
 }

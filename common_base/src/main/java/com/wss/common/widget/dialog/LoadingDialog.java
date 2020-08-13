@@ -11,7 +11,7 @@ import com.wss.common.widget.LVCircularRing;
 
 
 /**
- * 等待对话框
+ * 加载框
  * Created by wtq on 2016/3/14.
  */
 public class LoadingDialog {
@@ -19,7 +19,7 @@ public class LoadingDialog {
     private LVCircularRing mLoadingView;
     private Dialog mLoadingDialog;
     private Context context;
-    private String msg = "加载中···";
+    private String msg = "加载中…";
     private boolean cancelable = true;
     private boolean isShow;
 
@@ -29,6 +29,9 @@ public class LoadingDialog {
 
     /**
      * 设置提示信息
+     *
+     * @param msg 提示信息
+     * @return dialog
      */
     public LoadingDialog setTitleText(String msg) {
         this.msg = msg;
@@ -36,7 +39,10 @@ public class LoadingDialog {
     }
 
     /**
-     * 返回键是否可用
+     * 设置dialog是否可以取消
+     *
+     * @param cancelable 是否可取消
+     * @return dialog
      */
     public LoadingDialog setCancelable(boolean cancelable) {
         this.cancelable = cancelable;

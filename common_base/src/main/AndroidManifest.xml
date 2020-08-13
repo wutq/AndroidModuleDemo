@@ -13,12 +13,13 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application>
-        <activity android:name="com.wss.common.activity.WebViewActivity" />
+        <activity android:name="com.wss.common.view.browser.BrowserActivity" />
+        <activity android:name="com.wss.common.view.scan.ScanActivity" />
 
 
         <!--7.0以上调用相机-->
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">

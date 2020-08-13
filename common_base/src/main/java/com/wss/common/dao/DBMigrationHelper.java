@@ -2,20 +2,21 @@ package com.wss.common.dao;
 
 
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
+
+import com.orhanobut.logger.Logger;
 
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.database.StandardDatabase;
 import org.greenrobot.greendao.internal.DaoConfig;
+import org.jetbrains.annotations.Contract;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 
@@ -24,167 +25,216 @@ import java.util.List;
  * Created by 吴天强 on 2018/11/5.
  */
 public class DBMigrationHelper {
-    private static final String CONVERSION_CLASS_NOT_FOUND_EXCEPTION = "MIGRATION HELPER - CLASS DOESN'IDatabase MATCH WITH THE CURRENT PARAMETERS";
 
-    public void onUpgrade(SQLiteDatabase db, Class<? extends AbstractDao<?, ?>>... daoClasses) {
+    private static final String SQLITE_MASTER = "sqlite_master";
+    private static final String SQLITE_TEMP_MASTER = "sqlite_temp_master";
+
+    static void migrate(SQLiteDatabase db, Class<? extends AbstractDao<?, ?>>... daoClasses) {
+        Logger.e("【The Old Database Version】" + db.getVersion());
         Database database = new StandardDatabase(db);
-        generateTempTables(database, daoClasses); //备份数据（表结构改变的表）
-        dropAllTables(database, true, daoClasses);  //删除旧表（结构修改/新增）
-        createAllTables(database, false, daoClasses); //创建 新表（结构修改/新增）
-        restoreData(database, daoClasses);           //恢复数据（结构修改）
+        migrate(database, daoClasses);
     }
 
-    private void dropAllTables(Database db, boolean b, Class<? extends AbstractDao<?, ?>>... daoClasses) {
-        if (daoClasses != null) {
-            reflectMethod(db, "dropTable", b, daoClasses);
+
+    @SafeVarargs
+    static void migrate(Database database, Class<? extends AbstractDao<?, ?>>... daoClasses) {
+        Logger.e("【Generate temp table】start");
+        generateTempTables(database, daoClasses);
+        Logger.e("【Generate temp table】complete");
+
+        Logger.e("【Drop all table and recreate all table】");
+        for (Class<? extends AbstractDao<?, ?>> daoClass : daoClasses) {
+            DaoConfig daoConfig = new DaoConfig(database, daoClass);
+            dropTable(database, true, daoConfig);
+            createTable(database, false, daoConfig);
+        }
+
+        Logger.e("【Restore data】start");
+        restoreData(database, daoClasses);
+        Logger.e("【Restore data】complete");
+    }
+
+    private static void dropTable(Database database, boolean ifExists, DaoConfig daoConfig) {
+        String sql = String.format("DROP TABLE %s\"%s\"", ifExists ? "IF EXISTS " : "", daoConfig.tablename);
+        database.execSQL(sql);
+    }
+
+    @SafeVarargs
+    private static void generateTempTables(Database db, Class<? extends AbstractDao<?, ?>>... daoClasses) {
+        for (Class<? extends AbstractDao<?, ?>> daoClass : daoClasses) {
+            String tempTableName = null;
+
+            DaoConfig daoConfig = new DaoConfig(db, daoClass);
+            String tableName = daoConfig.tablename;
+            if (!isTableExists(db, false, tableName)) {
+                Logger.e("【New Table】" + tableName);
+                continue;
+            }
+            try {
+                tempTableName = daoConfig.tablename.concat("_TEMP");
+                StringBuilder dropTableStringBuilder = new StringBuilder();
+                dropTableStringBuilder.append("DROP TABLE IF EXISTS ").append(tempTableName).append(";");
+                Logger.e("【Generate temp table】 dropTableStringBuilder:" + dropTableStringBuilder);
+                db.execSQL(dropTableStringBuilder.toString());
+
+                StringBuilder insertTableStringBuilder = new StringBuilder();
+                insertTableStringBuilder.append("CREATE TEMPORARY TABLE ").append(tempTableName);
+                insertTableStringBuilder.append(" AS SELECT * FROM ").append(tableName).append(";");
+                Logger.e("【Generate temp table】 insertTableStringBuilder:" + insertTableStringBuilder);
+                db.execSQL(insertTableStringBuilder.toString());
+                Logger.e("【Table】" + tableName + "\n ---Columns-->" + getColumnsStr(daoConfig));
+                Logger.e("【Generate temp table】" + tempTableName);
+            } catch (SQLException e) {
+                Logger.e("【Failed to generate temp table】" + tempTableName, e);
+            }
         }
     }
 
-    private void createAllTables(Database db, boolean b, Class<? extends AbstractDao<?, ?>>... daoClasses) {
-        if (daoClasses != null) {
-            reflectMethod(db, "createTable", b, daoClasses);
+    @Contract("null, _, _ -> false")
+    private static boolean isTableExists(Database db, boolean isTemp, String tableName) {
+        if (db == null || TextUtils.isEmpty(tableName)) {
+            return false;
         }
-    }
-
-    /**
-     * 反射出方法执行
-     */
-    private static void reflectMethod(Database db, String methodName, boolean isExists, @NonNull Class<? extends AbstractDao<?, ?>>... daoClasses) {
-        if (daoClasses.length < 1) {
-            return;
-        }
+        String dbName = isTemp ? SQLITE_TEMP_MASTER : SQLITE_MASTER;
+        String sql = "SELECT COUNT(*) FROM " + dbName + " WHERE type = ? AND name = ?";
+        Cursor cursor = null;
+        int count = 0;
         try {
-            for (Class cls : daoClasses) {
-                // Method method = cls.getDeclaredMethod(methodName, cls);
-                Method method = cls.getDeclaredMethod(methodName, Database.class, boolean.class);//update by wragony on 2017-06-27
-                method.invoke(null, db, isExists);
+            cursor = db.rawQuery(sql, new String[]{"table", tableName});
+            if (cursor == null || !cursor.moveToFirst()) {
+                return false;
             }
-        } catch (NoSuchMethodException e) {
+            count = cursor.getInt(0);
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
+        return count > 0;
     }
 
-    /**
-     * 备份数据
-     *
-     * @param db
-     * @param daoClasses（表结构改变的表）
-     */
-    private void generateTempTables(Database db, Class<? extends AbstractDao<?, ?>>... daoClasses) {
-        for (int i = 0; i < daoClasses.length; i++) {
-            DaoConfig daoConfig = new DaoConfig(db, daoClasses[i]);
-            String divider = "";
+
+    private static String getColumnsStr(DaoConfig daoConfig) {
+        if (daoConfig == null) {
+            return "no columns";
+        }
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < daoConfig.allColumns.length; i++) {
+            builder.append(daoConfig.allColumns[i]);
+            builder.append(",");
+        }
+        if (builder.length() > 0) {
+            builder.deleteCharAt(builder.length() - 1);
+        }
+        return builder.toString();
+    }
+
+
+    @SafeVarargs
+    private static void restoreData(Database db, Class<? extends AbstractDao<?, ?>>... daoClasses) {
+        for (Class<? extends AbstractDao<?, ?>> daoClass : daoClasses) {
+            DaoConfig daoConfig = new DaoConfig(db, daoClass);
             String tableName = daoConfig.tablename;
             String tempTableName = daoConfig.tablename.concat("_TEMP");
-            ArrayList<String> properties = new ArrayList<>();
-            StringBuilder createTableStringBuilder = new StringBuilder();
-            createTableStringBuilder.append("CREATE TABLE ").append(tempTableName).append(" (");
-
-            for (int j = 0; j < daoConfig.properties.length; j++) {
-                String columnName = daoConfig.properties[j].columnName;
-                if (getColumns(db, tableName).contains(columnName)) {
-                    properties.add(columnName);
-                    String type = null;
-                    try {
-                        type = getTypeByClass(daoConfig.properties[j].type);
-                    } catch (Exception exception) {
-//                        Crashlytics.logException(exception);
+            isTableExists(db, true, tempTableName);
+            try {
+                // get all columns from tempTable, take careful to use the columns list
+                List<String> columns = getColumns(db, tempTableName);
+                ArrayList<String> properties = new ArrayList<>(columns.size());
+                for (int j = 0; j < daoConfig.properties.length; j++) {
+                    String columnName = daoConfig.properties[j].columnName;
+                    if (columns.contains(columnName)) {
+                        properties.add(columnName);
                     }
-                    createTableStringBuilder.append(divider).append(columnName).append(" ").append(type);
-                    if (daoConfig.properties[j].primaryKey) {
-                        createTableStringBuilder.append(" PRIMARY KEY");
-                    }
-                    divider = ",";
                 }
-            }
-            createTableStringBuilder.append(");");
-            db.execSQL(createTableStringBuilder.toString());
-            StringBuilder insertTableStringBuilder = new StringBuilder();
-            insertTableStringBuilder.append("INSERT INTO ").append(tempTableName).append(" (");
-            insertTableStringBuilder.append(TextUtils.join(",", properties));
-            insertTableStringBuilder.append(") SELECT ");
-            insertTableStringBuilder.append(TextUtils.join(",", properties));
-            insertTableStringBuilder.append(" FROM ").append(tableName).append(";");
-            db.execSQL(insertTableStringBuilder.toString());
-        }
-    }
+                if (properties.size() > 0) {
+                    final String columnSQL = TextUtils.join(",", properties);
 
-    /**
-     * 恢复数据
-     *
-     * @param db
-     * @param daoClasses（结构修改的表）
-     */
-    private void restoreData(Database db, Class<? extends AbstractDao<?, ?>>... daoClasses) {
-        for (int i = 0; i < daoClasses.length; i++) {
-            DaoConfig daoConfig = new DaoConfig(db, daoClasses[i]);
-
-            String tableName = daoConfig.tablename;
-            String tempTableName = daoConfig.tablename.concat("_TEMP");
-            ArrayList<String> properties = new ArrayList();
-
-            for (int j = 0; j < daoConfig.properties.length; j++) {
-                String columnName = daoConfig.properties[j].columnName;
-
-                if (getColumns(db, tempTableName).contains(columnName)) {
-                    properties.add(columnName);
+                    StringBuilder insertTableStringBuilder = new StringBuilder();
+                    insertTableStringBuilder.append("INSERT INTO ").append(tableName).append(" (");
+                    insertTableStringBuilder.append(columnSQL);
+                    insertTableStringBuilder.append(") SELECT ");
+                    insertTableStringBuilder.append(columnSQL);
+                    insertTableStringBuilder.append(" FROM ").append(tempTableName).append(";");
+                    Logger.e("【Restore data】 db sql: " + insertTableStringBuilder);
+                    db.execSQL(insertTableStringBuilder.toString());
+                    Logger.e("【Restore data】 to " + tableName);
                 }
+                StringBuilder dropTableStringBuilder = new StringBuilder();
+                dropTableStringBuilder.append("DROP TABLE ").append(tempTableName);
+                db.execSQL(dropTableStringBuilder.toString());
+                Logger.e("【Drop temp table】" + tempTableName);
+            } catch (SQLException e) {
+                Logger.e("【Failed to restore data from temp table 】" + tempTableName, e);
             }
-
-            StringBuilder insertTableStringBuilder = new StringBuilder();
-
-            insertTableStringBuilder.append("INSERT INTO ").append(tableName).append(" (");
-            insertTableStringBuilder.append(TextUtils.join(",", properties));
-            insertTableStringBuilder.append(") SELECT ");
-            insertTableStringBuilder.append(TextUtils.join(",", properties));
-            insertTableStringBuilder.append(" FROM ").append(tempTableName).append(";");
-
-            StringBuilder dropTableStringBuilder = new StringBuilder();
-
-            //dropTableStringBuilder.append("DROP TABLE ").append(tempTableName);
-            dropTableStringBuilder.append("DROP TABLE IF EXISTS ").append(tempTableName).append(";");// update by wragony on 2017-06-27
-
-            db.execSQL(insertTableStringBuilder.toString());
-            db.execSQL(dropTableStringBuilder.toString());
         }
-    }
-
-    private String getTypeByClass(Class<?> type) throws Exception {
-        if (type.equals(String.class)) {
-            return "TEXT";
-        }
-        if (type.equals(Long.class) || type.equals(Integer.class) || type.equals(long.class)) {
-            return "INTEGER";
-        }
-        if (type.equals(Boolean.class)) {
-            return "BOOLEAN";
-        }
-
-        Exception exception = new Exception(CONVERSION_CLASS_NOT_FOUND_EXCEPTION.concat(" - Class: ").concat(type.toString()));
-//        Crashlytics.logException(exception);
-        throw exception;
     }
 
     private static List<String> getColumns(Database db, String tableName) {
-        List<String> columns = new ArrayList<>();
-        Cursor cursor = null;
-        try {
-            cursor = db.rawQuery("SELECT * FROM " + tableName + " limit 1", null);
-            if (cursor != null) {
-                columns = new ArrayList<>(Arrays.asList(cursor.getColumnNames()));
+        List<String> columns = null;
+        try (Cursor cursor = db.rawQuery("SELECT * FROM " + tableName + " limit 0", null)) {
+            if (null != cursor && cursor.getColumnCount() > 0) {
+                columns = Arrays.asList(cursor.getColumnNames());
             }
         } catch (Exception e) {
-            Log.v(tableName, e.getMessage(), e);
             e.printStackTrace();
         } finally {
-            if (cursor != null)
-                cursor.close();
+            if (null == columns) {
+                columns = new ArrayList<>();
+            }
         }
         return columns;
     }
 
+    private static void createTable(Database db, boolean ifNotExists, DaoConfig daoConfig) {
+        String tableName = daoConfig.tablename;
+        StringBuilder builder = new StringBuilder();
+        builder.append("CREATE TABLE ");
+        builder.append(ifNotExists ? "IF NOT EXISTS " : "");
+        builder.append(tableName);
+        builder.append(getColumnsSql(daoConfig));
+        Logger.e("【createTable】 sql:" + builder.toString());
+        db.execSQL(builder.toString()); // 6: Description
+    }
+
+    private static String getColumnsSql(DaoConfig daoConfig) {
+        if (daoConfig == null) {
+            return "";
+        }
+        StringBuilder builder = new StringBuilder(" (");
+        for (int i = 0; i < daoConfig.properties.length; i++) {
+            builder.append(String.format("\"%s\" %s,", daoConfig.properties[i].columnName,
+                    getPropertyType(daoConfig.properties[i].type)));
+        }
+        if (daoConfig.properties.length > 0 && builder.length() > 0) {
+            builder.deleteCharAt(builder.length() - 1);
+        }
+        builder.append("); ");
+        return builder.toString();
+    }
+
+    /**
+     * 根据字段类型返回对应的数据库字段语句
+     *
+     * @param type
+     * @return
+     */
+    private static String getPropertyType(Class<?> type) {
+        if (type.equals(byte[].class)) {
+            return "BLOB";
+        } else if (type.equals(String.class)) {
+            return "TEXT DEFAULT ''";
+        } else if (type.equals(boolean.class) || type.equals(Boolean.class)
+                || type.equals(int.class) || type.equals(Integer.class)
+                || type.equals(long.class) || type.equals(Long.class)
+                || type.equals(Date.class) || type.equals(Byte.class)) {
+            return "INTEGER DEFAULT (0)";
+        } else if (type.equals(float.class) || type.equals(Float.class)
+                || type.equals(double.class) || type.equals(Double.class)) {
+            return "REAL DEFAULT (0)";
+        }
+        return "TEXT DEFAULT ''";
+    }
 }

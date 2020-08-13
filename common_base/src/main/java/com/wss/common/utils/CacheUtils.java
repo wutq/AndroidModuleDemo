@@ -8,6 +8,9 @@ import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -40,35 +43,40 @@ import java.util.concurrent.atomic.AtomicLong;
  * Describe：缓存工具类。。。能缓存普通的字符串、JsonObject、JsonArray、 Bitmap、Drawable、序列化的java对象，和 byte数据。
  * Created by 吴天强 on 2017/10/9.
  */
-
 public class CacheUtils {
-    public static final int TIME_MINUTE = 60;
-    public static final int TIME_HOUR = 60 * 60;
-    public static final int TIME_DAY = TIME_HOUR * 24;
+    private static final int TIME_MINUTE = 60;
+    private static final int TIME_HOUR = 60 * TIME_MINUTE;
+    private static final int TIME_DAY = TIME_HOUR * 24;
+    private static final int MAX_TIME_OUT = 90 * TIME_DAY;//最大缓存90天
     private static final int MAX_SIZE = 1000 * 1000 * 50; // 50 mb
     private static final int MAX_COUNT = Integer.MAX_VALUE; // 不限制存放数据的数量
     private static Map<String, CacheUtils> mInstanceMap = new HashMap<>();
     private ACacheManager mCache;
 
+    @NotNull
     public static CacheUtils get(Context ctx) {
         return get(ctx, CacheUtils.class.getSimpleName());
     }
 
-    public static CacheUtils get(Context ctx, String cacheName) {
+    @NotNull
+    public static CacheUtils get(@NotNull Context ctx, String cacheName) {
         File f = new File(ctx.getCacheDir(), cacheName);
         return get(f, MAX_SIZE, MAX_COUNT);
     }
 
+    @NotNull
     public static CacheUtils get(File cacheDir) {
         return get(cacheDir, MAX_SIZE, MAX_COUNT);
     }
 
-    public static CacheUtils get(Context ctx, long max_zise, int max_count) {
+    @NotNull
+    public static CacheUtils get(@NotNull Context ctx, long max_zise, int max_count) {
         File f = new File(ctx.getCacheDir(), CacheUtils.class.getSimpleName());
         return get(f, max_zise, max_count);
     }
 
-    public static CacheUtils get(File cacheDir, long max_zise, int max_count) {
+    @NotNull
+    public static CacheUtils get(@NotNull File cacheDir, long max_zise, int max_count) {
         CacheUtils manager = mInstanceMap.get(cacheDir.getAbsoluteFile() + myPid());
         if (manager == null) {
             manager = new CacheUtils(cacheDir, max_zise, max_count);
@@ -77,11 +85,12 @@ public class CacheUtils {
         return manager;
     }
 
+    @NotNull
     private static String myPid() {
         return "_" + android.os.Process.myPid();
     }
 
-    private CacheUtils(File cacheDir, long max_size, int max_count) {
+    private CacheUtils(@NotNull File cacheDir, long max_size, int max_count) {
         if (!cacheDir.exists() && !cacheDir.mkdirs()) {
             throw new RuntimeException("can't make dirs in "
                     + cacheDir.getAbsolutePath());
@@ -123,12 +132,34 @@ public class CacheUtils {
      * @param key   保存的key
      * @param value 保存的String数据
      */
+    public void put(String key, boolean value) {
+        put(key, String.valueOf(value));
+    }
+
+    /**
+     * 保存 String数据 到 缓存中
+     *
+     * @param key   保存的key
+     * @param value 保存的String数据
+     */
     public void put(String key, String value) {
+        put(key, value, MAX_TIME_OUT);
+    }
+
+    /**
+     * 保存 String数据 到 缓存中
+     *
+     * @param key      保存的key
+     * @param value    保存的String数据
+     * @param saveTime 保存的时间，单位：秒
+     */
+    public void put(String key, String value, int saveTime) {
+        String values = Utils.newStringWithDateInfo(saveTime, value);
         File file = mCache.newFile(key);
         BufferedWriter out = null;
         try {
             out = new BufferedWriter(new FileWriter(file), 1024);
-            out.write(value);
+            out.write(values);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -142,17 +173,6 @@ public class CacheUtils {
             }
             mCache.put(file);
         }
-    }
-
-    /**
-     * 保存 String数据 到 缓存中
-     *
-     * @param key      保存的key
-     * @param value    保存的String数据
-     * @param saveTime 保存的时间，单位：秒
-     */
-    public void put(String key, String value, int saveTime) {
-        put(key, Utils.newStringWithDateInfo(saveTime, value));
     }
 
     /**
@@ -196,6 +216,9 @@ public class CacheUtils {
         }
     }
 
+    public boolean getAsBoolean(String key) {
+        return Boolean.parseBoolean(getAsString(key));
+    }
     // =======================================
     // ============= JSONObject 数据 读写 ==============
     // =======================================
@@ -206,7 +229,7 @@ public class CacheUtils {
      * @param key   保存的key
      * @param value 保存的JSON数据
      */
-    public void put(String key, JSONObject value) {
+    public void put(String key, @NotNull JSONObject value) {
         put(key, value.toString());
     }
 
@@ -217,7 +240,7 @@ public class CacheUtils {
      * @param value    保存的JSONObject数据
      * @param saveTime 保存的时间，单位：秒
      */
-    public void put(String key, JSONObject value, int saveTime) {
+    public void put(String key, @NotNull JSONObject value, int saveTime) {
         put(key, value.toString(), saveTime);
     }
 
@@ -248,7 +271,7 @@ public class CacheUtils {
      * @param key   保存的key
      * @param value 保存的JSONArray数据
      */
-    public void put(String key, JSONArray value) {
+    public void put(String key, @NotNull JSONArray value) {
         put(key, value.toString());
     }
 
@@ -259,7 +282,7 @@ public class CacheUtils {
      * @param value    保存的JSONArray数据
      * @param saveTime 保存的时间，单位：秒
      */
-    public void put(String key, JSONArray value, int saveTime) {
+    public void put(String key, @NotNull JSONArray value, int saveTime) {
         put(key, value.toString(), saveTime);
     }
 
@@ -388,13 +411,13 @@ public class CacheUtils {
     // =======================================
 
     /**
-     * 保存 Serializable数据 到 缓存中
+     * 保存 Serializable数据 到 缓存中 默认保存90天
      *
      * @param key   保存的key
      * @param value 保存的value
      */
     public void put(String key, Serializable value) {
-        put(key, value, -1);
+        put(key, value, MAX_TIME_OUT);
     }
 
     /**
@@ -581,8 +604,7 @@ public class CacheUtils {
         private final AtomicInteger cacheCount;
         private final long sizeLimit;
         private final int countLimit;
-        private final Map<File, Long> lastUsageDates = Collections
-                .synchronizedMap(new HashMap<File, Long>());
+        private final Map<File, Long> lastUsageDates = Collections.synchronizedMap(new HashMap<>());
         protected File cacheDir;
 
         private ACacheManager(File cacheDir, long sizeLimit, int countLimit) {
@@ -598,22 +620,19 @@ public class CacheUtils {
          * 计算 cacheSize和cacheCount
          */
         private void calculateCacheSizeAndCacheCount() {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    int size = 0;
-                    int count = 0;
-                    File[] cachedFiles = cacheDir.listFiles();
-                    if (cachedFiles != null) {
-                        for (File cachedFile : cachedFiles) {
-                            size += calculateSize(cachedFile);
-                            count += 1;
-                            lastUsageDates.put(cachedFile,
-                                    cachedFile.lastModified());
-                        }
-                        cacheSize.set(size);
-                        cacheCount.set(count);
+            new Thread(() -> {
+                int size = 0;
+                int count = 0;
+                File[] cachedFiles = cacheDir.listFiles();
+                if (cachedFiles != null) {
+                    for (File cachedFile : cachedFiles) {
+                        size += calculateSize(cachedFile);
+                        count += 1;
+                        lastUsageDates.put(cachedFile,
+                                cachedFile.lastModified());
                     }
+                    cacheSize.set(size);
+                    cacheCount.set(count);
                 }
             }).start();
         }
@@ -636,21 +655,24 @@ public class CacheUtils {
             }
             cacheSize.addAndGet(valueSize);
 
-            Long currentTime = System.currentTimeMillis();
+            long currentTime = System.currentTimeMillis();
             file.setLastModified(currentTime);
             lastUsageDates.put(file, currentTime);
         }
 
+        @NotNull
         private File get(String key) {
             File file = newFile(key);
-            Long currentTime = System.currentTimeMillis();
+            long currentTime = System.currentTimeMillis();
             file.setLastModified(currentTime);
             lastUsageDates.put(file, currentTime);
 
             return file;
         }
 
-        private File newFile(String key) {
+        @NotNull
+        @Contract("_ -> new")
+        private File newFile(@NotNull String key) {
             return new File(cacheDir, key.hashCode() + "");
         }
 
@@ -705,7 +727,7 @@ public class CacheUtils {
             return fileSize;
         }
 
-        private long calculateSize(File file) {
+        private long calculateSize(@NotNull File file) {
             return file.length();
         }
     }
@@ -723,7 +745,7 @@ public class CacheUtils {
          * @param str
          * @return true：到期了 false：还没有到期
          */
-        private static boolean isDue(String str) {
+        private static boolean isDue(@NotNull String str) {
             return isDue(str.getBytes());
         }
 
@@ -750,11 +772,13 @@ public class CacheUtils {
             return false;
         }
 
+        @NotNull
         private static String newStringWithDateInfo(int second, String strInfo) {
             return createDateInfo(second) + strInfo;
         }
 
-        private static byte[] newByteArrayWithDateInfo(int second, byte[] data2) {
+        @NotNull
+        private static byte[] newByteArrayWithDateInfo(int second, @NotNull byte[] data2) {
             byte[] data1 = createDateInfo(second).getBytes();
             byte[] retdata = new byte[data1.length + data2.length];
             System.arraycopy(data1, 0, retdata, 0, data1.length);
@@ -762,6 +786,7 @@ public class CacheUtils {
             return retdata;
         }
 
+        @Contract("null -> null")
         private static String clearDateInfo(String strInfo) {
             if (strInfo != null && hasDateInfo(strInfo.getBytes())) {
                 strInfo = strInfo.substring(strInfo.indexOf(mSeparator) + 1,
@@ -778,11 +803,13 @@ public class CacheUtils {
             return data;
         }
 
+        @Contract(value = "null -> false", pure = true)
         private static boolean hasDateInfo(byte[] data) {
             return data != null && data.length > 15 && data[13] == '-'
                     && indexOf(data, mSeparator) > 14;
         }
 
+        @Nullable
         private static String[] getDateInfoFromDate(byte[] data) {
             if (hasDateInfo(data)) {
                 String saveDate = new String(copyOfRange(data, 0, 13));
@@ -793,6 +820,7 @@ public class CacheUtils {
             return null;
         }
 
+        @Contract(pure = true)
         private static int indexOf(byte[] data, char c) {
             for (int i = 0; i < data.length; i++) {
                 if (data[i] == c) {
@@ -802,6 +830,7 @@ public class CacheUtils {
             return -1;
         }
 
+        @NotNull
         private static byte[] copyOfRange(byte[] original, int from, int to) {
             int newLength = to - from;
             if (newLength < 0)
@@ -815,9 +844,9 @@ public class CacheUtils {
         private static final char mSeparator = ' ';
 
         private static String createDateInfo(int second) {
-            String currentTime = System.currentTimeMillis() + "";
+            StringBuilder currentTime = new StringBuilder(System.currentTimeMillis() + "");
             while (currentTime.length() < 13) {
-                currentTime = "0" + currentTime;
+                currentTime.insert(0, "0");
             }
             return currentTime + "-" + second + mSeparator;
         }
@@ -825,6 +854,7 @@ public class CacheUtils {
         /*
          * Bitmap → byte[]
          */
+        @Contract("null -> null")
         private static byte[] Bitmap2Bytes(Bitmap bm) {
             if (bm == null) {
                 return null;
@@ -837,7 +867,8 @@ public class CacheUtils {
         /*
          * byte[] → Bitmap
          */
-        private static Bitmap Bytes2Bimap(byte[] b) {
+        @Nullable
+        private static Bitmap Bytes2Bimap(@NotNull byte[] b) {
             if (b.length == 0) {
                 return null;
             }
@@ -847,6 +878,7 @@ public class CacheUtils {
         /*
          * Drawable → Bitmap
          */
+        @Contract("null -> null")
         private static Bitmap drawable2Bitmap(Drawable drawable) {
             if (drawable == null) {
                 return null;
@@ -870,6 +902,7 @@ public class CacheUtils {
         /*
          * Bitmap → Drawable
          */
+        @Contract("null -> null")
         @SuppressWarnings("deprecation")
         private static Drawable bitmap2Drawable(Bitmap bm) {
             if (bm == null) {

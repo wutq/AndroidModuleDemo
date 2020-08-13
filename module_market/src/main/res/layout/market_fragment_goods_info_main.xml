@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <!--嵌套使用了RecycleView 解决加载不全问题 使用NestedScrollView-->
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/sv_goods_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -162,7 +162,7 @@
         </LinearLayout>
 
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <!--商品下方 详情Html 和规格介绍-->
     <fragment

@@ -42,6 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
+                android:paddingRight="12dp"
                 app:pstsDividerColor="@android:color/transparent"
                 app:pstsHasBottomLine="false"
                 app:pstsHasTopLine="false"
@@ -49,7 +50,7 @@
                 app:pstsIndicatorHeight="2dp"
                 app:pstsScaleZoomMax="0.0"
                 app:pstsSmoothScrollWhenClickTab="false"
-                app:pstsTabPaddingLeftRight="12dp"
+                app:pstsTabPaddingLeft="12dp"
                 app:pstsTextDefaultColor="@color/light_white"
                 app:pstsTextSelectedColor="@color/white" />
 
@@ -99,10 +100,10 @@
                 android:layout_marginStart="35dp"
                 android:background="@drawable/market_shape_round_red"
                 android:gravity="center"
-                android:minHeight="15dp"
                 android:minWidth="15dp"
-                android:paddingEnd="2dp"
+                android:minHeight="15dp"
                 android:paddingStart="2dp"
+                android:paddingEnd="2dp"
                 android:textColor="@color/white"
                 android:textSize="10sp"
                 tools:ignore="SmallSp" />

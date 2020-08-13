@@ -66,7 +66,7 @@ public class Article extends BaseBean {
 
     @Getter
     @Setter
-    public class ArticleTag extends BaseBean {
+    private static class ArticleTag extends BaseBean {
 
         private String name;
         private String url;

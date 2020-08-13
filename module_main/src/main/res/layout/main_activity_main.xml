@@ -3,19 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <!--<TextView-->
-        <!--android:id="@+id/tv_title"-->
-        <!--style="@style/TextStyle"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="40dp"-->
-        <!--android:background="@color/blue"-->
-        <!--android:gravity="center"-->
-        <!--android:text="@string/main_tab_home"-->
-        <!--android:textColor="@color/white"-->
-        <!--android:textSize="16sp" />-->
-
-
     <FrameLayout
         android:id="@+id/fl_context"
         android:layout_width="match_parent"
@@ -46,22 +33,22 @@
                 android:id="@+id/rb_main"
                 style="@style/MainTabStyle"
                 android:checked="true"
-                android:drawablePadding="-3dp"
                 android:drawableTop="@drawable/main_tab_home"
+                android:drawablePadding="-3dp"
                 android:text="@string/main_tab_home" />
 
             <RadioButton
                 android:id="@+id/rb_center"
                 style="@style/MainTabStyle"
-                android:drawablePadding="1dp"
                 android:drawableTop="@drawable/main_tab_center"
+                android:drawablePadding="1dp"
                 android:text="@string/main_tab_center" />
 
             <RadioButton
                 android:id="@+id/rb_user"
                 style="@style/MainTabStyle"
-                android:drawablePadding="-3dp"
                 android:drawableTop="@drawable/main_tab_user"
+                android:drawablePadding="-3dp"
                 android:text="@string/main_tab_user" />
         </RadioGroup>
 

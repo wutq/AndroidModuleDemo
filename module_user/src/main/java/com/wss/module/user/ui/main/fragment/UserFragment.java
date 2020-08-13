@@ -7,17 +7,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.wss.common.base.BaseApplication;
 import com.wss.common.base.BaseMvpFragment;
-import com.wss.common.bean.AppInfo;
 import com.wss.common.bean.Event;
 import com.wss.common.bean.User;
 import com.wss.common.constants.ARouterConfig;
 import com.wss.common.constants.EventAction;
-import com.wss.common.manage.UpdateManager;
-import com.wss.common.net.Api;
-import com.wss.common.utils.ActivityToActivity;
+import com.wss.common.manage.ActivityToActivity;
 import com.wss.common.utils.ImageUtils;
-import com.wss.common.utils.UserInfoUtils;
 import com.wss.common.widget.dialog.AppDialog;
 import com.wss.module.user.R;
 import com.wss.module.user.R2;
@@ -36,7 +33,7 @@ import butterknife.OnClick;
 @Route(path = ARouterConfig.USER_MAIN_FRAGMENT)
 public class UserFragment extends BaseMvpFragment<UserPresenter> implements UserContract.View {
 
-    public static final String URL = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542110989472&di=e206dfdad3d1197025ddc03bca0b013c&imgtype=0&src=http%3A%2F%2Fwww.pig66.com%2Fuploadfile%2F2017%2F1209%2F20171209121323978.png";
+    private static final String URL = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597207810717&di=4498f60a4b64fb7a436943bb420c5e1e&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F5bb3acc1916253d3228ab37879d910bfcbe1a7ce1df00a-ld0gg1_fw658";
 
     @BindView(R2.id.iv_bg)
     ImageView ivBg;
@@ -61,32 +58,30 @@ public class UserFragment extends BaseMvpFragment<UserPresenter> implements User
 
 
     @Override
-    protected void initView() {
-
-        ImageUtils.loadImageBlur(ivBg, URL);
-        ImageUtils.loadImageCircle(ivHead, URL);
-        displayInfo();
+    protected int getLayoutId() {
+        return R.layout.user_fragment_user;
     }
 
-    private void displayInfo() {
-        User user = UserInfoUtils.getUser();
-        if (UserInfoUtils.isLogged()) {
+    @Override
+    protected void initView() {
+        ImageUtils.loadImageBlur(ivBg, URL);
+        ImageUtils.loadImageCircle(ivHead, URL);
+        refreshPage();
+    }
+
+    private void refreshPage() {
+        if (BaseApplication.i().isLogged()) {
+            User user = BaseApplication.i().getUser();
             llLogged.setVisibility(View.VISIBLE);
             tvLoginOut.setVisibility(View.VISIBLE);
             tvLogin.setVisibility(View.GONE);
             tvName.setText(user.getUsername());
             tvEmail.setText(TextUtils.isEmpty(user.getEmail()) ? "暂无邮箱" : user.getEmail());
-
         } else {
             llLogged.setVisibility(View.GONE);
             tvLogin.setVisibility(View.VISIBLE);
             tvLoginOut.setVisibility(View.GONE);
         }
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.user_fragment_user;
     }
 
 
@@ -96,94 +91,59 @@ public class UserFragment extends BaseMvpFragment<UserPresenter> implements User
         int i = view.getId();
         if (i == R.id.tv_login) {
             //去登录
-            ActivityToActivity.toActivity(mContext, LoginActivity.class);
+            ActivityToActivity.toActivity(context, LoginActivity.class);
         } else if (i == R.id.miv_collection) {
             //我的收藏
-            if (checkLogin()) {
-                ActivityToActivity.toActivity(ARouterConfig.WAN_COLLECTION);
-            }
+
         } else if (i == R.id.miv_order) {
             //我的订单
-            if (checkLogin()) {
-                ActivityToActivity.toActivity(ARouterConfig.MAIN_ORDER_LIST);
-            }
         } else if (i == R.id.miv_about) {
             //关于
-            ActivityToActivity.toActivity(mContext, AboutActivity.class);
-
+            ActivityToActivity.toActivity(context, AboutActivity.class);
         } else if (i == R.id.miv_check) {
-            presenter.checkUpdate();
-
+            getPresenter().checkUpdate();
         } else if (i == R.id.tv_login_out) {
-            new AppDialog(mContext)
+            new AppDialog.Builder(context)
                     .setContent("是否确定退出？")
-                    .setRightButton(new AppDialog.OnButtonClickListener() {
-                        @Override
-                        public void onClick(String val) {
-                            //退出登录
-                            UserInfoUtils.cleanUser();
-                            displayInfo();
-                        }
+                    .setRightButton(val -> {
+                        BaseApplication.i().setUser(null);
+                        refreshPage();
                     })
+                    .create()
                     .show();
         }
     }
 
-
+    /**
+     * 检查登录
+     *
+     * @return boolean
+     */
     private boolean checkLogin() {
-        if (!UserInfoUtils.isLogged()) {
-            new AppDialog(mContext)
-                    .setContent("请您先登录")
-                    .setRightButton(new AppDialog.OnButtonClickListener() {
-                        @Override
-                        public void onClick(String val) {
-                            ActivityToActivity.toActivity(mContext, LoginActivity.class);
-                        }
-                    })
-                    .show();
-            return false;
+        if (BaseApplication.i().isLogged()) {
+            return true;
         }
-        return true;
+        new AppDialog.Builder(context)
+                .setContent("请您先登录")
+                .setRightButton(val -> ActivityToActivity.toActivity(context, LoginActivity.class))
+                .create()
+                .show();
+        return false;
     }
 
     @Override
     public void onEventBus(Event event) {
         super.onEventBus(event);
-        if (TextUtils.equals(event.getAction(), EventAction.EVENT_LOGIN_SUCCESS)) {
-            displayInfo();
+        if (EventAction.EVENT_LOGIN_SUCCESS.equals(event.getAction()) ||
+                EventAction.EVENT_REGISTER_SUCCESS.equals(event.getAction())) {
+            //登录成功、注册成功刷新页面
+            refreshPage();
         }
     }
 
     @Override
-    protected boolean regEvent() {
+    protected boolean registerEventBus() {
         return true;
-    }
-
-
-    @Override
-    public void needUpdate(AppInfo appInfo) {
-        String context = "版本更新！";
-        if (appInfo != null && !TextUtils.isEmpty(appInfo.getDescribe())) {
-            context = appInfo.getDescribe();
-        }
-        new AppDialog(mContext)
-                .setTitle("提示更新")
-                .setContent(context)
-                .setRightButton("更新", new AppDialog.OnButtonClickListener() {
-                    @Override
-                    public void onClick(String val) {
-                        UpdateManager.getInstance(mContext).download(Api.DOWNLOAD_APK);
-                    }
-                })
-                .show();
-    }
-
-    @Override
-    public void isLastVersion() {
-        new AppDialog(mContext)
-                .setContent("当前已是最新版本")
-                .setSingleButton("确定")
-                .show();
     }
 
     @Override

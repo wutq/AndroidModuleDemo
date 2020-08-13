@@ -2,25 +2,27 @@ package com.wss.module.main.ui.selector.mvp.contract;
 
 import android.content.Context;
 
-import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
-import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.main.bean.Province;
 
 import java.util.List;
+
+import io.reactivex.Observable;
 
 /**
  * Describe：契约类
  * Created by 吴天强 on 2018/11/21.
  */
-
 public interface SelectContract {
 
-    interface Module extends IBaseModel {
+    interface Module {
         /**
          * 获取省市区
+         *
+         * @param mContext ctx
+         * @return 省份
          */
-        void getAddress(Context mContext, OnResultCallBack<String> callBack);
+        Observable<List<Province>> getAddress(Context mContext);
     }
 
     interface View extends IBaseView {
@@ -32,7 +34,7 @@ public interface SelectContract {
          * @param options2Items 市
          * @param options3Items 区
          */
-        void addressList(List<Province> options1Items, List<List<String>> options2Items, List<List<List<String>>> options3Items);
+        void refreshAddressList(List<Province> options1Items, List<List<String>> options2Items, List<List<List<String>>> options3Items);
 
         /**
          * 三级非动态数据
@@ -41,7 +43,7 @@ public interface SelectContract {
          * @param userFrom userFrom
          * @param userDes  userDes
          */
-        void userList(List<String> userList, List<String> userFrom, List<String> userDes);
+        void refreshNonLinkageList(List<String> userList, List<String> userFrom, List<String> userDes);
     }
 
     interface Presenter {

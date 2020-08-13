@@ -11,8 +11,9 @@ import com.wss.common.base.BaseActivity;
 import com.wss.common.base.BaseFragment;
 import com.wss.common.bean.Event;
 import com.wss.common.bean.HorizontalTabTitle;
+import com.wss.common.constants.Dic;
 import com.wss.common.constants.EventAction;
-import com.wss.common.utils.ActivityToActivity;
+import com.wss.common.manage.ActivityToActivity;
 import com.wss.common.utils.EventBusUtils;
 import com.wss.common.utils.ToastUtils;
 import com.wss.common.widget.NoScrollViewPager;
@@ -65,8 +66,9 @@ public class GoodsDetailActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        setImmersionBarColor(R.color.theme);
         if (getIntent() != null) {
-            goodsInfo = (GoodsInfo) getIntent().getSerializableExtra("GoodsInfo");
+            goodsInfo = (GoodsInfo) getIntent().getSerializableExtra(Dic.GOODS_INFO);
         }
 
         List<HorizontalTabTitle> title = new ArrayList<>();
@@ -104,7 +106,7 @@ public class GoodsDetailActivity extends BaseActivity {
     }
 
     @Override
-    protected boolean regEvent() {
+    protected boolean registerEventBus() {
         return true;
     }
 
@@ -129,7 +131,7 @@ public class GoodsDetailActivity extends BaseActivity {
             finish();
         } else if (i == R.id.rl_cart) {
             //去购物车
-            ActivityToActivity.toActivity(mContext, ShoppingCartActivity.class);
+            ActivityToActivity.toActivity(context, ShoppingCartActivity.class);
         } else if (i == R.id.tv_add_cart) {
             //加入购物车
             if (goodsInfo != null) {
@@ -151,14 +153,14 @@ public class GoodsDetailActivity extends BaseActivity {
                                 .setDuration(time)
                                 .start();
                     }
-                }, time * 2 );
+                }, time * 2);
 
             } else {
-                ToastUtils.show(mContext, "没有正经的商品信息~");
+                ToastUtils.show("没有正经的商品信息~");
             }
         } else if (i == R.id.tv_buy_now) {
             //立即购买
-            ToastUtils.show(mContext, "立即购买");
+            ToastUtils.show("立即购买");
         }
     }
 

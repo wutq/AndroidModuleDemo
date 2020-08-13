@@ -1,11 +1,11 @@
 package com.wss.module.wan.ui.collection.mvp.contract;
 
-import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
-import com.wss.common.net.callback.OnResultCallBack;
 import com.wss.module.wan.bean.Article;
 
 import java.util.List;
+
+import io.reactivex.Observable;
 
 /**
  * Describe：收藏契约类
@@ -14,19 +14,21 @@ import java.util.List;
 
 public interface CollectionContract {
 
-    interface Model extends IBaseModel {
+    interface Model {
         /**
          * 获取收藏列表
          *
-         * @param page     分页
-         * @param callback 回调
+         * @param page 分页
+         * @return string
          */
-        void getCollectionList(int page, OnResultCallBack callback);
+        Observable<String> getCollectionList(int page);
     }
 
     interface View extends IBaseView {
         /**
          * 获取分页
+         *
+         * @return page
          */
         int getPage();
 
@@ -35,7 +37,7 @@ public interface CollectionContract {
          *
          * @param collections collections
          */
-        void collectionList(List<Article> collections);
+        void refreshCollectionList(List<Article> collections);
     }
 
     interface Presenter {

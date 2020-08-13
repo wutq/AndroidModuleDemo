@@ -39,7 +39,7 @@
 
             <TextView
                 style="@style/TextStyle"
-                android:text="点击数字弹出对话框样式" />
+                android:text="默认样式" />
 
             <com.wss.common.widget.CountClickView
                 android:id="@+id/ccv_dialog"

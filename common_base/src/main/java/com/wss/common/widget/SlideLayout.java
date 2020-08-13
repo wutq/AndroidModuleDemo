@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,6 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.wss.common.base.R;
+
+import androidx.core.view.MotionEventCompat;
+import androidx.core.view.ViewCompat;
 
 
 /**
@@ -580,10 +581,13 @@ public class SlideLayout extends ViewGroup {
 
         public static final Creator<SavedState> CREATOR =
                 new Creator<SavedState>() {
+
+                    @Override
                     public SavedState createFromParcel(Parcel in) {
                         return new SavedState(in);
                     }
 
+                    @Override
                     public SavedState[] newArray(int size) {
                         return new SavedState[size];
                     }

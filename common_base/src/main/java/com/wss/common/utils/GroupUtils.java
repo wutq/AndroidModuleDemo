@@ -1,6 +1,5 @@
 package com.wss.common.utils;
 
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -12,20 +11,32 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.Nullable;
+
 /**
  * Describe：Lis分组
  * Created by 吴天强 on 2018-05-31 08:45
  **/
 public class GroupUtils {
-    public static final String TAG = GroupUtils.class.getSimpleName();
+    private static final String TAG = GroupUtils.class.getSimpleName();
 
     /**
      * 分组依据接口，用于集合分组时，获取分组依据
+     *
+     * @param <T>
      */
     public interface GroupBy<T> {
         T groupBy(Object obj);
     }
 
+    /**
+     * 待分组的集合
+     * 分组依据
+     *
+     * @param <T> <T>
+     * @param <D> <T>
+     * @return 分组数据
+     */
     public static <T extends Comparable<T>, D> Map<T, List<D>> group(Collection<D> colls, GroupBy<T> gb) {
         if (colls == null || colls.isEmpty()) {
             Log.e(TAG, "分组集合不能为空");

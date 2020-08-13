@@ -1,7 +1,6 @@
 package com.wss.module.market.ui.goods.detail.adapter;
 
 import android.content.Context;
-import android.widget.ImageView;
 
 import com.wss.common.base.adapter.BaseListAdapter;
 import com.wss.common.utils.ImageUtils;
@@ -20,13 +19,13 @@ import java.util.List;
 public class GoodsCommentAdapter extends BaseListAdapter<GoodsComment> {
 
 
-    public GoodsCommentAdapter(Context context, List<GoodsComment> items, int layoutResId) {
-        super(context, items, layoutResId, null);
+    public GoodsCommentAdapter(Context context, List<GoodsComment> items) {
+        super(context, items, R.layout.market_item_of_goods_comment_list, null);
     }
 
     @Override
     public void onBindData(SuperViewHolder holder, int viewType, int layoutPosition, GoodsComment data) {
-        ImageUtils.loadImageCircle((ImageView) holder.findViewById(R.id.iv_head), data.getUserHead());
+        ImageUtils.loadImageCircle(holder.findViewById(R.id.iv_head), data.getUserHead());
         holder.setText(R.id.tv_name, data.getUserName());
         holder.setText(R.id.tv_comment, data.getComment());
     }

@@ -1,8 +1,7 @@
 package com.wss.common.bean;
 
-import android.app.Activity;
-
 import com.wss.common.base.bean.BaseBean;
+import com.wss.common.constants.Constants;
 
 import java.util.Map;
 
@@ -21,27 +20,36 @@ public class Template extends BaseBean {
     private int res;
     private String describe;
     private Class clazz;
-    private String url;//模块外跳转链接
-    private int type;//0.本模块内Activity跳转 1.业务模块跳转 2.应用外跳转[WebView]
-    private Map<String, ?> params;//其他附加参数
+    /**
+     * 模块外跳转链接
+     */
+    private String url;
+    /**
+     * 页面跳转类型
+     */
+    private int type;
+    /**
+     * 其他附加参数
+     */
+    private Map<String, ?> params;
 
-    public Template(String title, int res, String url, int type, String describe) {
+    public Template(String title, String url, int type, String describe) {
         this.title = title;
-        this.res = res;
         this.url = url;
         this.type = type;
         this.describe = describe;
     }
 
-    public Template(String title, int res, Class<? extends Activity> clazz) {
-        this(title, res, clazz, "");
-    }
-
-    public Template(String title, int res, Class<? extends Activity> clazz, String describe) {
+    public Template(String title, Class clazz, String describe) {
         this.title = title;
-        this.res = res;
         this.clazz = clazz;
+        this.type = Constants.TemplateType.ACTIVITY;
         this.describe = describe;
     }
 
+    public Template(String title, int res, Class clazz) {
+        this.title = title;
+        this.res = res;
+        this.clazz = clazz;
+    }
 }

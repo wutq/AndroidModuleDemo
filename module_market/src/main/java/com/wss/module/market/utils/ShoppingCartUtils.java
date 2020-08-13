@@ -20,7 +20,6 @@ import java.util.Map;
  * Describe：购物车帮助类
  * Created by 吴天强 on 2018/11/5.
  */
-
 public class ShoppingCartUtils {
 
     /**

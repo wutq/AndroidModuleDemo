@@ -1,7 +1,5 @@
 package com.wss.module.market.ui.goods.detail.fragment.child;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +15,8 @@ import com.wss.module.market.ui.goods.detail.mvp.contract.GoodsCommentContract;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 /**
@@ -51,9 +51,8 @@ public class GoodsCommentFragment extends BaseMvpFragment<GoodsCommentPresent> i
 
     @Override
     protected void initView() {
-
-        adapter = new GoodsCommentAdapter(mContext, commentList, R.layout.market_item_of_goods_comment_list);
-        recycleView.setLayoutManager(new LinearLayoutManager(mContext));
+        adapter = new GoodsCommentAdapter(context, commentList);
+        recycleView.setLayoutManager(new LinearLayoutManager(context));
         recycleView.setAdapter(adapter);
 
         ivRight.setVisibility(View.GONE);
@@ -61,13 +60,12 @@ public class GoodsCommentFragment extends BaseMvpFragment<GoodsCommentPresent> i
         recycleView.setVisibility(View.VISIBLE);
         tvCommentCount.setText("用户点评(999)");
         tvPraiseRate.setText("好评率97.8%");
-
-        presenter.start();
+        getPresenter().start();
     }
 
 
     @Override
-    public void commentList(List<GoodsComment> commentList) {
+    public void refreshCommentList(List<GoodsComment> commentList) {
         this.commentList.addAll(commentList);
         adapter.notifyDataSetChanged();
     }

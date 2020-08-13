@@ -1,6 +1,5 @@
 package com.wss.module.market.ui.main.mvp.contract;
 
-import com.wss.common.base.mvp.IBaseModel;
 import com.wss.common.base.mvp.IBaseView;
 import com.wss.module.market.bean.GoodsInfo;
 
@@ -13,7 +12,7 @@ import java.util.List;
 
 public interface MarketMainContract {
 
-    interface Model extends IBaseModel {
+    interface Model {
 
     }
 
@@ -23,14 +22,14 @@ public interface MarketMainContract {
          *
          * @param dataList dataList
          */
-        void dataList(List<GoodsInfo> dataList);
+        void refreshGoodsList(List<GoodsInfo> dataList);
 
         /**
          * 购物车商品数量
          *
          * @param count count
          */
-        void cartCount(long count);
+        void refreshCartCount(long count);
     }
 
     interface Presenter {

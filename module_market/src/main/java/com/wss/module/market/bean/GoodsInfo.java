@@ -1,6 +1,7 @@
 package com.wss.module.market.bean;
 
 import com.wss.common.base.bean.BaseBean;
+import com.wss.common.bean.Banner;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -9,11 +10,15 @@ import org.greenrobot.greendao.annotation.Transient;
 
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Describe：商品信息 购物车做了本地化存储
  * Created by 吴天强 on 2018/11/1.
  */
-
+@Getter
+@Setter
 @Entity
 public class GoodsInfo extends BaseBean {
 
@@ -29,7 +34,7 @@ public class GoodsInfo extends BaseBean {
     @Transient//该字段不入库
     private boolean checked;//是否选择
     @Transient//该字段不入库
-    private List<String> goodsHeadImg;//商品头图
+    private List<Banner> goodsHeadImg;//商品头图
     private String vendorId;//供应商ID
 
 
@@ -150,21 +155,5 @@ public class GoodsInfo extends BaseBean {
 
     public void setVendorId(String vendorId) {
         this.vendorId = vendorId;
-    }
-
-    public boolean isChecked() {
-        return checked;
-    }
-
-    public void setChecked(boolean checked) {
-        this.checked = checked;
-    }
-
-    public List<String> getGoodsHeadImg() {
-        return goodsHeadImg;
-    }
-
-    public void setGoodsHeadImg(List<String> goodsHeadImg) {
-        this.goodsHeadImg = goodsHeadImg;
     }
 }

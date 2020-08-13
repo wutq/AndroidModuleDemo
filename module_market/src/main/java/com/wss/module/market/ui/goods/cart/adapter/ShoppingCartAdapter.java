@@ -8,9 +8,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wss.common.base.adapter.BaseListAdapter;
+import com.wss.common.base.adapter.listener.OnListItemClickListener;
 import com.wss.common.bean.Event;
 import com.wss.common.constants.EventAction;
-import com.wss.common.listener.OnListItemClickListener;
 import com.wss.common.utils.EventBusUtils;
 import com.wss.common.utils.ImageUtils;
 import com.wss.common.widget.CountClickView;
@@ -41,8 +41,8 @@ public class ShoppingCartAdapter extends BaseListAdapter<Vendor> implements OnCl
         notifyDataSetChanged();
     }
 
-    public ShoppingCartAdapter(Context context, List<Vendor> items, int layoutResId, OnListItemClickListener listener) {
-        super(context, items, layoutResId, listener);
+    public ShoppingCartAdapter(Context context, List<Vendor> items, OnListItemClickListener<Vendor> listener) {
+        super(context, items, R.layout.market_item_of_shopping_cart_list, listener);
     }
 
     @Override
@@ -54,7 +54,6 @@ public class ShoppingCartAdapter extends BaseListAdapter<Vendor> implements OnCl
         ivVendor.setTag(layoutPosition);
         ivVendor.setOnClickListener(this);
         goodsLayout.removeAllViews();
-
         for (int i = 0; i < data.getGoodsInfos().size(); i++) {
             View view = View.inflate(getContext(), R.layout.market_item_of_shopping_cart_list_goods_list, null);
             new ViewHolder(view).onBindData(layoutPosition, i);
@@ -115,7 +114,7 @@ public class ShoppingCartAdapter extends BaseListAdapter<Vendor> implements OnCl
             ccvClick.setMinCount(1);
             ccvClick.setMaxCount(99);
             ccvClick.setInput(true);
-            ccvClick.setCurrCount(goodsInfo.getNum() < 1 ? 1 : goodsInfo.getNum());
+            ccvClick.setCurrCount(Math.max(goodsInfo.getNum(), 1));
             ccvClick.setAfterClickListener(new CountClickView.OnClickAfterListener() {
                 @Override
                 public void onAfter(int value) {

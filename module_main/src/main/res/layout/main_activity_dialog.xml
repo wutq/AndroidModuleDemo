@@ -25,14 +25,6 @@
             android:text="输入框样式" />
 
         <Button
-            android:id="@+id/btn_03"
-            style="@style/ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="10dp"
-            android:text="输入框带加减" />
-
-        <Button
             android:id="@+id/btn_04"
             style="@style/ButtonStyle"
             android:layout_width="match_parent"
@@ -56,13 +48,6 @@
             android:layout_marginTop="10dp"
             android:text="底部弹出默认样式" />
 
-        <Button
-            android:id="@+id/btn_07"
-            style="@style/ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="10dp"
-            android:text="进度条对话框" />
 
     </LinearLayout>
 </ScrollView>

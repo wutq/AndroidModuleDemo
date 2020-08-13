@@ -1,6 +1,6 @@
 package com.wss.module.main.ui.page;
 
-import com.wss.common.base.ActionBarActivity;
+import com.wss.common.base.BaseActionBarActivity;
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.widget.MultipleItemView;
 import com.wss.module.main.R;
@@ -12,8 +12,7 @@ import butterknife.BindView;
  * Describe：多功能Item
  * Created by 吴天强 on 2018/10/25.
  */
-
-public class MultipleItemActivity extends ActionBarActivity {
+public class MultipleItemActivity extends BaseActionBarActivity {
 
     @BindView(R2.id.miv_02)
     MultipleItemView miv02;
@@ -39,7 +38,7 @@ public class MultipleItemActivity extends ActionBarActivity {
 
     @Override
     protected void initView() {
-        setTitleText("多功能横向Item");
+        setCenterText("多功能横向Item");
         miv02.setRightTextSize(10);
         miv03.setLeftIconSize(50, 50);
         miv04.setLeftIconMargin(10, 0, 30, 0);

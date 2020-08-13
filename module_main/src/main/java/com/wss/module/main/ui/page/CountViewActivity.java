@@ -1,6 +1,6 @@
 package com.wss.module.main.ui.page;
 
-import com.wss.common.base.ActionBarActivity;
+import com.wss.common.base.BaseActionBarActivity;
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.widget.CountClickView;
 import com.wss.module.main.R;
@@ -12,8 +12,7 @@ import butterknife.BindView;
  * Describe：数量加减控件
  * Created by 吴天强 on 2018/10/24.
  */
-
-public class CountViewActivity extends ActionBarActivity {
+public class CountViewActivity extends BaseActionBarActivity {
 
     @BindView(R2.id.ccv_dialog)
     CountClickView ccvDialog;
@@ -33,7 +32,7 @@ public class CountViewActivity extends ActionBarActivity {
 
     @Override
     protected void initView() {
-        setTitleText("数量加减控件");
+        setCenterText("数量加减控件");
 
         //显示输入框
         ccvDialog.setInput(true);

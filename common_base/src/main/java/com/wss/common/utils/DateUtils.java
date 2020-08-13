@@ -2,8 +2,11 @@ package com.wss.common.utils;
 
 import android.annotation.SuppressLint;
 import android.text.TextUtils;
+import android.util.Log;
 
-import com.wss.common.constants.Constants;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,6 +20,15 @@ import java.util.TimeZone;
  */
 @SuppressLint("SimpleDateFormat")
 public class DateUtils {
+
+    public static final String DATE_FORMAT = "yyyyMMddHH";
+    public static final String DATE_FORMAT_SLASH = "yyyy/MM/dd";
+    public static final String DATE_FORMAT_LINE = "yyyy-MM-dd";
+    public static final String DATE_FORMAT_DEFAULT = DATE_FORMAT_SLASH + " HH:mm:ss";
+    private static final int SECOND = 60;
+    private static final int DAY = 60;
+    private static final int MOUTH = 60;
+
 
     /**
      * 获取当前时间戳
@@ -33,9 +45,35 @@ public class DateUtils {
      * @return String
      */
     public static String getCurrentDateStr() {
-        return getFormatDate(getCurrentTimeStamp(), Constants.DATE_FORMAT_LINE);
+        return getFormatDate(getCurrentTimeStamp(), DATE_FORMAT_LINE);
     }
 
+    /**
+     * 获取格式化的当前系统时间
+     *
+     * @return String
+     */
+    public static String getCurrentDateStr(String pattern) {
+        return getFormatDate(getCurrentTimeStamp(), pattern);
+    }
+
+    /**
+     * 获取格式化时间
+     *
+     * @param date    date
+     * @param pattern 格式化格式（默认yyyy-MM-dd HH:mm:ss）
+     */
+    @NotNull
+    public static String getFormatDate(Date date, String pattern) {
+        if (date == null) {
+            return "";
+        }
+        if (!ValidUtils.isValid(pattern)) {
+            pattern = DATE_FORMAT_DEFAULT;
+        }
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        return format.format(date);
+    }
 
     /**
      * 获取格式化时间
@@ -49,7 +87,7 @@ public class DateUtils {
             timeStamp *= 1000;
         }
         if (TextUtils.isEmpty(pattern)) {
-            pattern = Constants.DATE_FORMAT_DEFAULT;
+            pattern = DATE_FORMAT_DEFAULT;
         }
         SimpleDateFormat format = new SimpleDateFormat(pattern);
         format.setTimeZone(TimeZone.getDefault());
@@ -69,12 +107,18 @@ public class DateUtils {
             return "";
         }
         String parentPattern;
-        if (stringDate.length() == 16) {
-            parentPattern = "yyyy-MM-dd HH:mm";
-        } else if (stringDate.length() == 19) {
-            parentPattern = "yyyy-MM-dd HH:mm:ss";
-        } else {
-            return stringDate;
+        switch (stringDate.length()) {
+            case 10:
+                parentPattern = "yyyy-MM-dd";
+                break;
+            case 16:
+                parentPattern = "yyyy-MM-dd HH:mm";
+                break;
+            case 19:
+                parentPattern = "yyyy-MM-dd HH:mm:ss";
+                break;
+            default:
+                return stringDate;
         }
         SimpleDateFormat sdf1 = new SimpleDateFormat(pattern);
         try {
@@ -85,39 +129,25 @@ public class DateUtils {
         return stringDate;
     }
 
-    /**
-     * 获取系统的时间
-     *
-     * @return String
-     */
-    public static String getCurrentTimeStr() {
-        SimpleDateFormat fort = new SimpleDateFormat("HH:mm:ss");
-        fort.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-        return fort.format(getCurrentTimeStamp());
-    }
 
     /**
-     * 获取当前时间的下一天/ 前一天时间
-     *
-     * @param time time
-     * @param day  正数为以后  负数为以前
-     * @return
+     * 日期转日历
      */
-    public static long getNextDayTimeStamp(long time, int day) {
-        long timeStamp = 0;
-        Calendar cal = Calendar.getInstance();
-        Date date = new Date(time);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+    @NotNull
+    public static Calendar getFormatDate(String stringDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_LINE);
+        Calendar calendar = Calendar.getInstance();
         try {
-            cal.setTime(date);
-            cal.add(Calendar.DATE, 1);
-            timeStamp = getStringToTimeStamp(sdf.format(cal.getTime()));
-        } catch (Exception e) {
+            Date date = sdf.parse(stringDate);
+            if (date != null) {
+                calendar.setTime(date);
+            }
+        } catch (ParseException e) {
             e.printStackTrace();
-            return timeStamp;
         }
-        return timeStamp;
+        return calendar;
     }
+
 
     /**
      * 根据字符串时间获取时间戳
@@ -134,41 +164,13 @@ public class DateUtils {
         }
         try {
             date = simpleDateFormat.parse(stringDate);
-            timeStamp = date.getTime();
+            if (date != null) {
+                timeStamp = date.getTime();
+            }
         } catch (ParseException e) {
             return timeStamp;
         }
         return timeStamp;
-    }
-
-    /**
-     * 根据当前时间获取问候语
-     *
-     * @return 问候语
-     */
-    public static String getTimeTransformation() {
-        Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        if (hour >= 0 && hour < 5) {
-            return "凌晨";
-        } else if (hour >= 5 && hour < 7) {
-            return "清晨";
-        } else if (hour >= 7 && hour < 9) {
-            return "早上";
-        } else if (hour >= 9 && hour < 12) {
-            return "上午";
-        } else if (hour >= 12 && hour < 14) {
-            return "中午";
-        } else if (hour >= 14 && hour < 17) {
-            return "下午";
-        } else if (hour >= 17 && hour < 19) {
-            return "傍晚";
-        } else if (hour >= 19 && hour < 21) {
-            return "晚上";
-        } else if (hour >= 21 && hour < 24) {
-            return "深夜";
-        }
-        return "";
     }
 
     /**
@@ -179,19 +181,95 @@ public class DateUtils {
     public static String dateTransformation(long date) {
         long difference = (getCurrentTimeStamp() / 1000) - (date / 1000);
         if (difference > 0) {
-            if (difference < 60 * 60) {
+            if (difference < SECOND * SECOND) {
+                long temp = difference / 60;
+                if (temp < 1) {
+                    return "1分钟前";
+                }
                 return difference / 60 + "分钟前";
-            } else if (difference < 24 * 60 * 60) {
+            } else if (difference < DAY * SECOND * SECOND) {
 
                 return (int) (difference / 60 / 60) + "小时前";
-            } else if (difference < 30 * 24 * 60 * 60) {
+            } else if (difference < MOUTH * DAY * SECOND * SECOND) {
 
                 return (int) (difference / 60 / 60 / 24) + "日前";
             } else {
-                return getFormatDate(date, Constants.DATE_FORMAT_SLASH);
+                return getFormatDate(date, DATE_FORMAT_SLASH);
             }
         } else {
-            return getFormatDate(date, Constants.DATE_FORMAT_SLASH);
+            return getFormatDate(date, DATE_FORMAT_SLASH);
         }
+    }
+
+    /**
+     * 格式化时间
+     *
+     * @param dateStr 5月21日 17：00
+     * @return String
+     */
+    @Nullable
+    public static String getMessageDate(long dateStr) {
+        try {
+            Date date = new Date();
+            date.setTime(dateStr);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            return String.format("%s月%s日%s:%s", (calendar.get(Calendar.MONTH) + 1),
+                    calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 根据月份返回中文
+     *
+     * @param month 月份
+     * @return 中文
+     */
+    @NotNull
+    @Contract(pure = true)
+    public static String getDateFormatMonth(int month) {
+        switch (month) {
+            case 1:
+                return "一月";
+            case 2:
+                return "二月";
+            case 3:
+                return "三月";
+            case 4:
+                return "四月";
+            case 5:
+                return "五月";
+            case 6:
+                return "六月";
+            case 7:
+                return "七月";
+            case 8:
+                return "八月";
+            case 9:
+                return "九月";
+            case 10:
+                return "十月";
+            case 11:
+                return "十一月";
+            case 12:
+                return "十二月";
+            default:
+                return "";
+        }
+    }
+
+    /**
+     * 计算两个时间的时间差
+     *
+     * @param time 时间
+     * @return 差值
+     */
+    public static long getTimeDifference(long time) {
+        long difference = System.currentTimeMillis() - time;
+        Log.e("时间差：", difference + "|" + difference / 1000);
+        return difference / 1000;
     }
 }

@@ -3,7 +3,7 @@ package com.wss.module.main.ui.page;
 import android.view.View;
 import android.widget.EditText;
 
-import com.wss.common.base.ActionBarActivity;
+import com.wss.common.base.BaseActionBarActivity;
 import com.wss.common.base.mvp.BasePresenter;
 import com.wss.common.utils.ToastUtils;
 import com.wss.common.widget.ObserverButton;
@@ -17,8 +17,7 @@ import butterknife.OnClick;
  * Describe：利用观察者模式对输入框进行监听
  * Created by 吴天强 on 2018/10/26.
  */
-
-public class ObserverButtonActivity extends ActionBarActivity {
+public class ObserverButtonActivity extends BaseActionBarActivity {
 
     @BindView(R2.id.edt_name)
     EditText edtName;
@@ -47,13 +46,13 @@ public class ObserverButtonActivity extends ActionBarActivity {
 
     @Override
     protected void initView() {
-        setTitleText("注册");
+        setCenterText("输完按钮方可点击");
         obBtn.observer(edtName, edtPwd, edtConfirm, edtAge);
     }
 
     @OnClick(R2.id.ob_btn)
     public void onClick(View v) {
-        ToastUtils.show(mContext, "可点击");
+        ToastUtils.show("可点击");
     }
 
 

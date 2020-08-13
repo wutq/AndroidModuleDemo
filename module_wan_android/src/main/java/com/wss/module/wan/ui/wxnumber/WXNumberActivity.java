@@ -1,58 +1,64 @@
 package com.wss.module.wan.ui.wxnumber;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-
+import com.wss.common.adapter.FragmentPagerAdapter;
+import com.wss.common.base.BaseActionBarActivity;
 import com.wss.common.base.BaseFragment;
-import com.wss.common.base.HorizontalTabActivity;
-import com.wss.common.base.mvp.BasePresenter;
+import com.wss.common.base.R2;
 import com.wss.common.bean.HorizontalTabTitle;
+import com.wss.common.widget.PagerSlidingTabStrip;
+import com.wss.module.wan.R;
 import com.wss.module.wan.bean.WXNumber;
 import com.wss.module.wan.ui.wxnumber.fragment.WXArticleFragment;
+import com.wss.module.wan.ui.wxnumber.mvp.WXNumberPresenter;
+import com.wss.module.wan.ui.wxnumber.mvp.contract.WXNumberContract;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+
+import androidx.viewpager.widget.ViewPager;
+import butterknife.BindView;
 
 /**
  * Describe：微信公众号
  * Created by 吴天强 on 2018/11/15.
  */
+public class WXNumberActivity extends BaseActionBarActivity<WXNumberPresenter> implements WXNumberContract.View {
 
-@SuppressWarnings("unchecked")
-public class WXNumberActivity extends HorizontalTabActivity {
+    @BindView(R2.id.pst_tab)
+    PagerSlidingTabStrip tabStrip;
 
-    private ArrayList<WXNumber> wxNumbers = new ArrayList<>();
+    @BindView(R2.id.vp_list)
+    ViewPager viewPager;
+
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getIntent() == null) {
-            finish();
-        }
-        setTitleText("公众号");
-        wxNumbers.addAll((Collection<? extends WXNumber>) getIntent().getSerializableExtra("WXNumbers"));
+    protected WXNumberPresenter createPresenter() {
+        return new WXNumberPresenter();
     }
 
     @Override
-    protected List<HorizontalTabTitle> getTabTitles() {
-        if (wxNumbers.size() < 1) {
-            finish();
-        }
+    public void refreshWxNumber(List<WXNumber> numberList) {
         List<HorizontalTabTitle> tabTitleList = new ArrayList<>();
-        for (WXNumber wx : wxNumbers) {
+        for (WXNumber wx : numberList) {
             tabTitleList.add(new HorizontalTabTitle<>(wx.getName(), wx));
         }
-        return tabTitleList;
+        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(), tabTitleList) {
+            @Override
+            public BaseFragment getTabFragment() {
+                return new WXArticleFragment();
+            }
+        });
+        tabStrip.setViewPager(viewPager);
     }
 
     @Override
-    protected BaseFragment getTabFragment() {
-        return new WXArticleFragment();
+    protected int getLayoutId() {
+        return R.layout.activity_horizontal_tab;
     }
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected void initView() {
+        setCenterText("微信公众号");
+        getPresenter().start();
     }
 }

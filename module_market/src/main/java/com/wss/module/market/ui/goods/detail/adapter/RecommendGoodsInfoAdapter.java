@@ -2,11 +2,10 @@ package com.wss.module.market.ui.goods.detail.adapter;
 
 import android.content.Context;
 import android.graphics.Paint;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wss.common.base.adapter.BaseListAdapter;
-import com.wss.common.listener.OnListItemClickListener;
+import com.wss.common.base.adapter.listener.OnListItemClickListener;
 import com.wss.common.utils.ImageUtils;
 import com.wss.module.market.R;
 import com.wss.module.market.bean.GoodsInfo;
@@ -23,14 +22,13 @@ import java.util.List;
 public class RecommendGoodsInfoAdapter extends BaseListAdapter<GoodsInfo> {
 
 
-    public RecommendGoodsInfoAdapter(Context context, List<GoodsInfo> items, int layoutResId, OnListItemClickListener listener) {
-        super(context, items, layoutResId, listener);
+    public RecommendGoodsInfoAdapter(Context context, List<GoodsInfo> items, OnListItemClickListener<GoodsInfo> listener) {
+        super(context, items, R.layout.market_item_of_goods_recommend_list, listener);
     }
 
     @Override
     public void onBindData(SuperViewHolder holder, int viewType, int layoutPosition, GoodsInfo data) {
-
-        ImageUtils.loadImage((ImageView) holder.findViewById(R.id.iv_goods), data.getGoodsMasterImg());
+        ImageUtils.loadImage(holder.findViewById(R.id.iv_goods), data.getGoodsMasterImg());
         holder.setText(R.id.tv_goods_name, data.getGoodsName());
         holder.setText(R.id.tv_goods_price, String.format("¥%s", data.getGoodsPrice()));
 

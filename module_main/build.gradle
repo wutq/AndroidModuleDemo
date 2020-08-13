@@ -61,8 +61,8 @@ dependencies {
     //公用依赖包
     implementation project(':common_base')
     //Arouter路由
-    annotationProcessor rootProject.ext.dependencies["arouter_compiler"]
+    annotationProcessor rootProject.ext.dependencies["arouterCompiler"]
     //黄油刀
-    annotationProcessor rootProject.ext.dependencies["butterknife_compiler"]
+    annotationProcessor rootProject.ext.dependencies["butterknifeCompiler"]
 
 }

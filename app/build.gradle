@@ -47,22 +47,18 @@ android {
     }
 }
 
-configurations.all {
-    resolutionStrategy.force 'com.android.support:support-annotations:27.1.1'
-}
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    annotationProcessor rootProject.ext.dependencies["butterknife_compiler"]
+    annotationProcessor rootProject.ext.dependencies["butterknifeCompiler"]
 
     //公用依赖包
     implementation project(':common_base')
-    if (!Boolean.valueOf(rootProject.ext.isModule)) {
-        //main模块
-        implementation project(':module_main')
-        implementation project(':module_market')
-        implementation project(':module_wan_android')
-        implementation project(':module_user')
-
-    }
+    //main模块
+    implementation project(':module_main')
+    //商城模块
+    implementation project(':module_market')
+    //用户模块
+    implementation project(':module_user')
+    //玩Android模块
+    implementation project(':module_wan_android')
 }

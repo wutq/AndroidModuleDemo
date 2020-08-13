@@ -3,7 +3,7 @@
     android:id="@+id/dialog_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/corners_blue_shape"
+    android:background="@drawable/corners_black_shape"
     android:gravity="center"
     android:minWidth="100dp"
     android:orientation="vertical"

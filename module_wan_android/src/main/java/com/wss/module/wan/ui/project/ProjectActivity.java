@@ -1,68 +1,60 @@
 package com.wss.module.wan.ui.project;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-
-import com.wss.common.base.RefreshListActivity;
-import com.wss.common.utils.ActivityToActivity;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.wss.common.base.BaseRefreshListActivity;
+import com.wss.common.manage.ActivityToActivity;
 import com.wss.common.utils.ToastUtils;
-import com.wss.module.wan.R;
+import com.wss.common.utils.ValidUtils;
 import com.wss.module.wan.bean.Article;
 import com.wss.module.wan.bean.Classification;
 import com.wss.module.wan.ui.project.adapter.ProjectListAdapter;
-import com.wss.module.wan.ui.project.mvp.contract.ProjectContract;
 import com.wss.module.wan.ui.project.mvp.ProjectPresenter;
+import com.wss.module.wan.ui.project.mvp.contract.ProjectContract;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Describe：项目
  * Created by 吴天强 on 2018/11/15.
  */
-
-public class ProjectActivity extends RefreshListActivity<ProjectPresenter> implements ProjectContract.View,
-        TypePopupWindow.OnProjectTypeClickListener {
+public class ProjectActivity extends BaseRefreshListActivity<ProjectPresenter> implements ProjectContract.View {
 
     private List<Classification> types = new ArrayList<>();
     private List<Article> projects = new ArrayList<>();
 
-    private Classification currentClassification;//当前显示的项目分类
+    /**
+     * 当前显示的项目分类
+     */
+    private Classification currentClassification;
     private int page = 1;
 
     @Override
     protected void initView() {
         super.initView();
-        actionBar.setRightText("项目", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new TypePopupWindow(mContext)
-                        .setData(types)
-                        .setCurrent(currentClassification)
-                        .setListener(ProjectActivity.this)
-                        .show(v);
-            }
-        });
-        presenter.getProjectType();
+        getTitleBar().setRightText("分类", v -> new TypePopupWindow(context)
+                .setData(types)
+                .setCurrent(currentClassification)
+                .setListener(classification -> {
+                    if (classification != null) {
+                        currentClassification = classification;
+                        setCenterText(currentClassification.getName());
+                        resetPage();
+                    }
+                })
+                .show(v));
+        getPresenter().start();
     }
 
-    @Override
-    public void onRefresh() {
-        page = 1;
-        projects.clear();
-        presenter.getProject();
-    }
-
-    @Override
-    public void onLoadMore() {
-        page++;
-        presenter.getProject();
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-        ActivityToActivity.toWebView(mContext, projects.get(position).getLink());
+    private void resetPage() {
+        page = 0;
+        getPresenter().getProject();
+        this.projects.clear();
     }
 
     @Override
@@ -76,40 +68,30 @@ public class ProjectActivity extends RefreshListActivity<ProjectPresenter> imple
     }
 
     @Override
-    public void projectTypeList(List<Classification> types) {
+    public void refreshProjectTypeList(List<Classification> types) {
         this.types.addAll(types);
-        currentClassification = types.get(0);
-        if (currentClassification != null) {
-            setTitleText(currentClassification.getName());
-            onRefresh();
-        } else {
-            showEmptyView("暂无项目数据");
+        if (ValidUtils.isValid(types, 0)) {
+            currentClassification = types.get(0);
+            if (currentClassification != null) {
+                setCenterText(currentClassification.getName());
+                resetPage();
+            } else {
+                showEmptyView("暂无项目数据");
+            }
         }
     }
 
     @Override
-    public void projectList(List<Article> projects) {
+    public void refreshProjectList(List<Article> projects) {
+        int position = this.projects.size();
         this.projects.addAll(projects);
-        adapter.notifyDataSetChanged();
+        getAdapter().notifyDataSetChanged();
+        if (page > 0) {
+            getRecyclerView().smoothScrollToPosition(position + 3);
+        }
+        page++;
     }
 
-    @Override
-    public void onProjectError(String message) {
-        if (page == 1) {
-            showEmptyView(message);
-        } else {
-            ToastUtils.show(mContext, message);
-        }
-    }
-
-    @Override
-    public void onProjectEmpty() {
-        if (page == 1) {
-            showEmptyView("暂无项目数据");
-        } else {
-            ToastUtils.show(mContext, "暂无更多项目数据");
-        }
-    }
 
     @Override
     protected ProjectPresenter createPresenter() {
@@ -118,34 +100,39 @@ public class ProjectActivity extends RefreshListActivity<ProjectPresenter> imple
 
     @Override
     protected RecyclerView.LayoutManager getLayoutManager() {
-        return new LinearLayoutManager(mContext);
+        return new LinearLayoutManager(context);
+    }
+
+    @Override
+    protected OnRefreshLoadMoreListener createRefreshListener() {
+        return new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                getPresenter().getProject();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                resetPage();
+            }
+        };
     }
 
     @Override
     public void onEmpty(Object tag) {
         super.onEmpty(tag);
-        showEmptyView("暂无项目");
-
+        ToastUtils.show(getPage() > 0 ? "暂无更多数据~" : "暂无数据");
     }
 
     @Override
     public void onError(Object tag, String errorMsg) {
         super.onError(tag, errorMsg);
-        showEmptyView(errorMsg);
+        ToastUtils.show(errorMsg);
     }
 
     @Override
     protected RecyclerView.Adapter createAdapter() {
-        return new ProjectListAdapter(mContext, projects, R.layout.wan_item_of_project_list, this);
-    }
-
-    @Override
-    public void onProjectTypeClick(Classification classification) {
-        //选择了一个分类
-        if (classification != null) {
-            this.currentClassification = classification;
-            setTitleText(currentClassification.getName());
-            onRefresh();
-        }
+        return new ProjectListAdapter(context, projects,
+                (data, position) -> ActivityToActivity.toWebView(context, data.getLink()));
     }
 }

@@ -2,29 +2,24 @@ package com.wss.common.base;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.gyf.barlibrary.ImmersionBar;
-import com.orhanobut.logger.Logger;
+import com.gyf.immersionbar.BarHide;
+import com.gyf.immersionbar.ImmersionBar;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.wss.common.bean.Event;
 import com.wss.common.utils.EventBusUtils;
-import com.wss.common.widget.dialog.LoadingDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.Arrays;
-
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -32,53 +27,72 @@ import butterknife.Unbinder;
  * Describe：所有Activity的基类
  * Created by 吴天强 on 2018/10/15.
  */
-
 public abstract class BaseActivity extends FragmentActivity {
-
 
     private Unbinder unbinder;
     private ViewStub emptyView;
-    protected Context mContext;
-    protected ImmersionBar mImmersionBar;
-    protected LoadingDialog loadingDialog;
-
+    protected Context context;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = this;
+        //加入Activity管理器
+        BaseApplication.i().getActivityManage().addActivity(this);
+        context = this;
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        if (isActionBar()) {
+        if (!isFullScreenLayout()) {
             setContentView(R.layout.activity_base);
             ((ViewGroup) findViewById(R.id.fl_content)).addView(getLayoutInflater().inflate(getLayoutId(), null));
-        } else {
-            setContentView(getLayoutId());
+            unbinder = ButterKnife.bind(this);
         }
-        //初始化ButterKnife
-        unbinder = ButterKnife.bind(this);
-
-        //沉浸式状态栏
-        initImmersionBar(R.color.blue);
-
-        //加入Activity管理器
-        BaseApplication.getApplication().getActivityManage().addActivity(this);
-        if (regEvent()) {
+        if (registerEventBus()) {
             EventBusUtils.register(this);
         }
-        loadingDialog = new LoadingDialog(mContext);
+    }
 
+    /**
+     * 设置沉浸栏颜色
+     *
+     * @param statusBarColor 颜色
+     */
+    protected void setImmersionBarColor(int statusBarColor) {
+        setImmersionBarColor(statusBarColor, false);
+    }
+
+    /**
+     * 设置沉浸栏颜色
+     *
+     * @param statusBarColor 沉浸栏颜色
+     */
+    protected void setImmersionBarColor(int statusBarColor, boolean fitsSystemWindows) {
+        setImmersionBarColor(statusBarColor, R.color.black, fitsSystemWindows);
     }
 
 
     /**
-     * 沉浸栏颜色
+     * 设置沉浸栏颜色
+     *
+     * @param statusBarColor     沉浸栏颜色
+     * @param navigationBarColor 沉浸栏图标颜色
      */
-    protected void initImmersionBar(int color) {
-        mImmersionBar = ImmersionBar.with(this);
-        if (color != 0) {
-            mImmersionBar.statusBarColor(color);
-        }
-        mImmersionBar.init();
+    protected void setImmersionBarColor(int statusBarColor, int navigationBarColor, boolean fitsSystemWindows) {
+        ImmersionBar.with(this)
+                .statusBarColor(statusBarColor)
+                .navigationBarColor(navigationBarColor)
+                .fitsSystemWindows(fitsSystemWindows)
+                .autoDarkModeEnable(true)
+                .statusBarDarkFont(true)
+                .init();
+    }
+
+    /**
+     * 隐藏状态栏、导航栏
+     */
+    protected void setImmersionBarHide() {
+        ImmersionBar.with(this)
+                .fitsSystemWindows(false)
+                .hideBar(BarHide.FLAG_HIDE_BAR)
+                .init();
     }
 
     @Override
@@ -87,15 +101,11 @@ public abstract class BaseActivity extends FragmentActivity {
         if (unbinder != null) {
             unbinder.unbind();
         }
-        if (regEvent()) {
+        if (registerEventBus()) {
             EventBusUtils.unregister(this);
         }
-        //必须调用该方法，防止内存泄漏
-        if (mImmersionBar != null) {
-            mImmersionBar.destroy();
-        }
         //将Activity从管理器移除
-        BaseApplication.getApplication().getActivityManage().removeActivity(this);
+        BaseApplication.i().getActivityManage().removeActivity(this);
     }
 
     @Override
@@ -104,39 +114,91 @@ public abstract class BaseActivity extends FragmentActivity {
         initView();
     }
 
-    //***************************************空页面方法*************************************
-    protected void showEmptyView(String text) {
-        showEmptyOrErrorView(text, R.drawable.bg_no_data);
+
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+        if (isAnimate()) {
+            overridePendingTransition(R.anim.anim_right_in, R.anim.anim_right_out);
+        }
     }
 
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        super.startActivityForResult(intent, requestCode);
+        if (isAnimate()) {
+            overridePendingTransition(R.anim.anim_right_in, R.anim.anim_right_out);
+        }
+    }
+
+    @Override
+    public void finish() {
+        if (isAnimate()) {
+            overridePendingTransition(R.anim.anim_right_in, R.anim.anim_right_out);
+        }
+        super.finish();
+    }
+
+
+    //***************************************空页面方法 start*************************************
+
+    /**
+     * 数据为空页面
+     */
     protected void showEmptyView() {
         showEmptyView(getString(R.string.no_data));
     }
 
-    protected void showErrorView(String text) {
-        showEmptyOrErrorView(text, R.drawable.bg_no_net);
+    /**
+     * 数据为空页面
+     *
+     * @param text 显示文案
+     */
+    protected void showEmptyView(String text) {
+        showEmptyOrErrorView(text, R.drawable.bg_no_data, false);
     }
 
+
+    /**
+     * 请求数据报错页面
+     */
     protected void showErrorView() {
-        showErrorView(getString(R.string.error_data));
+        showErrorView(getString(R.string.network_error_server_error));
     }
 
-    public void showEmptyOrErrorView(String text, int img) {
+    /**
+     * 请求数据报错页面
+     *
+     * @param text 显示文案
+     */
+    protected void showErrorView(String text) {
+        showEmptyOrErrorView(text, R.drawable.bg_no_net                                                                                                                             , true);
+    }
 
+
+    /**
+     * 请求数据报错或者为空页面
+     *
+     * @param text      提示文案
+     * @param iconResId 显示的icon
+     */
+    public void showEmptyOrErrorView(String text, int iconResId, boolean showRefreshButton) {
         if (emptyView == null) {
             emptyView = findViewById(R.id.vs_empty);
         }
         emptyView.setVisibility(View.VISIBLE);
-        findViewById(R.id.iv_empty).setBackgroundResource(img);
+        findViewById(R.id.iv_empty).setBackgroundResource(iconResId);
         ((TextView) findViewById(R.id.tv_empty)).setText(text);
-        findViewById(R.id.ll_empty).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onPageClick();
-            }
-        });
+        if (showRefreshButton) {
+            View refreshButton = findViewById(R.id.tv_try_again);
+            refreshButton.setVisibility(View.VISIBLE);
+            refreshButton.setOnClickListener(v -> onRefreshRetry());
+        }
     }
 
+    /**
+     * 隐藏空页面
+     */
     protected void hideEmptyView() {
         if (emptyView != null) {
             emptyView.setVisibility(View.GONE);
@@ -144,69 +206,72 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     /**
-     * 空页面被点击
+     * 刷新重试
      */
-    protected void onPageClick() {
-
+    protected void onRefreshRetry() {
     }
 
-    //***************************************空页面方法*********************************
+    //***************************************空页面方法 end*********************************
 
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        Logger.e("permissions:" + Arrays.toString(permissions) + " grantResults:" + Arrays.toString(grantResults));
-
-        //如果有未授权权限则跳转设置页面
-        if (!requestPermissionsResult(grantResults)) {
-            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            intent.setData(Uri.parse("package:" + getPackageName()));
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+    /**
+     * 停止刷新和加载更多
+     *
+     * @param layout 刷新layout
+     */
+    protected void stopRefresh(SmartRefreshLayout layout) {
+        if (layout == null) {
+            return;
         }
-
-
+        layout.finishLoadMore();
+        layout.finishRefresh();
     }
 
     /**
-     * 判断授权结果
+     * 是否布局伸入状态栏类型Activity
+     *
+     * @return boolean
      */
-    private boolean requestPermissionsResult(int[] grantResults) {
-        for (int code : grantResults) {
-            if (code == -1) {
-                return false;
-            }
-        }
+    protected boolean isFullScreenLayout() {
+        return false;
+    }
+
+    /**
+     * 切换页面是否需要过渡动画
+     *
+     * @return boolean
+     */
+    protected boolean isAnimate() {
         return true;
     }
 
+    /**
+     * 需要接收事件 重写该方法 并返回true
+     *
+     * @return boolean
+     */
+    protected boolean registerEventBus() {
+        return false;
+    }
 
     /**
      * 子类接受事件 重写该方法
+     *
+     * @param event 事件
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventBus(Event event) {
     }
 
-
     /**
-     * 是否需要ActionBar
-     * TODO 暂时用此方法 后续优化
+     * 返回页面layout
+     *
+     * @return layout
      */
-    protected boolean isActionBar() {
-        return false;
-    }
-
-    /**
-     * 需要接收事件 重写该方法 并返回true
-     */
-    protected boolean regEvent() {
-        return false;
-    }
-
     protected abstract int getLayoutId();
 
+    /**
+     * 初始化View
+     */
     protected abstract void initView();
 
 }

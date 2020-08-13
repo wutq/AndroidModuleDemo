@@ -2,8 +2,8 @@ package com.wss.common.widget.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextUtils;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
@@ -11,7 +11,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -20,14 +19,19 @@ import com.wss.common.base.R;
 import com.wss.common.base.R2;
 import com.wss.common.utils.KeyboardUtils;
 import com.wss.common.utils.PxUtils;
-import com.wss.common.widget.CountClickView;
+import com.wss.common.utils.ValidUtils;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
+import butterknife.Unbinder;
 
 /**
  * Describe：自定义对话框
@@ -35,162 +39,63 @@ import butterknife.OnClick;
  */
 public class AppDialog {
 
+    private static final int MAX_ITEM = 7;
 
+    /**
+     * 对话框的顶级父类
+     */
     @BindView(R2.id.dialog_layout)
-    LinearLayout dialogLayout;//对话框的顶级父类
+    LinearLayout dialogLayout;
 
+    /**
+     * 中间显示的Dialog 父View
+     */
     @BindView(R2.id.ll_center)
-    LinearLayout llCenter;//中间显示的Dialog 父View
+    LinearLayout llCenter;
     @BindView(R2.id.tv_title)
     TextView tvTitle;
     @BindView(R2.id.tv_content)
     TextView tvContent;
     @BindView(R2.id.edt_input)
     EditText edtInput;
-    @BindView(R2.id.iv_minus)
-    ImageView ivMinus;
-    @BindView(R2.id.edt_count)
-    EditText edtCount;
-    @BindView(R2.id.iv_plus)
-    ImageView ivPlus;
-    @BindView(R2.id.ll_count_view)
-    LinearLayout llCountView;
+
     @BindView(R2.id.btn_left)
     Button btnLeft;
     @BindView(R2.id.btn_right)
     Button btnRight;
     @BindView(R2.id.btn_line)
     View btnLine;
+
+    /**
+     * 中间弹出对话框的Content View
+     */
     @BindView(R2.id.ll_content_layout)
-    LinearLayout contentLayout;//中间弹出对话框的View
+    LinearLayout contentLayout;
+    @BindView(R2.id.center_scroll_view)
+    ScrollView centerScrollView;
 
-
+    /**
+     * 底部弹出的Dialog 父View
+     */
     @BindView(R2.id.ll_bottom)
-    LinearLayout llBottom;//底部弹出的Dialog 父View
-    @BindView(R2.id.tv_bottom_title)
-    TextView tvBottomTitle;
+    LinearLayout llBottom;
     @BindView(R2.id.ll_context)
     LinearLayout llContext;
-    @BindView(R2.id.sLayout_content)
-    ScrollView sLayoutContent;
+    @BindView(R2.id.bottom_scroll_view)
+    ScrollView bottomScrollView;
     @BindView(R2.id.tv_cancel)
     TextView tvCancel;
 
-    @DialogType.Type
-    private int type;
-    private int maxCount = CountClickView.MAX_COUNT;
-    private int minCount = CountClickView.MIN_COUNT;
     private Dialog dialog;
-    private Context mContext;
+    private Unbinder butterKnifeBinder;
+    private Builder builder;
 
-    private OnButtonClickListener leftListener;
-    private OnButtonClickListener rightListener;
-    private OnItemClickListener itemClickListener;
-    private String title;//标题
+    private AppDialog() {
 
-    public AppDialog(Context context) {
-        this(context, DialogType.DEFAULT);
     }
 
-    public AppDialog(Context context, @DialogType.Type int type) {
-        this.mContext = context;
-        this.type = type;
-        View dialogView = View.inflate(mContext, R.layout.dialog_app, null);
-        ButterKnife.bind(this, dialogView);
-        int themeResId = R.style.DialogStyle;
-        if (type == DialogType.BOTTOM_IN) {
-            themeResId = R.style.ActionSheetDialogStyle;
-            dialogView.setMinimumWidth(PxUtils.getScreenWidth(mContext));
-        }
-        dialog = new Dialog(mContext, themeResId);
-        dialog.setContentView(dialogView);
-        Window window = dialog.getWindow();
-        if (window != null) {
-            if (type == DialogType.BOTTOM_IN) {
-                window.getAttributes().gravity = Gravity.BOTTOM;
-                WindowManager.LayoutParams lp = window.getAttributes();
-                lp.x = 0;
-                lp.y = 0;
-                window.setAttributes(lp);
-            } else {
-                window.getAttributes().gravity = Gravity.CENTER;
-            }
-        }
-        dialog.setCanceledOnTouchOutside(false);
-    }
-
-    private void initView() {
-        switch (type) {
-            case DialogType.DEFAULT:
-                setTitleText();
-                break;
-            case DialogType.INPUT:
-                setTitleText();
-                edtInput.setVisibility(View.VISIBLE);
-                tvContent.setVisibility(View.GONE);
-                llCountView.setVisibility(View.GONE);
-                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                break;
-            case DialogType.COUNT:
-                setTitleText();
-                edtInput.setVisibility(View.GONE);
-                tvContent.setVisibility(View.GONE);
-                llCountView.setVisibility(View.VISIBLE);
-                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                break;
-            case DialogType.NO_TITLE:
-                tvTitle.setVisibility(View.GONE);
-                break;
-            case DialogType.BOTTOM_IN:
-                //底部弹出对话框
-                tvBottomTitle.setText(title);
-                llCenter.setVisibility(View.GONE);
-                llBottom.setVisibility(View.VISIBLE);
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void setTitleText() {
-        if (!TextUtils.isEmpty(title)) {
-            tvTitle.setText(title);
-        }
-    }
-
-
-    /**
-     * 设置Title
-     */
-    public AppDialog setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    /**
-     * 设置显示内容
-     */
-    public AppDialog setContent(String content) {
-        tvContent.setText(content);
-        return this;
-    }
-
-
-    /**
-     * 加减输入模式下 设置的数字
-     *
-     * @param minCount minCount
-     * @param maxCount maxCount
-     * @param current  current
-     */
-    public AppDialog setNumber(int minCount, int maxCount, int current) {
-        this.minCount = minCount;
-        this.maxCount = maxCount;
-        edtCount.setText(String.valueOf(current));
-        edtCount.setSelection(edtCount.getText().length());
-        edtCount.addTextChangedListener(textWatcher);
-        judgeTheViews(current);
-        return this;
+    private AppDialog(Builder builder) {
+        this.builder = builder;
     }
 
     /**
@@ -201,6 +106,10 @@ public class AppDialog {
         dialog.show();
     }
 
+    public boolean isShowing() {
+        return dialog != null && dialog.isShowing();
+    }
+
     /**
      * 关闭对话框
      */
@@ -208,276 +117,182 @@ public class AppDialog {
         if (dialog != null) {
             dialog.dismiss();
         }
-    }
-
-    /**
-     * 给左边按钮设置文字 事件
-     *
-     * @param text     文字
-     * @param listener 事件
-     * @return AppDialog
-     */
-    public AppDialog setLeftButton(String text, OnButtonClickListener listener) {
-        this.leftListener = listener;
-        if (!TextUtils.isEmpty(text)) {
-            btnLeft.setText(text);
+        if (butterKnifeBinder != null) {
+            butterKnifeBinder.unbind();
         }
-        return this;
     }
 
     /**
-     * 给左边按钮设置文字 事件
-     *
-     * @param listener 事件
-     * @return AppDialog
+     * 初始化View
      */
-    public AppDialog setLeftButton(OnButtonClickListener listener) {
-        return setLeftButton(null, listener);
-    }
-
-    /**
-     * 给左边按钮设置文字 事件
-     *
-     * @param text text
-     * @return AppDialog
-     */
-    public AppDialog setLeftButton(String text) {
-        return setLeftButton(text, null);
-    }
-
-
-    /**
-     * 给右边按钮设置文字 事件
-     *
-     * @param text     文字
-     * @param listener 事件
-     * @return AppDialog
-     */
-    public AppDialog setRightButton(String text, OnButtonClickListener listener) {
-        this.rightListener = listener;
-        if (!TextUtils.isEmpty(text)) {
-            btnRight.setText(text);
+    private void initView() {
+        View dialogView = View.inflate(builder.context, R.layout.dialog_app, null);
+        butterKnifeBinder = ButterKnife.bind(this, dialogView);
+        int themeResId = R.style.DialogStyle;
+        if (builder.type == DialogType.BOTTOM_IN) {
+            themeResId = R.style.ActionSheetDialogStyle;
+            dialogView.setMinimumWidth(PxUtils.getScreenWidth(builder.context));
         }
-        return this;
-    }
-
-    /**
-     * 给右边按钮设置文字 事件
-     *
-     * @param listener 事件
-     * @return AppDialog
-     */
-    public AppDialog setRightButton(OnButtonClickListener listener) {
-        return setRightButton(null, listener);
-    }
-
-    /**
-     * 给右边按钮设置文字 事件
-     *
-     * @param text text
-     * @return AppDialog
-     */
-    public AppDialog setRightButton(String text) {
-        return setRightButton(text, null);
-    }
-
-    /**
-     * 左按钮文字颜色
-     *
-     * @param color color
-     * @return AppDialog
-     */
-    public AppDialog setLeftButtonTextColor(int color) {
-        btnLeft.setTextSize(mContext.getResources().getColor(color));
-        return this;
-    }
-
-    /**
-     * 右按钮文字大小
-     *
-     * @param color color
-     * @return AppDialog
-     */
-    public AppDialog setRightButtonTextColor(int color) {
-        btnRight.setTextSize(mContext.getResources().getColor(color));
-        return this;
-    }
-
-    /**
-     * 单按钮文字大小
-     *
-     * @param color color
-     * @return AppDialog
-     */
-    public AppDialog setSingleButtonTextColor(int color) {
-        return setRightButtonTextColor(color);
-    }
-
-
-    /**
-     * 单按钮
-     *
-     * @param text     text
-     * @param listener listener
-     * @return AppDialog
-     */
-    public AppDialog setSingleButton(String text, OnButtonClickListener listener) {
-        this.rightListener = listener;
-        if (!TextUtils.isEmpty(text)) {
-            btnRight.setText(text);
+        dialog = new Dialog(builder.context, themeResId);
+        dialog.setContentView(dialogView);
+        Window window = dialog.getWindow();
+        if (window != null) {
+            if (builder.type == DialogType.BOTTOM_IN) {
+                window.getAttributes().gravity = Gravity.BOTTOM;
+                WindowManager.LayoutParams lp = window.getAttributes();
+                lp.x = 0;
+                lp.y = 0;
+                window.setAttributes(lp);
+            } else {
+                window.getAttributes().gravity = Gravity.CENTER;
+            }
         }
-        btnLeft.setVisibility(View.GONE);
-        btnLine.setVisibility(View.GONE);
-        btnRight.setBackgroundResource(R.drawable.corners_white_gray_selecter);
-        return this;
-    }
-
-    /**
-     * 单按钮
-     *
-     * @param listener listener
-     * @return AppDialog
-     */
-    public AppDialog setSingleButton(OnButtonClickListener listener) {
-        return setSingleButton(null, listener);
-    }
-
-    /**
-     * 单按钮
-     *
-     * @param text listener
-     * @return AppDialog
-     */
-    public AppDialog setSingleButton(String text) {
-        return setSingleButton(text, null);
-    }
-
-    /**
-     * 单按钮
-     *
-     * @return AppDialog
-     */
-    public AppDialog setSingleButton() {
-        return setSingleButton(null, null);
-    }
-
-    /**
-     * 设置底部弹出对话框的条目
-     *
-     * @param items    条目名称
-     * @param listener listener
-     * @return AppDialog
-     */
-    public AppDialog setBottomItems(List<String> items, OnItemClickListener listener) {
-        this.itemClickListener = listener;
-        setItems(items);
-        return this;
-    }
-
-    /**
-     * 设置底部弹出对话框的取消文字
-     *
-     * @param text text
-     * @return AppDialog
-     */
-    public AppDialog setBottomCancelText(String text) {
-        if (!TextUtils.isEmpty(text)) {
-            tvCancel.setText(text);
+        dialog.setCanceledOnTouchOutside(builder.canceledOnTouchOutside);
+        dialog.setCancelable(builder.cancelable);
+        dialog.setOnDismissListener(builder.dialogDismissListener);
+        switch (builder.type) {
+            case DialogType.INPUT:
+                //带文本框输入
+                setInputSetting();
+                break;
+            case DialogType.NO_TITLE:
+                tvTitle.setVisibility(View.GONE);
+                setCommonSetting();
+                break;
+            case DialogType.BOTTOM_IN:
+                //底部弹出对话框
+                setBottomSetting();
+                break;
+            case DialogType.REPLACE_ALL:
+                //替换全部View
+                dialogLayout.removeAllViews();
+                dialogLayout.addView(builder.allDialogView);
+                break;
+            case DialogType.REPLACE_CONTENT:
+                //替换Content View
+                contentLayout.removeAllViews();
+                contentLayout.addView(builder.contentView);
+                break;
+            case DialogType.REPLACE_BOTTOM:
+                //替换底部View
+                llBottom.setVisibility(View.VISIBLE);
+                llBottom.removeAllViews();
+                llBottom.addView(builder.bottomView);
+                break;
+            case DialogType.DEFAULT:
+                //默认对话框
+            default:
+                setCommonSetting();
+                break;
         }
-        return this;
-    }
-
-    /**
-     * 设置底部弹出对话框的取消文字颜色
-     *
-     * @param color text
-     * @return AppDialog
-     */
-    public AppDialog setBottomCancelTextColor(int color) {
-        tvCancel.setTextColor(mContext.getResources().getColor(color));
-        return this;
     }
 
 
     /**
-     * 给整个Dialog添加View
-     *
-     * @param view view
-     * @return AppDialog
+     * 常规对话框相关设置
      */
-    public AppDialog addDialogView(View view) {
-        dialogLayout.removeAllViews();
-        dialogLayout.addView(view);
-        return this;
+    private void setCommonSetting() {
+        llCenter.setVisibility(View.VISIBLE);
+        tvContent.setTextSize(builder.contentTextSize);
+        btnLeft.setTextSize(builder.leftButtonTextSize);
+        btnRight.setTextSize(builder.rightButtonTextSize);
+        tvContent.setTextColor(builder.contentTextColor);
+        btnLeft.setTextColor(builder.leftButtonTextColor);
+        btnRight.setTextColor(builder.rightButtonTextColor);
+        if (ValidUtils.isValid(builder.title)) {
+            tvTitle.setText(builder.title);
+        }
+        if (ValidUtils.isValid(builder.letButtonText)) {
+            btnLeft.setText(builder.letButtonText);
+        }
+        if (ValidUtils.isValid(builder.rightButtonText)) {
+            btnRight.setText(builder.rightButtonText);
+        }
+        tvContent.setText(builder.content);
+        centerScrollView.post(() -> {
+            int height = centerScrollView.getHeight();
+            int max = PxUtils.getScreenHeight(builder.context) * 3 / 5;
+            if (height > max) {
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) bottomScrollView.getLayoutParams();
+                params.height = max;
+                centerScrollView.setLayoutParams(params);
+            }
+        });
+        if (builder.isSingleButton) {
+            //单按钮
+            btnLeft.setVisibility(View.GONE);
+            btnLine.setVisibility(View.GONE);
+            btnRight.setBackgroundResource(R.drawable.corners_white_gray_selecter);
+        }
+    }
+
+
+    /**
+     * 文本框输入类型相关设置
+     */
+    private void setInputSetting() {
+        setCommonSetting();
+        edtInput.setVisibility(View.VISIBLE);
+        tvContent.setVisibility(View.GONE);
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+        edtInput.setTextSize(builder.inputTextSize);
+        edtInput.setTextColor(builder.inputTextColor);
+        edtInput.setHintTextColor(builder.inputHintTextColor);
+        if (builder.textWatcher != null) {
+            edtInput.addTextChangedListener(builder.textWatcher);
+        }
+        if (ValidUtils.isValid(builder.inputHintText)) {
+            edtInput.setHint(builder.inputHintText);
+        }
+        if (ValidUtils.isValid(builder.inputDefaultText)) {
+            edtInput.setText(builder.inputDefaultText);
+            edtInput.setSelection(builder.inputDefaultText.length());
+        }
     }
 
     /**
-     * 中间弹出对话框添加View
-     *
-     * @param view view
-     * @return AppDialog
+     * 底部弹出类型相关设置
      */
-    public AppDialog addContentView(View view) {
-        contentLayout.removeAllViews();
-        contentLayout.addView(view);
-        return this;
-    }
-
-    /**
-     * 底部弹出对话框添加View
-     *
-     * @param view     view
-     * @param itemSize 条目数量
-     * @return AppDialog
-     */
-    public AppDialog addItemView(View view, int itemSize) {
+    private void setBottomSetting() {
+        llBottom.setVisibility(View.VISIBLE);
+        tvCancel.setTextSize(builder.bottomCancelTextSize);
+        tvCancel.setTextColor(builder.bottomCancelTextColor);
+        if (ValidUtils.isValid(builder.bottomTitleText)) {
+            tvCancel.setText(builder.bottomCancelText);
+        }
+        int size = ValidUtils.isValid(builder.bottomItems) ? builder.bottomItems.size() : 0;
+        setItemScrollViewHeight(size);
         llContext.removeAllViews();
-        llContext.addView(view);
-        setItemScrollViewHeight(itemSize);
-        return this;
+        for (int i = 0; i < size; i++) {
+            View v = View.inflate(builder.context, R.layout.layout_item_of_dialog_bottom_in, null);
+            TextView item = v.findViewById(R.id.tv_text);
+            item.setText(builder.bottomItems.get(i));
+            item.setTag(i);
+            item.setTextColor(builder.bottomItemTextColor);
+            item.setTextSize(builder.bottomItemTextSize);
+            item.setOnClickListener(v1 -> {
+                if (builder.itemClickListener != null) {
+                    builder.itemClickListener.onItemClick((int) v1.getTag(), ((TextView) v1).getText().toString());
+                }
+                dismiss();
+            });
+            llContext.addView(v);
+        }
     }
 
-
-    @OnClick({R2.id.btn_left, R2.id.btn_right, R2.id.minus, R2.id.plus, R2.id.tv_cancel})
-    public void onClick(View v) {
+    @OnClick({R2.id.btn_left, R2.id.btn_right, R2.id.tv_cancel})
+    public void onClick(@NonNull View v) {
         if (v.getId() == R.id.btn_left) {
-            onButtonClick(leftListener);
+            onButtonClick(builder.letButtonListener);
         } else if (v.getId() == R.id.btn_right) {
-            onButtonClick(rightListener);
-        } else if (v.getId() == R.id.minus) {
-            //减少
-            int count = getCountEdtValue();
-            if (getCountEdtValue() > minCount) {
-                edtCount.setText(String.valueOf(--count));
-            }
-            judgeTheViews(count);
-        } else if (v.getId() == R.id.plus) {
-            //增加
-            int count = getCountEdtValue();
-            if (count < maxCount) {
-                edtCount.setText(String.valueOf(++count));
-            }
-            judgeTheViews(count);
+            onButtonClick(builder.rightButtonListener);
         } else if (v.getId() == R.id.tv_cancel) {
             dismiss();
         }
     }
 
-    /**
-     * 加减模式下点击结束结算值
-     */
-    private void judgeTheViews(int count) {
-        if (count == minCount) {
-            ivMinus.setImageResource(R.drawable.input_minus_disabled);
-        } else {
-            ivMinus.setImageResource(R.drawable.input_minus_default);
-        }
-        if (count == maxCount) {
-            ivPlus.setImageResource(R.drawable.input_add_disabled);
-        } else {
-            ivPlus.setImageResource(R.drawable.input_add_default);
-        }
-    }
 
     /**
      * 给点击事件设置数据
@@ -485,15 +300,7 @@ public class AppDialog {
      * @param listener listener
      */
     private void onButtonClick(OnButtonClickListener listener) {
-
-        if (type == DialogType.COUNT) {
-            if (getCountEdtValue() >= minCount) {
-                if (listener != null) {
-                    listener.onClick(String.valueOf(getCountEdtValue()));
-                }
-            }
-            KeyboardUtils.hideKeyboard(edtCount);
-        } else if (type == DialogType.INPUT) {
+        if (builder.type == DialogType.INPUT) {
             if (listener != null) {
                 listener.onClick(edtInput.getText().toString().trim());
             }
@@ -507,108 +314,643 @@ public class AppDialog {
     }
 
     /**
-     * 底部弹出对话框添加条目
-     *
-     * @param items items
-     */
-    private void setItems(List<String> items) {
-        if (items != null && items.size() > 0) {
-            int size = items.size();
-            setItemScrollViewHeight(size);
-            // 循环添加条目
-            for (int i = 0; i <= size - 1; i++) {
-                View v = View.inflate(mContext, R.layout.layout_item_of_dialog_bottom_in, null);
-                TextView item = v.findViewById(R.id.tv_text);
-                item.setText(items.get(i));
-                item.setTag(i);
-                item.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (itemClickListener != null) {
-                            itemClickListener.onItemClick((int) v.getTag());
-                        }
-                        dismiss();
-                    }
-                });
-                llContext.addView(v);
-            }
-        }
-    }
-
-    /**
      * 设置底部弹出带条目的ScrollView的高度
      *
      * @param size 条目数量
      */
     private void setItemScrollViewHeight(int size) {
         // 添加条目过多的时候控制高度
-        if (size >= 7) {
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) sLayoutContent.getLayoutParams();
-            params.height = PxUtils.getScreenHeight(mContext) / 2;
-            sLayoutContent.setLayoutParams(params);
+        if (size >= MAX_ITEM) {
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) bottomScrollView.getLayoutParams();
+            params.height = PxUtils.getScreenHeight(builder.context) / 2;
+            bottomScrollView.setLayoutParams(params);
         }
     }
 
+
     /**
-     * 得到 加减模式下 输入框的值
+     * 相机的Item
      *
-     * @return int
+     * @param context context
+     * @return List
      */
-    private int getCountEdtValue() {
-        int count = 0;
-        String text = edtCount.getText().toString().trim();
-        if (!TextUtils.isEmpty(text)) {
-            count = Integer.parseInt(text);
-        }
-        return count;
+    @NotNull
+    public static List<String> getPhotoItem(@NotNull Context context) {
+        List<String> items = new ArrayList<>();
+        items.add(context.getString(R.string.camera));
+        items.add(context.getString(R.string.album));
+        return items;
     }
 
     /**
-     * 加减模式下输入框的监听
+     * Describe：对话框建造者
+     * Created by 吴天强 on 2018年9月27日
      */
-    private TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    public static class Builder {
+        Context context;
+        /**
+         * 对话框类型
+         */
+        @DialogType.Type
+        int type = DialogType.DEFAULT;
+        /**
+         * 对话框Title
+         */
+        String title;
+        /**
+         * 显示内容文字颜色
+         */
+        int contentTextColor = Color.BLACK;
+        /**
+         * 显示内容文字大小
+         */
+        float contentTextSize = 16;
+        /**
+         * 对话框内容
+         */
+        String content;
+        /**
+         * 左按钮文字
+         */
+        String letButtonText;
+        /**
+         * 右按钮文字
+         */
+        String rightButtonText;
+        /**
+         * 左按钮事件
+         */
+        OnButtonClickListener letButtonListener;
+        /**
+         * 右按钮事件
+         */
+        OnButtonClickListener rightButtonListener;
 
+        /**
+         * 左按钮文字颜色
+         */
+        int leftButtonTextColor = Color.GRAY;
+        /**
+         * 右按钮文字颜色
+         */
+        int rightButtonTextColor = Color.parseColor("#0099FF");
+        /**
+         * 左按钮文字大小
+         */
+        float leftButtonTextSize = 18;
+        /**
+         * 右按钮文字大小
+         */
+        float rightButtonTextSize = 18;
+
+        /**
+         * 底部弹出多条目内容
+         */
+        List<String> bottomItems;
+        /**
+         * 底部多条目点击事件
+         */
+        OnItemClickListener itemClickListener;
+        /**
+         * 底部弹出对话框标题文字
+         */
+        String bottomTitleText;
+        /**
+         * 底部弹出对话框取消按钮文字
+         */
+        String bottomCancelText;
+        /**
+         * 底部弹出对话框取消按钮文字颜色
+         */
+        int bottomCancelTextColor = Color.GRAY;
+        /**
+         * 底部弹出对话框Item文字颜色
+         */
+        int bottomItemTextColor = Color.BLACK;
+        /**
+         * 底部弹出对话框取消按钮文字大小
+         */
+        float bottomCancelTextSize = 18;
+        /**
+         * 底部弹出对话框Item文字大小
+         */
+        float bottomItemTextSize = 16;
+
+        /**
+         * 输入框默认文字
+         */
+        String inputDefaultText;
+        /**
+         * 输入框hint文字
+         */
+        String inputHintText;
+        /**
+         * 输入框文字颜色
+         */
+        int inputTextColor = Color.BLACK;
+        /**
+         * 输入框Hint文字颜色
+         */
+        int inputHintTextColor = Color.GRAY;
+        /**
+         * 输入框文字大小
+         */
+        float inputTextSize = 16;
+        /**
+         * 输入框输入监听
+         */
+        TextWatcher textWatcher;
+        /**
+         * 替换整个Dialog内容的View
+         */
+        View allDialogView;
+        /**
+         * 替换中间部分View
+         */
+        View contentView;
+        /**
+         * 替换底部弹出View
+         */
+        View bottomView;
+
+        /**
+         * 是否单按钮
+         */
+        boolean isSingleButton;
+
+        /**
+         * 是否可以取消
+         */
+        boolean cancelable = true;
+
+        /**
+         * 点击对话框周围是否可取消
+         */
+        boolean canceledOnTouchOutside = true;
+
+        /**
+         * 对话框消失监听
+         */
+        DialogInterface.OnDismissListener dialogDismissListener;
+
+        /**
+         * 初始化
+         *
+         * @param context 上下文
+         */
+        public Builder(Context context) {
+            this.context = context;
         }
 
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+        /**
+         * 设置对话框类型
+         *
+         * @param type DialogType
+         * @return Builder
+         */
+        public Builder setDialogType(@DialogType.Type int type) {
+            this.type = type;
+            return this;
         }
 
-        @Override
-        public void afterTextChanged(Editable s) {
-            if (!TextUtils.isEmpty(s.toString().trim())) {
-                edtCount.removeTextChangedListener(textWatcher);
-                int text = Integer.parseInt(s.toString());
-                if (text < minCount) {
-                    edtCount.setText(String.valueOf(minCount));
-                } else if (text > maxCount) {
-                    edtCount.setText(String.valueOf(maxCount));
-                }
-                edtCount.setSelection(edtCount.getText().length());
-                edtCount.addTextChangedListener(textWatcher);
-                judgeTheViews(Integer.parseInt(edtCount.getText().toString().trim()));
-            } else {
-                //删光了 减 按钮不可点击
-                ivMinus.setImageResource(R.drawable.input_minus_disabled);
-            }
+        /**
+         * 设置对话框标题
+         *
+         * @param title 标题
+         * @return Builder
+         */
+        public Builder setTitle(String title) {
+            this.title = title;
+            return this;
         }
-    };
 
-    /**
-     * 按钮被点击事件回调
-     */
-    public interface OnButtonClickListener {
-        void onClick(String val);
+        /**
+         * 设置对话框内容
+         *
+         * @param content 内容
+         * @return Builder
+         */
+        public Builder setContent(String content) {
+            this.content = content;
+            return this;
+        }
+
+        /**
+         * 设置显示内容文字颜色
+         *
+         * @param color 颜色
+         * @return Builder
+         */
+        public Builder setContentTextColor(@ColorInt int color) {
+            this.contentTextColor = color;
+            return this;
+        }
+
+        /**
+         * 设置显示内容文字大小
+         *
+         * @param contentTextSize 大小
+         * @return Builder
+         */
+        public Builder setContentTextSize(float contentTextSize) {
+            this.contentTextSize = contentTextSize;
+            return this;
+        }
+        ////////////////////////////////////////左按钮设置////////////////////////////////////////////
+
+        /**
+         * 设置左按钮
+         *
+         * @param text 显示文字
+         * @return Builder
+         */
+        public Builder setLeftButton(String text) {
+            return setLeftButton(text, null);
+        }
+
+        /**
+         * 设置左按钮
+         *
+         * @param listener 监听事件
+         * @return Builder
+         */
+        public Builder setLeftButton(OnButtonClickListener listener) {
+            return setLeftButton(null, listener);
+        }
+
+        /**
+         * 设置左按钮
+         *
+         * @param text     显示文字
+         * @param listener 监听事件
+         * @return Builder
+         */
+        public Builder setLeftButton(String text, OnButtonClickListener listener) {
+            this.letButtonText = text;
+            this.letButtonListener = listener;
+            return this;
+        }
+
+        /**
+         * 设置左按钮文字颜色
+         *
+         * @param color 颜色
+         * @return Builder
+         */
+        public Builder setLeftButtonTextColor(@ColorInt int color) {
+            this.leftButtonTextColor = color;
+            return this;
+        }
+
+        /**
+         * 设置左按钮文字大小
+         *
+         * @param size 大小
+         * @return Builder
+         */
+        public Builder setLeftButtonTextSize(float size) {
+            this.leftButtonTextSize = size;
+            return this;
+        }
+
+        ////////////////////////////////////////右按钮设置////////////////////////////////////////////
+
+        /**
+         * 设置右按钮
+         *
+         * @param text 显示文字
+         * @return Builder
+         */
+        public Builder setRightButton(String text) {
+            return setRightButton(text, null);
+        }
+
+        /**
+         * 设置右按钮
+         *
+         * @param listener 监听事件
+         * @return Builder
+         */
+        public Builder setRightButton(OnButtonClickListener listener) {
+            return setRightButton(null, listener);
+        }
+
+        /**
+         * 设置右按钮
+         *
+         * @param text     显示文字
+         * @param listener 监听事件
+         * @return Builder
+         */
+        public Builder setRightButton(String text, OnButtonClickListener listener) {
+            this.rightButtonText = text;
+            this.rightButtonListener = listener;
+            return this;
+        }
+
+        /**
+         * 设置右按钮文字颜色
+         *
+         * @param color 颜色
+         * @return Builder
+         */
+        public Builder setRightButtonTextColor(@ColorInt int color) {
+            this.rightButtonTextColor = color;
+            return this;
+        }
+
+        /**
+         * 设置右按钮文字大小
+         *
+         * @param size 大小
+         * @return Builder
+         */
+        public Builder setRightButtonTextSize(float size) {
+            this.rightButtonTextSize = size;
+            return this;
+        }
+        ////////////////////////////////////////单按钮设置////////////////////////////////////////////
+
+        /**
+         * 单按钮设置
+         *
+         * @param text 显示文字
+         * @return Builder
+         */
+        public Builder setSingleButton(String text) {
+            return setSingleButton(text, null);
+        }
+
+        /**
+         * 单按钮设置
+         *
+         * @param listener 事件监听
+         * @return Builder
+         */
+        public Builder setSingleButton(OnButtonClickListener listener) {
+            return setSingleButton(null, listener);
+        }
+
+        /**
+         * 单按钮设置
+         *
+         * @param text     显示文字
+         * @param listener 事件监听
+         * @return Builder
+         */
+        public Builder setSingleButton(String text, OnButtonClickListener listener) {
+            this.isSingleButton = true;
+            return setRightButton(text, listener);
+        }
+
+        /**
+         * 设置单按钮文字颜色
+         *
+         * @param color 颜色
+         * @return Builder
+         */
+        public Builder setSingleButtonTextColor(@ColorInt int color) {
+            return setRightButtonTextColor(color);
+        }
+
+        /**
+         * 设置单按钮文字大小
+         *
+         * @param size 大小
+         * @return Builder
+         */
+        public Builder setSingleButtonTextSize(float size) {
+            return setRightButtonTextSize(size);
+        }
+
+        ////////////////////////////////////////多条目设置////////////////////////////////////////////
+
+        /**
+         * 当type = 底部弹出的时候，设置弹出条目及监听
+         *
+         * @param items    弹出条目
+         * @param listener 监听事件
+         * @return Builder
+         */
+        public Builder setBottomItems(List<String> items, OnItemClickListener listener) {
+            this.bottomItems = items;
+            this.itemClickListener = listener;
+            return this;
+        }
+
+        /**
+         * 设置底部弹出对话框取消按钮文字
+         *
+         * @param text 显示文字
+         * @return Builder
+         */
+        public Builder setBottomCancelText(String text) {
+            this.bottomCancelText = text;
+            return this;
+        }
+
+        /**
+         * 设置底部弹出对话框标题文字
+         *
+         * @param text 显示文字
+         * @return Builder
+         */
+        public Builder setBottomTitleText(String text) {
+            this.bottomTitleText = text;
+            return this;
+        }
+
+        /**
+         * 设置底部弹出对话框取消按钮文字颜色
+         *
+         * @param color 颜色
+         * @return Builder
+         */
+        public Builder setBottomCancelTextColor(@ColorInt int color) {
+            this.bottomCancelTextColor = color;
+            return this;
+        }
+
+        /**
+         * 设置底部弹出对话框Item文字颜色
+         *
+         * @param color 颜色
+         * @return Builder
+         */
+        public Builder setBottomItemTextColor(@ColorInt int color) {
+            this.bottomItemTextColor = color;
+            return this;
+        }
+
+        /**
+         * 设置底部弹出对话框取消按钮文字大小
+         *
+         * @param size 大小
+         * @return Builder
+         */
+        public Builder setBottomCancelTextSize(float size) {
+            this.bottomCancelTextSize = size;
+            return this;
+        }
+
+        /**
+         * 设置底部弹出对话框item文字大小
+         *
+         * @param size 大小
+         * @return Builder
+         */
+        public Builder setBottomItemTextSize(float size) {
+            this.bottomItemTextSize = size;
+            return this;
+        }
+
+        ////////////////////////////////////////输入框设置////////////////////////////////////////////
+
+        /**
+         * 设置输入框默认文字
+         *
+         * @param text 默认文字
+         * @return Builder
+         */
+        public Builder setInputDefaultText(String text) {
+            this.inputDefaultText = text;
+            return this;
+        }
+
+        /**
+         * 设置Hint文字
+         *
+         * @param text Hint 文字
+         * @return Builder
+         */
+        public Builder setInputHintText(String text) {
+            this.inputHintText = text;
+            return this;
+        }
+
+        /**
+         * 设置输入框文字颜色
+         *
+         * @param color 文字颜色
+         * @return Builder
+         */
+        public Builder setInputTextColor(@ColorInt int color) {
+            this.inputTextColor = color;
+            return this;
+        }
+
+        /**
+         * 设置输入框Hint文字颜色
+         *
+         * @param color Hint文字颜色
+         * @return Builder
+         */
+        public Builder setInputHintTextColor(@ColorInt int color) {
+            this.inputHintTextColor = color;
+            return this;
+        }
+
+        /**
+         * 设置输入框文字大小
+         *
+         * @param size 大小
+         * @return Builder
+         */
+        public Builder setInputTextSize(float size) {
+            this.inputTextSize = size;
+            return this;
+        }
+
+        /**
+         * 设置输入框输入监听
+         *
+         * @param textWatcher 监听
+         * @return Builder
+         */
+        public Builder setTextWatcher(TextWatcher textWatcher) {
+            this.textWatcher = textWatcher;
+            return this;
+        }
+        ////////////////////////////////////////其他设置////////////////////////////////////////////
+
+        /**
+         * 替换整个Dialog 内容
+         *
+         * @param view view
+         * @return Builder
+         */
+        public Builder addAllDialogView(View view) {
+            this.allDialogView = view;
+            this.type = DialogType.REPLACE_ALL;
+            return this;
+        }
+
+        /**
+         * 替换中间部分View
+         *
+         * @param view view
+         * @return Builder
+         */
+        public Builder addContentView(View view) {
+            this.contentView = view;
+            this.type = DialogType.REPLACE_CONTENT;
+            return this;
+        }
+
+        /**
+         * 替换底部弹出的View
+         *
+         * @param view view
+         * @return Builder
+         */
+        public Builder setBottomView(View view) {
+            this.bottomView = view;
+            this.type = DialogType.REPLACE_BOTTOM;
+            return this;
+        }
+
+        /**
+         * 是否可取消
+         *
+         * @param cancelable 可取消
+         * @return Builder
+         */
+        public Builder setCancelable(boolean cancelable) {
+            this.cancelable = cancelable;
+            return this;
+        }
+
+        /**
+         * 点击对话框周围是否可取消
+         *
+         * @param canceledOnTouchOutside 可取消
+         * @return Builder
+         */
+        public Builder setCanceledOnTouchOutside(boolean canceledOnTouchOutside) {
+            this.canceledOnTouchOutside = canceledOnTouchOutside;
+            return this;
+        }
+
+        /**
+         * 对话框消失监听
+         *
+         * @param dialogDismissListener 监听
+         * @return Builder
+         */
+        public Builder setDialogDismissListener(DialogInterface.OnDismissListener dialogDismissListener) {
+            this.dialogDismissListener = dialogDismissListener;
+            return this;
+        }
+
+        /**
+         * 创建对话框
+         *
+         * @return AppDialog
+         */
+        public AppDialog create() {
+            return new AppDialog(this);
+        }
     }
 
-    /**
-     * 底部弹出对话框条目被点击
-     */
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-    }
 
 }

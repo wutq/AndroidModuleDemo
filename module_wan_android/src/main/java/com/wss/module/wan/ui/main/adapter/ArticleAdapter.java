@@ -2,10 +2,9 @@ package com.wss.module.wan.ui.main.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.view.View;
 
 import com.wss.common.base.adapter.BaseListAdapter;
-import com.wss.common.listener.OnListItemClickListener;
+import com.wss.common.base.adapter.listener.OnListItemClickListener;
 import com.wss.module.wan.R;
 import com.wss.module.wan.bean.Article;
 
@@ -22,13 +21,12 @@ public class ArticleAdapter extends BaseListAdapter<Article> {
 
     private OnTagClickListener listener;
 
-
     public void setOnTagListener(OnTagClickListener listener) {
         this.listener = listener;
     }
 
-    public ArticleAdapter(Context context, List<Article> items, int layoutResId, OnListItemClickListener listener) {
-        super(context, items, layoutResId, listener);
+    public ArticleAdapter(Context context, List<Article> items, OnListItemClickListener<Article> listener) {
+        super(context, items, R.layout.wan_item_of_article_list, listener);
     }
 
     @Override
@@ -42,12 +40,9 @@ public class ArticleAdapter extends BaseListAdapter<Article> {
         if (!TextUtils.isEmpty(data.getSuperChapterName())) {
             holder.setText(R.id.tv_type2, data.getSuperChapterName());
         }
-        holder.findViewById(R.id.iv_collection).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onCollectionClick(layoutPosition);
-                }
+        holder.findViewById(R.id.iv_collection).setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onCollectionClick(layoutPosition);
             }
         });
     }
@@ -57,7 +52,11 @@ public class ArticleAdapter extends BaseListAdapter<Article> {
      */
     public interface OnTagClickListener {
 
-        //收藏按钮被点击
+        /**
+         * 收藏按钮被点击
+         *
+         * @param position pos
+         */
         void onCollectionClick(int position);
     }
 }

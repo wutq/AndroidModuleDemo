@@ -9,7 +9,6 @@ import java.util.List;
  * Describe：所有的数据库操作类都继承自此
  * Created by 吴天强 on 2018/11/5.
  */
-
 public class BaseDBManager<T, K> {
 
     private AbstractDao<T, K> mDao;

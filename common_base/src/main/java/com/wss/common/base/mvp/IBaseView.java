@@ -2,11 +2,12 @@ package com.wss.common.base.mvp;
 
 import android.content.Context;
 
+import androidx.lifecycle.LifecycleOwner;
+
 /**
  * Describe：所有View基类
  * Created by 吴天强 on 2018/10/17.
  */
-
 public interface IBaseView {
 
     /**
@@ -40,4 +41,12 @@ public interface IBaseView {
      * @return context
      */
     Context getContext();
+
+    /**
+     * 返回页面生命周期
+     *
+     * @return LifecycleOwner
+     */
+    LifecycleOwner getLifecycleOwner();
+
 }

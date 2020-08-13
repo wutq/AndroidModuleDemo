@@ -43,57 +43,53 @@ android {
 
 dependencies {
     // 在项目中的libs中的所有的.jar结尾的文件，都是依赖
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    //把implementation 用api代替,它是对外部公开的, 所有其他的module就不需要添加该依赖
-    api rootProject.ext.dependencies["appcompat_v7"]
-    api rootProject.ext.dependencies["constraint_layout"]
-    api rootProject.ext.dependencies["cardview-v7"]
-    api rootProject.ext.dependencies["recyclerview-v7"]
-    api rootProject.ext.dependencies["support-v4"]
-    api rootProject.ext.dependencies["design"]
-    api rootProject.ext.dependencies["support_annotations"]
-    api rootProject.ext.dependencies["junit"]
-    //MultiDex分包方法
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    //android基础库
+    api rootProject.ext.dependencies["appcompat"]
+    api rootProject.ext.dependencies["recyclerview"]
+    api rootProject.ext.dependencies["cardview"]
+    api rootProject.ext.dependencies["annotation"]
+    api rootProject.ext.dependencies["material"]
     api rootProject.ext.dependencies["multidex"]
-    //黄油刀
-    annotationProcessor rootProject.ext.dependencies["butterknife_compiler"]
+    api rootProject.ext.dependencies["junit"]
+    api rootProject.ext.dependencies["swiperefreshlayout"]
+    api rootProject.ext.dependencies["localbroadcastmanager"]
+    //Lombok
+    api rootProject.ext.dependencies["lombok"]
+    api rootProject.ext.dependencies["javaxAnnotation"]
+    //阿里ARouter
+    api rootProject.ext.dependencies["arouter"]
+    annotationProcessor rootProject.ext.dependencies["arouterCompiler"]
+    //Butterknife
     api rootProject.ext.dependencies["butterknife"]
-    //Arouter路由
-    annotationProcessor rootProject.ext.dependencies["arouter_compiler"]
-    api rootProject.ext.dependencies["arouter_api"]
-    api rootProject.ext.dependencies["arouter_annotation"]
-    //eventbus 发布/订阅事件总线
-    api rootProject.ext.dependencies["eventbus"]
-    //网络
-    api rootProject.ext.dependencies["novate"]
-    //日志
+    annotationProcessor rootProject.ext.dependencies["butterknifeCompiler"]
+    //EventBus
+    api rootProject.ext.dependencies["eventBus"]
+    //Logger
     api rootProject.ext.dependencies["logger"]
-    //fastJson
-    api rootProject.ext.dependencies["fastjson"]
     //沉浸栏
     api rootProject.ext.dependencies["immersionbar"]
-    //banner
+    //Bnnaer
     api rootProject.ext.dependencies["banner"]
-//    //图片加载
-//    api rootProject.ext.dependencies["picasso"]
-    //图片加载
+    //Glude
     api rootProject.ext.dependencies["glide"]
-    //lombok
-    api rootProject.ext.dependencies["lombok"]
-    api rootProject.ext.dependencies["lombokJavax"]
-    //时间 日期  地址 条件选中器
+    //弹窗选择器
     api rootProject.ext.dependencies["pickerView"]
-    //万能Adapter
+    //危险权限申请
+    api rootProject.ext.dependencies["xxpermissions"]
+    //网络
+    api rootProject.ext.dependencies["rxHttp"]
+    api rootProject.ext.dependencies["rxLife"]
+    api rootProject.ext.dependencies["rxAndroid"]
+    annotationProcessor rootProject.ext.dependencies["rxCompiler"]
+    //万能适配器
     api rootProject.ext.dependencies["superAdapter"]
-    //GreenDao
-    api rootProject.ext.dependencies["greenDao"]
-    //scaleImageView
+    //图片预览
     api rootProject.ext.dependencies["scaleImageView"]
     //二维码扫描
     api rootProject.ext.dependencies["zxing"]
-    //危险权限
-    api rootProject.ext.dependencies["xxpermissions"]
-    //RX
-    api rootProject.ext.dependencies["rx2_java"]
-    api rootProject.ext.dependencies["rx2_android"]
+    //刷新库
+    api rootProject.ext.dependencies["refreshLayout"]
+    //GreenDao
+    api rootProject.ext.dependencies["greenDao"]
 }

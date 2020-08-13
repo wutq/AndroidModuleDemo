@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--水平滑动Tab自定义属性-->
-    <declare-styleable name="PullToRefreshLayout">
-        <attr name="view_error" format="reference" />
-        <attr name="view_empty" format="reference" />
-        <attr name="view_loading" format="reference" />
-    </declare-styleable>
-
     <!--下拉 上拉刷新控件-->
     <declare-styleable name="PagerSlidingTabStrip">
         <!--下方 指示线条器颜色-->
@@ -26,15 +19,19 @@
         <attr name="pstsBold" format="boolean" />
         <!--是否显示顶部横线-->
         <attr name="pstsHasTopLine" format="boolean" />
+        <attr name="pstsIndicatorWidth" format="dimension" />
         <!--是否显示底部横线-->
         <attr name="pstsHasBottomLine" format="boolean" />
+        <!--是否绘制圆角1的矩形 指示器-->
+        <attr name="pstsRoundRect" format="boolean" />
 
         <attr name="pstsDividerPadding" format="dimension" />
         <!--指示器高度-->
         <attr name="pstsIndicatorHeight" format="dimension" />
         <attr name="pstsUnderlineHeight" format="dimension" />
         <attr name="pstsDividerPaddingTopBottom" format="dimension" />
-        <attr name="pstsTabPaddingLeftRight" format="dimension" />
+        <attr name="pstsTabPaddingLeft" format="dimension" />
+        <attr name="pstsTabPaddingRight" format="dimension" />
         <attr name="pstsScrollOffset" format="dimension" />
         <attr name="pstsShouldExpand" format="boolean" />
         <!--所有文字是否转大写-->
@@ -48,21 +45,6 @@
     <declare-styleable name="LVCircularRing">
         <attr name="bgColor" format="color" />
         <attr name="barColor" format="color" />
-    </declare-styleable>
-
-    <!--横向多功能View封装-->
-    <declare-styleable name="MultipleItemView">
-        <attr name="leftTextColor" format="color" />
-        <attr name="leftIcon" format="reference" />
-        <attr name="rightTextColor" format="color" />
-        <attr name="rightIcon" format="reference" />
-        <attr name="leftText" format="string" />
-        <attr name="rightText" format="string" />
-        <attr name="showTopLine" format="boolean" />
-        <attr name="showBottomLine" format="boolean" />
-        <attr name="showLeftIcon" format="boolean" />
-        <attr name="showRightIcon" format="boolean" />
-        <attr name="showEdtText" format="boolean" />
     </declare-styleable>
 
     <!--观察者按钮-->
@@ -89,6 +71,78 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="IconFontTextView">
+        <attr name="value" format="string" />
+        <attr name="valueChecked" format="string" />
+        <attr name="fontFile" format="string" />
+    </declare-styleable>
+
+    <!-- 增强输入框-->
+    <declare-styleable name="EnhanceEditText">
+        <attr name="eTextColor" format="color" />
+        <attr name="eTextSize" format="dimension" />
+        <attr name="eHintText" format="string" />
+        <attr name="eHintTextColor" format="color" />
+        <!--输入框左侧icon-->
+        <attr name="eLeftIconFont" format="string" />
+        <attr name="eLeftIconColor" format="color" />
+        <!--清除icon-->
+        <attr name="eCleanIconFont" format="string" />
+        <attr name="eCleanIconColor" format="color" />
+        <!-- 搜搜框背景-->
+        <attr name="eBg" format="color|dimension" />
+        <!--是否显示清除按钮-->
+        <attr name="eShowClean" format="boolean" />
+        <!--是否显示左侧icon-->
+        <attr name="eShowLeft" format="boolean" />
+        <!--是否隐藏背景-->
+        <attr name="eShowBg" format="boolean" />
+        <!--键盘按钮动作-->
+        <attr name="eAction" format="integer">
+            <enum name="none" value="0" />
+            <enum name="search" value="1" />
+            <enum name="next" value="2" />
+            <enum name="done" value="3" />
+        </attr>
+        <!--输入类型-->
+        <attr name="eInputType" format="integer">
+            <enum name="text" value="0" />
+            <enum name="password" value="1" />
+            <enum name="phone" value="2" />
+            <enum name="number" value="3" />
+        </attr>
+        <attr name="eMaxLength" format="integer" />
+        <attr name="eMaxLines" format="integer" />
+    </declare-styleable>
+    <!--    通用TabLayout-->
+    <declare-styleable name="TabLayout">
+        <attr name="tabLayoutTextColorSelector" format="color|reference" />
+        <attr name="tabLayoutTextSize" format="dimension" />
+        <attr name="tabLayoutBackgroundSelector" format="color|reference" />
+        <attr name="tabLayoutGravity" format="integer" />
+        <!--        设置元素的上下左右的drawable-->
+        <attr name="tabLayoutLeftDrawable" format="color|reference" />
+        <attr name="tabLayoutRightDrawable" format="color|reference" />
+        <attr name="tabLayoutTopDrawable" format="color|reference" />
+        <attr name="tabLayoutBottomDrawable" format="color|reference" />
+        <!--        设置元素怒上下左右的margin-->
+        <attr name="tabLayoutMarginLeft" format="dimension" />
+        <attr name="tabLayoutMarginRight" format="dimension" />
+        <attr name="tabLayoutMarginTop" format="dimension" />
+        <attr name="tabLayoutMarginBottom" format="dimension" />
+        <!--        设置元素的上下左右的padding-->
+        <attr name="tabLayoutPaddingLeft" format="dimension" />
+        <attr name="tabLayoutPaddingRight" format="dimension" />
+        <attr name="tabLayoutPaddingTop" format="dimension" />
+        <attr name="tabLayoutPaddingBottom" format="dimension" />
+        <!--        设置元素的宽度-->
+        <attr name="tabLayoutWidth" format="dimension" />
+        <!--        设置元素的高度-->
+        <attr name="tabLayoutHeight" format="dimension" />
+        <!--        顶部带图标的tab-->
+        <attr name="top_drawable" format="color|reference" />
+    </declare-styleable>
+
     <declare-styleable name="SlideLayout">
         <attr name="percent" format="float" />
         <attr name="duration" format="integer" />
@@ -96,5 +150,20 @@
             <enum name="front" value="0" />
             <enum name="behind" value="1" />
         </attr>
+    </declare-styleable>
+
+    <!--横向多功能View封装-->
+    <declare-styleable name="MultipleItemView">
+        <attr name="leftTextColor" format="color" />
+        <attr name="leftIcon" format="reference" />
+        <attr name="rightTextColor" format="color" />
+        <attr name="rightIcon" format="reference" />
+        <attr name="leftText" format="string" />
+        <attr name="rightText" format="string" />
+        <attr name="showTopLine" format="boolean" />
+        <attr name="showBottomLine" format="boolean" />
+        <attr name="showLeftIcon" format="boolean" />
+        <attr name="showRightIcon" format="boolean" />
+        <attr name="showEdtText" format="boolean" />
     </declare-styleable>
 </resources>

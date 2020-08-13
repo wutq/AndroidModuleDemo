@@ -2,7 +2,7 @@ package com.wss.module.market.db;
 
 import android.content.Context;
 
-import com.wss.common.constants.DBConfig;
+import com.wss.common.constants.Constants;
 import com.wss.module.market.bean.DaoMaster;
 import com.wss.module.market.bean.DaoSession;
 
@@ -72,7 +72,7 @@ public class MarketDBManage {
      */
     private DaoMaster getDaoMaster() {
         if (null == mDaoMaster) {
-            mHelper = new DaoMaster.DevOpenHelper(context, DBConfig.DB_NAME, null);
+            mHelper = new DaoMaster.DevOpenHelper(context, Constants.DBConfig.DB_NAME, null);
             mDaoMaster = new DaoMaster(mHelper.getWritableDb());
         }
         return mDaoMaster;

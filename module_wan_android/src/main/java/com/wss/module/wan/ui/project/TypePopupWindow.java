@@ -2,8 +2,6 @@ package com.wss.module.wan.ui.project;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +9,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.wss.common.base.adapter.BaseListAdapter;
-import com.wss.common.listener.OnListItemClickListener;
+import com.wss.common.base.adapter.listener.OnListItemClickListener;
 import com.wss.module.wan.R;
 import com.wss.module.wan.bean.Classification;
 
@@ -19,11 +17,13 @@ import org.byteam.superadapter.SuperViewHolder;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 /**
  * Describe：右侧弹出Pop
  * Created by 吴天强 on 2018/11/15.
  */
-
 public class TypePopupWindow extends PopupWindow {
 
     private View parent;
@@ -83,13 +83,10 @@ public class TypePopupWindow extends PopupWindow {
 
     private void initList() {
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.setAdapter(new TypeAdapter(mContext, data, R.layout.wan_item_of_setup_list, new OnListItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                if (listener != null) {
-                    listener.onProjectTypeClick(data.get(position));
-                    dismiss();
-                }
+        recyclerView.setAdapter(new TypeAdapter(mContext, data, (data, position) -> {
+            dismiss();
+            if (listener != null) {
+                listener.onProjectTypeClick(data);
             }
         }));
     }
@@ -97,8 +94,8 @@ public class TypePopupWindow extends PopupWindow {
 
     class TypeAdapter extends BaseListAdapter<Classification> {
 
-        TypeAdapter(Context context, List<Classification> items, int layoutResId, OnListItemClickListener listener) {
-            super(context, items, layoutResId, listener);
+        TypeAdapter(Context context, List<Classification> items, OnListItemClickListener<Classification> listener) {
+            super(context, items, R.layout.wan_item_of_setup_list, listener);
         }
 
         @Override
