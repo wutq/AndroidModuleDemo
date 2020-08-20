@@ -48,6 +48,14 @@
             android:layout_marginTop="10dp"
             android:text="底部弹出默认样式" />
 
+        <Button
+            android:id="@+id/btn_07"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:text="必须点按钮才能取消的" />
+
 
     </LinearLayout>
 </ScrollView>

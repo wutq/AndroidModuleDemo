@@ -40,15 +40,15 @@ public class DialogActivity extends BaseActionBarActivity {
         PermissionsUtils.checkPermissions(this, Permission.WRITE_EXTERNAL_STORAGE).subscribe();
     }
 
-    @OnClick({R2.id.btn_01, R2.id.btn_02, R2.id.btn_04, R2.id.btn_05, R2.id.btn_06,
-    })
+    @OnClick({R2.id.btn_01, R2.id.btn_02, R2.id.btn_04, R2.id.btn_05, R2.id.btn_06, R2.id.btn_07})
     public void onBtnClick(View view) {
-        if (view.getId() == R.id.btn_01) {
+        int id = view.getId();
+        if (id == R.id.btn_01) {
             new AppDialog.Builder(context)
                     .setContent("我是默认的")
                     .create()
                     .show();
-        } else if (view.getId() == R.id.btn_02) {
+        } else if (id == R.id.btn_02) {
             new AppDialog.Builder(context)
                     .setDialogType(DialogType.INPUT)
                     .setTitle("输入文字")
@@ -60,21 +60,21 @@ public class DialogActivity extends BaseActionBarActivity {
                     .setRightButton("OVER", ToastUtils::show)
                     .create()
                     .show();
-        } else if (view.getId() == R.id.btn_04) {
+        } else if (id == R.id.btn_04) {
             new AppDialog.Builder(context)
                     .setTitle("单个按钮")
                     .setContent("这是一段没有意义的文字")
                     .setSingleButton(val -> ToastUtils.show("消失啦"))
                     .create()
                     .show();
-        } else if (view.getId() == R.id.btn_05) {
+        } else if (id == R.id.btn_05) {
             new AppDialog.Builder(context)
                     .setDialogType(DialogType.NO_TITLE)
                     .setContent("我没有title,点我也没啥用")
                     .create()
                     .show();
 
-        } else if (view.getId() == R.id.btn_06) {
+        } else if (id == R.id.btn_06) {
             final List<String> list = new ArrayList<>();
             list.add("相机");
             list.add("相册");
@@ -86,6 +86,16 @@ public class DialogActivity extends BaseActionBarActivity {
                     .create()
                     .show();
 
+        } else if (id == R.id.btn_07) {
+            new AppDialog.Builder(context)
+                    .setTitle("警告")
+                    .setContent("你要么回家，要么挨打")
+                    .setLeftButton("挨打", val -> ToastUtils.show("成，那屁股撅起来"))
+                    .setRightButton("回家", val -> ToastUtils.show("诶，这就对喽"))
+                    .setCancelable(false)
+                    .setCanceledOnTouchOutside(false)
+                    .create()
+                    .show();
         }
     }
 }

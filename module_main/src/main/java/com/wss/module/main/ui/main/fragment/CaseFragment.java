@@ -11,6 +11,7 @@ import com.wss.module.main.ui.main.mvp.contract.CaseContract;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -42,7 +43,7 @@ public class CaseFragment extends BaseMvpFragment<CasePresenter> implements Case
 
     @Override
     public void refreshCaseList(List<Template> caseList) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
         recyclerView.setAdapter(new CaseAdapter(context, caseList,
                 (data, position) -> ActivityToActivity.toActivity(getActivity(), data)));
 

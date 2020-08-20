@@ -19,6 +19,7 @@
         <activity android:name=".ui.page.RadioGroupActivity" />
         <activity android:name=".ui.page.viscosity.SimpleViscositySlideActivity" />
         <activity android:name=".ui.page.viscosity.ComplexViscositySlideActivity" />
+        <activity android:name=".ui.page.navigation.CityListActivity" />
 
     </application>
 </manifest>

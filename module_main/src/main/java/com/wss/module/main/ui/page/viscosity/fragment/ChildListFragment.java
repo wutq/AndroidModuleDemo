@@ -9,7 +9,7 @@ import com.wss.common.constants.Dic;
 import com.wss.common.widget.ViewPagerForScrollView;
 import com.wss.module.main.R;
 import com.wss.module.main.R2;
-import com.wss.module.main.ui.page.TabItem;
+import com.wss.module.main.ui.page.viscosity.bean.TabItem;
 import com.wss.module.main.ui.page.viscosity.adapter.SimpleAdapter;
 
 import java.util.ArrayList;

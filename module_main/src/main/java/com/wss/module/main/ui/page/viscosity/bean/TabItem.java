@@ -1,4 +1,4 @@
-package com.wss.module.main.ui.page;
+package com.wss.module.main.ui.page.viscosity.bean;
 
 import com.wss.common.base.bean.BaseBean;
 

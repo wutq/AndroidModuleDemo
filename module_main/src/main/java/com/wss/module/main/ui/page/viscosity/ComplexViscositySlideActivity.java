@@ -16,7 +16,7 @@ import com.wss.common.widget.PagerSlidingTabStrip;
 import com.wss.common.widget.ViewPagerForScrollView;
 import com.wss.module.main.R;
 import com.wss.module.main.R2;
-import com.wss.module.main.ui.page.TabItem;
+import com.wss.module.main.ui.page.viscosity.bean.TabItem;
 import com.wss.module.main.ui.page.viscosity.fragment.ChildListFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -132,7 +132,7 @@ public class ComplexViscositySlideActivity extends BaseActionBarActivity {
         ImageUtils.loadBanner(topBanners, topBanner, true, position -> {
 
         });
-        String url = "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4070086237,2628439049&fm=26&gp=0.jpg";
+        String url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597401112079&di=e423a1a4356794e5758aced9191ec5d8&imgtype=0&src=http%3A%2F%2Fdpic.tiankong.com%2Fjg%2Flw%2FQJ8876084221.jpg";
         ImageUtils.loadImageCircleBead(middleBanner, url, 4);
     }
 

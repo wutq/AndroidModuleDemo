@@ -10,8 +10,7 @@
     <!--协调滑动悬停等操作-->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white">
+        android:layout_height="match_parent">
 
         <!--滑动悬停ViewGroup-->
         <com.google.android.material.appbar.AppBarLayout
@@ -45,7 +44,8 @@
                     android:text="这是可以划出去的View"
                     android:textColor="#00FF00"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <!--不设置layout_scrollFlags表示到顶了就悬停-->
