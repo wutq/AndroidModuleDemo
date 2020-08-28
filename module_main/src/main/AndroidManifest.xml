@@ -20,6 +20,7 @@
         <activity android:name=".ui.page.viscosity.SimpleViscositySlideActivity" />
         <activity android:name=".ui.page.viscosity.ComplexViscositySlideActivity" />
         <activity android:name=".ui.page.navigation.CityListActivity" />
+        <activity android:name=".ui.page.CustomViewActivity" />
 
     </application>
 </manifest>

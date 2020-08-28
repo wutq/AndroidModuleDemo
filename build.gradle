@@ -1,7 +1,6 @@
 apply from: "config.gradle"
 
 buildscript {
-
     repositories {
         maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
@@ -15,7 +14,6 @@ buildscript {
         //数据库GreenDAO
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
         //听云
-        classpath 'com.networkbench.newlens.agent.android:agent-gradle-plugin:2.7.1'
     }
 }
 

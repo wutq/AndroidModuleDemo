@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="自定义的波浪形View"
+            android:textColor="@color/color_333333" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <com.wss.module.main.ui.view.WaveView
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_weight="1"
+                app:waveColor="@color/theme"
+                app:waveCount="30"
+                app:waveMode="triangle"
+                app:waveWidth="40" />
+
+            <com.wss.module.main.ui.view.WaveView
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                app:waveColor="@color/theme"
+                app:waveCount="20"
+                app:waveMode="circle"
+                app:waveWidth="30" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="验证码"
+            android:textColor="@color/color_333333" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical">
+
+            <com.wss.module.main.ui.view.VerificationCodeView
+                android:id="@+id/vc_code"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:background="@color/orange"
+                app:textCount="6"
+                app:textSize="22sp" />
+
+
+            <TextView
+                android:id="@+id/tv_vc_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/color_333333" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

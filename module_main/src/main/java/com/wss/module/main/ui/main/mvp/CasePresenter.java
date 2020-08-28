@@ -8,6 +8,7 @@ import com.wss.common.view.scan.ScanActivity;
 import com.wss.module.main.ui.main.mvp.contract.CaseContract;
 import com.wss.module.main.ui.main.mvp.model.CaseModel;
 import com.wss.module.main.ui.page.CountViewActivity;
+import com.wss.module.main.ui.page.CustomViewActivity;
 import com.wss.module.main.ui.page.DialogActivity;
 import com.wss.module.main.ui.page.FlowLayoutActivity;
 import com.wss.module.main.ui.page.MultipleItemActivity;
@@ -52,6 +53,7 @@ public class CasePresenter extends BasePresenter<CaseModel, CaseContract.View> i
         list.add(new Template("字母导航List", CityListActivity.class, "根据首字母定位到具体的Item，如选择城市右侧导航条 "));
         list.add(new Template("简单黏性滑动", SimpleViscositySlideActivity.class, "页面滑动，某一个View滑动到顶部固定不动"));
         list.add(new Template("复杂黏性滑动", ComplexViscositySlideActivity.class, "诸如APP首页，既有上下滑动，也有左右滑动，还需要悬停某一项Item"));
+        list.add(new Template("自定义View展览区", CustomViewActivity.class, "展示一些自定义的View,学习为主"));
 
         getView().refreshCaseList(list);
     }
