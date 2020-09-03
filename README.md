@@ -1,5 +1,5 @@
 # AndroidModuleDemo
-基于MVP搭建的组件化开发框架 ，<a hrf="https://www.jianshu.com/p/00746e6fb48a">博客地址</a></br>
+基于MVP搭建的组件化开发框架 ，[详细介绍](https://www.jianshu.com/p/00746e6fb48a)</br>
 # 效果图
 <div align=center><img src="https://github.com/wutq/AndroidModuleDemo/blob/master/Screenshot/4.png"/></div>
 
