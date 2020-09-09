@@ -42,8 +42,5 @@ public class CustomViewActivity extends BaseActionBarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (vcCode != null) {
-            vcCode.destroy();
-        }
     }
 }
