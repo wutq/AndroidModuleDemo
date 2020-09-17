@@ -98,6 +98,9 @@ public class MainActivity extends BaseActionBarActivity {
             } else {
                 fragment = new CaseFragment();
             }
+            if (fragment == null) {
+                return;
+            }
             mFragmentList.add(fragment);
             transaction.add(R.id.fl_context, fragment, tag);
         }

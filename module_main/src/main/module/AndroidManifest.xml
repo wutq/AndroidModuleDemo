@@ -16,5 +16,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.page.selector.SelectorActivity" />
+        <activity android:name=".ui.page.MultipleItemActivity" />
+        <activity android:name=".ui.page.CountViewActivity" />
+        <activity android:name=".ui.page.ObserverButtonActivity" />
+        <activity android:name=".ui.page.FlowLayoutActivity" />
+        <activity android:name=".ui.page.DialogActivity" />
+        <activity android:name=".ui.page.RadioGroupActivity" />
+        <activity android:name=".ui.page.viscosity.SimpleViscositySlideActivity" />
+        <activity android:name=".ui.page.viscosity.ComplexViscositySlideActivity" />
+        <activity android:name=".ui.page.navigation.CityListActivity" />
+        <activity android:name=".ui.page.CustomViewActivity" />
+
     </application>
 </manifest>

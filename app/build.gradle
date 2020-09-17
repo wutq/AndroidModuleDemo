@@ -53,12 +53,15 @@ dependencies {
 
     //公用依赖包
     implementation project(':common_base')
-    //main模块
-    implementation project(':module_main')
-    //商城模块
-    implementation project(':module_market')
-    //用户模块
-    implementation project(':module_user')
-    //玩Android模块
-    implementation project(':module_wan_android')
+    if (!Boolean.valueOf(rootProject.ext.isModule)) {
+
+        //main模块
+        implementation project(':module_main')
+        //商城模块
+        implementation project(':module_market')
+        //用户模块
+        implementation project(':module_user')
+        //玩Android模块
+        implementation project(':module_wan_android')
+    }
 }
