@@ -14,6 +14,7 @@ import com.wss.module.main.ui.page.FlowLayoutActivity;
 import com.wss.module.main.ui.page.MultipleItemActivity;
 import com.wss.module.main.ui.page.ObserverButtonActivity;
 import com.wss.module.main.ui.page.RadioGroupActivity;
+import com.wss.module.main.ui.page.SwitchButtonActivity;
 import com.wss.module.main.ui.page.navigation.CityListActivity;
 import com.wss.module.main.ui.page.selector.SelectorActivity;
 import com.wss.module.main.ui.page.viscosity.ComplexViscositySlideActivity;
@@ -54,6 +55,7 @@ public class CasePresenter extends BasePresenter<CaseModel, CaseContract.View> i
         list.add(new Template("简单黏性滑动", SimpleViscositySlideActivity.class, "页面滑动，某一个View滑动到顶部固定不动"));
         list.add(new Template("复杂黏性滑动", ComplexViscositySlideActivity.class, "诸如APP首页，既有上下滑动，也有左右滑动，还需要悬停某一项Item"));
         list.add(new Template("自定义View展览区", CustomViewActivity.class, "展示一些自定义的View,学习为主"));
+        list.add(new Template("自定义开关", SwitchButtonActivity.class, "嗐~UI非要仿iOS风格的开关按钮"));
 
         getView().refreshCaseList(list);
     }
