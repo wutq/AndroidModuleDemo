@@ -50,4 +50,37 @@
         <attr name="sb_uncheckbutton_color" format="reference|color" />
 
     </declare-styleable>
+
+
+    <!-- 圆形进度条 -->
+    <declare-styleable name="CircleProgressBar">
+        <!-- 圆弧起始角度，3点钟方向为0，顺时针递增，小于0或大于360进行取余 -->
+        <attr name="cpbStartAngle" format="float" />
+        <!-- 圆弧度数 -->
+        <attr name="cpbSweepAngle" format="float" />
+        <!-- 设置动画时间 -->
+        <attr name="cpbAnimTime" format="integer" />
+        <!-- 绘制内容的数值 -->
+        <attr name="cpbMaxValue" format="float" />
+        <attr name="cpbValue" format="float" />
+        <!-- 绘制内容的单位 -->
+        <attr name="cpbUnit" format="string|reference" />
+        <!-- 绘制内容相应的提示语 -->
+        <attr name="cpbHint" format="string|reference" />
+        <attr name="cpbHintSize" format="dimension" />
+        <attr name="cpbHintColor" format="color|reference" />
+        <!-- 精度，默认为0 -->
+        <attr name="cpbPrecision" format="integer" />
+        <attr name="cpbValueSize" format="dimension" />
+        <attr name="cpbValueColor" format="color|reference" />
+        <!-- 圆弧颜色 -->
+        <attr name="cpbArcColor" format="color" />
+        <!-- 圆弧宽度 -->
+        <attr name="cpbArcWidth" format="dimension" />
+        <!-- 背景圆弧宽度，默认和圆弧宽度一致 -->
+        <attr name="cpbBgArcWidth" format="dimension" />
+        <!-- 背景圆弧颜色，默认灰色 -->
+        <attr name="cpbBgArcColor" format="color|reference" />
+    </declare-styleable>
+
 </resources>

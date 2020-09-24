@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +24,7 @@
 
             <com.wss.module.main.ui.view.WaveView
                 android:layout_width="0dp"
-                android:layout_height="200dp"
+                android:layout_height="80dp"
                 android:layout_weight="1"
                 app:waveColor="@color/theme"
                 app:waveCount="30"
@@ -32,7 +33,7 @@
 
             <com.wss.module.main.ui.view.WaveView
                 android:layout_width="0dp"
-                android:layout_height="200dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 app:waveColor="@color/theme"
@@ -41,6 +42,10 @@
                 app:waveWidth="30" />
 
         </LinearLayout>
+
+        <View
+            style="@style/HorizontalLine"
+            android:layout_marginTop="10dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -70,6 +75,221 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:textColor="@color/color_333333" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/HorizontalLine"
+            android:layout_marginTop="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="环形进度条"
+                android:textColor="@color/color_333333" />
+
+            <Button
+                android:id="@+id/btn_click"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:text="点我试试" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.wss.module.main.ui.view.CircleProgressBar
+                android:id="@+id/cpb_1"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="10dp"
+                app:cpbArcColor="@color/theme"
+                app:cpbBgArcColor="@color/color_f5f5f5"
+                app:cpbHint="你已经走了"
+                app:cpbHintColor="@color/black"
+                app:cpbUnit="步" />
+
+            <com.wss.module.main.ui.view.CircleProgressBar
+                android:id="@+id/cpb_2"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                app:cpbAnimTime="300"
+                app:cpbArcColor="@color/yellow"
+                app:cpbBgArcColor="@color/color_f5f5f5"
+                app:cpbHint="完成度"
+                app:cpbHintColor="@color/red"
+                app:cpbUnit="%" />
+        </RelativeLayout>
+
+        <View
+            style="@style/HorizontalLine"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="仿iOS风格的开关按钮"
+            android:textColor="@color/color_333333" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical">
+
+
+            <com.wss.module.main.ui.view.SwitchButton
+                android:id="@+id/sb_01"
+                android:layout_width="55dp"
+                android:layout_height="40dp"
+                app:sb_show_indicator="false" />
+
+            <com.wss.module.main.ui.view.SwitchButton
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                app:sb_checked="true"
+                app:sb_checked_color="@color/yellow" />
+
+            <com.wss.module.main.ui.view.SwitchButton
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                app:sb_checked_color="@color/red"
+                app:sb_effect_duration="1000" />
+
+            <com.wss.module.main.ui.view.SwitchButton
+                android:layout_width="55dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                app:sb_checked="true"
+                app:sb_checked_color="@color/light_green" />
+
+            <com.wss.module.main.ui.view.SwitchButton
+                android:layout_width="30dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="10dp"
+                app:sb_checked="true"
+                app:sb_checked_color="@color/red" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/HorizontalLine"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="数量加减控件"
+            android:textColor="@color/color_333333" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextStyle"
+                    android:text="默认样式" />
+
+                <com.wss.common.widget.CountClickView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" />
+            </LinearLayout>
+
+            <View style="@style/VerticalLine" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextStyle"
+                    android:text="自定义图标" />
+
+                <com.wss.common.widget.CountClickView
+                    android:id="@+id/ccv_cust"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <View style="@style/HorizontalLine" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextStyle"
+                    android:text="改一些样式" />
+
+                <com.wss.common.widget.CountClickView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:ccvMax="5"
+                    app:ccvMin="1"
+                    app:ccvTextColor="@color/red"
+                    app:ccvTextSize="18sp" />
+            </LinearLayout>
+
+            <View style="@style/VerticalLine" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextStyle"
+                    android:text="可输入样式" />
+
+                <com.wss.common.widget.CountClickView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:ccvInput="true" />
+            </LinearLayout>
+
 
         </LinearLayout>
     </LinearLayout>

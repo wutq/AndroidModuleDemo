@@ -17,7 +17,8 @@
         <ImageView
             android:id="@+id/iv_minus"
             android:layout_width="12dp"
-            android:layout_height="12dp" />
+            android:layout_height="12dp"
+            android:background="@drawable/bg_of_minus_count_view" />
     </LinearLayout>
 
     <TextView
@@ -43,6 +44,7 @@
         <ImageView
             android:id="@+id/iv_plus"
             android:layout_width="12dp"
-            android:layout_height="12dp" />
+            android:layout_height="12dp"
+            android:background="@drawable/bg_of_add_count_view" />
     </LinearLayout>
 </LinearLayout>

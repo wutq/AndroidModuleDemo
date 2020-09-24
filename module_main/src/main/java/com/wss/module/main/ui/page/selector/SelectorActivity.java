@@ -39,11 +39,17 @@ public class SelectorActivity extends BaseActionBarActivity<SelectorPresenter> i
     private List<Province> options1Items = new ArrayList<>();
     private List<List<String>> options2Items = new ArrayList<>();
     private List<List<List<String>>> options3Items = new ArrayList<>();
-    private TimePickerView lunarPicker;//农历日历
+    /**
+     * 农历日历
+     */
+    private TimePickerView lunarPicker;
 
-    private List<String> user = new ArrayList<>();//自定义
-    private List<String> userFrom = new ArrayList<>();//自定义
-    private List<String> userDes = new ArrayList<>();//自定义
+    /**
+     * 自定义
+     */
+    private List<String> user = new ArrayList<>();
+    private List<String> userFrom = new ArrayList<>();
+    private List<String> userDes = new ArrayList<>();
 
     @Override
     protected SelectorPresenter createPresenter() {
@@ -65,18 +71,26 @@ public class SelectorActivity extends BaseActionBarActivity<SelectorPresenter> i
     /**
      * 注意：lib中使用  ButterKnife 绑定事件用R2 判断 用if else 判断里面用R
      */
-    @OnClick({R2.id.btn_01, R2.id.btn_02, R2.id.btn_03, R2.id.btn_04, R2.id.btn_05})
+    @OnClick({R2.id.btn_01, R2.id.btn_02, R2.id.btn_03, R2.id.btn_04, R2.id.btn_05, R2.id.btn_06})
     public void onBtnClick(View view) {
         if (view.getId() == R.id.btn_01) {
+            //日期选择器
             showDateTime();
         } else if (view.getId() == R.id.btn_02) {
+            //地址三级联动
             showAddress();
         } else if (view.getId() == R.id.btn_03) {
+            //带农历日期选择器
             showLunarPicker();
         } else if (view.getId() == R.id.btn_04) {
+            //单行选择器
             showUserList();
         } else if (view.getId() == R.id.btn_05) {
+            //多级不联动选择器
             showUserInfoList();
+        } else if (view.getId() == R.id.btn_06) {
+            //自定义日期选择器
+            new SelectorDatePopupWindow(context, view).show();
         }
     }
 
@@ -85,16 +99,15 @@ public class SelectorActivity extends BaseActionBarActivity<SelectorPresenter> i
      * 农历时间已扩展至 ： 1900 - 2100年
      */
     private void showLunarPicker() {
-        Calendar selectedDate = Calendar.getInstance();//系统当前时间
+        //系统当前时间
+        Calendar selectedDate = Calendar.getInstance();
         Calendar startDate = Calendar.getInstance();
         startDate.set(2014, 1, 23);
         Calendar endDate = Calendar.getInstance();
         endDate.set(2069, 2, 28);
 
         //时间选择器 ，自定义布局
-        lunarPicker = new TimePickerBuilder(this, (date, v) -> {//选中事件回调
-            ToastUtils.show( getTime(date));
-        })
+        lunarPicker = new TimePickerBuilder(this, (date, v) -> ToastUtils.show(getTime(date)))
                 .setDate(selectedDate)
                 .setRangDate(startDate, endDate)
                 .setLayoutRes(R.layout.main_pickerview_custom_lunar, new CustomListener() {
@@ -134,7 +147,8 @@ public class SelectorActivity extends BaseActionBarActivity<SelectorPresenter> i
                     }
                 })
                 .setType(new boolean[]{true, true, true, false, false, false})
-                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .isCenterLabel(false)
                 .setDividerColor(getResources().getColor(R.color.theme))
                 .build();
         lunarPicker.show();
@@ -150,7 +164,7 @@ public class SelectorActivity extends BaseActionBarActivity<SelectorPresenter> i
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(date);
                 selectDate = calendar;
-                ToastUtils.show( getTime(date));
+                ToastUtils.show(getTime(date));
             }
         }).build();
         //注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，
@@ -169,7 +183,7 @@ public class SelectorActivity extends BaseActionBarActivity<SelectorPresenter> i
             String tx = options1Items.get(options1).getPickerViewText() +
                     options2Items.get(options1).get(options2) +
                     options3Items.get(options1).get(options2).get(options3);
-            ToastUtils.show( tx);
+            ToastUtils.show(tx);
         })
 
                 .setTitleText("城市选择")
@@ -192,7 +206,7 @@ public class SelectorActivity extends BaseActionBarActivity<SelectorPresenter> i
             @Override
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
-                ToastUtils.show( user.get(options1));
+                ToastUtils.show(user.get(options1));
             }
         })
                 .setSelectOptions(2)
@@ -211,7 +225,7 @@ public class SelectorActivity extends BaseActionBarActivity<SelectorPresenter> i
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 String str = user.get(options1) + "来自" + userFrom.get(options2) + "是一个" + userDes.get(options3);
-                ToastUtils.show( str);
+                ToastUtils.show(str);
             }
         })
                 .setOptionsSelectChangeListener((options1, options2, options3) -> {

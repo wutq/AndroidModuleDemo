@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
@@ -240,6 +241,7 @@ public class AppDialog {
         edtInput.setTextSize(builder.inputTextSize);
         edtInput.setTextColor(builder.inputTextColor);
         edtInput.setHintTextColor(builder.inputHintTextColor);
+        edtInput.setInputType(builder.inputType);
         if (builder.textWatcher != null) {
             edtInput.addTextChangedListener(builder.textWatcher);
         }
@@ -353,6 +355,11 @@ public class AppDialog {
          */
         @DialogType.Type
         int type = DialogType.DEFAULT;
+
+        /**
+         * 文本框输入类型
+         */
+        int inputType = InputType.TYPE_CLASS_TEXT;
         /**
          * 对话框Title
          */
@@ -510,6 +517,17 @@ public class AppDialog {
          */
         public Builder setDialogType(@DialogType.Type int type) {
             this.type = type;
+            return this;
+        }
+
+        /**
+         * 设置文本框输入类型
+         *
+         * @param inputType 输入类型
+         * @return Builder
+         */
+        public Builder setInputType(int inputType) {
+            this.inputType = inputType;
             return this;
         }
 

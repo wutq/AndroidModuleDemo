@@ -10,8 +10,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -272,4 +274,48 @@ public class DateUtils {
         Log.e("时间差：", difference + "|" + difference / 1000);
         return difference / 1000;
     }
+
+    /**
+     * 获取当前时间往前往后n的日期
+     * eg: date ==null 默认是系统当前时间  否则以date为时间起点
+     * n > 0 往后
+     * n = 0 当前时间
+     * n < 0 往前
+     *
+     * @param date
+     * @param n
+     * @return
+     * @author zhangheng5@lenovo.com
+     */
+    @NotNull
+    public static List<String> getBeforeDate(Date date, int n) {
+        List<String> list = new ArrayList<>();
+        Calendar calender = Calendar.getInstance();
+        Date today = new Date();
+        if (null != date) {
+            today = date;
+        }
+        calender.setTime(today);
+
+        if (n > 0) {
+            for (int i = 0; i <= n; i++) {
+                calender.add(Calendar.DATE, i);
+                list.add(getFormatDate(calender.getTime(), DATE_FORMAT_LINE));
+                calender.setTime(today);
+            }
+        } else if (n < 0) {
+            for (int i = n; i <= 0; i++) {
+                calender.add(Calendar.DATE, i);
+                list.add(getFormatDate(calender.getTime(), DATE_FORMAT_LINE));
+                calender.setTime(today);
+            }
+        } else {
+            calender.add(Calendar.DATE, 0);
+            list.add(getFormatDate(calender.getTime(), DATE_FORMAT_LINE));
+            calender.setTime(today);
+        }
+
+        return list;
+    }
+
 }

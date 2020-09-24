@@ -1,6 +1,8 @@
 package com.wss.common.utils;
 
 import android.content.Context;
+import android.graphics.Paint;
+import android.view.View;
 
 import com.wss.common.base.BaseApplication;
 
@@ -72,5 +74,35 @@ public class PxUtils {
     public static int sp2px(float spValue) {
         float fontScale = getScreenDensity(BaseApplication.i());
         return (int) (spValue * fontScale + 0.5f);
+    }
+
+    /**
+     * 测量 View
+     *
+     * @param measureSpec
+     * @param defaultSize View 的默认大小
+     * @return
+     */
+    public static int measure(int measureSpec, int defaultSize) {
+        int result = defaultSize;
+        int specMode = View.MeasureSpec.getMode(measureSpec);
+        int specSize = View.MeasureSpec.getSize(measureSpec);
+
+        if (specMode == View.MeasureSpec.EXACTLY) {
+            result = specSize;
+        } else if (specMode == View.MeasureSpec.AT_MOST) {
+            result = Math.min(result, specSize);
+        }
+        return result;
+    }
+    /**
+     * 测量文字高度
+     *
+     * @param paint
+     * @return
+     */
+    public static float measureTextHeight(Paint paint) {
+        Paint.FontMetrics fontMetrics = paint.getFontMetrics();
+        return (Math.abs(fontMetrics.ascent) - fontMetrics.descent);
     }
 }

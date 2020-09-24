@@ -115,21 +115,13 @@ public class ShoppingCartAdapter extends BaseListAdapter<Vendor> implements OnCl
             ccvClick.setMaxCount(99);
             ccvClick.setInput(true);
             ccvClick.setCurrCount(Math.max(goodsInfo.getNum(), 1));
-            ccvClick.setAfterClickListener(new CountClickView.OnClickAfterListener() {
-                @Override
-                public void onAfter(int value) {
-                    //修改源数据
-                    getData().get(parent).getGoodsInfos().get(child).setNum(value);
-                    //修改本地数据库数据
-                    goodsInfo.setNum(value);
-                    ShoppingCartUtils.updateCartGoodsNum(goodsInfo);
-                    updateCart();
-                }
-
-                @Override
-                public void onMin() {
-
-                }
+            ccvClick.setAfterClickListener((view, value) -> {
+                //修改源数据
+                getData().get(parent).getGoodsInfos().get(child).setNum(value);
+                //修改本地数据库数据
+                goodsInfo.setNum(value);
+                ShoppingCartUtils.updateCartGoodsNum(goodsInfo);
+                updateCart();
             });
             tvPrice.setVisibility(isEdit ? View.GONE : View.VISIBLE);
             ccvClick.setVisibility(isEdit ? View.GONE : View.VISIBLE);

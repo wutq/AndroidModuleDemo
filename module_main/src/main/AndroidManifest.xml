@@ -12,7 +12,6 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".ui.page.selector.SelectorActivity" />
         <activity android:name=".ui.page.MultipleItemActivity" />
-        <activity android:name=".ui.page.CountViewActivity" />
         <activity android:name=".ui.page.ObserverButtonActivity" />
         <activity android:name=".ui.page.FlowLayoutActivity" />
         <activity android:name=".ui.page.DialogActivity" />
@@ -21,7 +20,6 @@
         <activity android:name=".ui.page.viscosity.ComplexViscositySlideActivity" />
         <activity android:name=".ui.page.navigation.CityListActivity" />
         <activity android:name=".ui.page.CustomViewActivity" />
-        <activity android:name=".ui.page.SwitchButtonActivity" />
 
     </application>
 </manifest>

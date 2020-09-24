@@ -166,4 +166,25 @@
         <attr name="showRightIcon" format="boolean" />
         <attr name="showEdtText" format="boolean" />
     </declare-styleable>
+
+
+    <!--加减控件View-->
+    <declare-styleable name="CountClickView">
+        <!--最大值-->
+        <attr name="ccvMax" format="integer" />
+        <!--最小值-->
+        <attr name="ccvMin" format="integer" />
+        <!--当前值-->
+        <attr name="ccvCurrent" format="integer" />
+        <!--是否可输入-->
+        <attr name="ccvInput" format="boolean" />
+        <!--文字颜色-->
+        <attr name="ccvTextColor" format="color|reference" />
+        <!--文字大小-->
+        <attr name="ccvTextSize" format="dimension" />
+        <!--增加按钮资源-->
+        <attr name="ccvAddIcon" format="reference" />
+        <!--减少按钮资源-->
+        <attr name="ccvMinus" format="reference" />
+    </declare-styleable>
 </resources>
