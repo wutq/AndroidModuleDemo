@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="环形进度条"
+            android:textColor="@color/color_333333" />
+
+        <Button
+            android:id="@+id/btn_click"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:text="点我试试" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.wss.module.main.ui.view.CircleProgressBar
+            android:id="@+id/cpb_1"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="10dp"
+            app:cpbArcColor="@color/theme"
+            app:cpbBgArcColor="@color/color_f5f5f5"
+            app:cpbHint="你已经走了"
+            app:cpbHintColor="@color/black"
+            app:cpbUnit="步" />
+
+        <com.wss.module.main.ui.view.CircleProgressBar
+            android:id="@+id/cpb_2"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            app:cpbAnimTime="300"
+            app:cpbArcColor="@color/yellow"
+            app:cpbBgArcColor="@color/color_f5f5f5"
+            app:cpbHint="完成度"
+            app:cpbHintColor="@color/red"
+            app:cpbUnit="%" />
+    </RelativeLayout>
+</LinearLayout>

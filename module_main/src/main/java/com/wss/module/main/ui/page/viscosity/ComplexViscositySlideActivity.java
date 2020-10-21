@@ -124,15 +124,16 @@ public class ComplexViscositySlideActivity extends BaseActionBarActivity {
      * 初始化Banner
      */
     private void initBanner() {
+        String url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597401112079&di=e423a1a4356794e5758aced9191ec5d8&imgtype=0&src=http%3A%2F%2Fdpic.tiankong.com%2Fjg%2Flw%2FQJ8876084221.jpg";
+
         List<Banner> topBanner = new ArrayList<>();
-        topBanner.add(new Banner("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=509806298,1573310365&fm=26&gp=0.jpg"));
         topBanner.add(new Banner("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597323934304&di=c190243926ba5d4efd6db79df2fa33d4&imgtype=0&src=http%3A%2F%2Fphotocdn.sohu.com%2F20150205%2Fmp1204595_1423121484082_2_th_fv23.jpeg"));
         topBanner.add(new Banner("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1385848743,443183150&fm=26&gp=0.jpg"));
         topBanner.add(new Banner("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597323969074&di=f382fe44b9da6fc0e889c794118387c6&imgtype=0&src=http%3A%2F%2Fimg.improve-yourmemory.com%2Fpic%2F585996137799f8e9868acfaaeda61258-0.jpg"));
+        topBanner.add(new Banner(url));
         ImageUtils.loadBanner(topBanners, topBanner, true, position -> {
 
         });
-        String url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597401112079&di=e423a1a4356794e5758aced9191ec5d8&imgtype=0&src=http%3A%2F%2Fdpic.tiankong.com%2Fjg%2Flw%2FQJ8876084221.jpg";
         ImageUtils.loadImageCircleBead(middleBanner, url, 4);
     }
 

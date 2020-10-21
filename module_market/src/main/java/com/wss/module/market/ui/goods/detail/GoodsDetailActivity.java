@@ -49,10 +49,10 @@ public class GoodsDetailActivity extends BaseActivity {
     public NoScrollViewPager vpContent;
 
     @BindView(R2.id.tv_count)
-    TextView tvCount;//购物车数量
+    TextView tvCount;
 
     @BindView(R2.id.iv_cart)
-    ImageView ivCart;//购物车
+    ImageView ivCart;
 
     //TODO 测试使用列表造的伪数据表示不同商品做加入购物车操作
     private GoodsInfo goodsInfo;
@@ -141,18 +141,15 @@ public class GoodsDetailActivity extends BaseActivity {
                         .scaleY(1.3f)
                         .setDuration(time)
                         .start();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        goodsInfo.setNum(goodsInfoMainFragment.getGoodsCount());
-                        ShoppingCartUtils.addCartGoods(goodsInfo);
-                        EventBusUtils.sendEvent(new Event(EventAction.EVENT_SHOPPING_CART_REFRESH));
-                        ivCart.animate()
-                                .scaleX(1.0f)
-                                .scaleY(1.0f)
-                                .setDuration(time)
-                                .start();
-                    }
+                new Handler().postDelayed(() -> {
+                    goodsInfo.setNum(goodsInfoMainFragment.getGoodsCount());
+                    ShoppingCartUtils.addCartGoods(goodsInfo);
+                    EventBusUtils.sendEvent(new Event(EventAction.EVENT_SHOPPING_CART_REFRESH));
+                    ivCart.animate()
+                            .scaleX(1.0f)
+                            .scaleY(1.0f)
+                            .setDuration(time)
+                            .start();
                 }, time * 2);
 
             } else {

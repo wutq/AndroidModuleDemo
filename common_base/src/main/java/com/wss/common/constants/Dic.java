@@ -75,6 +75,10 @@ public interface Dic {
      * HouseFragment中的ViewPager
      */
     String HOUSE_FRAGMENT_VIEWPAGER = "viewpager";
+    /**
+     * 供应商 商品 信息
+     */
+    String VENDOR_GOODS_INFO = "vendor_goods_info";
 
 
 }

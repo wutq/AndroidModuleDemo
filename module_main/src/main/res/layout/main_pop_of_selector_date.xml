@@ -16,12 +16,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="32dp">
 
+        <EditText
+            android:id="@+id/edt_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:hint="添加待办内容"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingEnd="@dimen/activity_horizontal_margin" />
+
+        <View
+            style="@style/HorizontalLine"
+            android:layout_marginTop="17dp" />
         <!--日期显示区-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="220dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <com.contrarywind.view.WheelView
@@ -37,13 +51,13 @@
                 android:layout_weight="0.6" />
 
             <com.contrarywind.view.WheelView
-                android:id="@+id/wv_minute"
+                android:id="@+id/wv_hour"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.6" />
 
             <com.contrarywind.view.WheelView
-                android:id="@+id/wv_second"
+                android:id="@+id/wv_minute"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.6" />

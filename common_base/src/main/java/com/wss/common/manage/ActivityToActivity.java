@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import com.alibaba.android.arouter.core.LogisticsCenter;
 import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.wss.common.base.R;
 import com.wss.common.base.bean.BaseBean;
 import com.wss.common.bean.Template;
 import com.wss.common.constants.Constants;
@@ -25,7 +24,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 
 /**
@@ -223,8 +221,8 @@ public class ActivityToActivity {
             return;
         }
         Postcard postcard = ARouter.getInstance()
-                .build(url)
-                .withOptionsCompat(ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.anim_right_in, R.anim.anim_right_out));
+                .build(url);
+//                .withOptionsCompat(ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.anim_right_in, R.anim.anim_right_out));
         if (params != null) {
             for (Map.Entry<String, ?> entry : params.entrySet()) {
                 String key = entry.getKey();

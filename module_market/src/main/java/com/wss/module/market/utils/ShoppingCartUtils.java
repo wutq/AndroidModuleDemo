@@ -11,6 +11,8 @@ import com.wss.module.market.bean.GoodsInfo;
 import com.wss.module.market.bean.Vendor;
 import com.wss.module.market.db.MarketDBFactory;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -112,10 +114,9 @@ public class ShoppingCartUtils {
      * @return count
      */
     public static double getCartCountPrice(List<Vendor> vendors) {
-
         double price = 0.0;
         for (GoodsInfo info : getAllCheckedGoods(vendors)) {
-            price += info.getNum() * Double.valueOf(info.getGoodsPrice());
+            price += info.getNum() * Double.parseDouble(info.getGoodsPrice());
         }
         return price;
     }
@@ -130,6 +131,20 @@ public class ShoppingCartUtils {
                 .getGoodsInfoManage()
                 .delete(goodsList);
         EventBusUtils.sendEvent(new Event(EventAction.EVENT_SHOPPING_CART_REFRESH));
+    }
+
+    /**
+     * 计算商品总数
+     *
+     * @param goodsInfoList 商品列表
+     * @return 总数
+     */
+    public static int calculationGoodsCount(@NotNull List<GoodsInfo> goodsInfoList) {
+        int count = 0;
+        for (GoodsInfo goodsInfo : goodsInfoList) {
+            count += goodsInfo.getNum();
+        }
+        return count;
     }
 
     //**********************************购物车点击逻辑操作*******************************************
@@ -219,6 +234,35 @@ public class ShoppingCartUtils {
                         result.add(info);
                     }
                 }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 获取已选中的商品 和供应商
+     *
+     * @param vendors 供应商
+     * @return 供应商
+     */
+    @NotNull
+    public static List<Vendor> getCheckedGoodsVendor(@NotNull List<Vendor> vendors) {
+        List<Vendor> result = new ArrayList<>();
+        for (Vendor deliveryInfo : vendors) {
+            if (deliveryInfo.isChecked()) {
+                result.add(deliveryInfo);
+            } else {
+                List<GoodsInfo> goodsInfoList = new ArrayList<>();
+                for (GoodsInfo info : deliveryInfo.getGoodsInfos()) {
+                    if (info.isChecked()) {
+                        goodsInfoList.add(info);
+                    }
+                }
+                Vendor vendor = new Vendor();
+                vendor.setVendorId(deliveryInfo.getVendorId());
+                vendor.setVendorName(deliveryInfo.getVendorName());
+                vendor.setGoodsInfos(goodsInfoList);
+                result.add(vendor);
             }
         }
         return result;

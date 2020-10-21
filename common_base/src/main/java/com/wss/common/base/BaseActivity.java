@@ -1,7 +1,6 @@
 package com.wss.common.base;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,32 +113,6 @@ public abstract class BaseActivity extends FragmentActivity {
         initView();
     }
 
-
-    @Override
-    public void startActivity(Intent intent) {
-        super.startActivity(intent);
-        if (isAnimate()) {
-            overridePendingTransition(R.anim.anim_right_in, R.anim.anim_right_out);
-        }
-    }
-
-    @Override
-    public void startActivityForResult(Intent intent, int requestCode) {
-        super.startActivityForResult(intent, requestCode);
-        if (isAnimate()) {
-            overridePendingTransition(R.anim.anim_right_in, R.anim.anim_right_out);
-        }
-    }
-
-    @Override
-    public void finish() {
-        if (isAnimate()) {
-            overridePendingTransition(R.anim.anim_right_in, R.anim.anim_right_out);
-        }
-        super.finish();
-    }
-
-
     //***************************************空页面方法 start*************************************
 
     /**
@@ -235,14 +208,6 @@ public abstract class BaseActivity extends FragmentActivity {
         return false;
     }
 
-    /**
-     * 切换页面是否需要过渡动画
-     *
-     * @return boolean
-     */
-    protected boolean isAnimate() {
-        return true;
-    }
 
     /**
      * 需要接收事件 重写该方法 并返回true

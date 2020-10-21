@@ -1,18 +1,23 @@
 package com.wss.module.main.ui.page;
 
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
 import com.wss.common.base.BaseActionBarActivity;
 import com.wss.common.base.mvp.BasePresenter;
+import com.wss.common.utils.KeyboardUtils;
 import com.wss.common.utils.ToastUtils;
 import com.wss.common.widget.CountClickView;
+import com.wss.common.widget.ObserverButton;
 import com.wss.module.main.R;
 import com.wss.module.main.R2;
 import com.wss.module.main.ui.view.CircleProgressBar;
 import com.wss.module.main.ui.view.SwitchButton;
 import com.wss.module.main.ui.view.VerificationCodeView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -45,6 +50,14 @@ public class CustomViewActivity extends BaseActionBarActivity {
     @BindView(R2.id.ccv_cust)
     CountClickView ccvCust;
 
+    @BindView(R2.id.edt_name)
+    EditText edtName;
+
+    @BindView(R2.id.edt_pwd)
+    EditText edtPwd;
+
+    @BindView(R2.id.ob_btn)
+    ObserverButton obBtn;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -74,10 +87,12 @@ public class CustomViewActivity extends BaseActionBarActivity {
         ccvCust.setBtnSize(20, 20);
         ccvCust.setCountViewAttr(R.color.transparent, 0, 4, 4);
         ccvCust.setAfterClickListener((view, value) -> Logger.e("result:" + value));
+
+        obBtn.observer(edtName, edtPwd);
     }
 
     @OnClick({R2.id.btn_click})
-    public void onClick(View view) {
+    public void onClick(@NotNull View view) {
         if (view.getId() == R.id.btn_click) {
             //重置环形进度条的数值
             int step = new Random().nextInt((int) MAX_STEP);
@@ -86,5 +101,11 @@ public class CustomViewActivity extends BaseActionBarActivity {
             cpb02.setValue(i);
 
         }
+    }
+
+    @OnClick(R2.id.ob_btn)
+    public void onObBtnClick(View view) {
+        KeyboardUtils.hideKeyboard(view);
+        ToastUtils.show("哈哈哈");
     }
 }

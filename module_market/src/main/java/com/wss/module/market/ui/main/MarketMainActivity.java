@@ -56,7 +56,7 @@ public class MarketMainActivity extends BaseActionBarActivity<MarketMainPresente
 
     @Override
     protected void initView() {
-        setCenterText("商城");
+        setCenterText("商城模板");
         adapter = new MarketMainAdapter(context, marketInfoList, (data, position) -> {
             Map<String, Object> param = new HashMap<>();
             param.put(Dic.GOODS_INFO, marketInfoList.get(position));
@@ -103,4 +103,5 @@ public class MarketMainActivity extends BaseActionBarActivity<MarketMainPresente
     protected boolean registerEventBus() {
         return true;
     }
+
 }

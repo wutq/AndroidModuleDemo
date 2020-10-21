@@ -12,7 +12,7 @@ import com.wss.module.user.ui.main.mvp.model.UserModel;
  * Created by 吴天强 on 2018/11/21.
  */
 
-public class UserPresenter extends BasePresenter<UserModel, UserContract.View>
+public class  UserPresenter extends BasePresenter<UserModel, UserContract.View>
         implements UserContract.Presenter {
 
     @Override

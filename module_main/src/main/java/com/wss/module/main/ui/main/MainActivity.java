@@ -138,9 +138,4 @@ public class MainActivity extends BaseActionBarActivity {
     protected BasePresenter createPresenter() {
         return null;
     }
-
-    @Override
-    protected boolean isAnimate() {
-        return false;
-    }
 }

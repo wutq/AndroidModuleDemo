@@ -16,9 +16,12 @@ import com.wss.common.base.R;
 import com.wss.common.base.R2;
 import com.wss.common.utils.PxUtils;
 
+import org.jetbrains.annotations.NotNull;
+
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Describe：多功能Item 支持左右文字显示 最右边图片显示
@@ -68,6 +71,8 @@ public class MultipleItemView extends LinearLayout {
     private boolean showLeftIcon = true;
     private boolean showRightIcon = true;
     private boolean showEditText = false;
+
+    private OnIconCheckChangedListener leftIconChangedListener, rightIconChangedListener;
 
     public MultipleItemView(Context context) {
         this(context, null);
@@ -347,6 +352,56 @@ public class MultipleItemView extends LinearLayout {
     }
 
     /**
+     * 设置右icon选择
+     *
+     * @param checked 选择
+     * @return this
+     */
+    public MultipleItemView setRightIconChecked(boolean checked) {
+        ivRight.setSelected(checked);
+        if (leftIconChangedListener != null) {
+            leftIconChangedListener.onIconChanged(checked);
+        }
+        return this;
+    }
+
+    /**
+     * 设置左icon选择
+     *
+     * @param checked 选择
+     * @return this
+     */
+    public MultipleItemView setLeftIconChecked(boolean checked) {
+        ivRight.setSelected(checked);
+        if (rightIconChangedListener != null) {
+            rightIconChangedListener.onIconChanged(checked);
+        }
+        return this;
+    }
+
+    /**
+     * 左侧按钮变化监听
+     *
+     * @param iconChangedListener 监听器
+     * @return this
+     */
+    public MultipleItemView setLeftIconChangedListener(OnIconCheckChangedListener iconChangedListener) {
+        this.leftIconChangedListener = iconChangedListener;
+        return this;
+    }
+
+    /**
+     * 右侧按钮变化监听
+     *
+     * @param iconChangedListener 监听器
+     * @return this
+     */
+    public MultipleItemView setRightIconChangedListener(OnIconCheckChangedListener iconChangedListener) {
+        this.rightIconChangedListener = iconChangedListener;
+        return this;
+    }
+
+    /**
      * 设置父窗体 padding
      *
      * @param padding padding
@@ -375,5 +430,33 @@ public class MultipleItemView extends LinearLayout {
      */
     public String getRightTex() {
         return edtText.getText().toString().trim();
+    }
+
+
+    @OnClick({R2.id.iv_left, R2.id.iv_right})
+    public void onIconClick(@NotNull View view) {
+        view.setSelected(!view.isSelected());
+        if (view.getId() == R.id.iv_left) {
+            if (leftIconChangedListener != null) {
+                leftIconChangedListener.onIconChanged(view.isSelected());
+            }
+        } else if (view.getId() == R.id.iv_right) {
+            if (rightIconChangedListener != null) {
+                rightIconChangedListener.onIconChanged(view.isSelected());
+            }
+        }
+    }
+
+
+    /**
+     * 左右按钮 选择状态变化
+     */
+    public interface OnIconCheckChangedListener {
+        /**
+         * 按钮选择状态变化
+         *
+         * @param checked 选择状态
+         */
+        void onIconChanged(boolean checked);
     }
 }

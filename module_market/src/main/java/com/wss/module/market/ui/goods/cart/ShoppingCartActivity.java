@@ -7,8 +7,10 @@ import android.widget.TextView;
 
 import com.wss.common.base.BaseActionBarActivity;
 import com.wss.common.bean.Event;
+import com.wss.common.constants.Dic;
 import com.wss.common.constants.EventAction;
-import com.wss.common.utils.ToastUtils;
+import com.wss.common.manage.ActivityToActivity;
+import com.wss.common.utils.JsonUtils;
 import com.wss.module.market.R;
 import com.wss.module.market.R2;
 import com.wss.module.market.bean.GoodsInfo;
@@ -19,7 +21,9 @@ import com.wss.module.market.ui.goods.cart.mvp.contract.ShoppingCartContract;
 import com.wss.module.market.utils.ShoppingCartUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -145,7 +149,9 @@ public class ShoppingCartActivity extends BaseActionBarActivity<CartPresenter> i
                     //删除
                     ShoppingCartUtils.delete(checkedGoods);
                 } else {
-                    ToastUtils.show("去结算");
+                    Map<String, Object> param = new HashMap<>();
+                    param.put(Dic.VENDOR_GOODS_INFO, JsonUtils.toJson(ShoppingCartUtils.getCheckedGoodsVendor(mData)));
+                    ActivityToActivity.toActivity(context, OrderSettlementActivity.class, param);
                 }
             }
         }

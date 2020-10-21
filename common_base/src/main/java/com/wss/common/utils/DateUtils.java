@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.orhanobut.logger.Logger;
+
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -13,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -26,7 +29,8 @@ public class DateUtils {
     public static final String DATE_FORMAT = "yyyyMMddHH";
     public static final String DATE_FORMAT_SLASH = "yyyy/MM/dd";
     public static final String DATE_FORMAT_LINE = "yyyy-MM-dd";
-    public static final String DATE_FORMAT_DEFAULT = DATE_FORMAT_SLASH + " HH:mm:ss";
+    public static final String DATE_FORMAT_TIME = "HH:mm:ss";
+    public static final String DATE_FORMAT_DEFAULT = DATE_FORMAT_SLASH + " " + DATE_FORMAT_TIME;
     private static final int SECOND = 60;
     private static final int DAY = 60;
     private static final int MOUTH = 60;
@@ -95,6 +99,27 @@ public class DateUtils {
         format.setTimeZone(TimeZone.getDefault());
         time = format.format(timeStamp);
         return time;
+    }
+
+    /**
+     * 格式化返回日期时间
+     *
+     * @param stringDate stringDate
+     * @param pattern    pattern
+     * @return String
+     */
+    public static String getFormatDate2(String stringDate, String pattern) {
+        if (TextUtils.isEmpty(stringDate)) {
+            return "";
+        }
+        try {
+            SimpleDateFormat sdf1 = new SimpleDateFormat(pattern);
+            String sourcePattern = String.format("%s %s", DATE_FORMAT_LINE, DATE_FORMAT_TIME);
+            return sdf1.format(new SimpleDateFormat(sourcePattern).parse(stringDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return stringDate;
     }
 
     /**
@@ -317,5 +342,72 @@ public class DateUtils {
 
         return list;
     }
+
+    /**
+     * 根据时间戳判断是否是明天
+     *
+     * @param time 秒级 时间戳
+     * @return b
+     */
+    public static boolean isTomorrow(long time) {
+        Calendar curDate = Calendar.getInstance();
+        Calendar tomorrowCalendar = new GregorianCalendar(curDate
+                .get(Calendar.YEAR), curDate.get(Calendar.MONTH), curDate
+                .get(Calendar.DATE) + 1, 0, 0, 0);
+        long timeInMillis = tomorrowCalendar.getTimeInMillis();
+        return time >= tomorrowCalendar.getTimeInMillis() / 1000;
+    }
+
+    /**
+     * 格式化时间
+     *
+     * @param dateStr 时间字符串
+     * @return boolean
+     */
+    public static boolean isToday(String dateStr) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = format.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(date);
+        int year1 = c1.get(Calendar.YEAR);
+        int month1 = c1.get(Calendar.MONTH) + 1;
+        int day1 = c1.get(Calendar.DAY_OF_MONTH);
+        Calendar c2 = Calendar.getInstance();
+        c2.setTime(new Date());
+        int year2 = c2.get(Calendar.YEAR);
+        int month2 = c2.get(Calendar.MONTH) + 1;
+        int day2 = c2.get(Calendar.DAY_OF_MONTH);
+        return year1 == year2 && month1 == month2 && day1 == day2;
+    }
+
+    /**
+     * 判断某一个时间是不是下午
+     *
+     * @param dateStr 时间字符串
+     * @return boolean
+     */
+    public static boolean isDatePm(String dateStr) {
+        int a = Integer.parseInt(getFormatDate2(dateStr, "HH"));
+        return a >= 12 && a < 24;
+    }
+
+
+    /**
+     * 获取afterMinute钟以前或者以后的时间
+     *
+     * @param afterMinute 之前传负数 之后传正数
+     * @return yyyy-MM-dd HH:mm:ss;
+     */
+    public static String getAfterMinuteTime(int afterMinute) {
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(getCurrentTimeStamp() + 60 * 1000 * afterMinute);
+        return sd.format(date);
+    }
+
 
 }

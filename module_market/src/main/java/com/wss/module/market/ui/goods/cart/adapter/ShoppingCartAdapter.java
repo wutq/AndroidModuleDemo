@@ -31,7 +31,6 @@ import butterknife.ButterKnife;
  * Describe：购物车适配器
  * Created by 吴天强 on 2018/11/5.
  */
-
 public class ShoppingCartAdapter extends BaseListAdapter<Vendor> implements OnClickListener {
 
     private boolean isEdit;

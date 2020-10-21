@@ -16,8 +16,8 @@ import lombok.Setter;
 @Setter
 public class Vendor extends BaseBean {
 
-    private String vendorId;//供应商ID
-    private String vendorName;//供应商名称
+    private String vendorId;
+    private String vendorName;
     private List<GoodsInfo> goodsInfos;
     private boolean checked;
 

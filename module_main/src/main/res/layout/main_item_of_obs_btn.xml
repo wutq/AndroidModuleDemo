@@ -7,7 +7,27 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="观察者按钮"
+            android:textColor="@color/color_333333" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="输入框输入完成 按钮自动可点击"
+            android:textColor="@color/color_999999"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -15,10 +35,9 @@
             android:id="@+id/edt_name"
             style="@style/TextStyle"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:background="@color/transparent"
-            android:hint="请输入用户名"
-            android:paddingLeft="10dp" />
+            android:hint="请输入用户名" />
 
         <View style="@style/HorizontalLine" />
 
@@ -29,32 +48,7 @@
             android:layout_height="50dp"
             android:background="@color/transparent"
             android:hint="请输入密码"
-            android:inputType="textPassword"
-            android:paddingLeft="10dp" />
-
-        <View style="@style/HorizontalLine" />
-
-        <EditText
-            android:id="@+id/edt_confirm"
-            style="@style/TextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/transparent"
-            android:hint="请输入确认密码"
-            android:inputType="textPassword"
-            android:paddingLeft="10dp" />
-
-        <View style="@style/HorizontalLine" />
-
-        <EditText
-            android:id="@+id/edt_age"
-            style="@style/TextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/transparent"
-            android:hint="请输入年龄"
-            android:inputType="number"
-            android:paddingLeft="10dp" />
+            android:inputType="textPassword" />
 
         <View style="@style/HorizontalLine" />
     </LinearLayout>
@@ -63,9 +57,9 @@
         android:id="@+id/ob_btn"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_margin="30dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="注册"
+        android:text="输入完成我就可以点了"
         android:textColor="@color/black"
         app:defaultBgResource="@drawable/corner_gray_shape"
         app:pressBgResource="@drawable/bg_of_orange_gradient_radius" />
