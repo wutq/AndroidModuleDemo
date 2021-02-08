@@ -25,6 +25,7 @@ allprojects {
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url 'https://jitpack.io' }
         maven { url "http://mvn.gt.igexin.com/nexus/content/repositories/releases/" }
+        maven { url 'https://gitee.com/liuchaoya/libcommon/raw/master/repository/' }
 //        google()
 //        jcenter()
     }

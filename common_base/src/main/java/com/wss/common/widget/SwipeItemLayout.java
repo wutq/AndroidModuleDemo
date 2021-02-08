@@ -36,6 +36,7 @@ public class SwipeItemLayout extends ViewGroup {
 
     private boolean mInLayout;
     private boolean mIsLaidOut;
+    private OnItemSwipeListener onItemSwipeListener;
 
     public SwipeItemLayout(Context context) {
         this(context, null);
@@ -97,6 +98,10 @@ public class SwipeItemLayout extends ViewGroup {
 
             mScrollRunnable.startScroll(mScrollOffset, 0);
         }
+    }
+
+    public void setOnItemSwipeListener(OnItemSwipeListener listener) {
+        this.onItemSwipeListener = listener;
     }
 
     void fling(int xVel) {
@@ -379,6 +384,9 @@ public class SwipeItemLayout extends ViewGroup {
                 mScrollToLeft = endX < startX;
                 mScroller.startScroll(startX, 0, endX - startX, 0, 400);
                 ViewCompat.postOnAnimation(SwipeItemLayout.this, this);
+                if (onItemSwipeListener != null) {
+                    onItemSwipeListener.onItemSwipe(mScrollToLeft);
+                }
             }
         }
 
@@ -752,6 +760,13 @@ public class SwipeItemLayout extends ViewGroup {
         }
 
     }
+
+
+    public interface OnItemSwipeListener {
+
+        void onItemSwipe(boolean isOpen);
+    }
+
 
     static View findTopChildUnder(ViewGroup parent, int x, int y) {
         final int childCount = parent.getChildCount();

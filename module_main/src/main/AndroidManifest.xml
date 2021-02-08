@@ -2,6 +2,8 @@
     package="com.wss.module.main">
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
     <application>
 
         <activity
@@ -18,6 +20,9 @@
         <activity android:name=".ui.page.viscosity.ComplexViscositySlideActivity" />
         <activity android:name=".ui.page.navigation.CityListActivity" />
         <activity android:name=".ui.page.CustomViewActivity" />
+        <activity android:name=".ui.page.SlewedActivity" />
+        <activity android:name=".ui.page.MarqueeActivity" />
+        <activity android:name=".ui.page.flip.CardFlipActivity" />
 
     </application>
 </manifest>

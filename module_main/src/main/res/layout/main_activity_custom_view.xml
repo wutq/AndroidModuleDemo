@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp">
+        <View
+            style="@style/HorizontalLine"
+            android:layout_marginTop="10dp" />
 
+        <!--闪烁-->
+        <include layout="@layout/main_item_of_twinkle" />
+
+        <View
+            style="@style/HorizontalLine"
+            android:layout_marginTop="10dp" />
+
+        <!--浮层-->
+        <include layout="@layout/main_item_of_float" />
+
+        <View
+            style="@style/HorizontalLine"
+            android:layout_marginTop="10dp" />
         <!--观察者按钮-->
         <include layout="@layout/main_item_of_obs_btn" />
 

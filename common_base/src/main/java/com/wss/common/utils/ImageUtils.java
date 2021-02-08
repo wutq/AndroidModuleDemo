@@ -74,6 +74,19 @@ public class ImageUtils {
     }
 
     /**
+     * 加载手机图片
+     *
+     * @param imageView imageView
+     */
+    public static void loadImage(@NotNull ImageView imageView, Bitmap bitmap) {
+        Glide.with(imageView.getContext())
+                .load(bitmap)
+                .apply(new RequestOptions()
+                        .placeholder(R.color.color_999999))
+                .into(imageView);
+    }
+
+    /**
      * 加载本地图片
      *
      * @param drawable  drawable
