@@ -7,13 +7,13 @@ import com.wss.common.constants.Constants;
 import com.wss.common.view.scan.ScanActivity;
 import com.wss.module.main.ui.main.mvp.contract.CaseContract;
 import com.wss.module.main.ui.main.mvp.model.CaseModel;
-import com.wss.module.main.ui.page.flip.CardFlipActivity;
 import com.wss.module.main.ui.page.CustomViewActivity;
 import com.wss.module.main.ui.page.DialogActivity;
-import com.wss.module.main.ui.page.MarqueeActivity;
 import com.wss.module.main.ui.page.MultipleItemActivity;
 import com.wss.module.main.ui.page.RadioGroupActivity;
 import com.wss.module.main.ui.page.SlewedActivity;
+import com.wss.module.main.ui.page.file.FileUploadDownloadActivity;
+import com.wss.module.main.ui.page.flip.CardFlipActivity;
 import com.wss.module.main.ui.page.navigation.CityListActivity;
 import com.wss.module.main.ui.page.selector.SelectorActivity;
 import com.wss.module.main.ui.page.viscosity.ComplexViscositySlideActivity;
@@ -52,8 +52,8 @@ public class CasePresenter extends BasePresenter<CaseModel, CaseContract.View> i
         list.add(new Template("简单黏性滑动", SimpleViscositySlideActivity.class, "页面滑动，某一个View滑动到顶部固定不动"));
         list.add(new Template("复杂黏性滑动", ComplexViscositySlideActivity.class, "诸如APP首页，既有上下滑动，也有左右滑动，还需要悬停某一项Item"));
         list.add(new Template("列表侧滑菜单", SlewedActivity.class, "RecyclerView列表侧滑菜单，如：QQ列表侧滑"));
-        list.add(new Template("跑马灯", MarqueeActivity.class, "跑马灯效果，任意View都可以跑起来的那种"));
-        list.add(new Template("卡片翻转", CardFlipActivity.class, "卡片翻转"));
+        list.add(new Template("卡片翻转", CardFlipActivity.class, "点击翻转卡片，类似刮刮乐抽奖"));
+        list.add(new Template("文件上传，下载", FileUploadDownloadActivity.class, "演示RxHttp文件上传、下载"));
 
         getView().refreshCaseList(list);
     }

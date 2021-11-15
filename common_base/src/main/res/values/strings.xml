@@ -140,6 +140,7 @@
     <string name="camera">相机</string>
     <string name="album">相册</string>
     <string name="no_more_data">~没有更多拉~</string>
+    <string name="processing_please_wait">正在处理中，请稍等…</string>
 
 
     <!--下拉刷新、上拉加载资源覆盖 请勿动 start-->

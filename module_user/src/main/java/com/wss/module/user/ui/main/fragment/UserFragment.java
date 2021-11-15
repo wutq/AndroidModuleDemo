@@ -15,6 +15,8 @@ import com.wss.common.constants.ARouterConfig;
 import com.wss.common.constants.EventAction;
 import com.wss.common.manage.ActivityToActivity;
 import com.wss.common.utils.ImageUtils;
+import com.wss.common.utils.Utils;
+import com.wss.common.widget.MultipleItemView;
 import com.wss.common.widget.dialog.AppDialog;
 import com.wss.module.user.R;
 import com.wss.module.user.R2;
@@ -56,6 +58,8 @@ public class UserFragment extends BaseMvpFragment<UserPresenter> implements User
     @BindView(R2.id.tv_email)
     TextView tvEmail;
 
+    @BindView(R2.id.miv_check)
+    MultipleItemView mivVersion;
 
     @Override
     protected int getLayoutId() {
@@ -67,6 +71,7 @@ public class UserFragment extends BaseMvpFragment<UserPresenter> implements User
         ImageUtils.loadImageBlur(ivBg, URL);
         ImageUtils.loadImageCircle(ivHead, URL);
         refreshPage();
+        mivVersion.setRightText(String.format("当前版本：V%s", Utils.getVersionName()));
     }
 
     private void refreshPage() {

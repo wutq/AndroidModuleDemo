@@ -25,8 +25,7 @@ public class LoadingActivity extends BaseFullScreenActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         new Handler().postDelayed(() -> {
             ActivityToActivity.toActivity(this, MainActivity.class);
-        }, 800);
-
+        }, 1000);
 
     }
 

@@ -1,6 +1,7 @@
 package com.wss.amd.profile;
 
 
+import com.wss.amd.BuildConfig;
 import com.wss.common.profile.IProfile;
 import com.wss.common.profile.IProfileFactory;
 
@@ -9,10 +10,23 @@ import com.wss.common.profile.IProfileFactory;
  * Created by 吴天强 on 2020/4/13.
  */
 public class ProfileFactory implements IProfileFactory {
+    /**
+     * 开发环境
+     */
+    private static final String DEV = "DEV";
+    /**
+     * 生产环境
+     */
+    private static final String PRO = "PRO";
 
     @Override
     public IProfile createProfile() {
-        //根据不同的环境生成不同的配置文件，这里仅生成DEV配置文件
-        return new DevProfile();
+        switch (BuildConfig.FLAVOR) {
+            case PRO:
+                return new ProProfile();
+            case DEV:
+            default:
+                return new DevProfile();
+        }
     }
 }

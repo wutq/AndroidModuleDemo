@@ -1,42 +1,65 @@
 apply plugin: 'com.android.application'
 
+/**
+ * 打包时间
+ */
+static String releaseTime() {
+    return "\"" + new Date().format("yyyy-MM-dd HH:mm") + "\""
+}
+
+/**
+ * 根据build时间自动生成versionCode
+ */
+static def createVersionCode() {
+    def code = new Date().format("yyMMddHHmm")
+    return code.toInteger();
+}
+
 android {
     compileSdkVersion rootProject.ext.versions.compileSdkVersion
     buildToolsVersion rootProject.ext.versions.buildToolsVersion
 
     defaultConfig {
-        applicationId rootProject.ext.versions.applicationId
         minSdkVersion rootProject.ext.versions.minSdkVersion
         targetSdkVersion rootProject.ext.versions.targetSdkVersion
-        versionCode rootProject.ext.versions.versionCode
-        versionName rootProject.ext.versions.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        //MultiDex分包方法
-        multiDexEnabled true
 
-        //Arouter路由配置
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [moduleName: project.getName()]
-                includeCompileClasspath = true
+        signingConfigs {
+            config {
+                keyAlias 'amd'
+                keyPassword '123456'
+                storeFile file('../key/amd.jsk')
+                storePassword '123456'
+            }
+        }
+
+        defaultConfig {
+            minSdkVersion rootProject.ext.versions.minSdkVersion
+            targetSdkVersion rootProject.ext.versions.targetSdkVersion
+            versionCode createVersionCode()
+            multiDexEnabled true
+            signingConfig signingConfigs.config
+
+            ndk {
+                abiFilters "armeabi-v7a"
+            }
+
+            javaCompileOptions {
+                annotationProcessorOptions {
+                    arguments = [AROUTER_MODULE_NAME: project.getName()]
+                    includeCompileClasspath = true
+                }
             }
         }
 
     }
-    signingConfigs {
-        config {
-            keyAlias 'amd'
-            keyPassword '123456'
-            storeFile file('../key/amd.jsk')
-            storePassword '123456'
-        }
-    }
+
     buildTypes {
-        debug {
-            signingConfig signingConfigs.config
-        }
         release {
-            signingConfig signingConfigs.config
+            lintOptions {
+                checkReleaseBuilds false
+                abortOnError false
+            }
+            //不使用混淆
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -45,6 +68,51 @@ android {
         targetCompatibility rootProject.ext.versions.javaSDKVersion
         sourceCompatibility rootProject.ext.versions.javaSDKVersion
     }
+
+    dexOptions {
+        javaMaxHeapSize "5g"
+    }
+    repositories {
+        flatDir {
+            dirs project(':common_base').file('libs')
+        }
+    }
+    //多维度标签
+    flavorDimensions "default"
+    //多渠道配置
+    productFlavors {
+        //开发
+        DEV {
+            dimension "default"
+            versionName rootProject.ext.versions.versionNameDEV
+            applicationId rootProject.ext.versions.applicationIdDEV
+            resValue "string", "app_name", "AMD_DEV"
+            buildConfigField("String", "RELEASE_TIME", releaseTime())
+            manifestPlaceholders = [
+                    //7.0文件权限
+                    FILE_PROVIDER: applicationId,
+            ]
+        }
+
+        //生产
+        PRO {
+            dimension "default"
+            versionName rootProject.ext.versions.versionName
+            applicationId rootProject.ext.versions.applicationId
+            resValue "string", "app_name", "AMD"
+            buildConfigField("String", "RELEASE_TIME", releaseTime())
+            manifestPlaceholders = [
+                    //7.0文件权限
+                    FILE_PROVIDER: applicationId,
+            ]
+        }
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = "AMD_v${variant.versionName}_${variant.productFlavors[0].name}_${variant.buildType.name}.apk"
+        }
+    }
+
 }
 
 dependencies {

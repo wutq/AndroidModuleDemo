@@ -14,4 +14,18 @@ public interface IProfile {
      */
     String getServiceBase();
 
+    /**
+     * 请求是否加密
+     *
+     * @return boolean
+     */
+    boolean isSecret();
+
+    /**
+     * 返回Aes加解密key
+     *
+     * @return key
+     */
+    String getAesSecretKey();
+
 }

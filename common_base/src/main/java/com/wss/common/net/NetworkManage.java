@@ -12,6 +12,9 @@ import com.wss.common.exception.NetErrorException;
 import com.wss.common.manage.ActivityToActivity;
 import com.wss.common.net.request.RequestParam;
 import com.wss.common.net.response.BaseResponse;
+import com.wss.common.net.response.DownloadResponse;
+import com.wss.common.profile.ProfileManager;
+import com.wss.common.secret.AesUtils;
 import com.wss.common.utils.JsonUtils;
 import com.wss.common.utils.NetworkUtil;
 import com.wss.common.utils.ToastUtils;
@@ -64,6 +67,11 @@ public class NetworkManage {
      */
     private static final List<String> ACCOUNT_ERROR_CODE = new ArrayList<>();
 
+    /**
+     * 无须加密白名单
+     */
+    private static final List<String> NO_DECRYPTION_LIST = new ArrayList<>();
+
     static {
         ACCOUNT_ERROR_CODE.add(Constants.Net.Status.CODE_ACCOUNT_DISABLE);
         ACCOUNT_ERROR_CODE.add(Constants.Net.Status.CODE_ACCOUNT_QUIT);
@@ -73,6 +81,9 @@ public class NetworkManage {
         ACCOUNT_ERROR_CODE.add(Constants.Net.Status.CODE_ACCOUNT_MULTIPLE_TEAM);
         ACCOUNT_ERROR_CODE.add(Constants.Net.Status.CODE_TOKEN_EXPIRED);
         ACCOUNT_ERROR_CODE.add(Constants.Net.Status.CODE_ACCOUNT_POSITION_ERROR);
+
+        NO_DECRYPTION_LIST.add(Api.UPLOAD_FILE);
+        NO_DECRYPTION_LIST.add(Api.DOWNLOAD_FILE);
     }
 
     /**
@@ -268,8 +279,48 @@ public class NetworkManage {
                     })
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
-
         }
+
+
+        /**
+         * 下载文件
+         *
+         * @param life        声明周期实现类
+         * @param downloadUrl 文件的下载地址
+         * @param localPath   本地保存的文件路径
+         * @return 下载response
+         */
+        public Observable<DownloadResponse> requestDownload(LifecycleOwner life, String downloadUrl, String localPath) {
+            return Observable.<DownloadResponse>create(
+                    subscriber -> {
+                        if (!NetworkUtil.isNetworkEnabled(BaseApplication.i())) {
+                            //无可用网络
+                            subscriber.onError(new NetErrorException(BaseApplication.i().getString(R.string.network_error_no_net)));
+                            return;
+                        }
+                        Logger.e("文件下载地址：" + downloadUrl);
+                        DownloadResponse downloadResponse = new DownloadResponse();
+                        //下载失败，处理相关逻辑
+                        RxHttp.get(downloadUrl)
+                                .asDownload(localPath, progress -> {
+                                    Logger.i("文件下载中，" + progress);
+                                    //下载进度回调,0-100，仅在进度有更新时才会回调，最多回调101次，最后一次回调文件存储路径
+                                    downloadResponse.setProgress(progress);
+                                    subscriber.onNext(downloadResponse);
+                                })
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .as(RxLife.as(life))
+                                .subscribe(s -> {
+                                    Logger.e("文件下载完成，保存：" + s);
+                                    //下载完成，处理相关逻辑
+                                    downloadResponse.setSuccess(true);
+                                    subscriber.onNext(downloadResponse);
+                                }, subscriber::onError);
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread());
+        }
+
 
         /**
          * 检查响应
@@ -345,24 +396,50 @@ public class NetworkManage {
          * @return RxHttp
          */
         private RxHttp buildRequest(String url, @NotNull RequestParam param) {
-            Map<String, Object> fileMap = new HashMap<>(16);
-            Map<String, Object> paramMap = new HashMap<>(16);
+            Map<String, File> fileMap = new HashMap<>(16);
+            Map<String, List<File>> fileListMap = new HashMap<>(16);
+            Map<String, Object> objectMap = new HashMap<>(16);
 
             //分离请求参数中的文件
             for (Map.Entry<String, Object> entry : param.getParameter().entrySet()) {
                 if (entry.getValue() instanceof File) {
-                    fileMap.put(entry.getKey(), entry.getValue());
-                } else if (entry.getValue() instanceof String) {
+                    //单个文件
+                    fileMap.put(entry.getKey(), (File) entry.getValue());
+                    continue;
+                }
+                if (entry.getValue() instanceof List && ((List) entry.getValue()).size() > 0) {
+                    if (((List) entry.getValue()).get(0) instanceof File) {
+                        //文件list
+                        fileListMap.put(entry.getKey(), (List<File>) entry.getValue());
+                        continue;
+                    }
+                }
+
+                if (entry.getValue() instanceof String) {
                     //把null转成""
                     String value = String.valueOf(entry.getValue());
                     if (!ValidUtils.isValid(value) || "null".equalsIgnoreCase(value)) {
                         value = "";
                     }
-                    paramMap.put(entry.getKey(), value);
-                } else {
-                    paramMap.put(entry.getKey(), entry.getValue());
+                    objectMap.put(entry.getKey(), value);
+                    continue;
                 }
+                objectMap.put(entry.getKey(), entry.getValue());
             }
+
+            Map<String, String> requestParam = new HashMap<>();
+            String paramJson = JsonUtils.toJson(objectMap);
+            /*
+             *注：该加密方式为：把请求参数key、value以json的格式整体加密，然后再以key、value的形式发送给服务器
+             */
+            if (!NO_DECRYPTION_LIST.contains(url) && ProfileManager.profile().isSecret()) {
+                //请求是否需要加密
+                requestParam.put(Constants.Net.REQUEST_DATA, AesUtils.getInstance().encrypt(paramJson));
+            } else {
+                requestParam.put(Constants.Net.REQUEST_DATA, paramJson);
+            }
+            Logger.i(String.format("加密请求\nRequest-Id:%s\n%s %s%s\n请求参数：%s",
+                    requestId, method, Api.BASE_URL, url, JsonUtils.toJson(requestParam)));
             RxHttp rxHttp;
             switch (method) {
                 case POST_JSON:
@@ -376,10 +453,21 @@ public class NetworkManage {
                     } else {
                         rxHttp = RxHttp.putJson(url);
                     }
-                    ((RxHttpJsonParam) rxHttp).addAll(paramMap);
+                    if (isUpLoadFile(url)) {
+                        //上传文件传参特殊
+                        ((RxHttpJsonParam) rxHttp).addAll(objectMap);
+                    } else {
+                        ((RxHttpJsonParam) rxHttp).addAll(requestParam);
+                    }
+
                     //添加文件请求参数
                     if (!fileMap.isEmpty()) {
-                        for (Map.Entry<String, Object> entry : fileMap.entrySet()) {
+                        for (Map.Entry<String, File> entry : fileMap.entrySet()) {
+                            ((RxHttpJsonParam) rxHttp).add(entry.getKey(), entry.getValue());
+                        }
+                    }
+                    if (!fileListMap.isEmpty()) {
+                        for (Map.Entry<String, List<File>> entry : fileListMap.entrySet()) {
                             ((RxHttpJsonParam) rxHttp).add(entry.getKey(), entry.getValue());
                         }
                     }
@@ -395,21 +483,35 @@ public class NetworkManage {
                     } else {
                         rxHttp = RxHttp.putForm(url);
                     }
-                    ((RxHttpFormParam) rxHttp).addAll(paramMap);
-                    //添加文件请求参数
+                    if (isUpLoadFile(url)) {
+                        //上传文件传参特殊
+                        ((RxHttpFormParam) rxHttp).addAll(objectMap);
+                    } else {
+                        ((RxHttpFormParam) rxHttp).addAll(requestParam);
+                    }//添加文件请求参数
                     if (!fileMap.isEmpty()) {
-                        for (Map.Entry<String, Object> entry : fileMap.entrySet()) {
-                            ((RxHttpFormParam) rxHttp).addFile(entry.getKey(), (File) entry.getValue());
+                        for (Map.Entry<String, File> entry : fileMap.entrySet()) {
+                            ((RxHttpFormParam) rxHttp).addFile(entry.getKey(), entry.getValue());
+                        }
+                    }
+                    if (!fileListMap.isEmpty()) {
+                        for (Map.Entry<String, List<File>> entry : fileListMap.entrySet()) {
+                            ((RxHttpFormParam) rxHttp).addFile(entry.getKey(), entry.getValue());
                         }
                     }
                     break;
                 case GET:
                 default:
                     rxHttp = RxHttp.get(url);
-                    ((RxHttpNoBodyParam) rxHttp).addAll(paramMap);
+                    ((RxHttpNoBodyParam) rxHttp).addAll(requestParam);
                     //添加文件请求参数
                     if (!fileMap.isEmpty()) {
-                        for (Map.Entry<String, Object> entry : fileMap.entrySet()) {
+                        for (Map.Entry<String, File> entry : fileMap.entrySet()) {
+                            ((RxHttpNoBodyParam) rxHttp).add(entry.getKey(), entry.getValue());
+                        }
+                    }
+                    if (!fileListMap.isEmpty()) {
+                        for (Map.Entry<String, List<File>> entry : fileListMap.entrySet()) {
                             ((RxHttpNoBodyParam) rxHttp).add(entry.getKey(), entry.getValue());
                         }
                     }
@@ -437,6 +539,17 @@ public class NetworkManage {
             header.put(Constants.Net.REQUEST_ID, requestId);
             Logger.i("请求Header:\n" + JsonUtils.toJson(header));
             return header;
+        }
+
+        /**
+         * 检查是否上传文件
+         *
+         * @param url url
+         * @return boolean
+         */
+        @Contract(value = "null -> false", pure = true)
+        private boolean isUpLoadFile(String url) {
+            return Api.UPLOAD_FILE.equals(url);
         }
 
 
@@ -499,7 +612,6 @@ public class NetworkManage {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe();
         }
-        //--------------------------其他第三方服务请求--------------------------------------------
 
     }
 }

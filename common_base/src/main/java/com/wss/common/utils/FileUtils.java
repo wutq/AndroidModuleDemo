@@ -31,10 +31,20 @@ import androidx.core.content.FileProvider;
  */
 public class FileUtils {
     public static final String APPS_ROOT_DIR = getExternalStorePath() + File.separator + BaseApplication.i().getPackageName();
-    public static final String IMAGE_PATH = APPS_ROOT_DIR + "/Image";
-    public static final String TEMP_PATH = APPS_ROOT_DIR + "/Temp";
-    public static final String APP_CRASH_PATH = APPS_ROOT_DIR + "/AppCrash";
-    public static final String FILE_PATH = APPS_ROOT_DIR + "/File";
+    public static final String IMAGE_PATH = APPS_ROOT_DIR + Constant.IMAGE;
+    public static final String TEMP_PATH = APPS_ROOT_DIR + Constant.TEMP;
+    public static final String APP_CRASH_PATH = APPS_ROOT_DIR + Constant.APP_CRASH;
+    public static final String FILE_PATH = APPS_ROOT_DIR + Constant.FILE;
+
+    /**
+     * 存放文件的目录
+     */
+    public interface Constant {
+        String IMAGE = "/Image";
+        String TEMP = "/Temp";
+        String FILE = "/File";
+        String APP_CRASH = "/AppCrash";
+    }
 
 
     /**

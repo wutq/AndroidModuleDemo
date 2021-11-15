@@ -4,4 +4,5 @@
     <string name="main_tab_center">案例</string>
     <string name="main_tab_user">我的</string>
     <string name="main_exit_app">再按一次退出应用</string>
+    <string name="main_download_tips">下载完成文件存放在 %s 目录下</string>
 </resources>

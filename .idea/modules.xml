@@ -3,12 +3,13 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AndroidModuleDemo.iml" filepath="$PROJECT_DIR$/AndroidModuleDemo.iml" group="AndroidModuleDemo" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="AndroidModuleDemo/app" />
-      <module fileurl="file://$PROJECT_DIR$/common_base/common_base.iml" filepath="$PROJECT_DIR$/common_base/common_base.iml" group="AndroidModuleDemo/common_base" />
-      <module fileurl="file://$PROJECT_DIR$/module_main/module_main.iml" filepath="$PROJECT_DIR$/module_main/module_main.iml" group="AndroidModuleDemo/module_main" />
-      <module fileurl="file://$PROJECT_DIR$/module_market/module_market.iml" filepath="$PROJECT_DIR$/module_market/module_market.iml" group="AndroidModuleDemo/module_market" />
-      <module fileurl="file://$PROJECT_DIR$/module_user/module_user.iml" filepath="$PROJECT_DIR$/module_user/module_user.iml" group="AndroidModuleDemo/module_user" />
-      <module fileurl="file://$PROJECT_DIR$/module_wan_android/module_wan_android.iml" filepath="$PROJECT_DIR$/module_wan_android/module_wan_android.iml" group="AndroidModuleDemo/module_wan_android" />
-    </modules>
+      <module fileurl="file://$PROJECT_DIR$/app/AndroidModuleDemo.app.iml" filepath="$PROJECT_DIR$/app/AndroidModuleDemo.app.iml" group="AndroidModuleDemo/app" />
+      <module fileurl="file://$PROJECT_DIR$/common_base/AndroidModuleDemo.common_base.iml" filepath="$PROJECT_DIR$/common_base/AndroidModuleDemo.common_base.iml" group="AndroidModuleDemo/common_base" />
+      <module fileurl="file://$PROJECT_DIR$/module_main/AndroidModuleDemo.module_main.iml" filepath="$PROJECT_DIR$/module_main/AndroidModuleDemo.module_main.iml" group="AndroidModuleDemo/module_main" />
+      <module fileurl="file://$PROJECT_DIR$/module_market/AndroidModuleDemo.module_market.iml" filepath="$PROJECT_DIR$/module_market/AndroidModuleDemo.module_market.iml" group="AndroidModuleDemo/module_market" />
+      <module fileurl="file://$PROJECT_DIR$/module_user/AndroidModuleDemo.module_user.iml" filepath="$PROJECT_DIR$/module_user/AndroidModuleDemo.module_user.iml" group="AndroidModuleDemo/module_user" />
+      <module fileurl="file://$PROJECT_DIR$/module_wan_android/AndroidModuleDemo.module_wan_android.iml" filepath="$PROJECT_DIR$/module_wan_android/AndroidModuleDemo.module_wan_android.iml" group="AndroidModuleDemo/module_wan_android" />
+      <module fileurl="file://$PROJECT_DIR$/AndroidProject.AndroidModuleDemo.iml" filepath="$PROJECT_DIR$/AndroidProject.AndroidModuleDemo.iml" group="AndroidModuleDemo" />
+   </modules>
   </component>
 </project>

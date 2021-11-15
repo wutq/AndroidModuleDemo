@@ -54,6 +54,7 @@ public interface Constants {
         String HEADER_APP_VERSION = "appVersion";
         String HEADER_IP = "ip";
         String REQUEST_ID = "requestId";
+        String REQUEST_DATA = "requestData";
         /**
          * 超时时间 单位：秒
          */

@@ -6,9 +6,10 @@ ext {
     isModule = false
     //版本号
     versions = [
+            applicationIdDEV      : "com.wss.amddev",     //应用ID
             applicationId         : "com.wss.amd",        //应用ID
-            versionCode           : 1,                    //版本号
-            versionName           : "1.0.0",              //版本名称
+            versionNameDEV        : "2.0.0",              //版本名称
+            versionName           : "2.0.0",              //版本名称
 
             javaSDKVersion        : 1.8,
 
@@ -121,7 +122,7 @@ ext {
             refreshLayout        : "com.scwang.smartrefresh:SmartRefreshLayout:${versions["refreshLayoutVersion"]}",
 
             //数据库
-            "greenDao"            : "org.greenrobot:greendao:${versions["greendaoVersion"]}",
+            "greenDao"           : "org.greenrobot:greendao:${versions["greendaoVersion"]}",
 
     ]
 

@@ -56,7 +56,7 @@ public class PermissionsUtils {
                                 .request(new OnPermission() {
                                     @Override
                                     public void hasPermission(List<String> granted, boolean isAll) {
-                                        subscriber.onNext(true);
+                                        subscriber.onNext(isAll);
                                     }
 
                                     @Override

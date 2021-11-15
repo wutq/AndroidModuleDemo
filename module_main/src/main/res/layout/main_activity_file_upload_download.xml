@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="12dp"
+        android:text="该功能为演示上传、下载文件功能，需要将文件上传、下载地址更换为自己的真实的接口地址方可使用。"
+        android:textColor="@color/color_333333" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:src="@drawable/main_list_icon_img_add" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="支持多个文件以List形式上传" />
+
+            <Button
+                android:id="@+id/btn_upload_file"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/theme"
+                android:text="上传文件"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View style="@style/HorizontalLine" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="返回当前文件下载进度，下载完成返回true" />
+
+    <Button
+        android:id="@+id/btn_download_file"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/theme"
+        android:text="下载文件"
+        android:textColor="@color/white" />
+
+</LinearLayout>
