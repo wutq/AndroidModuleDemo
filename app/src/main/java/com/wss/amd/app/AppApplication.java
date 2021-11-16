@@ -14,5 +14,6 @@ public class AppApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         ProfileManager.inst.factory(new ProfileFactory());
+
     }
 }
