@@ -10,6 +10,6 @@
       <module fileurl="file://$PROJECT_DIR$/module_user/AndroidModuleDemo.module_user.iml" filepath="$PROJECT_DIR$/module_user/AndroidModuleDemo.module_user.iml" group="AndroidModuleDemo/module_user" />
       <module fileurl="file://$PROJECT_DIR$/module_wan_android/AndroidModuleDemo.module_wan_android.iml" filepath="$PROJECT_DIR$/module_wan_android/AndroidModuleDemo.module_wan_android.iml" group="AndroidModuleDemo/module_wan_android" />
       <module fileurl="file://$PROJECT_DIR$/AndroidProject.AndroidModuleDemo.iml" filepath="$PROJECT_DIR$/AndroidProject.AndroidModuleDemo.iml" group="AndroidModuleDemo" />
-   </modules>
+    </modules>
   </component>
 </project>

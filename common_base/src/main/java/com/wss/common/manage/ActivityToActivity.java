@@ -13,7 +13,6 @@ import com.wss.common.base.bean.BaseBean;
 import com.wss.common.bean.Template;
 import com.wss.common.constants.Constants;
 import com.wss.common.constants.Dic;
-import com.wss.common.utils.NetworkUtil;
 import com.wss.common.utils.ToastUtils;
 import com.wss.common.utils.Utils;
 import com.wss.common.view.browser.BrowserActivity;
@@ -156,9 +155,9 @@ public class ActivityToActivity {
      * @param title   标题
      */
     public static void toWebView(Context context, String url, String title) {
-        if (!NetworkUtil.isLink(url)) {
-            return;
-        }
+//        if (!NetworkUtil.isLink(url)) {
+//            return;
+//        }
         Map<String, String> param = new HashMap<>();
         param.put(Dic.URL, url);
         param.put(Dic.TITLE_TEXT, title);
@@ -280,7 +279,7 @@ public class ActivityToActivity {
                 break;
             case Constants.TemplateType.WEB_VIEW:
                 //跳转WebView
-                toWebView(activity, template.getUrl());
+                toWebView(activity, template.getUrl(), template.getDescribe());
                 break;
             case Constants.TemplateType.SYS_BROWSER:
                 //跳转手机浏览器

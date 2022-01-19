@@ -31,6 +31,7 @@ import com.wss.common.base.R2;
 import com.wss.common.constants.Constants;
 import com.wss.common.constants.Dic;
 import com.wss.common.utils.NetworkUtil;
+import com.wss.common.utils.PxUtils;
 import com.wss.common.utils.ValidUtils;
 import com.wss.common.view.browser.mvp.BrowserPresenter;
 import com.wss.common.view.browser.mvp.contract.BrowserContract;
@@ -472,5 +473,18 @@ public class BrowserActivity extends BaseMvpActivity<BrowserPresenter> implement
         } else {
             finish();
         }
+    }
+
+    @OnClick(R2.id.tv_title)
+    public void test() {
+
+        int height = PxUtils.getScreenHeight(context);
+        int width = PxUtils.getScreenWidth(context);
+
+        new AppDialog.Builder(context)
+                .setContent(height+"x"+width)
+                .setSingleButton("YES")
+                .create()
+                .show();
     }
 }

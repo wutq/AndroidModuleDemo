@@ -110,7 +110,7 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
     public Context getContext() {
         return context;
     }
-    //***************************************IBaseView方法实现 end*************************************
+    //********************************x*******IBaseView方法实现 end*************************************
 
     /**
      * 创建Presenter

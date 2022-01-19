@@ -1,0 +1,24 @@
+<html>
+<head>
+    <title>test page</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, people-scalable=no">
+    <script type="text/javascript">
+            function show()
+            {
+
+				var height = window.screen.height 
+				var width = window.screen.width 
+				
+                document.getElementById('show').innerHTML = height +"x" +width;
+            }
+
+
+
+    </script>
+</head>
+<body>
+<a href="javascript:void(0)" onclick="show()">获取分辨率</a>
+<div id="show"></div>
+</body>
+</html>

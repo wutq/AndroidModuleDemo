@@ -11,7 +11,13 @@ static String releaseTime() {
  * 根据build时间自动生成versionCode
  */
 static def createVersionCode() {
-    def code = new Date().format("yyMMddHHmm")
+    def year = new Date().format("yy")
+    def month = new Date().format("MM")
+    def other = new Date().format("ddHHmm")
+    //年份-1 月份+12
+    year = year.toInteger() - 1
+    month = month.toInteger() + 12
+    def code = year.toString() + month.toString() + other
     return code.toInteger();
 }
 
@@ -131,5 +137,6 @@ dependencies {
         implementation project(':module_user')
         //玩Android模块
         implementation project(':module_wan_android')
+
     }
 }

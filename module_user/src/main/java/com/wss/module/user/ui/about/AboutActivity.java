@@ -1,7 +1,5 @@
 package com.wss.module.user.ui.about;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.widget.TextView;
 
 import com.wss.common.base.BaseActionBarActivity;

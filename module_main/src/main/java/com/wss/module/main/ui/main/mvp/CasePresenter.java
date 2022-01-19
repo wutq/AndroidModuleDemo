@@ -54,6 +54,7 @@ public class CasePresenter extends BasePresenter<CaseModel, CaseContract.View> i
         list.add(new Template("列表侧滑菜单", SlewedActivity.class, "RecyclerView列表侧滑菜单，如：QQ列表侧滑"));
         list.add(new Template("卡片翻转", CardFlipActivity.class, "点击翻转卡片，类似刮刮乐抽奖"));
         list.add(new Template("文件上传，下载", FileUploadDownloadActivity.class, "演示RxHttp文件上传、下载"));
+        list.add(new Template("测试分辨率", "file:///android_asset/Test.html", Constants.TemplateType.WEB_VIEW, "测试分辨率"));
 
         getView().refreshCaseList(list);
     }

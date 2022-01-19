@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/fragment_user"
-        class="com.wss.module.user.ui.main.fragment.UserFragment"
+        class="com.wss.module.people.ui.main.fragment.UserFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>
